@@ -24,6 +24,16 @@ stage. All analysis and tests run on eex005.
    in `next_experiment.json`. Registration is not authorization to infer missing
    simulator knobs or execute a new campaign during this stage.
 
+For the specific pattern of reduced mean packet latency, less than 1% absolute
+application-time change, and over 95% local work in both selected chains, the
+postprocessor registers one existing `permuted` mapping pair. These thresholds
+are descriptive triage rules, not significance tests. The permutation uses the
+existing adapter's default seed 1234, verified against an explicit call; the
+network seed stays 1. No unconsumed JSON parameter is introduced. The registration
+records the exact expected endpoint assignments, unchanged work, binary identity
+and one candidate config. It cannot execute before current reference equivalence
+passes. Other result patterns remain unregistered for explicit result review.
+
 The checkout is `/home/wangziheng/wafer_simulator/source`; its parent holds the
 venv, original graphs and runs. Thus commands should use the checkout for code
 and the parent for data:

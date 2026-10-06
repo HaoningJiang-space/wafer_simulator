@@ -7,6 +7,7 @@ import numpy as np
 
 from wafer_sim.analysis.campaign_acceptance import ARMS, accept
 from wafer_sim.analysis.critical_chain import difference, message_timings, parent_graph, recover
+from wafer_sim.analysis.next_experiment import register_mapping_check
 from wafer_sim.io import digest, read_json, write_json
 
 
@@ -105,6 +106,8 @@ def render(summary, acceptance, output):
         lines.append(f"| {row['metric']} ({row['unit']}) | {values[0]} | {values[1]} |")
     lines += ["", f"平均 packet latency 变化：降低 {summary['packet_latency_reduction_percent']:.6f}%。"
               "该比例与应用时间缩短分别报告；不相除定义‘兑现率’。", "",
+              "平均消息就绪至完成时间还包含 CPU-lane 等待。两者变化比例不同时，应先检查"
+              "消息区间与实际关键链；不能由平均 packet latency 单独推导应用完成时间。", "",
               "## 两条实际关键链", "",
               "每个 placement 独立恢复一条确定性关键链：终点取最大完成时间中 ID 最小者，"
               "前驱取最大完成时间中 ID 最大者，与已有审计一致。存在同值路径时，这不是所有关键路径的枚举。", "",
@@ -165,7 +168,14 @@ def render(summary, acceptance, output):
               "也可能由下游反压造成。当前证据能够定位关键消息和时间区间，尚不能定位内部阻塞资源。", "",
               "两种 placements 的宿主运行时间仅作为实现成本记录，不用于计算架构加速比。并发与 debugger 采样"
               "使既有宿主时间比只能视为观测值。", "",
-              "下一轮实验仅在 `next_experiment.json` 登记一组；本分析不启动仿真，也不扩展 thermal 或 GPU。", ""]
+              f"下一轮登记状态：`{summary['next_experiment']['status']}`，"
+              f"已登记组数：{summary['next_experiment']['registered_groups']}。", ""]
+    if summary["next_experiment"]["registered_groups"]:
+        lines += ["下一轮只登记一组 endpoint mapping 配对：将 row-major 改为既有的 permuted 策略，"
+                  "映射置换种子固定为 1234，网络 seed 仍为 1。逻辑任务、duration、payload、依赖、"
+                  "物理资源和原生实现保持不变。目的是检查当前‘网络均值改善而应用变化小’及关键链"
+                  "变化是否依赖当前端点分配。详见 `next_experiment.json`；必须先通过本轮参考等价性验收。", ""]
+    lines += ["本分析不启动新仿真，也不扩展 thermal 或 GPU。", ""]
     (Path(output) / "attribution.md").write_text("\n".join(lines))
 
 
@@ -268,6 +278,7 @@ def analyze(campaign, output):
                        if k not in ("ids", "predecessor_relations")} for name in ARMS},
                    top_critical_messages=top, top_critical_local=top_local, message_groups=groups,
                    host_wall_seconds={name: info["arms"][name]["execution"]["wall_seconds"] for name in ARMS})
+    summary["next_experiment"] = register_mapping_check(info, summary, output)
     print("Recording complete-input and artifact hashes", flush=True)
     inputs = {str(graph / file): digest(graph / file) for file in
               ("graph_audit.json", "operations.npy", "dependencies.npy", "message_pairs.npy")}

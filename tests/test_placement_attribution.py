@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -13,6 +14,7 @@ from wafer_sim.analysis.campaign_acceptance import accept
 from wafer_sim.analysis.critical_chain import difference, message_timings, parent_graph, recover
 from wafer_sim.analysis.goal_completion import audit
 from wafer_sim.analysis.placement_attribution import analyze, finalize
+from wafer_sim.analysis.next_experiment import register_mapping_check
 from wafer_sim.io import digest, read_json, write_json
 
 FIELDS = ("ready_cycle", "start_cycle", "finish_cycle", "cpu_predecessor", "generated_cycle",
@@ -213,6 +215,44 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(read_json(output / "acceptance.json")["implementation_equivalence"]["status"], "passed")
         manifest = read_json(output / "ANALYZED.json")
         self.assertEqual(manifest["artifact_sha256"]["attribution.md"], digest(output / "attribution.md"))
+
+    def test_registration_changes_only_supported_mapping_and_never_runs(self):
+        # Temporary metadata fixtures test the registration contract only.
+        info = accept(self.campaign)
+        info["campaign"] = self.root / "runs/accepted_pair"
+        info["config"].update(mapping="row_major", active_endpoints=4, seed=1)
+        for arm in info["arms"].values():
+            arm["network"]["endpoints"] = [dict(node=i, router=i, layer=0, position=dict(x=i, y=0)) for i in range(4)]
+        project = self.root / "project"
+        config = dict(info["config"], implementation_patch_files=["patches/booksim-wafer.patch"])
+        write_json(project / "configs/llama16_fixed_state.json", config)
+        binary = self.root / "build/booksim/rapidchiplet/booksim2/src/booksim"
+        binary.parent.mkdir(parents=True)
+        binary.write_text("non-executable unit fixture")
+        write_json(self.root / "runs/fastest-consolidation-001/acceptance.json",
+                   dict(passed=True, binary_sha256=digest(binary)))
+        summary = dict(chains={name: dict(critical_local_work_cycles=999, application_cycles=1000)
+                               for name in ("baseline", "ours_rotated")},
+                       application_time_reduction_percent=.1, packet_latency_reduction_percent=15)
+        output = self.root / "registration"
+        output.mkdir()
+        with patch("wafer_sim.analysis.next_experiment.__file__", str(project / "src/wafer_sim/analysis/next_experiment.py")):
+            decision = register_mapping_check(info, summary, output)
+            self.assertEqual(decision["registered_groups"], 1)
+            proposed = read_json(output / "next_experiment_config.json")
+            self.assertEqual({k for k in proposed if proposed[k] != config[k]}, {"mapping"})
+            self.assertNotIn("mapping_seed", proposed)  # It is metadata, not an unconsumed config knob.
+            registration = read_json(output / "next_experiment.json")
+            self.assertEqual(registration["network_seed"], 1)
+            self.assertEqual(registration["mapping_seed"], 1234)
+            self.assertEqual(registration["status"], "registered_not_executed")
+            for mapping in registration["expected_endpoint_mapping"].values():
+                self.assertEqual(sorted(mapping), [0, 1, 2, 3])
+                self.assertNotEqual(mapping, [0, 1, 2, 3])
+            config["seed"] = 2
+            write_json(project / "configs/llama16_fixed_state.json", config)
+            with self.assertRaisesRegex(ValueError, "Active controls changed"):
+                register_mapping_check(info, summary, output)
 
 
 if __name__ == "__main__":
