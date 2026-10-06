@@ -48,7 +48,10 @@ def main():
         label, kind, amount, suffix, extra = match.groups()
         amount = int(amount)
         fields = extra.split()
-        cpu = int(fields[fields.index("cpu")+1]) if "cpu" in fields else 0
+        # The published capture contains tokens such as "cpu 3nic 0".
+        # Tokenize numeric fields, preserving their values; do not drop lines.
+        cpu_match = re.search(r"cpu\s+(\d+)", extra)
+        cpu = int(cpu_match.group(1)) if cpu_match else 0
         cpus[rank].add(cpu)
         counts[kind] += 1
         if kind == "calc":
@@ -56,7 +59,8 @@ def main():
             continue
         other = int(fields[1])
         tag = int(fields[fields.index("tag")+1])
-        nic = int(fields[fields.index("nic")+1]) if "nic" in fields else 0
+        nic_match = re.search(r"nic\s+(\d+)", extra)
+        nic = int(nic_match.group(1)) if nic_match else 0
         nics[rank].add(nic)
         key = (rank, other, tag) if kind == "send" else (other, rank, tag)
         messages[key][kind == "recv"].append((amount, nic, int(label), cpu))
