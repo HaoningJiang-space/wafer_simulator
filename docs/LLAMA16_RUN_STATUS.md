@@ -1,11 +1,19 @@
 # Full-capture run receipt — 2026-10-06
 
-Status: **full runs 002 through 006 executing; no application-performance result yet**.
+Status checked **2026-10-06 12:16 UTC**: runs 003, 004 and 005 have passed
+their paired full-completion audits. Run 006 has audited Rotated; Baseline is
+still executing. Run 002 is still executing both arms. The requested 006
+attribution and direct 002-vs-006 equivalence therefore remain pending.
+See [the postrun receipt and validation](POSTRUN_STATUS.md).
 
 The working tree now maintains only the selected run 006 implementation through
 the [unified build/test/run entry points](IMPLEMENTATION.md). The historical
 run labels below identify preserved processes and evidence, not selectable
 implementation variants in the current code.
+
+The launch details below are historical receipts. Completed intermediate
+implementations do not replace the requested 006 acceptance gate, and matching
+completion times alone do not establish full-event implementation equivalence.
 
 - Host: `wangziheng@eex005`.
 - Run: `/home/wangziheng/wafer_simulator/runs/llama16-full-002`.

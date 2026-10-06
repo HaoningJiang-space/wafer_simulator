@@ -1,0 +1,72 @@
+{
+  "campaigns": {
+    "llama16-full-002": {
+      "audited_arms": [],
+      "baseline_latest_progress": "TRACE_PROGRESS seconds=13920 cycle=620737115 instructions=1797261/5324230 messages=151147 flits=47664158",
+      "complete": false,
+      "excluded": false,
+      "failures": false,
+      "ours_rotated_latest_progress": "TRACE_PROGRESS seconds=13920 cycle=851162875 instructions=3016078/5324230 messages=252918 flits=83941357"
+    },
+    "llama16-full-003-topology-ref": {
+      "audited_arms": [
+        "baseline",
+        "ours_rotated"
+      ],
+      "baseline_cycles": 1738783916,
+      "complete": true,
+      "excluded": false,
+      "failures": false,
+      "ours_rotated_cycles": 1736418652
+    },
+    "llama16-full-004-runtime-opt": {
+      "audited_arms": [
+        "baseline",
+        "ours_rotated"
+      ],
+      "baseline_cycles": 1738783916,
+      "complete": true,
+      "excluded": false,
+      "failures": false,
+      "ours_rotated_cycles": 1736418652
+    },
+    "llama16-full-005-node-reuse": {
+      "audited_arms": [
+        "baseline",
+        "ours_rotated"
+      ],
+      "baseline_cycles": 1738783916,
+      "complete": true,
+      "excluded": false,
+      "failures": false,
+      "ours_rotated_cycles": 1736418652
+    },
+    "llama16-full-006-csr-frontier": {
+      "audited_arms": [
+        "ours_rotated"
+      ],
+      "baseline_latest_progress": "TRACE_PROGRESS seconds=8580 cycle=1655807388 instructions=4873842/5324230 messages=408406 flits=137211244",
+      "complete": false,
+      "excluded": false,
+      "failures": false,
+      "ours_rotated_cycles": 1736418652
+    }
+  },
+  "postprocessor": {
+    "log": "/home/wangziheng/wafer_simulator/logs/postrun-006-attribution-001.log",
+    "native_simulations_launched": 0,
+    "output": "/home/wangziheng/wafer_simulator/runs/postrun-006-attribution-001",
+    "pid": 2412066,
+    "stage": "waiting_for_both_006_arms"
+  },
+  "source_commit": "4639ade6052a3c794ed3f9d15c38bfd2d61052a7",
+  "utc": "2026-10-06T12:16:06.836917+00:00",
+  "validation": {
+    "full_readback": "/home/wangziheng/wafer_simulator/runs/postrun-full-readback-004-001",
+    "full_validation_receipt_sha256": "1b74db2ff65da2bedd649824143578fcb49e43e322ee725c0679d3460920d986",
+    "passed": true,
+    "unit_log": "/home/wangziheng/wafer_simulator/runs/postrun-unit-006/tests.log",
+    "unit_log_sha256": "ba14c76e69fc0091982b0c4fb0e9f353f20b199337624417b072492a701650c9",
+    "unit_tests": 10
+  }
+}
