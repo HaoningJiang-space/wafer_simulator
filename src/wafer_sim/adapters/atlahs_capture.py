@@ -61,7 +61,7 @@ def extract(upstream, sqlite_directory, output, revision_expected=UPSTREAM_COMMI
     return manifest
 
 
-def regenerate(extracted, upstream, original_goal, output, source_host_order):
+def regenerate(extracted, upstream, original_goal, output, source_host_order, observe=False):
     """Test a host-order hypothesis through the full author GOAL generator.
 
     Output is a conversion candidate, never a simulator input or accepted M0
@@ -109,8 +109,13 @@ def regenerate(extracted, upstream, original_goal, output, source_host_order):
     try:
         mapping = get_in_gpu_microevents_dependency(groups, init, comm, str(output / "gpu_events.goal"),
                                                     bundle["intervals"], True)
-        get_inter_node_microevents_dependency(groups, init, comm, mapping, str(candidate),
-                                              bundle["intervals"], False, True)
+        from contextlib import nullcontext
+        from generator_modules.data_dependency_modules import inter_node_dependency
+        from wafer_sim.adapters.atlahs_observer import observe_generator
+        observation = observe_generator(inter_node_dependency, groups, output) if observe else nullcontext()
+        with observation:
+            get_inter_node_microevents_dependency(groups, init, comm, mapping, str(candidate),
+                                                  bundle["intervals"], False, True)
     finally:
         for name, value in previous.items():
             if value is None:
@@ -122,7 +127,8 @@ def regenerate(extracted, upstream, original_goal, output, source_host_order):
         source_host_order=source_host_order, goal_rank_to_host={to_goal[v]: k for k, v in bundle["hosts"].items()},
         upstream_commit=revision, extracted_manifest_sha256=digest(extracted / "EXTRACTED.json"),
         benchmark_sha256={str(p): digest(p) for p in (simple, ll)}, environment_controls=controls,
-        unique_nic=True, zero_red_copy=False, goal_sha256=hashes, new_simulations_launched=0)
+        unique_nic=True, zero_red_copy=False, goal_sha256=hashes, source_observer=observe,
+        new_simulations_launched=0)
     if not result["exact_published_goal_match"]:
         from itertools import zip_longest
         with original_goal.open() as a, candidate.open() as b:
