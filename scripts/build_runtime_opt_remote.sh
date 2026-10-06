@@ -12,12 +12,21 @@ fi
 patches=("$project_root/patches/booksim-completion.patch"
          "$project_root/patches/booksim-topology-ref.patch"
          "$project_root/patches/booksim-runtime-opt.patch")
-if git -C "$build_root" apply --reverse --check "${patches[@]}" 2>/dev/null; then
-    :
+manifest="$build_root/.wafer-runtime-patches"
+patch_digest=$(sha256sum "${patches[@]}" | sha256sum | cut -d ' ' -f1)
+if [[ -f "$manifest" ]]; then
+    read -r recorded_patches recorded_diff < "$manifest"
+    [[ "$recorded_patches" == "$patch_digest" ]]
+    [[ "$recorded_diff" == "$(git -C "$build_root" diff | sha256sum | cut -d ' ' -f1)" ]]
 else
     git -C "$build_root" diff --exit-code
-    git -C "$build_root" apply --check "${patches[@]}"
-    git -C "$build_root" apply "${patches[@]}"
+    # Later patches modify the completion patch. Apply in dependency order;
+    # checking all patches together compares each against the unpatched tree.
+    for patch_file in "${patches[@]}"; do
+        git -C "$build_root" apply --check "$patch_file"
+        git -C "$build_root" apply "$patch_file"
+    done
+    printf '%s %s\n' "$patch_digest" "$(git -C "$build_root" diff | sha256sum | cut -d ' ' -f1)" > "$manifest"
 fi
 make -C "$build_root/rapidchiplet/booksim2/src" -j4 \
     CXX="g++ -I$remote_root/deps/json-source/single_include" \
