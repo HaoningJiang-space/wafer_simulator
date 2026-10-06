@@ -41,7 +41,10 @@ def run(binary, config, directory, timeout=120, require_report=True):
     metrics = {}
     for label in ("Packet latency average", "Network latency average", "Hops average",
                   "Total cycles until trace completion", "Total number of trace messages simulated"):
-        matches = re.findall(re.escape(label) + r"\s*=\s*([0-9.eE+\-]+)", log)
+        number = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?"
+        # Upstream prints -nan when there are no packets. Such a network metric
+        # is undefined, while the compute-only completion report remains valid.
+        matches = re.findall(re.escape(label) + r"\s*=\s*(" + number + r")(?:\s|$)", log)
         if matches:
             metrics[label] = float(matches[-1])
     record["network_metrics"] = metrics

@@ -7,7 +7,7 @@ name = "wafer-simulator"
 version = "0.1.0"
 description = "Matched application-completion experiments on the published WoW network"
 requires-python = ">=3.11"
-dependencies = ["numpy", "scipy", "matplotlib", "shapely", "pymetis", "networkx"]
+dependencies = ["numpy", "scipy", "matplotlib", "shapely", "pymetis", "networkx", "pandas"]
 
 [project.scripts]
 wafer-sim = "wafer_sim.cli:main"
