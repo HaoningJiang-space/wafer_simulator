@@ -52,16 +52,17 @@ runs and their automatic event comparisons remain intact. See
 [run status](docs/LLAMA16_RUN_STATUS.md), [CSR semantics](docs/CSR_FRONTIER.md),
 and [HeteroSTA transfer](docs/HETEROSTA_TRANSFER.md).
 
-The next research stage is [accepted placement attribution](docs/POSTRUN_PROTOCOL.md):
-read the existing full events, recover both critical chains, pair every message,
-and explain application benefits. It uses the same native implementation and
-does not start another performance or architecture campaign.
+The [placement attribution stage](docs/POSTRUN_PROTOCOL.md) has recovered both
+critical chains and paired the complete message set from existing full events.
 
 The [006 placement result and reviewed interpretation](docs/results/llama16-006/REVIEW.md)
 are now available: mean packet latency falls by 14.7490%, while complete
 conditional replay time falls by 0.13603%. Both full arms and attribution pass;
 direct event equivalence to reference 002 is still pending.
 
-Current priority: trace the provenance of the dominant fixed `calc` stages,
-then assess whether source-supported intra-host transfers belong on target WoW
-resources. Mapping experiments are deferred; the native implementation is frozen.
+The [local-stage source audit](docs/LOCAL_STAGE_PROVENANCE.md) is complete.
+It identifies the two dominant calc operations as composite measured intervals
+and recovers 1,337,280 intra-host transfers. Complete M0 lowered traces and
+contracts are unchanged. One [registered M0/M1 study](configs/llama16_model_boundary.json)
+reuses M0 and runs both M1 placements with those transfers on target resources.
+Mapping experiments remain deferred; the native binary remains frozen 006.

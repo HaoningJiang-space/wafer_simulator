@@ -3,6 +3,13 @@
 Checked on eex005 on 2026-10-06. The 006 implementation and result are frozen;
 random mapping and further simulator optimization remain deferred.
 
+Execution update at **14:38 UTC**: complete M0 lowering identity and M1 input
+audits passed. The single registered full M1 pair has launched on eex005 under
+`runs/llama16-model-boundary-M1-001`, controlled by PID `2712305`.
+The log is `logs/model-boundary-M1-001.log`; neither placement is yet accepted.
+After both full audits pass, the same controller performs model comparison and
+critical-chain readback into `runs/model-boundary-analysis-001`.
+
 ## What the source audit established
 
 The two dominant operations are measured intervals between NCCL event groups,
@@ -79,6 +86,11 @@ transfer peer and interval boundaries. An independent pass checks all source
 records against the original graph and hashes every GOAL line with only calc
 amounts normalized; non-NPKit amounts are then required to match exactly.
 See [SOURCE_CORRESPONDENCE.json](results/local-stage-provenance/SOURCE_CORRESPONDENCE.json).
+
+`source_stream` is the author's logical stream label after coalescing; it is
+not a raw CUDA stream ID. The interval activity audit records CUDA stream IDs
+separately. The parser GPU index and GOAL CPU-lane number likewise retain their
+distinct meanings.
 
 ## Source-supported transfer recovery
 
