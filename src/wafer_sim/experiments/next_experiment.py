@@ -1,4 +1,4 @@
-"""Register one supported diagnostic pair for a specific observed result pattern."""
+"""Register (never execute) one diagnostic pair from accepted analysis results."""
 from pathlib import Path
 
 from wafer_sim.adapters.wow import rank_mapping

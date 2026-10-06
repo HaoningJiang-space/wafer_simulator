@@ -7,7 +7,6 @@ import numpy as np
 
 from wafer_sim.analysis.campaign_acceptance import ARMS, accept
 from wafer_sim.analysis.critical_chain import difference, message_timings, parent_graph, recover
-from wafer_sim.analysis.next_experiment import register_mapping_check
 from wafer_sim.io import digest, read_json, write_json
 
 
@@ -119,12 +118,31 @@ def render(summary, acceptance, output):
                      f"本地工作 {chain['critical_local_work_cycles']:,} cycles，"
                      f"消息服务 {chain['critical_message_cycles']:,} cycles；"
                      f"本地工作占链时长 {100 * chain['critical_local_work_cycles'] / chain['application_cycles']:.6f}%。")
+    means = {row["metric"]: row for row in table}
+    cpu_shares = {name: 100 * means["平均发送前 CPU 等待"][name] / means["平均消息就绪至完成"][name]
+                  for name in ARMS}
+    lines += ["", f"在全部消息的就绪至完成区间中，CPU-lane 等待占均值的比例为 "
+              f"Baseline {cpu_shares['baseline']:.4f}%、Rotated {cpu_shares['ours_rotated']:.4f}%。"
+              "这是消息级平均值，和关键链时长占比属于不同观察量。", ""]
+    if (summary["packet_latency_reduction_percent"] > 0 and
+            abs(summary["application_time_reduction_percent"]) < 1 and
+            all(c["critical_local_work_cycles"] / c["application_cycles"] > .95
+                for c in summary["chains"].values())):
+        lines += ["当前观察是：平均 packet latency 下降，但整份工作完成时间变化不足 1%；"
+                  "两条实际关键链均由固定本地阶段占据绝大部分时长。因此平均 packet 延迟下降"
+                  "没有按相同比例缩短最终完成时间。下一步应先检查消息到达如何改变本地资源顺序"
+                  "与关键链选择。链上的消息服务占比不能当作网络优化收益的上限，因为网络时序"
+                  "也可能改变后续 CPU-lane 执行顺序。", ""]
     delta = summary["chain_difference"]
     lines += ["", "两条链可能经过不同操作。以下恒等式逐项核对完成时间差（Baseline − Rotated）：", "",
               "| 操作类别 | 共同节点服务差 | 仅 Baseline 链服务 | 仅 Rotated 链服务（扣除） |",
               "| --- | ---: | ---: | ---: |"]
     for kind in ("local", "message"):
         lines.append(f"| {kind} | {delta[f'common_{kind}_delta']:,} | {delta[f'baseline_only_{kind}']:,} | {delta[f'rotated_only_{kind}']:,} |")
+    local_delta = delta['common_local_delta'] + delta['baseline_only_local'] - delta['rotated_only_local']
+    message_delta = delta['common_message_delta'] + delta['baseline_only_message'] - delta['rotated_only_message']
+    lines += ["", f"其中本地阶段的链上服务差为 {local_delta:,} cycles，"
+              f"消息阶段的链上服务差为 {message_delta:,} cycles。"]
     lines += ["", f"逐项相加 = **{delta['accounted_delta_cycles']:,} cycles**，"
               f"等于观测完成时间差 {delta['application_delta_cycles']:,} cycles。"
               "这是实际服务时间的记账恒等式，不是逐消息独立加速的反事实效果。", "",
@@ -179,7 +197,8 @@ def render(summary, acceptance, output):
     (Path(output) / "attribution.md").write_text("\n".join(lines))
 
 
-def analyze(campaign, output):
+def analyze(campaign, output, register_next=None):
+    """Analyze saved evidence; optional experiment registration is supplied by orchestration."""
     info = accept(campaign)
     graph = Path(info["config"]["graph_directory"])
     gate = read_json(graph / "graph_audit.json")
@@ -278,7 +297,8 @@ def analyze(campaign, output):
                        if k not in ("ids", "predecessor_relations")} for name in ARMS},
                    top_critical_messages=top, top_critical_local=top_local, message_groups=groups,
                    host_wall_seconds={name: info["arms"][name]["execution"]["wall_seconds"] for name in ARMS})
-    summary["next_experiment"] = register_mapping_check(info, summary, output)
+    summary["next_experiment"] = (register_next(info, summary, output) if register_next else
+                                  dict(status="needs_result_review", registered_groups=0))
     print("Recording complete-input and artifact hashes", flush=True)
     inputs = {str(graph / file): digest(graph / file) for file in
               ("graph_audit.json", "operations.npy", "dependencies.npy", "message_pairs.npy")}

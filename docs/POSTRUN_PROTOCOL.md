@@ -5,6 +5,11 @@ implementation frozen. No 007/008 optimization variant, new simulator model,
 GPU backend, thermal feedback or additional workload execution belongs to this
 stage. All analysis and tests run on eex005.
 
+Readback, chain recovery and reporting stay in `analysis/`. The optional next-pair
+config registration lives in `experiments/next_experiment.py` and is supplied by
+the command-line orchestration. The analysis layer neither imports experiment
+orchestration nor launches a simulator.
+
 ## Acceptance and order
 
 1. Wait for both arms of `llama16-full-006-csr-frontier` to pass their existing

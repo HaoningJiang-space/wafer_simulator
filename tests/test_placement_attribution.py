@@ -14,7 +14,7 @@ from wafer_sim.analysis.campaign_acceptance import accept
 from wafer_sim.analysis.critical_chain import difference, message_timings, parent_graph, recover
 from wafer_sim.analysis.goal_completion import audit
 from wafer_sim.analysis.placement_attribution import analyze, finalize
-from wafer_sim.analysis.next_experiment import register_mapping_check
+from wafer_sim.experiments.next_experiment import register_mapping_check
 from wafer_sim.io import digest, read_json, write_json
 
 FIELDS = ("ready_cycle", "start_cycle", "finish_cycle", "cpu_predecessor", "generated_cycle",
@@ -236,7 +236,7 @@ class AttributionTests(unittest.TestCase):
                        application_time_reduction_percent=.1, packet_latency_reduction_percent=15)
         output = self.root / "registration"
         output.mkdir()
-        with patch("wafer_sim.analysis.next_experiment.__file__", str(project / "src/wafer_sim/analysis/next_experiment.py")):
+        with patch("wafer_sim.experiments.next_experiment.__file__", str(project / "src/wafer_sim/experiments/next_experiment.py")):
             decision = register_mapping_check(info, summary, output)
             self.assertEqual(decision["registered_groups"], 1)
             proposed = read_json(output / "next_experiment_config.json")

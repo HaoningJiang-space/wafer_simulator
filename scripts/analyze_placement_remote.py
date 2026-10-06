@@ -5,6 +5,7 @@ import platform
 import subprocess
 
 from wafer_sim.analysis.placement_attribution import analyze, finalize
+from wafer_sim.experiments.next_experiment import register_mapping_check
 
 
 def main():
@@ -23,7 +24,7 @@ def main():
             raise SystemExit("Finalization campaign differs from the analyzed campaign")
         finalize(args.output, args.finalize_equivalence)
     else:
-        analyze(args.campaign, args.output)
+        analyze(args.campaign, args.output, register_next=register_mapping_check)
 
 
 if __name__ == "__main__":
