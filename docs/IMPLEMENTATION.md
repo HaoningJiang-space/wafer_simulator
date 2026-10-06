@@ -58,8 +58,28 @@ The pinned author binary remains a test oracle, not a maintained product variant
 
 ## Consolidation acceptance
 
-Verify the combined patch produces the same native sources as the selected run
-006 build, rebuild on eex005, and require the semantic reports and arbitration
-grants to match saved evidence. This is packaging validation; no new full
-performance campaign is needed solely to rename/repackage identical code.
-Remote results are recorded here after verification.
+The unified build passed remote verification at source commit `1cb822b`:
+
+- All 134 tracked native C/C++/header/parser/Makefile inputs match the selected
+  run 006 build byte for byte. Their canonical hash map has SHA-256
+  `01b37cd9302ce58941c4f4b17098a26d1a599f8dd135dd834778d5fdeda95e99`.
+- Rebuilt using GCC 8.5.0 and the same `-O3 -g -std=c++17` flags. New binary
+  SHA-256: `fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42`.
+  Build paths changed, so native source identity and execution reports, rather
+  than binary equality, establish preservation.
+- The 18 native/workload semantic tests and three independent readback tests
+  passed. Fourteen native input/report pairs match saved CSR evidence exactly;
+  network metrics and dependency-profile accounting also match/pass.
+- Checked-container ownership/credit-reset tests passed. The 1,500-round
+  arbitration output matches the frozen reference hash.
+
+Evidence resides under
+`/home/wangziheng/wafer_simulator/runs/fastest-consolidation-001/`, including
+`source-equivalence.json`, `acceptance.json`, and `tests/`. The source manifest
+records compiler/platform details and every compared source hash.
+Combined patch SHA-256:
+`2e44498b90fd5f06c6ff58a09141d38c6dd1979d477a6d7fcb93118ff9f40344`.
+
+This is packaging validation. The full performance and event-equivalence
+experiments already running use the identical native source and continue with
+their original binary identities; no duplicate full campaign was launched.
