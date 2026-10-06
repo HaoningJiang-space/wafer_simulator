@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wafer-simulator"
+version = "0.1.0"
+description = "Matched application-completion experiments on the published WoW network"
+requires-python = ">=3.11"
+dependencies = ["numpy", "scipy", "matplotlib", "shapely", "pymetis", "networkx"]
+
+[project.scripts]
+wafer-sim = "wafer_sim.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
