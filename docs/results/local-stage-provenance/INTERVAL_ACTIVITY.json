@@ -1,0 +1,1239 @@
+{
+  "intervals": [
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005786_109975.sqlite",
+      "duration_ns": 556029402,
+      "end_ns": 73196189240,
+      "goal_rank": 3,
+      "identified": true,
+      "kernel_union_ns": 354010909,
+      "label": 902031,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 1241,
+      "non_nccl_kernel_union_ns": 354010909,
+      "not_covered_by_kernel_ns": 202018493,
+      "op_id": 4895210,
+      "overlapping_kernel_count": 1241,
+      "previous_boundary_nccl_kernels": [
+        [
+          72640087870,
+          72640159838,
+          34,
+          "ncclDevKernel_AllReduce_Sum_f32_TREE_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)], at::detail::Array<char *, (int)2>, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::unrolled_elementwise_kernel<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnSelf_add<int>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, at::detail::Array<char *, (int)1>>(int, T2, T3)",
+        "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4>>(T3)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283320285921280,
+      "source_gpu_id": 6,
+      "source_stream_id": 0,
+      "start_ns": 72640159838,
+      "stream_kernel_counts": {
+        "7": 1241
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 382900771,
+      "end_ns": 71996006617,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 376836770,
+      "label": 735605,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 1241,
+      "non_nccl_kernel_union_ns": 376836770,
+      "not_covered_by_kernel_ns": 6064001,
+      "op_id": 2066694,
+      "overlapping_kernel_count": 1241,
+      "previous_boundary_nccl_kernels": [
+        [
+          71612972758,
+          71613105846,
+          34,
+          "ncclDevKernel_AllReduce_Sum_f32_TREE_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)], at::detail::Array<char *, (int)2>, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::unrolled_elementwise_kernel<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnSelf_add<int>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, at::detail::Array<char *, (int)1>>(int, T2, T3)",
+        "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4>>(T3)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283275171987456,
+      "source_gpu_id": 2,
+      "source_stream_id": 0,
+      "start_ns": 71613105846,
+      "stream_kernel_counts": {
+        "7": 1241
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005789_106910.sqlite",
+      "duration_ns": 56127775,
+      "end_ns": 72243925794,
+      "goal_rank": 0,
+      "identified": true,
+      "kernel_union_ns": 8124448,
+      "label": 831953,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 113,
+      "non_nccl_kernel_union_ns": 8124448,
+      "not_covered_by_kernel_ns": 48003327,
+      "op_id": 831952,
+      "overlapping_kernel_count": 113,
+      "previous_boundary_nccl_kernels": [
+        [
+          72187594339,
+          72187798019,
+          18,
+          "ncclDevKernel_AllGather_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<void at::native::compare_scalar_kernel<float>(at::TensorIteratorBase &, at::native::<unnamed>::OpType, T1)::[lambda(float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+        "void at_cuda_detail::cub::DeviceReduceSingleTileKernel<at_cuda_detail::cub::DeviceReducePolicy<int, unsigned int, cuda::std::__4::plus<void>>::Policy600, at_cuda_detail::cub::TransformInputIterator<bool, at::native::<unnamed>::NonZeroOp<bool>, const bool *, long>, int *, unsigned int, cuda::std::__4::plus<void>, int, int, cuda::std::__4::__identity>(T2, T3, T4, T5, T6, T8)",
+        "void at_cuda_detail::cub::DeviceCompactInitKernel<at_cuda_detail::cub::ScanTileState<int, (bool)1>, int *>(T1, int, T2)",
+        "void at_cuda_detail::cub::DeviceSelectSweepKernel<at_cuda_detail::cub::detail::device_select_policy_hub<long, bool, int, (bool)0, (bool)0>::Policy900, at_cuda_detail::cub::CountingInputIterator<long, long>, at_cuda_detail::cub::TransformInputIterator<bool, at::native::<unnamed>::NonZeroOp<bool>, const bool *, long>, long *, int *, at_cuda_detail::cub::ScanTileState<int, (bool)1>, at_cuda_detail::cub::NullType, at_cuda_detail::cub::NullType, int, (bool)0>(T2, T3, T4, T5, T6, T7, T8, T9, int, at_cuda_detail::cub::detail::vsmem_t)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, at::detail::Array<char *, (int)1>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<int>, at::detail::Array<char *, (int)1>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283268897308672,
+      "source_gpu_id": 10,
+      "source_stream_id": 0,
+      "start_ns": 72187798019,
+      "stream_kernel_counts": {
+        "7": 113
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005786_109975.sqlite",
+      "duration_ns": 29066336,
+      "end_ns": 71524638912,
+      "goal_rank": 3,
+      "identified": true,
+      "kernel_union_ns": 7936448,
+      "label": 3,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 17,
+      "non_nccl_kernel_union_ns": 7936448,
+      "not_covered_by_kernel_ns": 21129888,
+      "op_id": 3993182,
+      "overlapping_kernel_count": 17,
+      "previous_boundary_nccl_kernels": [],
+      "representative_kernel_names": [
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, at::detail::Array<char *, (int)1>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<int>, at::detail::Array<char *, (int)1>>(int, T2, T3)"
+      ],
+      "source_device_id": 0,
+      "source_global_pid": 283320269144064,
+      "source_gpu_id": 4,
+      "source_stream_id": 0,
+      "start_ns": 71495572576,
+      "stream_kernel_counts": {
+        "7": 17
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 9774496,
+      "end_ns": 72356599431,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 7404896,
+      "label": 1164546,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 215,
+      "non_nccl_kernel_union_ns": 7404896,
+      "not_covered_by_kernel_ns": 2369600,
+      "op_id": 2495635,
+      "overlapping_kernel_count": 215,
+      "previous_boundary_nccl_kernels": [
+        [
+          72346701287,
+          72346824935,
+          18,
+          "ncclDevKernel_AllReduce_Sum_f32_TREE_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "void multi_tensor_apply_kernel<TensorListMetadata<(int)2, (bool)0>, ScaleFunctor<float, float>, float>(long, volatile int *, T1, T2, T3...)",
+        "void multi_tensor_apply_kernel<TensorListMetadata<(int)4, (bool)0>, AdamFunctor<float, float, int>, float, float, float, float, float, float, adamMode_t, float>(long, volatile int *, T1, T2, T3...)",
+        "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)], at::detail::Array<char *, (int)2>, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnSelf_add<float>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctorOnSelf_add<float>, at::detail::Array<char *, (int)2>, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>, at::detail::Array<char *, (int)3>>(int, T2, T3)"
+      ],
+      "source_device_id": 0,
+      "source_global_pid": 283275155210240,
+      "source_gpu_id": 3,
+      "source_stream_id": 0,
+      "start_ns": 72346824935,
+      "stream_kernel_counts": {
+        "7": 215
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005800_104761.sqlite",
+      "duration_ns": 9671808,
+      "end_ns": 73350426667,
+      "goal_rank": 2,
+      "identified": true,
+      "kernel_union_ns": 7039264,
+      "label": 332659,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 147,
+      "non_nccl_kernel_union_ns": 7039264,
+      "not_covered_by_kernel_ns": 2632544,
+      "op_id": 2994788,
+      "overlapping_kernel_count": 147,
+      "previous_boundary_nccl_kernels": [
+        [
+          73340602315,
+          73340754859,
+          18,
+          "ncclDevKernel_AllReduce_Sum_f32_TREE_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "void multi_tensor_apply_kernel<TensorListMetadata<(int)2, (bool)0>, ScaleFunctor<float, float>, float>(long, volatile int *, T1, T2, T3...)",
+        "void multi_tensor_apply_kernel<TensorListMetadata<(int)4, (bool)0>, AdamFunctor<float, float, int>, float, float, float, float, float, float, adamMode_t, float>(long, volatile int *, T1, T2, T3...)",
+        "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)], at::detail::Array<char *, (int)2>, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnSelf_add<float>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctorOnSelf_add<float>, at::detail::Array<char *, (int)2>, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>, at::detail::Array<char *, (int)3>>(int, T2, T3)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283232826294272,
+      "source_gpu_id": 12,
+      "source_stream_id": 0,
+      "start_ns": 73340754859,
+      "stream_kernel_counts": {
+        "7": 147
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005786_109975.sqlite",
+      "duration_ns": 7773856,
+      "end_ns": 73204180952,
+      "goal_rank": 3,
+      "identified": true,
+      "kernel_union_ns": 4579744,
+      "label": 902041,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 20,
+      "non_nccl_kernel_union_ns": 4579744,
+      "not_covered_by_kernel_ns": 3194112,
+      "op_id": 4895220,
+      "overlapping_kernel_count": 20,
+      "previous_boundary_nccl_kernels": [
+        [
+          73196189240,
+          73196407096,
+          34,
+          "ncclDevKernel_AllReduce_Sum_f32_TREE_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)], at::detail::Array<char *, (int)2>, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::unrolled_elementwise_kernel<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnSelf_add<int>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, at::detail::Array<char *, (int)1>>(int, T2, T3)",
+        "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4>>(T3)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283320285921280,
+      "source_gpu_id": 6,
+      "source_stream_id": 0,
+      "start_ns": 73196407096,
+      "stream_kernel_counts": {
+        "7": 20
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005789_106910.sqlite",
+      "duration_ns": 6858432,
+      "end_ns": 71828167532,
+      "goal_rank": 0,
+      "identified": true,
+      "kernel_union_ns": 4783200,
+      "label": 402923,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 20,
+      "non_nccl_kernel_union_ns": 4783200,
+      "not_covered_by_kernel_ns": 2075232,
+      "op_id": 402922,
+      "overlapping_kernel_count": 20,
+      "previous_boundary_nccl_kernels": [
+        [
+          71813351724,
+          71821309100,
+          34,
+          "ncclDevKernel_AllReduce_Sum_f32_TREE_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)], at::detail::Array<char *, (int)2>, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::unrolled_elementwise_kernel<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnSelf_add<int>, at::detail::Array<char *, (int)2>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, at::detail::Array<char *, (int)1>>(int, T2, T3)",
+        "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4>>(T3)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283268863754240,
+      "source_gpu_id": 9,
+      "source_stream_id": 0,
+      "start_ns": 71821309100,
+      "stream_kernel_counts": {
+        "7": 20
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005800_104761.sqlite",
+      "duration_ns": 4705568,
+      "end_ns": 72223319261,
+      "goal_rank": 2,
+      "identified": true,
+      "kernel_union_ns": 179520,
+      "label": 499081,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 97,
+      "non_nccl_kernel_union_ns": 179520,
+      "not_covered_by_kernel_ns": 4526048,
+      "op_id": 3161210,
+      "overlapping_kernel_count": 97,
+      "previous_boundary_nccl_kernels": [
+        [
+          72217963709,
+          72218613693,
+          18,
+          "ncclDevKernel_AllGather_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<void at::native::compare_scalar_kernel<float>(at::TensorIteratorBase &, at::native::<unnamed>::OpType, T1)::[lambda(float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+        "void at_cuda_detail::cub::DeviceReduceSingleTileKernel<at_cuda_detail::cub::DeviceReducePolicy<int, unsigned int, cuda::std::__4::plus<void>>::Policy600, at_cuda_detail::cub::TransformInputIterator<bool, at::native::<unnamed>::NonZeroOp<bool>, const bool *, long>, int *, unsigned int, cuda::std::__4::plus<void>, int, int, cuda::std::__4::__identity>(T2, T3, T4, T5, T6, T8)",
+        "void at_cuda_detail::cub::DeviceCompactInitKernel<at_cuda_detail::cub::ScanTileState<int, (bool)1>, int *>(T1, int, T2)",
+        "void at_cuda_detail::cub::DeviceSelectSweepKernel<at_cuda_detail::cub::detail::device_select_policy_hub<long, bool, int, (bool)0, (bool)0>::Policy900, at_cuda_detail::cub::CountingInputIterator<long, long>, at_cuda_detail::cub::TransformInputIterator<bool, at::native::<unnamed>::NonZeroOp<bool>, const bool *, long>, long *, int *, at_cuda_detail::cub::ScanTileState<int, (bool)1>, at_cuda_detail::cub::NullType, at_cuda_detail::cub::NullType, int, (bool)0>(T2, T3, T4, T5, T6, T7, T8, T9, int, at_cuda_detail::cub::detail::vsmem_t)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, at::detail::Array<char *, (int)1>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283232859848704,
+      "source_gpu_id": 13,
+      "source_stream_id": 0,
+      "start_ns": 72218613693,
+      "stream_kernel_counts": {
+        "7": 97
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005800_104761.sqlite",
+      "duration_ns": 4679744,
+      "end_ns": 73355145496,
+      "goal_rank": 2,
+      "identified": true,
+      "kernel_union_ns": 157472,
+      "label": 665447,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 97,
+      "non_nccl_kernel_union_ns": 157472,
+      "not_covered_by_kernel_ns": 4522272,
+      "op_id": 3327576,
+      "overlapping_kernel_count": 97,
+      "previous_boundary_nccl_kernels": [
+        [
+          73349894872,
+          73350465752,
+          18,
+          "ncclDevKernel_AllGather_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<void at::native::compare_scalar_kernel<float>(at::TensorIteratorBase &, at::native::<unnamed>::OpType, T1)::[lambda(float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+        "void at_cuda_detail::cub::DeviceReduceSingleTileKernel<at_cuda_detail::cub::DeviceReducePolicy<int, unsigned int, cuda::std::__4::plus<void>>::Policy600, at_cuda_detail::cub::TransformInputIterator<bool, at::native::<unnamed>::NonZeroOp<bool>, const bool *, long>, int *, unsigned int, cuda::std::__4::plus<void>, int, int, cuda::std::__4::__identity>(T2, T3, T4, T5, T6, T8)",
+        "void at_cuda_detail::cub::DeviceCompactInitKernel<at_cuda_detail::cub::ScanTileState<int, (bool)1>, int *>(T1, int, T2)",
+        "void at_cuda_detail::cub::DeviceSelectSweepKernel<at_cuda_detail::cub::detail::device_select_policy_hub<long, bool, int, (bool)0, (bool)0>::Policy900, at_cuda_detail::cub::CountingInputIterator<long, long>, at_cuda_detail::cub::TransformInputIterator<bool, at::native::<unnamed>::NonZeroOp<bool>, const bool *, long>, long *, int *, at_cuda_detail::cub::ScanTileState<int, (bool)1>, at_cuda_detail::cub::NullType, at_cuda_detail::cub::NullType, int, (bool)0>(T2, T3, T4, T5, T6, T7, T8, T9, int, at_cuda_detail::cub::detail::vsmem_t)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, at::detail::Array<char *, (int)1>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283232859848704,
+      "source_gpu_id": 13,
+      "source_stream_id": 0,
+      "start_ns": 73350465752,
+      "stream_kernel_counts": {
+        "7": 97
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 3122464,
+      "end_ns": 71612972758,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 3095520,
+      "label": 735595,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 11,
+      "non_nccl_kernel_union_ns": 3095520,
+      "not_covered_by_kernel_ns": 26944,
+      "op_id": 2066684,
+      "overlapping_kernel_count": 11,
+      "previous_boundary_nccl_kernels": [
+        [
+          71607196022,
+          71609850294,
+          38,
+          "ncclDevKernel_AllGather_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tst_320x128_64x3_1x2_h_bz_coopB_TNT",
+        "triton_",
+        "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4>>(T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::<unnamed>::CatArrayBatchedCopy_aligned16_contig<at::native::<unnamed>::OpaqueType<(unsigned int)4>, unsigned int, (int)1, (int)128, (int)1>(T1 *, at::native::<unnamed>::CatArrInputTensorMetadata<T1, T2, T4, T5>, at::native::<unnamed>::TensorSizeStride<T2, (unsigned int)4>, int, T2)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283275171987456,
+      "source_gpu_id": 2,
+      "source_stream_id": 0,
+      "start_ns": 71609850294,
+      "stream_kernel_counts": {
+        "7": 11
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 3099296,
+      "end_ns": 72573513086,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 3073696,
+      "label": 901981,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 11,
+      "non_nccl_kernel_union_ns": 3073696,
+      "not_covered_by_kernel_ns": 25600,
+      "op_id": 2233070,
+      "overlapping_kernel_count": 11,
+      "previous_boundary_nccl_kernels": [
+        [
+          72567663006,
+          72570413790,
+          38,
+          "ncclDevKernel_AllGather_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tst_320x128_64x3_1x2_h_bz_coopB_TNT",
+        "triton_",
+        "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4>>(T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::<unnamed>::CatArrayBatchedCopy_aligned16_contig<at::native::<unnamed>::OpaqueType<(unsigned int)4>, unsigned int, (int)1, (int)128, (int)1>(T1 *, at::native::<unnamed>::CatArrInputTensorMetadata<T1, T2, T4, T5>, at::native::<unnamed>::TensorSizeStride<T2, (unsigned int)4>, int, T2)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283275171987456,
+      "source_gpu_id": 2,
+      "source_stream_id": 0,
+      "start_ns": 72570413790,
+      "stream_kernel_counts": {
+        "7": 11
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 3081376,
+      "end_ns": 72573469856,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 3053856,
+      "label": 236477,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 11,
+      "non_nccl_kernel_union_ns": 3053856,
+      "not_covered_by_kernel_ns": 27520,
+      "op_id": 1567566,
+      "overlapping_kernel_count": 11,
+      "previous_boundary_nccl_kernels": [
+        [
+          72567555936,
+          72570388480,
+          38,
+          "ncclDevKernel_AllGather_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tst_320x128_64x3_1x2_h_bz_coopB_TNT",
+        "triton_",
+        "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4>>(T3)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::<unnamed>::CatArrayBatchedCopy_aligned16_contig<at::native::<unnamed>::OpaqueType<(unsigned int)4>, unsigned int, (int)1, (int)128, (int)1>(T1 *, at::native::<unnamed>::CatArrInputTensorMetadata<T1, T2, T4, T5>, at::native::<unnamed>::TensorSizeStride<T2, (unsigned int)4>, int, T2)"
+      ],
+      "source_device_id": 2,
+      "source_global_pid": 283275188764672,
+      "source_gpu_id": 0,
+      "source_stream_id": 0,
+      "start_ns": 72570388480,
+      "stream_kernel_counts": {
+        "7": 11
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005800_104761.sqlite",
+      "duration_ns": 1982592,
+      "end_ns": 71874338886,
+      "goal_rank": 2,
+      "identified": true,
+      "kernel_union_ns": 1966112,
+      "label": 72279,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 7,
+      "non_nccl_kernel_union_ns": 1966112,
+      "not_covered_by_kernel_ns": 16480,
+      "op_id": 2734408,
+      "overlapping_kernel_count": 7,
+      "previous_boundary_nccl_kernels": [
+        [
+          71870516070,
+          71872356294,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tst_128x256_64x4_2x1_v_bz_coopA_NNN",
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283232826294272,
+      "source_gpu_id": 12,
+      "source_stream_id": 0,
+      "start_ns": 71872356294,
+      "stream_kernel_counts": {
+        "7": 7
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 1370560,
+      "end_ns": 73412874416,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 1357184,
+      "label": 646601,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1357184,
+      "not_covered_by_kernel_ns": 13376,
+      "op_id": 1977690,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          73408992336,
+          73411503856,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283275205541888,
+      "source_gpu_id": 1,
+      "source_stream_id": 0,
+      "start_ns": 73411503856,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 1367840,
+      "end_ns": 73381800432,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 1354304,
+      "label": 637925,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1354304,
+      "not_covered_by_kernel_ns": 13536,
+      "op_id": 1969014,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          73377915120,
+          73380432592,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283275205541888,
+      "source_gpu_id": 1,
+      "source_stream_id": 0,
+      "start_ns": 73380432592,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 1356864,
+      "end_ns": 72073748912,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 1343264,
+      "label": 422395,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1343264,
+      "not_covered_by_kernel_ns": 13600,
+      "op_id": 1753484,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72069876432,
+          72072392048,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283275205541888,
+      "source_gpu_id": 1,
+      "source_stream_id": 0,
+      "start_ns": 72072392048,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005786_109975.sqlite",
+      "duration_ns": 1351680,
+      "end_ns": 72368449056,
+      "goal_rank": 3,
+      "identified": true,
+      "kernel_union_ns": 1337024,
+      "label": 153255,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1337024,
+      "not_covered_by_kernel_ns": 14656,
+      "op_id": 4146434,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72364559232,
+          72367097376,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 0,
+      "source_global_pid": 283320269144064,
+      "source_gpu_id": 4,
+      "source_stream_id": 0,
+      "start_ns": 72367097376,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005800_104761.sqlite",
+      "duration_ns": 1330944,
+      "end_ns": 72184456126,
+      "goal_rank": 2,
+      "identified": true,
+      "kernel_union_ns": 1317888,
+      "label": 491803,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1317888,
+      "not_covered_by_kernel_ns": 13056,
+      "op_id": 3153932,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72180571838,
+          72183125182,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283232859848704,
+      "source_gpu_id": 13,
+      "source_stream_id": 0,
+      "start_ns": 72183125182,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005800_104761.sqlite",
+      "duration_ns": 1321888,
+      "end_ns": 72070319073,
+      "goal_rank": 2,
+      "identified": true,
+      "kernel_union_ns": 1308448,
+      "label": 459991,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1308448,
+      "not_covered_by_kernel_ns": 13440,
+      "op_id": 3122120,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72066390561,
+          72068997185,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283232859848704,
+      "source_gpu_id": 13,
+      "source_stream_id": 0,
+      "start_ns": 72068997185,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005786_109975.sqlite",
+      "duration_ns": 1320512,
+      "end_ns": 72223088320,
+      "goal_rank": 3,
+      "identified": true,
+      "kernel_union_ns": 1305376,
+      "label": 112767,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1305376,
+      "not_covered_by_kernel_ns": 15136,
+      "op_id": 4105946,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72219216864,
+          72221767808,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 0,
+      "source_global_pid": 283320269144064,
+      "source_gpu_id": 4,
+      "source_stream_id": 0,
+      "start_ns": 72221767808,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005786_109975.sqlite",
+      "duration_ns": 1319840,
+      "end_ns": 72243824896,
+      "goal_rank": 3,
+      "identified": true,
+      "kernel_union_ns": 1304928,
+      "label": 118551,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1304928,
+      "not_covered_by_kernel_ns": 14912,
+      "op_id": 4111730,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72239914560,
+          72242505056,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 0,
+      "source_global_pid": 283320269144064,
+      "source_gpu_id": 4,
+      "source_stream_id": 0,
+      "start_ns": 72242505056,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 1315904,
+      "end_ns": 72094494074,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 1301248,
+      "label": 760919,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1301248,
+      "not_covered_by_kernel_ns": 14656,
+      "op_id": 2092008,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72090569562,
+          72093178170,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283275171987456,
+      "source_gpu_id": 2,
+      "source_stream_id": 0,
+      "start_ns": 72093178170,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 1314016,
+      "end_ns": 73216494563,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 1299136,
+      "label": 924413,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1299136,
+      "not_covered_by_kernel_ns": 14880,
+      "op_id": 2255502,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          73212595587,
+          73215180547,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 1,
+      "source_global_pid": 283275171987456,
+      "source_gpu_id": 2,
+      "source_stream_id": 0,
+      "start_ns": 73215180547,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 1312544,
+      "end_ns": 72229188080,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 1298752,
+      "label": 465775,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1298752,
+      "not_covered_by_kernel_ns": 13792,
+      "op_id": 1796864,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72225289008,
+          72227875536,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283275205541888,
+      "source_gpu_id": 1,
+      "source_stream_id": 0,
+      "start_ns": 72227875536,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 1310848,
+      "end_ns": 72332941552,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 1297568,
+      "label": 494695,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1297568,
+      "not_covered_by_kernel_ns": 13280,
+      "op_id": 1825784,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72329088848,
+          72331630704,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283275205541888,
+      "source_gpu_id": 1,
+      "source_stream_id": 0,
+      "start_ns": 72331630704,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005786_109975.sqlite",
+      "duration_ns": 1308864,
+      "end_ns": 72233379872,
+      "goal_rank": 3,
+      "identified": true,
+      "kernel_union_ns": 1294176,
+      "label": 115659,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1294176,
+      "not_covered_by_kernel_ns": 14688,
+      "op_id": 4108838,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72229519008,
+          72232071008,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 0,
+      "source_global_pid": 283320269144064,
+      "source_gpu_id": 4,
+      "source_stream_id": 0,
+      "start_ns": 72232071008,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 1307200,
+      "end_ns": 73423227312,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 1293632,
+      "label": 649493,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1293632,
+      "not_covered_by_kernel_ns": 13568,
+      "op_id": 1980582,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          73419330928,
+          73421920112,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283275205541888,
+      "source_gpu_id": 1,
+      "source_stream_id": 0,
+      "start_ns": 73421920112,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite",
+      "duration_ns": 1305728,
+      "end_ns": 72084004464,
+      "goal_rank": 1,
+      "identified": true,
+      "kernel_union_ns": 1293184,
+      "label": 425287,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1293184,
+      "not_covered_by_kernel_ns": 12544,
+      "op_id": 1756376,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72080170672,
+          72082698736,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 3,
+      "source_global_pid": 283275205541888,
+      "source_gpu_id": 1,
+      "source_stream_id": 0,
+      "start_ns": 72082698736,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    },
+    {
+      "category_limit": "Non-NCCL kernel activity is not calibrated pure compute; uncovered time is not classified as waiting",
+      "database": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005789_106910.sqlite",
+      "duration_ns": 1304352,
+      "end_ns": 72095854939,
+      "goal_rank": 0,
+      "identified": true,
+      "kernel_union_ns": 1289472,
+      "label": 144587,
+      "nccl_kernel_count": 0,
+      "nccl_kernel_union_ns": 0,
+      "non_nccl_kernel_count": 6,
+      "non_nccl_kernel_union_ns": 1289472,
+      "not_covered_by_kernel_ns": 14880,
+      "op_id": 144586,
+      "overlapping_kernel_count": 6,
+      "previous_boundary_nccl_kernels": [
+        [
+          72091997723,
+          72094550587,
+          38,
+          "ncclDevKernel_ReduceScatter_Sum_f32_RING_LL(ncclDevComm *, unsigned long, ncclWork *)"
+        ]
+      ],
+      "representative_kernel_names": [
+        "nvjet_tss_320x128_64x3_1x2_h_badd_coopB_NTT",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits<__nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)4096, (unsigned int)1, (unsigned int)1, (unsigned int)4, (unsigned int)16, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)128>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void transformer_engine::rmsnorm::rmsnorm_bwd_finalize_tuned_kernel<transformer_engine::rmsnorm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_finalize<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024, (unsigned int)4, transformer_engine::layer_norm::Kernel_traits_base<(unsigned int)4096, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, unsigned int, (unsigned int)1024>>>>(transformer_engine::rmsnorm::BwdParams)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<c10::BFloat16>, at::detail::Array<char *, (int)3>>(int, T2, T3)",
+        "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctor_add<float>, at::detail::Array<char *, (int)3>, TrivialOffsetCalculator<(int)2, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)2>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T3, T4, T5, T6)",
+        "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, at::detail::Array<char *, (int)2>>(int, T2, T3)"
+      ],
+      "source_device_id": 0,
+      "source_global_pid": 283268846977024,
+      "source_gpu_id": 8,
+      "source_stream_id": 0,
+      "start_ns": 72094550587,
+      "stream_kernel_counts": {
+        "7": 6
+      }
+    }
+  ],
+  "local_stages_sha256": "c45f24cc9dbd12d0f41d0cc80b5e93c8c3e6b0664f9cabaed27c3c4101b6004e",
+  "scope": "Same-process/device kernel coverage of major source intervals; no time subtraction or target service calibration",
+  "sqlite_sha256": {
+    "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005785_107285.sqlite": "f026724ac73c02bf6af2721325c4e57102f6c1eaa0fd44e697295e31dd99651b",
+    "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005786_109975.sqlite": "1906a217d207c321241f7745e869cce7acc75508e3c6a808994ee1688a6f386d",
+    "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005789_106910.sqlite": "cc5b94142e887939b203b4a1f46de29c9f75bffbeaef2108196612634d361c1b",
+    "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/sqlite-001/nsys_report_nid005800_104761.sqlite": "61735be2dbabdda8f1c310289befcf45db0af941051e112ea74ddd92e819f1eb"
+  }
+}
