@@ -99,3 +99,31 @@ above was built from a fresh worktree with all five patches.
 
 The complete-capture comparison remains pending. No GPU kernel or full-capture
 speedup is established by this change.
+
+## Whole-input structure, before a GPU decision
+
+The separate static inspection at clean commit `4206a08` read every operation
+and both complete edge arrays on eex005. It recorded the graph-file hashes in
+`runs/csr-frontier-static-001.json`; this was an input analysis, not a simulation
+or performance run. There are 5,324,230 nodes, 9,002,700 edges and four roots.
+
+| Successors per operation | Operations |
+| --- | ---: |
+| 0 | 4 |
+| 1 | 3,534,686 |
+| 2 | 1,783,180 |
+| 3 | 10 |
+| 4 | 14 |
+| 16 | 64 |
+| 256 | 5,152 |
+| 512 | 1,088 |
+| 768 | 32 |
+
+About 99.88% of operations have only one or two successors. Another 6,272
+operations have 256–768 successors, so the work is irregular rather than
+uniformly wide. Static fanout bounds the newly ready work from one completion;
+it does not say that all successors become ready then, that several completions
+can be reordered, or that GPU offload pays for its transfer/synchronization cost.
+The implementation preserves that distinction. The full-run profile measures
+actual readiness; a GPU decision also needs service-order constraints and cost
+measurements. No kernel-per-completion design is justified by total trace size.

@@ -1,6 +1,6 @@
 # Full-capture run receipt — 2026-10-06
 
-Status: **full runs 002 through 005 executing; no application-performance result yet**.
+Status: **full runs 002 through 006 executing; no application-performance result yet**.
 
 - Host: `wangziheng@eex005`.
 - Run: `/home/wangziheng/wafer_simulator/runs/llama16-full-002`.
@@ -55,6 +55,7 @@ controls. They compare simulator implementations, not new architecture settings.
 | `llama16-full-003-topology-ref` | Immutable routing topology passed by reference | 002 |
 | `llama16-full-004-runtime-opt` | Dense instruction state and empty channel evaluation removed | 003 |
 | `llama16-full-005-node-reuse` | Ordered-container nodes retained across arbitration/credit reuse | 004 |
+| `llama16-full-006-csr-frontier` | Flat dependency CSR, stable ready frontier, aggregate readiness profile | 005 |
 
 Run 004 passed the full-input equality gate and launched both native processes
 (observed PIDs 2149199 and 2149200). Its recorded source commit is `79784d5` with
@@ -70,3 +71,14 @@ Run 005 also passed the full-input equality gate and launched native processes
 `logs/llama16-full-005-node-reuse.log`. The additional 1,500-round arbitration
 comparison and checked-container ownership tests are documented in
 [NODE_REUSE.md](NODE_REUSE.md). Full-capture acceptance is pending.
+
+Run 006 passed the full-input equality gate and launched native processes
+2209666 and 2209667 from clean source commit `10a6f35`; wrapper PID 2208034.
+Its driver log is `logs/llama16-full-006-csr-frontier.log`. It retains all
+5,324,230 operations, 9,002,700 dependency/arrival edges and 151,889,580 flits
+per placement. The candidate enables dependency profiling; its separate
+accounting audit must pass before campaign completion. The wrapper then checks
+exact input/event hashes against run 005. The 18-test reference/candidate
+semantic acceptance, binary identity and complete-graph structure inspection
+are documented in [CSR_FRONTIER.md](CSR_FRONTIER.md). No GPU kernel or full-run
+speedup has been established.
