@@ -1,5 +1,9 @@
 # Further runtime optimization — 2026-10-06
 
+> Historical implementation record. Old patch, config and script paths below
+> refer to Git commit `f530c82`. The working tree now maintains one combined
+> implementation; see [current entry points](IMPLEMENTATION.md).
+
 ## Evidence and choice
 
 Twelve debugger samples from the two **complete** ATLAHS replay processes in

@@ -1,5 +1,9 @@
 # Full-run performance diagnosis — 2026-10-06
 
+> Historical implementation record. Old patch, config and script paths below
+> refer to Git commit `f530c82`. The working tree now maintains one combined
+> implementation; see [current entry points](IMPLEMENTATION.md).
+
 The complete capture has 151,889,580 flits, and the reused BookSim network
 executes each active cycle on one CPU thread. This is a substantial baseline
 cost, but it does not explain away avoidable implementation work.

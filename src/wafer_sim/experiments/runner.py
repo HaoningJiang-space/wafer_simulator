@@ -43,9 +43,9 @@ def run_campaign(config_path, upstream, binary, output):
     write_json(output / "config.json", config)
     provenance = dict(host=platform.node(), python=platform.python_version(),
                       upstream_commit=wow.UPSTREAM_COMMIT, binary_sha256=digest(binary),
-                      patch_sha256=digest("patches/booksim-completion.patch"),
+                      patch_sha256=digest("patches/booksim-wafer.patch"),
                       declared_patch_sha256={path: digest(path) for path in config.get(
-                          "implementation_patch_files", ["patches/booksim-completion.patch"])},
+                          "implementation_patch_files", ["patches/booksim-wafer.patch"])},
                       config_sha256=digest(config_path), source_sha256=config["source_sha256"],
                       source_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
                       source_dirty=bool(subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()))

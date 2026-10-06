@@ -1,5 +1,9 @@
 # Arbitration and credit node reuse — 2026-10-06
 
+> Historical implementation record. Old patch, config and script paths below
+> refer to Git commit `f530c82`. The working tree now maintains one combined
+> implementation; see [current entry points](IMPLEMENTATION.md).
+
 The sampled credit allocation is not a missing `Credit` object pool: upstream
 already reuses those objects through `Credit::New/Free`. Its `set<int>` nodes
 are freed by `Reset` and allocated again by each insert. `SparseAllocator`

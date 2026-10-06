@@ -1,5 +1,9 @@
 # CSR dependency backend and ordered readiness
 
+> Historical implementation record. Old patch, config and script paths below
+> refer to Git commit `f530c82`. The working tree now maintains one combined
+> implementation; see [current entry points](IMPLEMENTATION.md).
+
 This is the first implementation of the data-layout/frontier ideas assessed in
 [HETEROSTA_TRANSFER.md](HETEROSTA_TRANSFER.md). It is an additive patch over the
 completion, topology-reference, runtime-array and node-reuse patches. The

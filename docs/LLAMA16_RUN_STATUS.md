@@ -2,6 +2,11 @@
 
 Status: **full runs 002 through 006 executing; no application-performance result yet**.
 
+The working tree now maintains only the selected run 006 implementation through
+the [unified build/test/run entry points](IMPLEMENTATION.md). The historical
+run labels below identify preserved processes and evidence, not selectable
+implementation variants in the current code.
+
 - Host: `wangziheng@eex005`.
 - Run: `/home/wangziheng/wafer_simulator/runs/llama16-full-002`.
 - Driver log: `/home/wangziheng/wafer_simulator/logs/llama16-full-002.log`.

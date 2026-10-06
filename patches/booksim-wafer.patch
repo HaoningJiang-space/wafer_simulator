@@ -1,0 +1,1296 @@
+diff --git a/rapidchiplet/booksim2/src/allocators/allocator.cpp b/rapidchiplet/booksim2/src/allocators/allocator.cpp
+index 9a71f31..48d0c9e 100644
+--- a/rapidchiplet/booksim2/src/allocators/allocator.cpp
++++ b/rapidchiplet/booksim2/src/allocators/allocator.cpp
+@@ -30,6 +30,7 @@
+ #include <sstream>
+ #include <cassert>
+ #include "allocator.hpp"
++#include "node_reuse.hpp"
+ 
+ /////////////////////////////////////////////////////////////////////////
+ //Allocator types
+@@ -268,16 +269,16 @@ void SparseAllocator::Clear( )
+ {
+   for ( int i = 0; i < _inputs; ++i ) {
+     if(!_in_req[i].empty())
+-      _in_req[i].clear( );
++      RecycleNodes(_in_req[i], _request_nodes);
+   }
+ 
+   for ( int j = 0; j < _outputs; ++j ) {
+     if(!_out_req[j].empty())
+-      _out_req[j].clear( );
++      RecycleNodes(_out_req[j], _request_nodes);
+   }
+ 
+-  _in_occ.clear( );
+-  _out_occ.clear( );
++  RecycleNodes(_in_occ, _occupied_nodes);
++  RecycleNodes(_out_occ, _occupied_nodes);
+ 
+   Allocator::Clear();
+ }
+@@ -321,12 +322,12 @@ void SparseAllocator::AddRequest( int in, int out, int label,
+   // insert into occupied inputs set if
+   // input is currently empty
+   if ( _in_req[in].empty( ) ) {
+-    _in_occ.insert(in);
++    ReuseSetEntry(_in_occ, _occupied_nodes, in);
+   }
+ 
+   // similarly for the output
+   if ( _out_req[out].empty( ) ) {
+-    _out_occ.insert(out);
++    ReuseSetEntry(_out_occ, _occupied_nodes, out);
+   }
+ 
+   sRequest req;
+@@ -335,11 +336,11 @@ void SparseAllocator::AddRequest( int in, int out, int label,
+   req.in_pri  = in_pri;
+   req.out_pri = out_pri;
+ 
+-  _in_req[in][out] = req;
++  ReuseMapEntry(_in_req[in], _request_nodes, out, req);
+ 
+   req.port  = in;
+ 
+-  _out_req[out][in] = req;
++  ReuseMapEntry(_out_req[out], _request_nodes, in, req);
+ }
+ 
+ void SparseAllocator::RemoveRequest( int in, int out, int label )
+@@ -349,21 +350,21 @@ void SparseAllocator::RemoveRequest( int in, int out, int label )
+   
+   assert( _in_req[in].count( out ) > 0 );
+   assert( _in_req[in][out].label == label );
+-  _in_req[in].erase( out );
++  _request_nodes.push_back(_in_req[in].extract(out));
+ 
+   // remove from occupied inputs list if
+   // input is now empty
+   if ( _in_req[in].empty( ) ) {
+-    _in_occ.erase(in);
++    _occupied_nodes.push_back(_in_occ.extract(in));
+   }
+ 
+   // similarly for the output
+   assert( _out_req[out].count( in ) > 0 );
+   assert( _out_req[out][in].label == label );
+-  _out_req[out].erase( in );
++  _request_nodes.push_back(_out_req[out].extract(in));
+ 
+   if ( _out_req[out].empty( ) ) {
+-    _out_occ.erase(out);
++    _occupied_nodes.push_back(_out_occ.extract(out));
+   }
+ }
+ 
+@@ -478,4 +479,3 @@ Allocator *Allocator::NewAllocator( Module *parent, const string& name,
+ 
+   return a;
+ }
+-
+diff --git a/rapidchiplet/booksim2/src/allocators/allocator.hpp b/rapidchiplet/booksim2/src/allocators/allocator.hpp
+index 8e6860b..6a14b5e 100644
+--- a/rapidchiplet/booksim2/src/allocators/allocator.hpp
++++ b/rapidchiplet/booksim2/src/allocators/allocator.hpp
+@@ -131,6 +131,8 @@ protected:
+   
+   vector<map<int, sRequest> > _in_req;
+   vector<map<int, sRequest> > _out_req;
++  vector<map<int, sRequest>::node_type> _request_nodes;
++  vector<set<int>::node_type> _occupied_nodes;
+ 
+ public:
+   SparseAllocator( Module *parent, const string& name,
+diff --git a/rapidchiplet/booksim2/src/booksim_config.cpp b/rapidchiplet/booksim2/src/booksim_config.cpp
+index 1581d7d..63d7eed 100644
+--- a/rapidchiplet/booksim2/src/booksim_config.cpp
++++ b/rapidchiplet/booksim2/src/booksim_config.cpp
+@@ -48,6 +48,10 @@ BookSimConfig::BookSimConfig( )
+   AddStrField( "path_for_xy_info", "" );
+   AddStrField( "mode", "" );
+   AddStrField( "trace_file", "" );
++  AddStrField( "trace_report", "" );
++  AddStrField( "trace_events_file", "" );
++  AddStrField( "trace_dependency_profile", "" );
++  _int_map["trace_skip_idle"] = 1;
+   _int_map["ignore_cycles"] = 0;
+   _int_map["trace_time_out"] = 43200; //12 hours
+   // ----- End custom options ---------------------------------
+diff --git a/rapidchiplet/booksim2/src/credit.cpp b/rapidchiplet/booksim2/src/credit.cpp
+index 0370308..437d9eb 100644
+--- a/rapidchiplet/booksim2/src/credit.cpp
++++ b/rapidchiplet/booksim2/src/credit.cpp
+@@ -32,9 +32,11 @@
+ 
+ #include "booksim.hpp"
+ #include "credit.hpp"
++#include "node_reuse.hpp"
+ 
+ stack<Credit *> Credit::_all;
+ stack<Credit *> Credit::_free;
++vector<set<int>::node_type> Credit::_vc_nodes;
+ 
+ Credit::Credit()
+ {
+@@ -43,12 +45,16 @@ Credit::Credit()
+ 
+ void Credit::Reset()
+ {
+-  vc.clear();
++  RecycleNodes(vc, _vc_nodes);
+   head = false;
+   tail = false;
+   id   = -1;
+ }
+ 
++void Credit::AddVC(int index) {
++  ReuseSetEntry(vc, _vc_nodes, index);
++}
++
+ Credit * Credit::New() {
+   Credit * c;
+   if(_free.empty()) {
+@@ -71,6 +77,8 @@ void Credit::FreeAll() {
+     delete _all.top();
+     _all.pop();
+   }
++  // All live Credit sets have now been destroyed; release extracted nodes too.
++  vector<set<int>::node_type>().swap(_vc_nodes);
+ }
+ 
+ 
+diff --git a/rapidchiplet/booksim2/src/credit.hpp b/rapidchiplet/booksim2/src/credit.hpp
+index 3f8b5be..1ef2807 100644
+--- a/rapidchiplet/booksim2/src/credit.hpp
++++ b/rapidchiplet/booksim2/src/credit.hpp
+@@ -30,6 +30,7 @@
+ 
+ #include <set>
+ #include <stack>
++#include <vector>
+ 
+ class Credit {
+ 
+@@ -42,6 +43,7 @@ public:
+   int  id;
+ 
+   void Reset();
++  void AddVC(int index);
+   
+   static Credit * New();
+   void Free();
+@@ -51,6 +53,8 @@ private:
+ 
+   static stack<Credit *> _all;
+   static stack<Credit *> _free;
++  // The simulator and the existing Credit object pool are single-threaded.
++  static vector<set<int>::node_type> _vc_nodes;
+ 
+   Credit();
+   ~Credit() {}
+diff --git a/rapidchiplet/booksim2/src/networks/anynet.cpp b/rapidchiplet/booksim2/src/networks/anynet.cpp
+index d0ca3c7..5cb841c 100644
+--- a/rapidchiplet/booksim2/src/networks/anynet.cpp
++++ b/rapidchiplet/booksim2/src/networks/anynet.cpp
+@@ -155,6 +155,13 @@ AnyNet::AnyNet( const Configuration &config, const string & name ) :    Network(
+ 	*/
+ }
+ 
++void AnyNet::Evaluate() {
++    // Network::_Alloc adds only FlitChannel and CreditChannel instances;
++    // their Evaluate methods are empty. Keep every router evaluation in the
++    // original order. ReadInputs/WriteOutputs and channel latency stay intact.
++    for (Router * router : _evaluation_routers) router->Evaluate();
++}
++
+ // Destructor
+ AnyNet::~AnyNet(){
+ 	// Report link usage statistics
+@@ -267,6 +274,7 @@ void AnyNet::_BuildNet( const Configuration &config ){
+         _routers[node] = Router::NewRouter( config, this, router_name.str( ), 
+         					node, radix, radix );
+         _timed_modules.push_back(_routers[node]);
++        _evaluation_routers.push_back(_routers[node]);
+         //add injeciton ejection channels
+         map<int, tuple<int,int,int> >::iterator nniter;
+         for(nniter = niter->second.begin();nniter!=niter->second.end(); nniter++){
+@@ -680,4 +688,3 @@ void AnyNet::readFile(){
+         }
+     } 
+ }
+-
+diff --git a/rapidchiplet/booksim2/src/networks/anynet.hpp b/rapidchiplet/booksim2/src/networks/anynet.hpp
+index 5b11d99..43d4dbc 100644
+--- a/rapidchiplet/booksim2/src/networks/anynet.hpp
++++ b/rapidchiplet/booksim2/src/networks/anynet.hpp
+@@ -52,6 +52,8 @@ class AnyNet : public Network {
+   //stores minimal routing information from every router to every node
+   //[router][dest_node]=port
+   vector<map<int, int> > routing_table;
++  // Routers in the same order as _timed_modules. Channel Evaluate is empty.
++  vector<Router *> _evaluation_routers;
+ 
+   void _ComputeSize( const Configuration &config );
+   void _BuildNet( const Configuration &config );
+@@ -62,6 +64,7 @@ class AnyNet : public Network {
+ public:
+   AnyNet( const Configuration &config, const string & name );
+   ~AnyNet();
++  void Evaluate() override;
+ 
+   int GetN( ) const{ return -1;}
+   int GetK( ) const{ return -1;}
+diff --git a/rapidchiplet/booksim2/src/networks/routing_function.hpp b/rapidchiplet/booksim2/src/networks/routing_function.hpp
+index 2b8fd64..beef798 100644
+--- a/rapidchiplet/booksim2/src/networks/routing_function.hpp
++++ b/rapidchiplet/booksim2/src/networks/routing_function.hpp
+@@ -3,9 +3,22 @@
+ #include <tuple>
+ #include <map>
+ 
++using RoutingNeighbors = std::map<int, std::tuple<int, int, int>>;
++using RoutingTopology = std::vector<std::map<int, RoutingNeighbors>>;
++
++// Routers without attached endpoints have no entry in topology[0]. Preserve
++// the old by-value operator[] empty-adjacency behavior without mutating or
++// copying the shared topology on every flit route.
++inline const RoutingNeighbors& routing_neighbors(const RoutingTopology& topology,
++                                                 unsigned domain, int router) {
++    static const RoutingNeighbors empty;
++    const auto& layer = topology.at(domain);
++    const auto found = layer.find(router);
++    return found == layer.end() ? empty : found->second;
++}
++
+ class routing_function {
+ public:
+     virtual ~routing_function() = default;
+-    virtual std::vector<std::tuple<int,int,int>> route(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int n_vcs, int cur_rid, int dst_nid, int in_port, int flit_id) const = 0;
++    virtual std::vector<std::tuple<int,int,int>> route(const RoutingTopology& router_list, int n_routers, int n_nodes, int n_vcs, int cur_rid, int dst_nid, int in_port, int flit_id) const = 0;
+ };
+-
+diff --git a/rapidchiplet/booksim2/src/networks/shortest_path_lowest_id_first_routing.cpp b/rapidchiplet/booksim2/src/networks/shortest_path_lowest_id_first_routing.cpp
+index fd34ec0..ec786d0 100644
+--- a/rapidchiplet/booksim2/src/networks/shortest_path_lowest_id_first_routing.cpp
++++ b/rapidchiplet/booksim2/src/networks/shortest_path_lowest_id_first_routing.cpp
+@@ -10,7 +10,7 @@
+ // Deterministic: YES (only one output port is returned)
+ // Description: Shortest path routing with lowest ID first tie-breaking
+ // Settings: Shortest paths w.r.t. hops vs. shortest paths w.r.t. latency
+-std::vector<std::tuple<int,int,int>> shortest_path_lowest_id_first_routing::route(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int n_vsc, int cur_rid, int dst_nid, int in_port, int flit_id) const {
++std::vector<std::tuple<int,int,int>> shortest_path_lowest_id_first_routing::route(const RoutingTopology& router_list, int n_routers, int n_nodes, int n_vsc, int cur_rid, int dst_nid, int in_port, int flit_id) const {
+ 	// If the routing table has been precomputed for the current router, then compute it
+ 	if (routing_table.find(cur_rid) == routing_table.end() || routing_table.at(cur_rid).find(dst_nid) == routing_table.at(cur_rid).end()) {
+ 		route_from_source(router_list, n_routers, n_nodes, cur_rid);
+@@ -24,7 +24,7 @@ std::vector<std::tuple<int,int,int>> shortest_path_lowest_id_first_routing::rout
+ 
+ // Computes shortest paths from the source router to all nodes in the network and sets the routing table accordingly
+ // Only sets the routing table entries of the current source router (cur_rid)
+-void shortest_path_lowest_id_first_routing::route_from_source(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int src_rid) const {
++void shortest_path_lowest_id_first_routing::route_from_source(const RoutingTopology& router_list, int n_routers, int n_nodes, int src_rid) const {
+ 	// TODO: Hard-coded distance metric: true = latency, false = hops
+ 	bool use_latency_for_distance = false;
+ 	// Data structures for Dijkstra's algorithm
+@@ -51,7 +51,7 @@ void shortest_path_lowest_id_first_routing::route_from_source(std::vector<std::m
+ 		}
+ 		todo.erase(cur_rid);
+ 		// Explore neighbors of the current router
+-		for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[1][cur_rid].begin(); it != router_list[1][cur_rid].end(); ++it) {
++		for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 1, cur_rid).begin(); it != routing_neighbors(router_list, 1, cur_rid).end(); ++it) {
+ 			nei_rid = it->first;	
+ 			link_latency = std::get<2>(it->second);
+ 			new_distance = dist[cur_rid] + (use_latency_for_distance ? link_latency : 1);
+@@ -69,7 +69,7 @@ void shortest_path_lowest_id_first_routing::route_from_source(std::vector<std::m
+ 		// Source router: 
+ 		if (dst_rid == src_rid) {
+ 			// Add the correct output port for all local nodes
+-			for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[0][src_rid].begin(); it != router_list[0][src_rid].end(); ++it) {
++			for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 0, src_rid).begin(); it != routing_neighbors(router_list, 0, src_rid).end(); ++it) {
+ 				nid = it->first;		
+ 				port = std::get<0>(it->second);
+ 				routing_table[src_rid][nid] = port;	
+@@ -81,9 +81,9 @@ void shortest_path_lowest_id_first_routing::route_from_source(std::vector<std::m
+ 			while (prev[nei_rid] != src_rid && prev[nei_rid] != -1) {
+ 				nei_rid = prev[nei_rid];
+ 			}
+-			port = std::get<0>(router_list[1][src_rid][nei_rid]);
++			port = std::get<0>(routing_neighbors(router_list, 1, src_rid).at(nei_rid));
+ 			// Add that direction for all nodes that are attached to that destination router
+-			for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[0][dst_rid].begin(); it != router_list[0][dst_rid].end(); ++it) {
++			for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 0, dst_rid).begin(); it != routing_neighbors(router_list, 0, dst_rid).end(); ++it) {
+ 				nid = it->first;		
+ 				routing_table[src_rid][nid] = port;
+ 			}
+diff --git a/rapidchiplet/booksim2/src/networks/shortest_path_lowest_id_first_routing.hpp b/rapidchiplet/booksim2/src/networks/shortest_path_lowest_id_first_routing.hpp
+index 90adff7..34b95c5 100644
+--- a/rapidchiplet/booksim2/src/networks/shortest_path_lowest_id_first_routing.hpp
++++ b/rapidchiplet/booksim2/src/networks/shortest_path_lowest_id_first_routing.hpp
+@@ -10,11 +10,11 @@ public:
+ 	// router_list[0][router_id][node_id] = (port, latency)
+ 	// router_list[1][router_id][other_router_id] = (port, latency)
+ 	// return: (out_port, vc_start, vc_end)
+-    std::vector<std::tuple<int,int,int>> route(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int n_vcs, int cur_rid, int dst_nid, int in_port, int flit_id) const override;
++    std::vector<std::tuple<int,int,int>> route(const RoutingTopology& router_list, int n_routers, int n_nodes, int n_vcs, int cur_rid, int dst_nid, int in_port, int flit_id) const override;
+ private:
+ 	// routing_table[cur_router_id][dst_node_id] = port
+     mutable std::map<int,std::map<int,int>> routing_table;
+ 	// router_list[0][router_id][node_id] = (port, latency)
+ 	// router_list[1][src_router_id][dst_router_id] = (output_port_at_src, input_port_at_dst, latency)
+-    void route_from_source(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int src_rid) const;
++    void route_from_source(const RoutingTopology& router_list, int n_routers, int n_nodes, int src_rid) const;
+ };
+diff --git a/rapidchiplet/booksim2/src/networks/simple_cycle_breaking_set_routing.cpp b/rapidchiplet/booksim2/src/networks/simple_cycle_breaking_set_routing.cpp
+index ca0ffab..c0ee55d 100644
+--- a/rapidchiplet/booksim2/src/networks/simple_cycle_breaking_set_routing.cpp
++++ b/rapidchiplet/booksim2/src/networks/simple_cycle_breaking_set_routing.cpp
+@@ -14,14 +14,14 @@
+ // Deterministic: NO (possibly multiple output ports can be returned)
+ // Description: Shortest path routing that uses the simple cycle-breaking set strategy to achieve deadlock-freedom.
+ // Settings: Shortest paths w.r.t. hops vs. shortest paths w.r.t. latency
+-std::vector<std::tuple<int,int,int>> simple_cycle_breaking_set_routing::route(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int n_vsc, int cur_rid, int dst_nid, int in_port, int flit_id) const {
++std::vector<std::tuple<int,int,int>> simple_cycle_breaking_set_routing::route(const RoutingTopology& router_list, int n_routers, int n_nodes, int n_vsc, int cur_rid, int dst_nid, int in_port, int flit_id) const {
+ 	// Vector to store all valid next hops (output port, min VC, max VC)
+ 	std::vector<std::tuple<int,int,int>> valid_next_hops;
+ 	// Identify input ports that are connected to nodes
+ 	std::vector<int> node_input_ports;
+ 	// Previous router id that is needed to access the routing table with turn restrictions
+ 	int prev_rid;
+-	for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[0][cur_rid].begin(); it != router_list[0][cur_rid].end(); ++it) {
++	for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 0, cur_rid).begin(); it != routing_neighbors(router_list, 0, cur_rid).end(); ++it) {
+ 		node_input_ports.push_back(std::get<1>(it->second));
+ 	}
+ 	// Identify the previous router based on the input port for and use -1 if the packet has been injected at the current router
+@@ -57,7 +57,7 @@ std::vector<std::tuple<int,int,int>> simple_cycle_breaking_set_routing::route(st
+ 
+ 
+ // Only sets the routing table entries of the current source router (cur_rid)
+-void simple_cycle_breaking_set_routing::route_from_source(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int src_rid) const {
++void simple_cycle_breaking_set_routing::route_from_source(const RoutingTopology& router_list, int n_routers, int n_nodes, int src_rid) const {
+ 	// TODO: Hard-coded distance metric: true = latency, false = hops
+ 	bool use_latency_for_distance = false;
+ 	// Check that the simple cycle-breaking set has been computed; if not, compute it
+@@ -96,7 +96,7 @@ void simple_cycle_breaking_set_routing::route_from_source(std::vector<std::map<i
+ 		}
+ 		todo.erase(cur_rid);
+ 		// Explore neighbors of the current router
+-		for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[1][cur_rid].begin(); it != router_list[1][cur_rid].end(); ++it) {
++		for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 1, cur_rid).begin(); it != routing_neighbors(router_list, 1, cur_rid).end(); ++it) {
+ 			nei_rid = it->first;	
+ 			// Only explore neighbors that are reachable via a permitted turns. This is the main modification to Dijkstra's algorithm to implement the simple cycle-breaking set strategy
+ 			has_vali_turn = false;
+@@ -127,7 +127,7 @@ void simple_cycle_breaking_set_routing::route_from_source(std::vector<std::map<i
+ 		// Here, we configure the routing for packets that have already reached their destination router and need to be ejected to the correct node
+ 		if (dst_rid == src_rid) {
+ 			// Add the correct output port for all local nodes
+-			for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[0][src_rid].begin(); it != router_list[0][src_rid].end(); ++it) {
++			for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 0, src_rid).begin(); it != routing_neighbors(router_list, 0, src_rid).end(); ++it) {
+ 				nid = it->first;		
+ 				port = std::get<0>(it->second);
+ 				// This needs to be added for all possible previous routers
+@@ -184,9 +184,9 @@ void simple_cycle_breaking_set_routing::route_from_source(std::vector<std::map<i
+ 							// Add the routing information for this hop to the routing table (nothing to add for the last hop, ejection of packets is handled separately)
+ 							if (not last_hop && is_permitted_turn){
+ 								// Identify the output port at cur_rid to reach next_rid
+-								port = std::get<0>(router_list[1][hop.first][hop.second]);
++								port = std::get<0>(routing_neighbors(router_list, 1, hop.first).at(hop.second));
+ 								// We need to configure this for all possible nodes attached to the destination router
+-								for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[0][dst_rid].begin(); it != router_list[0][dst_rid].end(); ++it) {
++								for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 0, dst_rid).begin(); it != routing_neighbors(router_list, 0, dst_rid).end(); ++it) {
+ 									nid = it->first;
+ 									// Avoid duplicates
+ 									if (std::find(routing_table[prev][hop.first][nid].begin(), routing_table[prev][hop.first][nid].end(), port) == routing_table[prev][hop.first][nid].end()) {
+@@ -223,9 +223,9 @@ void simple_cycle_breaking_set_routing::route_from_source(std::vector<std::map<i
+ 			for (std::pair<int,int> hop : intermediate_hops) {
+ 				int nxt_rid = hop.second;
+ 				// Identify the output port at the source router to reach the next router
+-				port = std::get<0>(router_list[1][src_rid][nxt_rid]);
++				port = std::get<0>(routing_neighbors(router_list, 1, src_rid).at(nxt_rid));
+ 				// This configuration needs to be done for all possible nodes attached to the destination router
+-				for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[0][dst_rid].begin(); it != router_list[0][dst_rid].end(); ++it) {
++				for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 0, dst_rid).begin(); it != routing_neighbors(router_list, 0, dst_rid).end(); ++it) {
+ 					nid = it->first;
+ 					// Avoid duplicates
+ 					if (std::find(routing_table[-1][src_rid][nid].begin(), routing_table[-1][src_rid][nid].end(), port) == routing_table[-1][src_rid][nid].end()) {
+@@ -237,14 +237,14 @@ void simple_cycle_breaking_set_routing::route_from_source(std::vector<std::map<i
+ 	}
+ }
+ 
+-void simple_cycle_breaking_set_routing::compute_prev_router_map(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers) const {
++void simple_cycle_breaking_set_routing::compute_prev_router_map(const RoutingTopology& router_list, int n_routers) const {
+ 	// Clear the previous map
+ 	prev_router_map.clear();
+ 	// Variables to be reused
+ 	int next_rid, in_port;
+ 	// For each router, find all its neighbors and set the neighbor as its previous router for the corresponding input port
+ 	for (int rid = 0; rid < n_routers; ++rid) {
+-		for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[1][rid].begin(); it != router_list[1][rid].end(); ++it) {
++		for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 1, rid).begin(); it != routing_neighbors(router_list, 1, rid).end(); ++it) {
+ 			next_rid = it->first;
+ 			in_port = std::get<1>(it->second);	
+ 			prev_router_map[next_rid][in_port] = rid;
+@@ -252,11 +252,11 @@ void simple_cycle_breaking_set_routing::compute_prev_router_map(std::vector<std:
+ 	}
+ }
+ 
+-void simple_cycle_breaking_set_routing::compute_permitted_turns(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers) const {
++void simple_cycle_breaking_set_routing::compute_permitted_turns(const RoutingTopology& router_list, int n_routers) const {
+ 	// Preprocessing: Compute a clean adjacency list for easier handling
+ 	std::vector<std::vector<int>> adj_list(n_routers);
+ 	for (int src_rid = 0; src_rid < n_routers; ++src_rid) {
+-		for (std::map<int,std::tuple<int,int,int>>::iterator it = router_list[1][src_rid].begin(); it != router_list[1][src_rid].end(); ++it) {
++		for (std::map<int,std::tuple<int,int,int>>::const_iterator it = routing_neighbors(router_list, 1, src_rid).begin(); it != routing_neighbors(router_list, 1, src_rid).end(); ++it) {
+ 			int dst_rid = it->first;
+ 			adj_list[src_rid].push_back(dst_rid);
+ 		}
+diff --git a/rapidchiplet/booksim2/src/networks/simple_cycle_breaking_set_routing.hpp b/rapidchiplet/booksim2/src/networks/simple_cycle_breaking_set_routing.hpp
+index 5c76bab..10d5762 100644
+--- a/rapidchiplet/booksim2/src/networks/simple_cycle_breaking_set_routing.hpp
++++ b/rapidchiplet/booksim2/src/networks/simple_cycle_breaking_set_routing.hpp
+@@ -10,7 +10,7 @@ public:
+ 	// router_list[0][router_id][node_id] = (port, latency)
+ 	// router_list[1][router_id][other_router_id] = (port, latency)
+ 	// return: (out_port, vc_start, vc_end)
+-    std::vector<std::tuple<int,int,int>> route(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int n_vcs, int cur_rid, int dst_nid, int in_port, int flit_id) const override;
++    std::vector<std::tuple<int,int,int>> route(const RoutingTopology& router_list, int n_routers, int n_nodes, int n_vcs, int cur_rid, int dst_nid, int in_port, int flit_id) const override;
+ private:
+ 	// routing_table[prev_router_id][cur_router_id][dst_node_id] = (out_port_1, ..., out_port_n)
+     mutable std::map<int,std::map<int,std::map<int,std::vector<int>>>> routing_table;
+@@ -21,7 +21,7 @@ private:
+     mutable std::vector<std::tuple<int,int,int>> forbidden_turns;
+ 	// router_list[0][router_id][node_id] = (port, latency)
+ 	// router_list[1][src_router_id][dst_router_id] = (output_port_at_src, input_port_at_dst, latency)
+-    void route_from_source(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int src_rid) const;
+-	void compute_prev_router_map(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers) const;
+-	void compute_permitted_turns(std::vector<std::map<int, std::map<int, std::tuple<int, int, int>>>> router_list, int n_routers) const;
++    void route_from_source(const RoutingTopology& router_list, int n_routers, int n_nodes, int src_rid) const;
++	void compute_prev_router_map(const RoutingTopology& router_list, int n_routers) const;
++	void compute_permitted_turns(const RoutingTopology& router_list, int n_routers) const;
+ };
+diff --git a/rapidchiplet/booksim2/src/networks/xy_routing.cpp b/rapidchiplet/booksim2/src/networks/xy_routing.cpp
+index b55f8c5..92b1d6a 100644
+--- a/rapidchiplet/booksim2/src/networks/xy_routing.cpp
++++ b/rapidchiplet/booksim2/src/networks/xy_routing.cpp
+@@ -16,7 +16,7 @@
+ // Deterministic: YES (only one output port is returned)
+ // Description: XY routing based on external info on N,E, S, W neighbors and router position 
+ // Settings: Shortest paths w.r.t. hops vs. shortest paths w.r.t. latency
+-std::vector<std::tuple<int,int,int>> xy_routing::route(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int n_vsc, int cur_rid, int dst_nid, int in_port, int flit_id) const {
++std::vector<std::tuple<int,int,int>> xy_routing::route(const RoutingTopology& router_list, int n_routers, int n_nodes, int n_vsc, int cur_rid, int dst_nid, int in_port, int flit_id) const {
+ 	float epsilon = 0.01;	// Small value to handle floating point comparisons
+ 	int dst_rid = node_list_.at(dst_nid);
+ 	float cur_x, cur_y, dst_x, dst_y;
+@@ -27,7 +27,7 @@ std::vector<std::tuple<int,int,int>> xy_routing::route(std::vector<std::map<int,
+ 	std::tie(dst_x, dst_y, std::ignore, std::ignore, std::ignore, std::ignore) = xy_info[dst_rid];
+ 	// Check if the current flit has reached the destination router and needs to be ejected
+ 	if (cur_rid == dst_rid) {
+-		out_port = std::get<0>(router_list[0][cur_rid][dst_nid]);
++		out_port = std::get<0>(routing_neighbors(router_list, 0, cur_rid).at(dst_nid));
+ 	} else {
+ 		// Check if the current flit is in the x_coordinate_reached map.
+ 		if (x_coordinate_reached.find(flit_id) == x_coordinate_reached.end()) {
+@@ -55,7 +55,7 @@ std::vector<std::tuple<int,int,int>> xy_routing::route(std::vector<std::map<int,
+ 				std::cerr << "Error: Flit " << flit_id << " at router " << cur_rid << " has reached x coordinate but current y equals destination y." << std::endl;
+ 			}
+ 		}
+-		out_port = std::get<0>(router_list[1][cur_rid][nxt_rid]);
++		out_port = std::get<0>(routing_neighbors(router_list, 1, cur_rid).at(nxt_rid));
+ 	}
+ 	// Return the output port; Allow the full range of possible VCs
+ 	return {std::make_tuple(out_port, 0, n_vsc-1)};
+diff --git a/rapidchiplet/booksim2/src/networks/xy_routing.hpp b/rapidchiplet/booksim2/src/networks/xy_routing.hpp
+index 13faa45..8a11467 100644
+--- a/rapidchiplet/booksim2/src/networks/xy_routing.hpp
++++ b/rapidchiplet/booksim2/src/networks/xy_routing.hpp
+@@ -14,7 +14,7 @@ public:
+ 	// router_list[0][router_id][node_id] = (port, latency)
+ 	// router_list[1][router_id][other_router_id] = (port, latency)
+ 	// return: (out_port, vc_start, vc_end)
+-    std::vector<std::tuple<int,int,int>> route(std::vector<std::map<int,std::map<int,std::tuple<int,int,int>>>> router_list, int n_routers, int n_nodes, int n_vcs, int cur_rid, int dst_nid, int in_port, int flit_id) const override;
++    std::vector<std::tuple<int,int,int>> route(const RoutingTopology& router_list, int n_routers, int n_nodes, int n_vcs, int cur_rid, int dst_nid, int in_port, int flit_id) const override;
+ private:
+ 	const Configuration& config_;
+ 	std::map<int,int> node_list_;
+diff --git a/rapidchiplet/booksim2/src/node_reuse.hpp b/rapidchiplet/booksim2/src/node_reuse.hpp
+new file mode 100644
+index 0000000..d82af60
+--- /dev/null
++++ b/rapidchiplet/booksim2/src/node_reuse.hpp
+@@ -0,0 +1,53 @@
++#ifndef BOOKSIM_NODE_REUSE_HPP
++#define BOOKSIM_NODE_REUSE_HPP
++
++#include <map>
++#include <set>
++#include <utility>
++#include <vector>
++
++// C++17 node handles retain the existing ordered-container semantics while
++// avoiding a malloc/free pair for each clear/insert cycle. Pools own extracted
++// nodes exclusively; container destruction and pool destruction release them.
++template<class Container>
++void RecycleNodes(Container & values,
++                  std::vector<typename Container::node_type> & pool) {
++  while (!values.empty()) pool.push_back(values.extract(values.begin()));
++}
++
++template<class Key, class Value>
++void ReuseMapEntry(std::map<Key, Value> & values,
++                   std::vector<typename std::map<Key, Value>::node_type> & pool,
++                   const Key & key, const Value & value) {
++  if (pool.empty()) {
++    values[key] = value;
++    return;
++  }
++  auto node = std::move(pool.back());
++  pool.pop_back();
++  node.key() = key;
++  node.mapped() = value;
++  auto result = values.insert(std::move(node));
++  if (!result.inserted) {
++    result.position->second = value;
++    pool.push_back(std::move(result.node));
++  }
++}
++
++template<class Key>
++void ReuseSetEntry(std::set<Key> & values,
++                   std::vector<typename std::set<Key>::node_type> & pool,
++                   const Key & key) {
++  if (pool.empty()) {
++    values.insert(key);
++    return;
++  }
++  auto node = std::move(pool.back());
++  pool.pop_back();
++  node.value() = key;
++  auto result = values.insert(std::move(node));
++  // A duplicate remains one credit, and its unused node stays reusable.
++  if (!result.inserted) pool.push_back(std::move(result.node));
++}
++
++#endif
+diff --git a/rapidchiplet/booksim2/src/routers/chaos_router.cpp b/rapidchiplet/booksim2/src/routers/chaos_router.cpp
+index 018a068..c72e98c 100644
+--- a/rapidchiplet/booksim2/src/routers/chaos_router.cpp
++++ b/rapidchiplet/booksim2/src/routers/chaos_router.cpp
+@@ -581,7 +581,7 @@ void ChaosRouter::_OutputAdvance( )
+ 	}
+ 	
+ 	c = Credit::New( );
+-	c->vc.insert(0);
++	c->AddVC(0);
+ 	_credit_queue[i].push( c );
+       }
+     }
+diff --git a/rapidchiplet/booksim2/src/routers/event_router.cpp b/rapidchiplet/booksim2/src/routers/event_router.cpp
+index b2ca461..93f3c95 100644
+--- a/rapidchiplet/booksim2/src/routers/event_router.cpp
++++ b/rapidchiplet/booksim2/src/routers/event_router.cpp
+@@ -671,7 +671,7 @@ void EventRouter::_TransportArb( int input )
+     }
+ 
+     c = Credit::New( );
+-    c->vc.insert(f->vc);
++    c->AddVC(f->vc);
+     c->head          = f->head;
+     c->tail          = f->tail;
+     c->id            = f->id;
+diff --git a/rapidchiplet/booksim2/src/routers/iq_router.cpp b/rapidchiplet/booksim2/src/routers/iq_router.cpp
+index b2de219..3f886c8 100644
+--- a/rapidchiplet/booksim2/src/routers/iq_router.cpp
++++ b/rapidchiplet/booksim2/src/routers/iq_router.cpp
+@@ -1126,7 +1126,7 @@ void IQRouter::_SWHoldUpdate( )
+       if(_out_queue_credits.count(input) == 0) {
+ 	_out_queue_credits.insert(make_pair(input, Credit::New()));
+       }
+-      _out_queue_credits.find(input)->second->vc.insert(vc);
++      _out_queue_credits.find(input)->second->AddVC(vc);
+       
+       if(cur_buf->Empty(vc)) {
+ 	if(f->watch) {
+@@ -2036,7 +2036,7 @@ void IQRouter::_SWAllocUpdate( )
+       if(_out_queue_credits.count(input) == 0) {
+ 	_out_queue_credits.insert(make_pair(input, Credit::New()));
+       }
+-      _out_queue_credits.find(input)->second->vc.insert(vc);
++      _out_queue_credits.find(input)->second->AddVC(vc);
+ 
+       if(cur_buf->Empty(vc)) {
+ 	if(f->tail) {
+diff --git a/rapidchiplet/booksim2/src/trace_dependency_graph.hpp b/rapidchiplet/booksim2/src/trace_dependency_graph.hpp
+new file mode 100644
+index 0000000..7d6cde6
+--- /dev/null
++++ b/rapidchiplet/booksim2/src/trace_dependency_graph.hpp
+@@ -0,0 +1,31 @@
++// Flat, immutable-after-loading workload topology. Mutable dependency counts,
++// timestamps and resource state belong to the execution backend, not this graph.
++#ifndef WAFER_TRACE_DEPENDENCY_GRAPH_HPP
++#define WAFER_TRACE_DEPENDENCY_GRAPH_HPP
++
++#include <cstddef>
++#include <limits>
++#include <stdexcept>
++#include <vector>
++
++struct TraceDependencyGraph {
++    std::vector<size_t> offsets;
++    std::vector<long> successors;
++
++    // First store row lengths in offsets[id+1], then seal the allocation once.
++    // Rows are populated in original edge order; never sort for convenience.
++    void AllocateRows() {
++        for (size_t i = 1; i < offsets.size(); ++i) {
++            if (offsets[i] > std::numeric_limits<size_t>::max() - offsets[i-1])
++                throw std::overflow_error("Trace dependency offset overflow");
++            offsets[i] += offsets[i-1];
++        }
++        successors.resize(offsets.back());
++    }
++
++    size_t StorageBytes() const {
++        return offsets.size() * sizeof(size_t) + successors.size() * sizeof(long);
++    }
++};
++
++#endif
+diff --git a/rapidchiplet/booksim2/src/trace_frontier_profile.hpp b/rapidchiplet/booksim2/src/trace_frontier_profile.hpp
+new file mode 100644
+index 0000000..02927ea
+--- /dev/null
++++ b/rapidchiplet/booksim2/src/trace_frontier_profile.hpp
+@@ -0,0 +1,47 @@
++// Optional aggregate instrumentation. This does not schedule execution.
++#ifndef WAFER_TRACE_FRONTIER_PROFILE_HPP
++#define WAFER_TRACE_FRONTIER_PROFILE_HPP
++
++#include <array>
++#include <cstdint>
++#include <nlohmann/json.hpp>
++
++struct TraceWidthHistogram {
++    // 0 is zero; bin k>0 is [2^(k-1), 2^k-1]. No per-event allocation.
++    std::array<uint64_t, 65> bins{};
++    uint64_t samples = 0, total = 0, maximum = 0;
++    void Add(uint64_t width) {
++        unsigned bin = 0;
++        for (uint64_t value = width; value; value >>= 1) ++bin;
++        ++bins[bin];
++        ++samples;
++        total += width;
++        if (width > maximum) maximum = width;
++    }
++    nlohmann::json Report() const {
++        return {{"bins", bins}, {"samples", samples}, {"total", total},
++                {"maximum", maximum},
++                {"bin_definition", "0: zero; k>0: [2^(k-1), 2^k-1]"}};
++    }
++};
++
++struct TraceFrontierProfile {
++    TraceWidthHistogram successor_edges, newly_ready, completions_per_active_cycle;
++    long active_cycle = -1;
++    uint64_t cycle_completions = 0;
++    void Record(long observation_cycle, uint64_t edges, uint64_t ready) {
++        if (active_cycle != observation_cycle) {
++            Flush();
++            active_cycle = observation_cycle;
++        }
++        ++cycle_completions;
++        successor_edges.Add(edges);
++        newly_ready.Add(ready);
++    }
++    void Flush() {
++        if (cycle_completions) completions_per_active_cycle.Add(cycle_completions);
++        cycle_completions = 0;
++    }
++};
++
++#endif
+diff --git a/rapidchiplet/booksim2/src/trafficmanager.cpp b/rapidchiplet/booksim2/src/trafficmanager.cpp
+index 55c194e..8de8ce0 100644
+--- a/rapidchiplet/booksim2/src/trafficmanager.cpp
++++ b/rapidchiplet/booksim2/src/trafficmanager.cpp
+@@ -599,6 +599,13 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+ 	rc_trace_instructions_simulated = 0;										// Number of instructions simulated so far	
+ 	rc_trace_messages_simulated = 0;											// Number of messages simulated so far	
+ 
++    rc_trace_report = config.GetStr("trace_report");
++    rc_trace_events_file = config.GetStr("trace_events_file");
++    rc_trace_dependency_profile = config.GetStr("trace_dependency_profile");
++    rc_trace_skip_idle = config.GetInt("trace_skip_idle") != 0;
++    if (rc_mode == "trace" && (config.GetInt("sim_count") != 1 || rc_ignore_cycles)) {
++        Error("Complete trace mode requires sim_count=1 and ignore_cycles=0");
++    }
+ 	// NOTE: For trace simulation, set a very high latency threshold to avoid interference
+ 	if (rc_mode == "trace") {
+ 		for (int c = 0; c < _classes; ++c) {
+@@ -620,16 +627,51 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+ 		trace_file >> trace_json;
+ 		trace_file.close();
+ 
++        if (!trace_json.is_array()) Error("Complete trace must be an array");
++        const size_t instruction_count = trace_json.size();
++        vector<unsigned char> present(instruction_count, 0);
++        msg_ready_cycle.assign(instruction_count, -1);
++        msg_finish_cycle.assign(instruction_count, -1);
++        msg_generate_cycle.assign(instruction_count, -1);
++        msg_start_cycle.assign(instruction_count, -1);
++        msg_cpu_predecessor.assign(instruction_count, -1);
++        msg_first_inject.assign(instruction_count, -1);
++        msg_last_inject.assign(instruction_count, -1);
++        msg_first_eject.assign(instruction_count, -1);
++        msg_cpu_resource.resize(instruction_count);
++        msg_flits_remaining.resize(instruction_count);
++        trace_scheduled.assign(instruction_count, 0);
++        trace_completed.assign(instruction_count, 0);
++        trace_dependencies.offsets.assign(instruction_count + 1, 0);
++        // Count rows without creating one vector per operation. Validate IDs
++        // before indexing; file order and row order need not be sorted.
++        for (const auto & item : trace_json) {
++            const long instruction = item["id"];
++            if (instruction < 0 || static_cast<size_t>(instruction) >= instruction_count || present[instruction])
++                Error("Complete-trace IDs must be unique and dense from zero");
++            present[instruction] = 1;
++            if (!item["rev_deps"].is_array()) Error("Invalid complete-trace dependency row");
++            trace_dependencies.offsets[instruction + 1] = item["rev_deps"].size();
++        }
++        trace_dependencies.AllocateRows();
++        msg_source.resize(instruction_count);
++        msg_destination.resize(instruction_count);
++        msg_deps_left.resize(instruction_count);
++        msg_cycle.resize(instruction_count);
++        msg_packets.resize(instruction_count);
++        msg_ignore.resize(instruction_count);
++        msg_duration.resize(instruction_count);
++
+ 		// Variables used in the for loop
+ 		long id, cycle, src, dst, duration;
+ 		int num_deps, num_flits;
+-		vector<long> rev_deps;
+ 		bool ignore;
+ 
+ 		// We need to track packets that started without dependencies
+ 		vector<long> pkg_without_deps;
+ 
+-		// Insert the trace info into the maps
++		// Keep file order for initial readiness and reverse-dependency order for
++        // callbacks: both affect FCFS CPU reservations and must stay unchanged.
+ 		for (const auto& item : trace_json) {
+ 			// Read from json
+ 			id = item["id"];
+@@ -638,18 +680,27 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+ 			dst = item["dst"];
+ 			num_deps = item["num_deps"];
+ 			num_flits = item["num_flits"];
+-			rev_deps = item["rev_deps"].get<vector<long>>();
+ 			ignore = item["ignore"];
+ 			duration = item["duration"];
+-			// Insert into maps
++            if (cycle < 0 || duration < 0 || num_deps < 0 ||
++                (!ignore && (src < 0 || src >= _nodes || dst < 0 || dst >= _nodes ||
++                             src == dst || num_flits <= 0 || duration != 0)) ||
++                (ignore && num_flits != 0)) {
++                Error("Invalid complete-trace instruction");
++            }
++			// Store by validated instruction ID.
+ 			msg_source[id] = src;
+ 			msg_destination[id] = dst;
+ 			msg_deps_left[id] = num_deps;
+ 			msg_cycle[id] = cycle;
+ 			msg_packets[id] = num_flits;
+-			msg_rev_deps[id] = rev_deps;
++            size_t edge = trace_dependencies.offsets[id];
++            for (const auto & successor : item["rev_deps"])
++                trace_dependencies.successors[edge++] = successor.get<long>();
+ 			msg_ignore[id] = ignore;
+ 			msg_duration[id] = duration;
++            msg_flits_remaining[id] = num_flits;
++            msg_cpu_resource[id] = item.value("cpu_resource", -1);
+ 			// Update num packets and max cycle
+ 			rc_trace_instructions++;
+ 			// Track if packet started without dependencies
+@@ -658,10 +709,26 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+ 			}
+ 		}
+ 
++        vector<int> actual_dependencies(instruction_count, 0);
++        for (size_t predecessor = 0; predecessor < instruction_count; ++predecessor) {
++            set<long> unique;
++            for (size_t edge = trace_dependencies.offsets[predecessor];
++                 edge < trace_dependencies.offsets[predecessor + 1]; ++edge) {
++                const long successor = trace_dependencies.successors[edge];
++                if (successor < 0 || static_cast<size_t>(successor) >= instruction_count ||
++                    static_cast<size_t>(successor) == predecessor || !unique.insert(successor).second)
++                    Error("Invalid complete-trace dependency");
++                actual_dependencies[successor]++;
++            }
++        }
++        for (size_t instruction = 0; instruction < instruction_count; ++instruction)
++            if (actual_dependencies[instruction] != msg_deps_left[instruction]) Error("Dependency count mismatch");
++
+ 		// Initialize the list of packets that are ready to be injected (one list per node)
+ 		for (int i = 0; i < _nodes; i++) {
+ 			ready_messages[i] = priority_queue<pair<long,long>, vector<pair<long,long>>, greater<pair<long,long>>>();
+ 		}
++        trace_initial_roots = pkg_without_deps.size();
+ 		// Insert the packets without dependencies in to the map of ready packets
+ 		for (long pkt_id : pkg_without_deps) {
+ 			_HandlePacketWithZeroDependencies(pkt_id);
+@@ -728,42 +795,180 @@ TrafficManager::~TrafficManager( )
+     Credit::FreeAll();
+ }
+ 
+-// NOTE: Custom function for trace simulation
+-void TrafficManager::_HandlePacketWithZeroDependencies(long pkt_id) {
+-	// Use a vector of packets to process because in case of ignored packets, we might have to process multiple packets
+-	vector<long> packets_with_zero_deps;
+-	packets_with_zero_deps.push_back(pkt_id);
+-	// Variable used in the loop
+-	long current_pkt_id, dep_packet_id, packet_cycle;
+-	int packet_src;
+-	// While there are packets to process
+-	while (!packets_with_zero_deps.empty()) {
+-		// Remove the last packet from the list
+-		current_pkt_id = packets_with_zero_deps.back();
+-		packets_with_zero_deps.pop_back();
+-		// This packet is being processed, so decrement the number of packets left
+-		rc_trace_instructions_simulated++;
+-		// If the packet is ignored, clear its downstream dependencies
+-		if (msg_ignore[current_pkt_id]) {
+-			for (size_t i = 0; i < msg_rev_deps[current_pkt_id].size(); i++) {
+-				dep_packet_id = msg_rev_deps[current_pkt_id][i];
+-				msg_deps_left[dep_packet_id]--;
+-				msg_cycle[dep_packet_id] = max(msg_cycle[dep_packet_id], max(msg_cycle[current_pkt_id], global_current_cycle) + msg_duration[current_pkt_id]);
+-				// If this was the last dependency, add to the list of packets to process
+-				if (msg_deps_left[dep_packet_id] < 0) {
+-					cerr << "Error: Negative dependencies for packet " << dep_packet_id << endl;
+-					exit(1);
+-				} else if (msg_deps_left[dep_packet_id] == 0) {
+-					packets_with_zero_deps.push_back(dep_packet_id);
+-				}
+-			}
+-		// If the packet is not ignored, add it to the ready queue
+-		} else {
+-			packet_src = msg_source[current_pkt_id];
+-			packet_cycle = msg_cycle[current_pkt_id];
+-			ready_messages[packet_src].push(make_pair(packet_cycle, current_pkt_id));
+-		}
+-	}
++// Completion semantics for fixed-state application DAGs. Compute nodes are
++// timed events; all message flits must arrive before consumers become ready.
++void TrafficManager::_HandlePacketWithZeroDependencies(long id) {
++    if (trace_scheduled.at(id)) Error("Instruction scheduled twice");
++    trace_scheduled[id] = 1;
++    long ready = max(msg_cycle.at(id), global_current_cycle);
++    msg_ready_cycle[id] = ready;
++    long start = ready;
++    int cpu = msg_cpu_resource.at(id);
++    msg_cpu_predecessor[id] = -1;
++    if (cpu >= 0) {
++        // Fixed-duration GOAL lanes, FCFS in dependency-ready callback order.
++        // Network sends use a zero-overhead issue slot; their network latency
++        // does not occupy the CPU lane. This is an explicit target policy.
++        start = max(start, cpu_free_cycle[cpu]);
++        if (start > ready) msg_cpu_predecessor[id] = cpu_owner.at(cpu);
++        if (msg_duration.at(id) > 0) {
++            cpu_free_cycle[cpu] = start + msg_duration.at(id);
++            cpu_owner[cpu] = id;
++        }
++    }
++    msg_start_cycle[id] = start;
++    if (msg_ignore.at(id)) {
++        compute_completions.push(make_pair(start + msg_duration.at(id), id));
++    } else {
++        ready_messages[msg_source.at(id)].push(make_pair(start, id));
++    }
++}
++
++void TrafficManager::_CompleteTraceInstruction(long id, long cycle) {
++    if (trace_completed.at(id)) Error("Instruction completed twice");
++    trace_completed[id] = 1;
++    msg_finish_cycle[id] = cycle;
++    rc_trace_finish_cycle = max(rc_trace_finish_cycle, cycle);
++    rc_trace_instructions_simulated++;
++    dependency_ready_frontier.clear();
++    const size_t begin = trace_dependencies.offsets.at(id);
++    const size_t end = trace_dependencies.offsets.at(id + 1);
++    for (size_t edge = begin; edge < end; ++edge) {
++        const long successor = trace_dependencies.successors[edge];
++        msg_cycle[successor] = max(msg_cycle[successor], cycle);
++        if (--msg_deps_left[successor] < 0) Error("Negative dependency count");
++        if (msg_deps_left[successor] == 0) dependency_ready_frontier.push_back(successor);
++    }
++    if (!rc_trace_dependency_profile.empty())
++        trace_frontier_profile.Record(global_current_cycle, end - begin, dependency_ready_frontier.size());
++    // Stable compaction: submit in original successor order before processing
++    // ANY other completion. The callback only schedules future events; it must
++    // not recursively complete instructions. Even same-cycle completions cannot
++    // be merged arbitrarily because CPU reservations and heap ties observe order.
++    for (long successor : dependency_ready_frontier) _HandlePacketWithZeroDependencies(successor);
++}
++
++void TrafficManager::_WriteTraceReport(bool complete) {
++    if (!rc_trace_dependency_profile.empty()) {
++        trace_frontier_profile.Flush();
++        json profile = {
++            {"schema_version", 1}, {"complete", complete},
++            {"instructions_expected", rc_trace_instructions},
++            {"instructions_completed", rc_trace_instructions_simulated},
++            {"initial_roots", trace_initial_roots},
++            {"static_edges", trace_dependencies.successors.size()},
++            {"csr_storage_bytes", trace_dependencies.StorageBytes()},
++            {"row_offset_bytes", sizeof(size_t)}, {"successor_id_bytes", sizeof(long)},
++            {"successor_edges_per_completion", trace_frontier_profile.successor_edges.Report()},
++            {"newly_ready_per_completion", trace_frontier_profile.newly_ready.Report()},
++            {"completions_per_active_cycle", trace_frontier_profile.completions_per_active_cycle.Report()},
++            {"scope", "Workload dependency processing only; same-cycle events may remain causally ordered"}
++        };
++        ofstream profile_output(rc_trace_dependency_profile);
++        if (!profile_output) Error("Cannot write trace dependency profile");
++        profile_output << profile.dump(2) << endl;
++        if (!profile_output) Error("Failed writing trace dependency profile");
++    }
++    if (rc_trace_report.empty()) return;
++    json report;
++    report["schema_version"] = 1;
++    report["complete"] = complete;
++    report["application_cycles"] = rc_trace_finish_cycle;
++    report["observation_cycle"] = global_current_cycle;
++    report["network_steps"] = _time;
++    report["instructions_expected"] = rc_trace_instructions;
++    report["instructions_completed"] = rc_trace_instructions_simulated;
++    report["messages_completed"] = rc_trace_messages_simulated;
++    report["flits_ejected"] = rc_trace_ejected_flits;
++    report["tagged_last_flit_arrived_early"] = rc_trace_tagged_last_early;
++    report["events"] = json::array();
++    ofstream event_stream;
++    if (!rc_trace_events_file.empty()) {
++        event_stream.open(rc_trace_events_file);
++        if (!event_stream) Error("Cannot write trace events");
++        report["events_file"] = rc_trace_events_file;
++    }
++    for (size_t id = 0; id < msg_source.size(); ++id) {
++        json event = {{"id", id}, {"completed", trace_completed.at(id) != 0},
++                      {"ready_cycle", msg_ready_cycle.at(id)},
++                      {"start_cycle", msg_start_cycle.at(id)},
++                      {"cpu_predecessor", msg_cpu_predecessor.at(id)},
++                      {"finish_cycle", msg_finish_cycle.at(id)},
++                      {"flits_remaining", msg_flits_remaining.at(id)}};
++        if (!msg_ignore.at(id)) {
++            event["generated_cycle"] = msg_generate_cycle.at(id);
++            event["first_inject_cycle"] = msg_first_inject.at(id);
++            event["last_inject_cycle"] = msg_last_inject.at(id);
++            event["first_eject_cycle"] = msg_first_eject.at(id);
++        }
++        if (event_stream.is_open()) event_stream << event.dump() << '\n';
++        else report["events"].push_back(event);
++    }
++    if (event_stream.is_open()) {
++        event_stream.flush();
++        if (!event_stream) Error("Failed writing trace events");
++        event_stream.close();
++    }
++    ofstream output(rc_trace_report);
++    if (!output) Error("Cannot write complete-trace report");
++    output << report.dump(2) << endl;
++}
++
++int TrafficManager::_RunCompleteTrace() {
++    _ClearStats();
++    global_current_cycle = 0;
++    const long cycle_limit = static_cast<long>(_sample_period) * 1000;
++    const auto start = chrono::steady_clock::now();
++    long next_progress = 60;
++    while (true) {
++        while (!compute_completions.empty() && compute_completions.top().first <= global_current_cycle) {
++            const auto event = compute_completions.top();
++            compute_completions.pop();
++            _CompleteTraceInstruction(event.second, event.first);
++        }
++        if (rc_trace_instructions_simulated == rc_trace_instructions) {
++            _WriteTraceReport(true);
++            return 0;
++        }
++        const auto seconds = chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now() - start).count();
++        if (seconds >= next_progress) {
++            cout << "TRACE_PROGRESS seconds=" << seconds << " cycle=" << global_current_cycle
++                 << " instructions=" << rc_trace_instructions_simulated << "/" << rc_trace_instructions
++                 << " messages=" << rc_trace_messages_simulated << " flits=" << rc_trace_ejected_flits << endl;
++            next_progress = seconds + 60;
++        }
++        if (global_current_cycle >= cycle_limit || seconds >= rc_trace_time_out) {
++            _WriteTraceReport(false);
++            return 3;
++        }
++        bool network_idle = Credit::OutStanding() == 0;
++        for (int c = 0; c < _classes; ++c) network_idle &= _total_in_flight_flits[c].empty();
++        if (network_idle) {
++            long next_event = cycle_limit;
++            bool event_exists = false;
++            if (!compute_completions.empty()) {
++                next_event = min(next_event, compute_completions.top().first);
++                event_exists = true;
++            }
++            for (const auto & queue : ready_messages) {
++                if (!queue.second.empty()) {
++                    next_event = min(next_event, queue.second.top().first);
++                    event_exists = true;
++                }
++            }
++            if (!event_exists) {
++                _WriteTraceReport(false);
++                return 1; // cyclic/unreachable DAG, not a completed application
++            }
++            if (rc_trace_skip_idle && next_event > global_current_cycle) {
++                global_current_cycle = next_event;
++                continue;
++            }
++        }
++        const int code = _Step();
++        if (code) { _WriteTraceReport(false); return code; }
++        global_current_cycle++;
++    }
+ }
+ 
+ 
+@@ -1076,6 +1281,7 @@ void TrafficManager::_Inject(){
+ 						} else {
+ 							// Remove the next message from the ready queue
+ 							ready_messages[input].pop();
++                            msg_generate_cycle[message_id] = global_current_cycle;
+ 							// cout << "[" << global_current_cycle << "] Injecting packet " << packet_id << " schedule at cycle " << packet_cycle << endl;
+ 							// Call Issue function just for its side effects
+ 							int do_inject = _IssuePacket(input, c);
+@@ -1220,32 +1426,17 @@ int TrafficManager::_Step()
+                         ++_accepted_packets[f->cl][n];
+                     }
+                 }
+-				// NOTE: EJECTION Custom code to track packets left in trace simulation
+-				if (rc_mode == "trace") {
+-					// If this is a tail flit, decrease the number of packets left
+-					if (f->is_last) {
+-						// cout << "[" << global_current_cycle << "] Ejecting packet " << f->pid << endl;
+-						// This was the last flit of the packet, hence, this packet is done
+-						rc_trace_messages_simulated++;
+-						// Clear packets that depend on this packet
+-						long message_id = f->mid;
+-						for (size_t i = 0; i < msg_rev_deps[message_id].size(); i++) {
+-							long dep_message_id = msg_rev_deps[message_id][i];
+-							msg_deps_left[dep_message_id]--;
+-							msg_cycle[dep_message_id] = max(msg_cycle[dep_message_id], max(msg_cycle[message_id], global_current_cycle) + msg_duration[message_id]);
+-							if (msg_duration[message_id] != 0) {
+-								cerr << "Error: For packets that are sent over the network, we expect duration to be 0. Non-zero duration is only intended for packets that model computation latency." << endl;
+-							}
+-							// If this was the last dependency, add to ready packets
+-							if (msg_deps_left[dep_message_id] < 0) {
+-								cerr << "Error: Negative dependencies for packet " << dep_message_id << endl;
+-								exit(1);
+-							} else if (msg_deps_left[dep_message_id] == 0) {
+-								_HandlePacketWithZeroDependencies(dep_message_id);
+-							}
+-						}
+-					}		
+-				}
++                if (rc_mode == "trace") {
++                    const long id = f->mid;
++                    if (msg_first_eject[id] < 0) msg_first_eject[id] = global_current_cycle;
++                    rc_trace_ejected_flits++;
++                    if (--msg_flits_remaining[id] < 0) Error("Too many message flits received");
++                    if (f->is_last && msg_flits_remaining[id] > 0) rc_trace_tagged_last_early++;
++                    if (msg_flits_remaining[id] == 0) {
++                        rc_trace_messages_simulated++;
++                        _CompleteTraceInstruction(id, global_current_cycle);
++                    }
++                }
+ 				// NOTE: End custom code to track packets left in trace simulation
+             }
+ 
+@@ -1268,6 +1459,15 @@ int TrafficManager::_Step()
+         _net[subnet]->ReadInputs( );
+     }
+   
++    // Resolve zero-duration joins caused by this cycle's arrivals before
++    // injection. This prevents a hidden extra cycle at dependency-only nodes.
++    if (rc_mode == "trace") {
++        while (!compute_completions.empty() && compute_completions.top().first <= global_current_cycle) {
++            const auto event = compute_completions.top();
++            compute_completions.pop();
++            _CompleteTraceInstruction(event.second, event.first);
++        }
++    }
+     if ( !_empty_network ) {
+         _Inject();
+     }
+@@ -1459,6 +1659,10 @@ int TrafficManager::_Step()
+                 _outstanding_classes[n][subnet][f->vc].push(c);
+ #endif
+ 
++                if (rc_mode == "trace") {
++                    if (msg_first_inject[f->mid] < 0) msg_first_inject[f->mid] = global_current_cycle;
++                    msg_last_inject[f->mid] = global_current_cycle;
++                }
+                 dest_buf->SendingFlit(f);
+ 	
+                 if(_pri_type == network_age_based) {
+@@ -1515,7 +1719,7 @@ int TrafficManager::_Step()
+                                << "." << endl;
+                 }
+                 Credit * const c = Credit::New();
+-                c->vc.insert(f->vc);
++                c->AddVC(f->vc);
+                 _net[subnet]->WriteCredit(c, n);
+ 	
+ #ifdef TRACK_FLOWS
+@@ -1686,6 +1890,7 @@ void TrafficManager::_DisplayRemaining( ostream & os ) const
+ // Returns 0 for success, 1 for potential deadlock, 2 for unstable simulation
+ int TrafficManager::_SingleSim( )
+ {
++    if (rc_mode == "trace") return _RunCompleteTrace();
+     int converged = 0;
+   
+     //once warmed up, we require 3 converging runs to end the simulation 
+@@ -1697,62 +1902,7 @@ int TrafficManager::_SingleSim( )
+            ( ( _sim_state != running ) || 
+              ( converged < 3 ) ) ) {
+ 
+-		// NOTE: Custom code for trace simulation
+-		// NOTE: We do not sync the _time from default BookSim with global_current_cycle from us to avoid issues
+-		// Our time can skip periods without any network activity, while BookSim's _time always increments by 1 each Step.
+-		// Latency measurements are based on BookSim's _time, so we keep it unchanged.
+-		// Note that the reported packet and flit injection rates will be wrong, they have to be computed based on reported simulation cycles and packets.
+-		if (rc_mode == "trace") {
+-			_ClearStats( );
+-			global_current_cycle = 0;
+-			auto wall_clock_time_start = std::chrono::steady_clock::now();
+-			auto now = std::chrono::steady_clock::now();
+-        	auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - wall_clock_time_start).count();
+-			// NOTE: HACK: Because the sample period is limited by the max int of ~2e9, we multiply it by 1e3
+-			long larger_sample_period = (long)_sample_period * 1000;
+-			while ((global_current_cycle < larger_sample_period) && (elapsed < rc_trace_time_out)) {
+-				// Periodic status output
+-				if (global_current_cycle % 1000000 == 0) {
+-					float perc = 100.0 * (float)rc_trace_instructions_simulated / (float)rc_trace_instructions;
+-					cout << "Progress: " << perc << "% | " << rc_trace_instructions_simulated << " out of " << rc_trace_instructions << " instructions (calc,send,recv) completed | " << (long)(global_current_cycle / 1000000)<< "M cycles pseudo-simulated | Sample period: " << (long)(_sample_period / 1000000) << "M | " << rc_trace_messages_simulated << " Trace Messages Simulated | " << " | " << _time << " Cycles Truly Simulated" << endl;
+-				}
+-				// We did not yet process all packets in the trace -> continue stepping
+-				if (rc_trace_instructions_simulated < rc_trace_instructions) {
+-					_Step();
+-				}
+-				// All packets in the trace have been processed -> exit stepping
+-				else {
+-					break;
+-				}
+-				// Increment cycle counter
+-				global_current_cycle++;
+-				// NOTE: This is a bit of a hack to speed up simulation of traces with long periods of compute-only where the network is idle
+-				// Check if there are any flits in flight
+-				bool flits_in_flight = false;
+-				for(int c = 0; c < _classes; ++c) {
+-					flits_in_flight |= !_total_in_flight_flits[c].empty();
+-				}
+-				// If no flits are in flight, identify the next cycle where a packet is ready to be injected
+-				long next_non_idle_cycle = _sample_period;
+-				if (!flits_in_flight){
+-					for ( int input = 0; input < _nodes; ++input ) {
+-						if (!ready_messages[input].empty()) {
+-							pair<long,long> cycle_and_pid = ready_messages[input].top();
+-							next_non_idle_cycle = min(next_non_idle_cycle, cycle_and_pid.first);
+-						}
+-					}
+-				}
+-				// Jump the global cycle counter to the next non-idle cycle if there are no flits in flight
+-				if ((!flits_in_flight) && (next_non_idle_cycle > global_current_cycle)) {
+-					// cout << "Jumping from cycle " << global_current_cycle << " to cycle " << next_non_idle_cycle << " due to idle network (skipping " << (next_non_idle_cycle - global_current_cycle) << " cycles)" << endl;
+-					global_current_cycle = next_non_idle_cycle;
+-				}
+-				now = std::chrono::steady_clock::now();
+-				elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - wall_clock_time_start).count();
+-			}
+-			float perc = 100.0 * (float)rc_trace_instructions_simulated / (float)rc_trace_instructions;
+-			cout << "Progress: " << perc << "% | " << rc_trace_instructions_simulated << " out of " << rc_trace_instructions << " instructions (calc,send,recv) completed | " << (long)(global_current_cycle / 1000000)<< "M cycles pseudo-simulated | Sample period: " << (long)(_sample_period / 1000000) << "M | " << rc_trace_messages_simulated << " Trace Messages Simulated | " << " | " << _time << " Cycles Truly Simulated" << endl;
+-		} else {
++        {
+    			// Original BookSim code 
+ 			if ( clear_last || (( ( _sim_state == warming_up ) && ( ( total_phases % 2 ) == 0 ) )) ) {
+ 				clear_last = false;
+@@ -2498,7 +2648,7 @@ void TrafficManager::DisplayOverallStats( ostream & os ) const {
+ 
+ 		// NOTE: Custom code for trace simulation
+ 		if (rc_mode == "trace") {
+-			cout << "Total cycles until trace completion = " << (global_current_cycle + 1) << endl;
++			cout << "Total cycles until trace completion = " << rc_trace_finish_cycle << endl;
+ 			cout << "Truly simulated cycles = " << _time << endl;
+ 			cout << "Total number of trace messages simulated = " << rc_trace_messages_simulated << endl;
+ 			cout << "Total number of trace instructions simulated = " << rc_trace_instructions_simulated << endl;
+diff --git a/rapidchiplet/booksim2/src/trafficmanager.hpp b/rapidchiplet/booksim2/src/trafficmanager.hpp
+index d373931..71a1dca 100644
+--- a/rapidchiplet/booksim2/src/trafficmanager.hpp
++++ b/rapidchiplet/booksim2/src/trafficmanager.hpp
+@@ -43,6 +43,8 @@
+ #include "routefunc.hpp"
+ #include "outputset.hpp"
+ #include "injection.hpp"
++#include "trace_dependency_graph.hpp"
++#include "trace_frontier_profile.hpp"
+ 
+ //register the requests to a node
+ class PacketReplyInfo;
+@@ -93,16 +95,36 @@ protected:
+   long rc_trace_instructions;
+   long rc_trace_instructions_simulated;
+   long rc_trace_messages_simulated;
++  string rc_trace_report;
++  string rc_trace_events_file;
++  bool rc_trace_skip_idle;
++  long rc_trace_finish_cycle = 0;
++  long rc_trace_ejected_flits = 0;
++  long rc_trace_tagged_last_early = 0;
++  priority_queue<pair<long,long>, vector<pair<long,long>>, greater<pair<long,long>>> compute_completions;
++  // Lowered complete traces use dense IDs [0, instruction_count). Validate
++  // that contract before indexing. -1 marks an event that has not occurred.
++  vector<long> msg_ready_cycle, msg_finish_cycle, msg_generate_cycle;
++  vector<long> msg_start_cycle, msg_cpu_predecessor;
++  vector<int> msg_cpu_resource;
++  map<int, long> cpu_free_cycle, cpu_owner;
++  vector<long> msg_first_inject, msg_last_inject, msg_first_eject;
++  vector<int> msg_flits_remaining;
++  vector<unsigned char> trace_scheduled, trace_completed;
+ 
+   map<int, priority_queue<pair<long,long>, vector<pair<long,long>>, greater<pair<long,long>>>> ready_messages;
+-  map<long, vector<long>> msg_rev_deps;
+-  map<long, int> msg_source;
+-  map<long, int> msg_destination;
+-  map<long, int> msg_deps_left;
+-  map<long, long> msg_cycle;
+-  map<long, int> msg_packets;
+-  map<long, bool> msg_ignore;
+-  map<long, long> msg_duration;
++  TraceDependencyGraph trace_dependencies;
++  vector<long> dependency_ready_frontier;
++  string rc_trace_dependency_profile;
++  TraceFrontierProfile trace_frontier_profile;
++  size_t trace_initial_roots = 0;
++  vector<int> msg_source;
++  vector<int> msg_destination;
++  vector<int> msg_deps_left;
++  vector<long> msg_cycle;
++  vector<int> msg_packets;
++  vector<unsigned char> msg_ignore;
++  vector<long> msg_duration;
+ 
+ 
+ 
+@@ -286,6 +308,9 @@ protected:
+ 
+   // NOTE: Custom code for trace simulation
+   void _HandlePacketWithZeroDependencies(long pkt_id);
++  void _CompleteTraceInstruction(long id, long cycle);
++  int _RunCompleteTrace();
++  void _WriteTraceReport(bool complete);
+   // NOTE: End custom code for trace simulation
+ 
+   virtual void _RetireFlit( Flit *f, int dest );

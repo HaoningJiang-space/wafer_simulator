@@ -5,7 +5,10 @@
   "graph_directory": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/graph-001",
   "diameter_mm": 200,
   "utilization": "rectangular",
-  "placements": ["baseline", "ours_rotated"],
+  "placements": [
+    "baseline",
+    "ours_rotated"
+  ],
   "active_endpoints": 16,
   "mapping": "row_major",
   "seed": 1,
@@ -15,5 +18,9 @@
   "parallel_placements": 2,
   "truncate_input": false,
   "remove_dependencies": false,
-  "thermal_feedback": false
+  "thermal_feedback": false,
+  "implementation_patch_files": [
+    "patches/booksim-wafer.patch"
+  ],
+  "dependency_profile": true
 }
