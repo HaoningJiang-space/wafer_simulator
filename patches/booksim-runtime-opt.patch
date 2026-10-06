@@ -1,0 +1,253 @@
+diff --git a/rapidchiplet/booksim2/src/networks/anynet.cpp b/rapidchiplet/booksim2/src/networks/anynet.cpp
+index d0ca3c7..5cb841c 100644
+--- a/rapidchiplet/booksim2/src/networks/anynet.cpp
++++ b/rapidchiplet/booksim2/src/networks/anynet.cpp
+@@ -155,6 +155,13 @@ AnyNet::AnyNet( const Configuration &config, const string & name ) :    Network(
+ 	*/
+ }
+ 
++void AnyNet::Evaluate() {
++    // Network::_Alloc adds only FlitChannel and CreditChannel instances;
++    // their Evaluate methods are empty. Keep every router evaluation in the
++    // original order. ReadInputs/WriteOutputs and channel latency stay intact.
++    for (Router * router : _evaluation_routers) router->Evaluate();
++}
++
+ // Destructor
+ AnyNet::~AnyNet(){
+ 	// Report link usage statistics
+@@ -267,6 +274,7 @@ void AnyNet::_BuildNet( const Configuration &config ){
+         _routers[node] = Router::NewRouter( config, this, router_name.str( ), 
+         					node, radix, radix );
+         _timed_modules.push_back(_routers[node]);
++        _evaluation_routers.push_back(_routers[node]);
+         //add injeciton ejection channels
+         map<int, tuple<int,int,int> >::iterator nniter;
+         for(nniter = niter->second.begin();nniter!=niter->second.end(); nniter++){
+@@ -680,4 +688,3 @@ void AnyNet::readFile(){
+         }
+     } 
+ }
+-
+diff --git a/rapidchiplet/booksim2/src/networks/anynet.hpp b/rapidchiplet/booksim2/src/networks/anynet.hpp
+index 5b11d99..43d4dbc 100644
+--- a/rapidchiplet/booksim2/src/networks/anynet.hpp
++++ b/rapidchiplet/booksim2/src/networks/anynet.hpp
+@@ -52,6 +52,8 @@ class AnyNet : public Network {
+   //stores minimal routing information from every router to every node
+   //[router][dest_node]=port
+   vector<map<int, int> > routing_table;
++  // Routers in the same order as _timed_modules. Channel Evaluate is empty.
++  vector<Router *> _evaluation_routers;
+ 
+   void _ComputeSize( const Configuration &config );
+   void _BuildNet( const Configuration &config );
+@@ -62,6 +64,7 @@ class AnyNet : public Network {
+ public:
+   AnyNet( const Configuration &config, const string & name );
+   ~AnyNet();
++  void Evaluate() override;
+ 
+   int GetN( ) const{ return -1;}
+   int GetK( ) const{ return -1;}
+diff --git a/rapidchiplet/booksim2/src/trafficmanager.cpp b/rapidchiplet/booksim2/src/trafficmanager.cpp
+index 8b71efa..cd3dfa6 100644
+--- a/rapidchiplet/booksim2/src/trafficmanager.cpp
++++ b/rapidchiplet/booksim2/src/trafficmanager.cpp
+@@ -626,6 +626,30 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+ 		trace_file >> trace_json;
+ 		trace_file.close();
+ 
++        if (!trace_json.is_array()) Error("Complete trace must be an array");
++        const size_t instruction_count = trace_json.size();
++        vector<unsigned char> present(instruction_count, 0);
++        msg_ready_cycle.assign(instruction_count, -1);
++        msg_finish_cycle.assign(instruction_count, -1);
++        msg_generate_cycle.assign(instruction_count, -1);
++        msg_start_cycle.assign(instruction_count, -1);
++        msg_cpu_predecessor.assign(instruction_count, -1);
++        msg_first_inject.assign(instruction_count, -1);
++        msg_last_inject.assign(instruction_count, -1);
++        msg_first_eject.assign(instruction_count, -1);
++        msg_cpu_resource.resize(instruction_count);
++        msg_flits_remaining.resize(instruction_count);
++        trace_scheduled.assign(instruction_count, 0);
++        trace_completed.assign(instruction_count, 0);
++        msg_rev_deps.resize(instruction_count);
++        msg_source.resize(instruction_count);
++        msg_destination.resize(instruction_count);
++        msg_deps_left.resize(instruction_count);
++        msg_cycle.resize(instruction_count);
++        msg_packets.resize(instruction_count);
++        msg_ignore.resize(instruction_count);
++        msg_duration.resize(instruction_count);
++
+ 		// Variables used in the for loop
+ 		long id, cycle, src, dst, duration;
+ 		int num_deps, num_flits;
+@@ -635,7 +659,8 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+ 		// We need to track packets that started without dependencies
+ 		vector<long> pkg_without_deps;
+ 
+-		// Insert the trace info into the maps
++		// Keep file order for initial readiness and reverse-dependency order for
++        // callbacks: both affect FCFS CPU reservations and must stay unchanged.
+ 		for (const auto& item : trace_json) {
+ 			// Read from json
+ 			id = item["id"];
+@@ -647,13 +672,16 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+ 			rev_deps = item["rev_deps"].get<vector<long>>();
+ 			ignore = item["ignore"];
+ 			duration = item["duration"];
+-            if (msg_source.count(id) || id < 0 || cycle < 0 || duration < 0 || num_deps < 0 ||
++            if (id < 0 || static_cast<size_t>(id) >= instruction_count || present[id])
++                Error("Complete-trace IDs must be unique and dense from zero");
++            present[id] = 1;
++            if (cycle < 0 || duration < 0 || num_deps < 0 ||
+                 (!ignore && (src < 0 || src >= _nodes || dst < 0 || dst >= _nodes ||
+                              src == dst || num_flits <= 0 || duration != 0)) ||
+                 (ignore && num_flits != 0)) {
+                 Error("Invalid complete-trace instruction");
+             }
+-			// Insert into maps
++			// Store by validated instruction ID.
+ 			msg_source[id] = src;
+ 			msg_destination[id] = dst;
+ 			msg_deps_left[id] = num_deps;
+@@ -672,17 +700,18 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+ 			}
+ 		}
+ 
+-        map<long, int> actual_dependencies;
+-        for (const auto & entry : msg_rev_deps) {
++        vector<int> actual_dependencies(instruction_count, 0);
++        for (size_t predecessor = 0; predecessor < instruction_count; ++predecessor) {
+             set<long> unique;
+-            for (long successor : entry.second) {
+-                if (!msg_source.count(successor) || successor == entry.first || !unique.insert(successor).second)
++            for (long successor : msg_rev_deps[predecessor]) {
++                if (successor < 0 || static_cast<size_t>(successor) >= instruction_count ||
++                    static_cast<size_t>(successor) == predecessor || !unique.insert(successor).second)
+                     Error("Invalid complete-trace dependency");
+                 actual_dependencies[successor]++;
+             }
+         }
+-        for (const auto & entry : msg_deps_left)
+-            if (actual_dependencies[entry.first] != entry.second) Error("Dependency count mismatch");
++        for (size_t instruction = 0; instruction < instruction_count; ++instruction)
++            if (actual_dependencies[instruction] != msg_deps_left[instruction]) Error("Dependency count mismatch");
+ 
+ 		// Initialize the list of packets that are ready to be injected (one list per node)
+ 		for (int i = 0; i < _nodes; i++) {
+@@ -757,7 +786,8 @@ TrafficManager::~TrafficManager( )
+ // Completion semantics for fixed-state application DAGs. Compute nodes are
+ // timed events; all message flits must arrive before consumers become ready.
+ void TrafficManager::_HandlePacketWithZeroDependencies(long id) {
+-    if (!trace_scheduled.insert(id).second) Error("Instruction scheduled twice");
++    if (trace_scheduled.at(id)) Error("Instruction scheduled twice");
++    trace_scheduled[id] = 1;
+     long ready = max(msg_cycle.at(id), global_current_cycle);
+     msg_ready_cycle[id] = ready;
+     long start = ready;
+@@ -783,7 +813,8 @@ void TrafficManager::_HandlePacketWithZeroDependencies(long id) {
+ }
+ 
+ void TrafficManager::_CompleteTraceInstruction(long id, long cycle) {
+-    if (!trace_completed.insert(id).second) Error("Instruction completed twice");
++    if (trace_completed.at(id)) Error("Instruction completed twice");
++    trace_completed[id] = 1;
+     msg_finish_cycle[id] = cycle;
+     rc_trace_finish_cycle = max(rc_trace_finish_cycle, cycle);
+     rc_trace_instructions_simulated++;
+@@ -814,19 +845,18 @@ void TrafficManager::_WriteTraceReport(bool complete) {
+         if (!event_stream) Error("Cannot write trace events");
+         report["events_file"] = rc_trace_events_file;
+     }
+-    for (const auto & entry : msg_source) {
+-        long id = entry.first;
+-        json event = {{"id", id}, {"completed", trace_completed.count(id) != 0},
+-                      {"ready_cycle", msg_ready_cycle.count(id) ? msg_ready_cycle.at(id) : -1},
+-                      {"start_cycle", msg_start_cycle.count(id) ? msg_start_cycle.at(id) : -1},
+-                      {"cpu_predecessor", msg_cpu_predecessor.count(id) ? msg_cpu_predecessor.at(id) : -1},
+-                      {"finish_cycle", msg_finish_cycle.count(id) ? msg_finish_cycle.at(id) : -1},
++    for (size_t id = 0; id < msg_source.size(); ++id) {
++        json event = {{"id", id}, {"completed", trace_completed.at(id) != 0},
++                      {"ready_cycle", msg_ready_cycle.at(id)},
++                      {"start_cycle", msg_start_cycle.at(id)},
++                      {"cpu_predecessor", msg_cpu_predecessor.at(id)},
++                      {"finish_cycle", msg_finish_cycle.at(id)},
+                       {"flits_remaining", msg_flits_remaining.at(id)}};
+         if (!msg_ignore.at(id)) {
+-            event["generated_cycle"] = msg_generate_cycle.count(id) ? msg_generate_cycle.at(id) : -1;
+-            event["first_inject_cycle"] = msg_first_inject.count(id) ? msg_first_inject.at(id) : -1;
+-            event["last_inject_cycle"] = msg_last_inject.count(id) ? msg_last_inject.at(id) : -1;
+-            event["first_eject_cycle"] = msg_first_eject.count(id) ? msg_first_eject.at(id) : -1;
++            event["generated_cycle"] = msg_generate_cycle.at(id);
++            event["first_inject_cycle"] = msg_first_inject.at(id);
++            event["last_inject_cycle"] = msg_last_inject.at(id);
++            event["first_eject_cycle"] = msg_first_eject.at(id);
+         }
+         if (event_stream.is_open()) event_stream << event.dump() << '\n';
+         else report["events"].push_back(event);
+@@ -1355,7 +1385,7 @@ int TrafficManager::_Step()
+                 }
+                 if (rc_mode == "trace") {
+                     const long id = f->mid;
+-                    if (!msg_first_eject.count(id)) msg_first_eject[id] = global_current_cycle;
++                    if (msg_first_eject[id] < 0) msg_first_eject[id] = global_current_cycle;
+                     rc_trace_ejected_flits++;
+                     if (--msg_flits_remaining[id] < 0) Error("Too many message flits received");
+                     if (f->is_last && msg_flits_remaining[id] > 0) rc_trace_tagged_last_early++;
+@@ -1587,7 +1617,7 @@ int TrafficManager::_Step()
+ #endif
+ 
+                 if (rc_mode == "trace") {
+-                    if (!msg_first_inject.count(f->mid)) msg_first_inject[f->mid] = global_current_cycle;
++                    if (msg_first_inject[f->mid] < 0) msg_first_inject[f->mid] = global_current_cycle;
+                     msg_last_inject[f->mid] = global_current_cycle;
+                 }
+                 dest_buf->SendingFlit(f);
+diff --git a/rapidchiplet/booksim2/src/trafficmanager.hpp b/rapidchiplet/booksim2/src/trafficmanager.hpp
+index d591d5c..e381351 100644
+--- a/rapidchiplet/booksim2/src/trafficmanager.hpp
++++ b/rapidchiplet/booksim2/src/trafficmanager.hpp
+@@ -100,23 +100,25 @@ protected:
+   long rc_trace_ejected_flits = 0;
+   long rc_trace_tagged_last_early = 0;
+   priority_queue<pair<long,long>, vector<pair<long,long>>, greater<pair<long,long>>> compute_completions;
+-  map<long, long> msg_ready_cycle, msg_finish_cycle, msg_generate_cycle;
+-  map<long, long> msg_start_cycle, msg_cpu_predecessor;
+-  map<long, int> msg_cpu_resource;
++  // Lowered complete traces use dense IDs [0, instruction_count). Validate
++  // that contract before indexing. -1 marks an event that has not occurred.
++  vector<long> msg_ready_cycle, msg_finish_cycle, msg_generate_cycle;
++  vector<long> msg_start_cycle, msg_cpu_predecessor;
++  vector<int> msg_cpu_resource;
+   map<int, long> cpu_free_cycle, cpu_owner;
+-  map<long, long> msg_first_inject, msg_last_inject, msg_first_eject;
+-  map<long, int> msg_flits_remaining;
+-  set<long> trace_scheduled, trace_completed;
++  vector<long> msg_first_inject, msg_last_inject, msg_first_eject;
++  vector<int> msg_flits_remaining;
++  vector<unsigned char> trace_scheduled, trace_completed;
+ 
+   map<int, priority_queue<pair<long,long>, vector<pair<long,long>>, greater<pair<long,long>>>> ready_messages;
+-  map<long, vector<long>> msg_rev_deps;
+-  map<long, int> msg_source;
+-  map<long, int> msg_destination;
+-  map<long, int> msg_deps_left;
+-  map<long, long> msg_cycle;
+-  map<long, int> msg_packets;
+-  map<long, bool> msg_ignore;
+-  map<long, long> msg_duration;
++  vector<vector<long>> msg_rev_deps;
++  vector<int> msg_source;
++  vector<int> msg_destination;
++  vector<int> msg_deps_left;
++  vector<long> msg_cycle;
++  vector<int> msg_packets;
++  vector<unsigned char> msg_ignore;
++  vector<long> msg_duration;
+ 
+ 
+ 

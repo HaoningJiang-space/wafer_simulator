@@ -70,7 +70,7 @@ class NativeCompletionTests(unittest.TestCase):
         cls.output.mkdir(parents=True, exist_ok=False)
         wow.load_upstream(cls.root / "upstream/nw-design-for-wsi")
 
-    def execute(self, workload, suffix, original=False, skip=True, max_cycles=None):
+    def execute(self, workload, suffix, original=False, skip=True, max_cycles=None, trace_transform=None):
         directory = self.output / suffix
         directory.mkdir()
         tree = directory / "rapidchiplet/booksim2/src"
@@ -79,7 +79,10 @@ class NativeCompletionTests(unittest.TestCase):
         (tree / "rc_topologies/network.anynet").write_text(
             "router 0 node 0 1 router 1 3\nrouter 1 node 1 1 router 0 3\n")
         write_json(directory / "workload.json", workload)
-        write_json(directory / "trace.json", lower_to_booksim(workload, [0, 1]))
+        trace = lower_to_booksim(workload, [0, 1])
+        if trace_transform is not None:
+            trace_transform(trace)
+        write_json(directory / "trace.json", trace)
         config = booksim.prepare_config(tiny_inputs(), directory, directory / "trace.json", 1, 30, skip)
         if original:
             config.write_text("\n".join(line for line in config.read_text().splitlines()
@@ -170,6 +173,36 @@ class NativeCompletionTests(unittest.TestCase):
         self.assertFalse(report["complete"])
         with self.assertRaises(ValueError):
             audit(workload, report)
+
+    def test_unordered_dense_ids_preserve_cpu_callback_order(self):
+        # Initial readiness follows file order, not ID order. Dependency-ready
+        # callbacks follow reverse-edge order. Both are observable on one CPU.
+        initial = work([node(2, duration=20), node(0, duration=30), node(1, duration=40)])
+        dependent = work([node(0, duration=5), node(2, duration=20, deps=[0]),
+                          node(1, duration=30, deps=[0])])
+        for workload, suffix, starts in (
+                (initial, "unordered_initial", {2: 0, 0: 20, 1: 50}),
+                (dependent, "unordered_successors", {0: 0, 2: 5, 1: 25})):
+            for op in workload["nodes"]:
+                op["cpu_resource"] = 0
+            report, _ = self.execute(workload, suffix)
+            self.assertEqual([e["id"] for e in report["events"]], [0, 1, 2])
+            self.assertEqual({e["id"]: e["start_cycle"] for e in report["events"]}, starts)
+
+    def test_native_invalid_indices_rejected(self):
+        # Exercise the native parser directly, bypassing Python's input gate.
+        cases = {
+            "negative_id": lambda trace: trace[0].update(id=-1),
+            "duplicate_id": lambda trace: trace[1].update(id=0),
+            "missing_successor": lambda trace: trace[0].update(rev_deps=[9]),
+            "negative_successor": lambda trace: trace[0].update(rev_deps=[-1]),
+        }
+        for suffix, transform in cases.items():
+            with self.subTest(case=suffix), self.assertRaisesRegex(RuntimeError, "did not complete"):
+                self.execute(work([node(0), node(1)]), suffix, trace_transform=transform)
+            self.assertFalse((self.output / suffix / "trace_report.json").exists())
+            # A parser error is required; a crash is not an acceptable rejection.
+            self.assertIn("complete-trace", (self.output / suffix / "stdout.log").read_text().lower())
 
     def test_audit_detects_corrupted_completion(self):
         workload = work([node(0, duration=37)])
