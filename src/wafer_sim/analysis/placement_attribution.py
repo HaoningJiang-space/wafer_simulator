@@ -158,6 +158,12 @@ def render(summary, acceptance, output):
             lines.append(f"| {name} | {row['op_id']} | {row['host']}/{row['cpu']} | {row['duration_cycles']:,} | {both} | "
                          f"{row['baseline_start_cycle']:,} | {row['ours_rotated_start_cycle']:,} | "
                          f"{row['baseline_cpu_predecessor']} | {row['ours_rotated_cpu_predecessor']} |")
+    order = summary["observed_order_changes"]
+    lines += ["", f"两条选定链共有 {order['common_nodes']:,} 个操作；共同操作的相对顺序是否一致："
+              f"{order['common_order_equal']}。关键链并集中的 {order['critical_local_nodes']:,} 个本地操作里，"
+              f"有 {order['critical_local_cpu_predecessor_changes']:,} 个操作的 CPU 前驱发生变化。"
+              f"全部本地操作中则有 {order['all_local_cpu_predecessor_changes']:,} 个前驱发生变化。"
+              "这些记录直接表明资源执行顺序发生了变化；它们还不能独立证明是哪一条消息造成了最终时间差。", ""]
     lines += ["",
               "## 关键消息与另一个 placement 的对应记录", "",
               "下面分别列出两条链上服务时间最大的消息；完整配对包含所有消息，保存在 `message_pairs.csv`。"
@@ -170,6 +176,16 @@ def render(summary, acceptance, output):
             both = row["baseline_on_chain"] and row["ours_rotated_on_chain"]
             values = [row[f"{name}_{field}"] for field in ("cpu_wait", "injection_wait", "first_inject_to_complete") for name in ARMS]
             lines.append(f"| {row['send_id']} | {row['payload_bytes']:,} | {both} | " + " | ".join(f"{v:,}" for v in values) + " |")
+    lines += ["", "### 关键链并集中服务时间变化最大的配对消息", "",
+              "按同一消息的服务时间差绝对值排序，正数表示 Baseline 更长。只列至少出现在一条"
+              "选定链中的消息；这比只列最大绝对延迟更能定位需要解释的变化，但仍不是单消息反事实归因。", "",
+              "| Send ID | B 链 / R 链 | CPU 等待差 | 注入前差 | 注入后差 | 服务差 B−R |",
+              "| --- | --- | ---: | ---: | ---: | ---: |"]
+    for row in summary["largest_critical_message_changes"]:
+        values = [row[f"baseline_minus_rotated_{key}"] for key in
+                  ("cpu_wait", "injection_wait", "first_inject_to_complete", "service")]
+        lines.append(f"| {row['send_id']} | {row['baseline_on_chain']} / {row['ours_rotated_on_chain']} | " +
+                     " | ".join(f"{v:,}" for v in values) + " |")
     lines += ["", "## 全部消息与关键链覆盖", "",
               "以下累计值只描述消息集合，多个消息可能重叠，不能相加作为应用完成时间。", "",
               "| 消息集合 | 数量 | 累计服务时间差 B−R |", "| --- | ---: | ---: |"]
@@ -262,6 +278,16 @@ def analyze(campaign, output, register_next=None):
         selected = np.flatnonzero(membership[name][sends])
         ranked = selected[np.argsort(-metrics[name]["service"][selected], kind="stable")[:10]]
         top[name] = [row(int(i)) for i in ranked]
+    selected = np.flatnonzero(left[sends] | right[sends])
+    service_delta = metrics[ARMS[0]]["service"] - metrics[ARMS[1]]["service"]
+    ranked_changes = selected[np.argsort(-np.abs(service_delta[selected]), kind="stable")[:10]]
+    common_left = chains[ARMS[0]]["ids"][right[chains[ARMS[0]]["ids"]]]
+    common_right = chains[ARMS[1]]["ids"][left[chains[ARMS[1]]["ids"]]]
+    changed_cpu = events[ARMS[0]]["cpu_predecessor"] != events[ARMS[1]]["cpu_predecessor"]
+    order_changes = dict(common_nodes=len(common_left), common_order_equal=bool(np.array_equal(common_left, common_right)),
+                         critical_local_nodes=len(local_ids),
+                         critical_local_cpu_predecessor_changes=int(changed_cpu[local_ids].sum()),
+                         all_local_cpu_predecessor_changes=int(changed_cpu[ops["kind"] == 0].sum()))
     groups = {}
     for name, mask in (("both_selected_chains", left[sends] & right[sends]),
                        ("baseline_chain_only", left[sends] & ~right[sends]),
@@ -296,6 +322,8 @@ def analyze(campaign, output, register_next=None):
                    chain_difference=delta, chains={name: {k: v for k, v in chains[name].items()
                        if k not in ("ids", "predecessor_relations")} for name in ARMS},
                    top_critical_messages=top, top_critical_local=top_local, message_groups=groups,
+                   largest_critical_message_changes=[row(int(i)) for i in ranked_changes],
+                   observed_order_changes=order_changes,
                    host_wall_seconds={name: info["arms"][name]["execution"]["wall_seconds"] for name in ARMS})
     summary["next_experiment"] = (register_next(info, summary, output) if register_next else
                                   dict(status="needs_result_review", registered_groups=0))

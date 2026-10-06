@@ -180,6 +180,9 @@ class AttributionTests(unittest.TestCase):
         summary = analyze(self.campaign, output)
         self.assertEqual(summary["application_speedup"], 14 / 13)
         self.assertEqual(summary["chain_difference"]["accounted_delta_cycles"], 1)
+        self.assertEqual([row["send_id"] for row in summary["largest_critical_message_changes"]], [1, 2])
+        self.assertEqual([row["baseline_minus_rotated_service"] for row in summary["largest_critical_message_changes"]], [7, -6])
+        self.assertTrue(summary["observed_order_changes"]["common_order_equal"])
         with (output / "message_pairs.csv").open() as stream:
             paired = list(csv.DictReader(stream))
         self.assertEqual([int(r["send_id"]) for r in paired], [1, 2])
