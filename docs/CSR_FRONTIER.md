@@ -75,5 +75,27 @@ as application and network results. The profile is enabled in the candidate;
 wall-time comparisons include that overhead. Concurrent runs and earlier
 debugger sampling make wall-time ratios observational.
 
-Build/test/run results will be recorded below after remote verification. No GPU
-kernel or completed full-capture acceleration is established by this change.
+## Remote verification, 2026-10-06
+
+The candidate compiled on eex005 with the complete five-patch stack. Binary
+SHA-256: `9807d4a81c07e29bf1f40dec11fbc9dad9f64d66319c6dbdd5103c04b4256255`.
+CSR patch SHA-256:
+`2c2fd847f3dcebd100750e577cbaf760864e3edbe568a2d7623e0f2288ca510e`.
+The build records both the patch-set digest and the resulting working-tree diff
+in `.wafer-csr-frontier-patches`, including all added headers.
+
+`scripts/test_csr_frontier_remote.sh` passed 18 semantic tests against each of
+the frozen node-reuse and CSR binaries. Fourteen saved native cases have
+byte-identical inputs/reports and identical network metrics. The candidate's
+profile accounting passed; incomplete and deliberately corrupted readbacks were
+rejected. Evidence is under
+`/home/wangziheng/wafer_simulator/runs/csr-frontier-semantics-001/`, including
+`equivalence.json` and both unit-test logs. These are correctness results only.
+
+The first build attempt stopped before compilation because its script omitted
+the node-reuse prerequisite. The script was corrected; that unbuilt worktree is
+retained as `build/booksim-csr-frontier-incomplete-patch-list`. The candidate
+above was built from a fresh worktree with all five patches.
+
+The complete-capture comparison remains pending. No GPU kernel or full-capture
+speedup is established by this change.
