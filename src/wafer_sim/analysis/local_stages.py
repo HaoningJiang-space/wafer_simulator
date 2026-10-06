@@ -15,17 +15,18 @@ from wafer_sim.io import digest, read_json, write_json
 def normalized_goal(path):
     """Ignore only calc amounts here; every amount is checked separately."""
     sha, counts = hashlib.sha256(), Counter()
-    for raw in Path(path).open("rb"):
-        if b": calc " in raw:
-            counts["calc"] += 1
-            raw = re.sub(rb"(: calc )-?\d+", rb"\1DURATION", raw)
-        elif b": send " in raw:
-            counts["send"] += 1
-        elif b": recv " in raw:
-            counts["recv"] += 1
-        elif b" requires " in raw:
-            counts["requires"] += 1
-        sha.update(raw)
+    with Path(path).open("rb") as stream:
+        for raw in stream:
+            if b": calc " in raw:
+                counts["calc"] += 1
+                raw = re.sub(rb"(: calc )-?\d+", rb"\1DURATION", raw)
+            elif b": send " in raw:
+                counts["send"] += 1
+            elif b": recv " in raw:
+                counts["recv"] += 1
+            elif b" requires " in raw:
+                counts["requires"] += 1
+            sha.update(raw)
     return sha.hexdigest(), dict(counts)
 
 
@@ -109,7 +110,8 @@ def classify(graph, regenerated, attribution, output):
     positions[ids] = np.arange(len(ids))
     memberships, totals, all_ids = {}, {}, set()
     for arm in ("baseline", "ours_rotated"):
-        chain = list(csv.DictReader((attribution / arm / "critical_chain.csv").open()))
+        with (attribution / arm / "critical_chain.csv").open() as stream:
+            chain = list(csv.DictReader(stream))
         selected = [int(row["op_id"]) for row in chain if row["kind"] == "calc"]
         memberships[arm] = set(selected)
         all_ids.update(selected)

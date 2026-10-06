@@ -13,7 +13,7 @@ HISTORICAL_COMMIT = "e436c1de79619e7bcd9977e2a713f8e4a1f7e8f9"
 SOURCE_REVISIONS = {UPSTREAM_COMMIT, HISTORICAL_COMMIT}
 
 
-def extract(upstream, sqlite_directory, output, revision_expected=UPSTREAM_COMMIT):
+def extract(upstream, sqlite_directory, output, revision_expected=UPSTREAM_COMMIT, merge_non_overlap=False):
     upstream, sqlite_directory, output = map(lambda p: Path(p).resolve(), (upstream, sqlite_directory, output))
     revision = subprocess.check_output(["git", "-C", str(upstream), "rev-parse", "HEAD"], text=True).strip()
     if revision_expected not in SOURCE_REVISIONS or revision != revision_expected or subprocess.check_output(
@@ -26,9 +26,11 @@ def extract(upstream, sqlite_directory, output, revision_expected=UPSTREAM_COMMI
     generator = upstream / "goal_gen/ai/nccl_goal_generator"
     sys.path.insert(0, str(generator))
     from generator_modules.nsys_events import get_nsys_events
-    from generator_modules.manipulate_events import merge_nsys_events, get_events_parallel_group
+    from generator_modules.manipulate_events import merge_nsys_events, get_events_parallel_group, merge_stream_if_no_overlap
 
     init, nccl, kernels, comm, hosts, intervals = get_nsys_events(str(sqlite_directory))
+    if merge_non_overlap:
+        nccl, kernels = merge_stream_if_no_overlap(nccl, kernels)
     # Preserve the original typed dictionaries. This file is generated locally,
     # hashed below and must only be loaded with that hash checked.
     merged = merge_nsys_events(nccl, kernels, comm)
@@ -51,7 +53,7 @@ def extract(upstream, sqlite_directory, output, revision_expected=UPSTREAM_COMMI
                   groups=sum(len(es) for gs in groups.values() for ss in gs.values() for es in ss.values()))
     if counts["hosts"] != 4 or counts["gpus"] != 16:
         raise ValueError(f"Source capture cardinality differs: {counts}")
-    manifest = dict(passed=True, upstream_commit=revision, counts=counts,
+    manifest = dict(passed=True, upstream_commit=revision, counts=counts, merge_non_overlap=merge_non_overlap,
         scope="Author event extraction only; equivalence to the published GOAL has not been established",
         sqlite_sha256={str(p): digest(p) for p in files},
         generator_source_sha256={str(p.relative_to(upstream)): digest(p) for p in generator.rglob("*.py")},
@@ -98,6 +100,8 @@ def regenerate(extracted, upstream, original_goal, output, source_host_order, ob
     simple = generator / "npkit_benchmark_results/clariden/npkit_data_summary_Simple.json"
     ll = generator / "npkit_benchmark_results/clariden/npkit_data_summary_LL.json"
     init_data(str(simple), str(ll))
+    import random
+    random.seed(0)  # Record new reconstruction draws; never substitute them for published costs.
     # The published file has same-host transfer dependencies after its last op.
     # Request the author's complete legacy relation mode; never delete cycles.
     controls = dict(ATLAHS_INTRA_NODE_RECV_REQUIRES_SEND_MODE="all",
@@ -127,7 +131,8 @@ def regenerate(extracted, upstream, original_goal, output, source_host_order, ob
         source_host_order=source_host_order, goal_rank_to_host={to_goal[v]: k for k, v in bundle["hosts"].items()},
         upstream_commit=revision, extracted_manifest_sha256=digest(extracted / "EXTRACTED.json"),
         benchmark_sha256={str(p): digest(p) for p in (simple, ll)}, environment_controls=controls,
-        unique_nic=True, zero_red_copy=False, goal_sha256=hashes, source_observer=observe,
+        unique_nic=True, zero_red_copy=False, reconstruction_random_seed=0,
+        goal_sha256=hashes, source_observer=observe,
         new_simulations_launched=0)
     if not result["exact_published_goal_match"]:
         from itertools import zip_longest

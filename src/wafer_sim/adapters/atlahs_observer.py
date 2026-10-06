@@ -57,6 +57,7 @@ class Observer:
     def __init__(self, module, groups, output):
         self.module, self.output = module, Path(output)
         self.source = Path(module.__file__).resolve()
+        self.code_filename = module.get_inter_node_microevents_dependency.__code__.co_filename
         self.sites = write_sites(self.source.read_text())
         self.group_ids = {id(group): index for hosts in groups.values() for streams in hosts.values()
                           for sequence in streams.values() for index, group in enumerate(sequence)}
@@ -81,7 +82,7 @@ class Observer:
                 raise ValueError("A model evaluation was not consumed by its calc write")
             return
         values, line = frame.f_locals, frame.f_lineno
-        if Path(frame.f_code.co_filename).resolve() != self.source or line not in self.sites:
+        if frame.f_code.co_filename != self.code_filename or line not in self.sites:
             raise ValueError("Unrecognized author calc write site")
         label, duration, cpu = map(int, match.groups())
         site = self.sites[line]
