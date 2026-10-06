@@ -1,6 +1,6 @@
 # Full-capture run receipt — 2026-10-06
 
-Status: **full run 002 submitted; no application-performance result yet**.
+Status: **full run 002 executing; no application-performance result yet**.
 
 - Host: `wangziheng@eex005`.
 - Run: `/home/wangziheng/wafer_simulator/runs/llama16-full-002`.
@@ -16,7 +16,9 @@ The first complete-input launch passed the identity gate and entered native
 execution. Its baseline progress indicated a risk of exceeding the original
 12-hour limit, so it was stopped and excluded before any performance result.
 Run 002 uses the identical full workload and native binary with a 24-hour
-limit. Progress fractions are not completed application timing.
+limit. Both arms passed full-input equality and entered native execution.
+Driver PID at launch: 2099908; native PIDs observed: 2101576 and 2101577.
+Progress fractions are not completed application timing.
 
 Per arm, `stdout.log` records progress, `stderr.log` records errors,
 `trace_report.json` declares completion, `events.jsonl` records every operation,
@@ -26,6 +28,10 @@ pass. A `failures.json` file means no valid paired result is available.
 
 The native completion/CPU-lane/idle-step regression suite passed all 13 tests
 on eex005 (`logs/tests-004.log`). Those checks are software evidence only.
+The independent readback also passed three tests against saved native events
+(`logs/readback-regressions-001.log`), including critical-chain closure and
+rejection of changed duration and unexplained CPU wait. No simulation was
+launched for those readback tests.
 The earlier generated workload campaign was stopped and excluded. See
 [the registered input, controls and limits](LLAMA16_PROTOCOL.md).
 

@@ -65,6 +65,10 @@ completion. It reconstructs the observed critical chain with CPU contention
 edges and requires local-work cycles plus message-service cycles to equal
 application completion exactly. Compare these with mean network packet
 latency, hop count, and injection wait; do not sum overlapping rank waits.
+Do not use legacy BookSim aggregate injection/acceptance rates: their drain
+normalization does not describe a full application with idle-time skipping.
+Effective application throughput must use conserved work divided by the
+independently checked application completion time.
 
 Keep full traces, compiled binaries, raw logs, per-operation events, and
 intermediate graphs on eex005. Only small provenance/audit/result summaries

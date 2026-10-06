@@ -14,7 +14,11 @@ source review, and Git. The remote root is `/home/wangziheng/wafer_simulator`.
 ```bash
 # On eex005, in the source checkout:
 bash scripts/build_remote.sh
-PYTHONPATH=src /home/wangziheng/wafer_simulator/.venv/bin/python -m unittest discover -s tests -v
+test_output=/home/wangziheng/wafer_simulator/runs/semantics-$(date -u +%Y%m%dT%H%M%S)
+WAFER_TEST_OUTPUT="$test_output" PYTHONPATH=src \
+  /home/wangziheng/wafer_simulator/.venv/bin/python -m unittest discover -s tests -p test_semantics.py -v
+WAFER_NATIVE_REGRESSION_INPUT="$test_output" PYTHONPATH=src \
+  /home/wangziheng/wafer_simulator/.venv/bin/python -m unittest discover -s tests -p test_goal_completion.py -v
 PYTHONPATH=src /home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.cli \
   --config configs/llama16_fixed_state.json \
   --upstream /home/wangziheng/wafer_simulator/upstream/nw-design-for-wsi \
