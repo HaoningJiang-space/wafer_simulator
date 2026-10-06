@@ -5,7 +5,7 @@ import platform
 import subprocess
 
 from wafer_sim.analysis.placement_attribution import analyze, finalize
-from wafer_sim.experiments.next_experiment import register_mapping_check
+from wafer_sim.experiments.next_experiment import defer_mapping_for_local_provenance
 
 
 def main():
@@ -22,7 +22,7 @@ def main():
         from wafer_sim.io import read_json
         if Path(read_json(args.output / "acceptance.json")["campaign"]).resolve() != args.campaign.resolve():
             raise SystemExit("Finalization campaign differs from the analyzed campaign")
-        finalize(args.output, args.finalize_equivalence, register_next=register_mapping_check)
+        finalize(args.output, args.finalize_equivalence, register_next=defer_mapping_for_local_provenance)
     else:
         analyze(args.campaign, args.output)
 

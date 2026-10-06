@@ -1,5 +1,17 @@
 # Accepted placement attribution
 
+## Priority change, 2026-10-06 13:30 UTC
+
+006 attribution is complete. Preserve its result and native implementation.
+Continue 002–006 full-event equivalence, but **defer the mapping study**. The
+finalization entry point now records zero registered groups and prioritizes
+source-level classification of fixed local stages. Only source-supported
+intra-host transfers may enter a later fixed-cost versus WoW-resource M0/M1
+comparison. Do not infer categories from durations or CPU-lane IDs, remove
+unexplained intervals, or double count a transfer's original fixed cost.
+The threshold-based mapping rule described below is historical and is no
+longer called by the active postprocessor.
+
 The current goal is application attribution, with the single maintained native
 implementation frozen. No 007/008 optimization variant, new simulator model,
 GPU backend, thermal feedback or additional workload execution belongs to this

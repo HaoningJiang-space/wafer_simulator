@@ -14,7 +14,7 @@ from wafer_sim.analysis.campaign_acceptance import accept
 from wafer_sim.analysis.critical_chain import difference, message_timings, parent_graph, recover
 from wafer_sim.analysis.goal_completion import audit
 from wafer_sim.analysis.placement_attribution import analyze, finalize
-from wafer_sim.experiments.next_experiment import register_mapping_check
+from wafer_sim.experiments.next_experiment import register_mapping_check, defer_mapping_for_local_provenance
 from wafer_sim.io import digest, read_json, write_json
 
 FIELDS = ("ready_cycle", "start_cycle", "finish_cycle", "cpu_predecessor", "generated_cycle",
@@ -266,6 +266,13 @@ class AttributionTests(unittest.TestCase):
             write_json(project / "configs/llama16_fixed_state.json", config)
             with self.assertRaisesRegex(ValueError, "Active controls changed"):
                 register_mapping_check(info, summary, output)
+
+    def test_current_policy_defers_mapping_without_creating_config(self):
+        output = self.root / "deferred"
+        decision = defer_mapping_for_local_provenance({}, {}, output)
+        self.assertEqual(decision["registered_groups"], 0)
+        self.assertEqual(decision["status"], "deferred_for_local_stage_provenance")
+        self.assertEqual([p.name for p in output.iterdir()], ["next_experiment_decision.json"])
 
 
 if __name__ == "__main__":

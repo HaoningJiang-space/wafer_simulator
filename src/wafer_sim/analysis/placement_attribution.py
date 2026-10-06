@@ -224,6 +224,9 @@ def render(summary, acceptance, output):
                   "映射置换种子固定为 1234，网络 seed 仍为 1。逻辑任务、duration、payload、依赖、"
                   "物理资源和原生实现保持不变。目的是检查当前‘网络均值改善而应用变化小’及关键链"
                   "变化是否依赖当前端点分配。详见 `next_experiment.json`；必须先通过本轮参考等价性验收。", ""]
+    elif summary["next_experiment"]["status"] == "deferred_for_local_stage_provenance":
+        lines += ["根据新的研究优先级，暂缓 mapping 实验。先追溯主要固定 calc 的来源，"
+                  "再判断原节点内传输能否有依据地迁移到目标 WoW 资源竞争；不按占比阈值自动选择实验。", ""]
     lines += ["本分析不启动新仿真，也不扩展 thermal 或 GPU。", ""]
     (Path(output) / "attribution.md").write_text("\n".join(lines))
 

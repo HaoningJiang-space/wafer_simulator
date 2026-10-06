@@ -61,3 +61,7 @@ The [006 placement result and reviewed interpretation](docs/results/llama16-006/
 are now available: mean packet latency falls by 14.7490%, while complete
 conditional replay time falls by 0.13603%. Both full arms and attribution pass;
 direct event equivalence to reference 002 is still pending.
+
+Current priority: trace the provenance of the dominant fixed `calc` stages,
+then assess whether source-supported intra-host transfers belong on target WoW
+resources. Mapping experiments are deferred; the native implementation is frozen.

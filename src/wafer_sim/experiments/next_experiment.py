@@ -1,11 +1,20 @@
-"""Register (never execute) one diagnostic pair from accepted analysis results."""
+"""Hold mapping studies while fixed local-work provenance is investigated."""
 from pathlib import Path
 
 from wafer_sim.adapters.wow import rank_mapping
 from wafer_sim.io import digest, read_json, write_json
 
 
+def defer_mapping_for_local_provenance(info, summary, output):
+    decision = dict(status="deferred_for_local_stage_provenance", registered_groups=0,
+                    reason="User reprioritized calc provenance and a source-supported M0/M1 model-boundary comparison",
+                    mapping_study="deferred", new_simulations_launched=0)
+    write_json(Path(output) / "next_experiment_decision.json", decision)
+    return decision
+
+
 def register_mapping_check(info, summary, output):
+    # Retained for a later explicit decision; no current entry point calls this.
     # Descriptive triage thresholds, not statistical significance or a new metric.
     local_shares = {name: chain["critical_local_work_cycles"] / chain["application_cycles"]
                     for name, chain in summary["chains"].items()}
