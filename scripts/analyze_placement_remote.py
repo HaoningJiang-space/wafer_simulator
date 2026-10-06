@@ -22,9 +22,9 @@ def main():
         from wafer_sim.io import read_json
         if Path(read_json(args.output / "acceptance.json")["campaign"]).resolve() != args.campaign.resolve():
             raise SystemExit("Finalization campaign differs from the analyzed campaign")
-        finalize(args.output, args.finalize_equivalence)
+        finalize(args.output, args.finalize_equivalence, register_next=register_mapping_check)
     else:
-        analyze(args.campaign, args.output, register_next=register_mapping_check)
+        analyze(args.campaign, args.output)
 
 
 if __name__ == "__main__":

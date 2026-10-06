@@ -216,8 +216,8 @@ def render(summary, acceptance, output):
     (Path(output) / "attribution.md").write_text("\n".join(lines))
 
 
-def analyze(campaign, output, register_next=None):
-    """Analyze saved evidence; optional experiment registration is supplied by orchestration."""
+def analyze(campaign, output):
+    """Analyze saved evidence; next-study registration waits for reference equivalence."""
     info = accept(campaign)
     graph = Path(info["config"]["graph_directory"])
     gate = read_json(graph / "graph_audit.json")
@@ -328,8 +328,7 @@ def analyze(campaign, output, register_next=None):
                    largest_critical_message_changes=[row(int(i)) for i in ranked_changes],
                    observed_order_changes=order_changes,
                    host_wall_seconds={name: info["arms"][name]["execution"]["wall_seconds"] for name in ARMS})
-    summary["next_experiment"] = (register_next(info, summary, output) if register_next else
-                                  dict(status="needs_result_review", registered_groups=0))
+    summary["next_experiment"] = dict(status="pending_reference_equivalence", registered_groups=0)
     print("Recording complete-input and artifact hashes", flush=True)
     inputs = {str(graph / file): digest(graph / file) for file in
               ("graph_audit.json", "operations.npy", "dependencies.npy", "message_pairs.npy")}
@@ -357,7 +356,7 @@ def analyze(campaign, output, register_next=None):
     return summary
 
 
-def finalize(output, equivalence):
+def finalize(output, equivalence, register_next=None):
     output, equivalence = Path(output).resolve(), Path(equivalence).resolve()
     acceptance = read_json(output / "acceptance.json")
     verification = read_json(equivalence)
@@ -377,12 +376,19 @@ def finalize(output, equivalence):
                 raise ValueError("Equivalence differs from attributed input/events")
     acceptance["implementation_equivalence"] = dict(status="passed", path=str(equivalence), sha256=digest(equivalence),
                                                       reference=verification["reference"])
+    summary = read_json(output / "summary.json")
+    summary["next_experiment"] = (register_next(accept(acceptance["campaign"]), summary, output) if register_next else
+                                  dict(status="needs_result_review", registered_groups=0))
+    acceptance["finalization_source_commit"] = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    write_json(output / "summary.json", summary)
     write_json(output / "acceptance.json", acceptance)
-    render(read_json(output / "summary.json"), acceptance, output)
+    render(summary, acceptance, output)
     manifest = read_json(output / "ANALYZED.json")
     manifest["implementation_equivalence"] = "passed"
-    for file in ("acceptance.json", "attribution.md"):
-        manifest["artifact_sha256"][file] = digest(output / file)
+    for file in ("acceptance.json", "summary.json", "attribution.md", "next_experiment.json",
+                 "next_experiment_config.json", "next_experiment_decision.json", "implementation_equivalence.json"):
+        if (output / file).exists():
+            manifest["artifact_sha256"][file] = digest(output / file)
     write_json(output / "ANALYZED.json", manifest)
     write_json(output / "FINAL_ACCEPTED.json", dict(architecture_pair_accepted=True, implementation_equivalence=True,
         acceptance_sha256=digest(output / "acceptance.json"), report_sha256=digest(output / "attribution.md"),

@@ -7,7 +7,9 @@ stage. All analysis and tests run on eex005.
 
 Readback, chain recovery and reporting stay in `analysis/`. The optional next-pair
 config registration lives in `experiments/next_experiment.py` and is supplied by
-the command-line orchestration. The analysis layer neither imports experiment
+the command-line orchestration only after direct reference equivalence passes.
+The initial report has zero registered groups while equivalence is pending.
+The analysis layer neither imports experiment
 orchestration nor launches a simulator.
 
 ## Acceptance and order

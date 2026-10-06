@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import numpy as np
 
@@ -178,6 +178,8 @@ class AttributionTests(unittest.TestCase):
         before = {p: digest(p) for p in self.campaign.rglob("*") if p.is_file()}
         output = self.root / "analysis"
         summary = analyze(self.campaign, output)
+        self.assertEqual(summary["next_experiment"], dict(status="pending_reference_equivalence", registered_groups=0))
+        self.assertFalse((output / "next_experiment.json").exists())
         self.assertEqual(summary["application_speedup"], 14 / 13)
         self.assertEqual(summary["chain_difference"]["accounted_delta_cycles"], 1)
         self.assertEqual([row["send_id"] for row in summary["largest_critical_message_changes"]], [1, 2])
@@ -205,15 +207,19 @@ class AttributionTests(unittest.TestCase):
         bad = copy.deepcopy(verification)
         bad["arms"][0]["hashes"][0]["sha256"] = "d" * 64
         write_json(output / "bad-equivalence.json", bad)
+        registration = Mock(return_value=dict(status="registered_not_executed", registered_groups=1))
         with self.assertRaisesRegex(ValueError, "differs from attributed"):
-            finalize(output, output / "bad-equivalence.json")
+            finalize(output, output / "bad-equivalence.json", register_next=registration)
+        registration.assert_not_called()
         write_json(output / "implementation_equivalence.json", verification)
         missing = copy.deepcopy(verification)
         missing["arms"][0]["hashes"].pop()
         write_json(output / "incomplete-equivalence.json", missing)
         with self.assertRaisesRegex(ValueError, "both complete input and event hashes"):
             finalize(output, output / "incomplete-equivalence.json")
-        finalize(output, output / "implementation_equivalence.json")
+        finalize(output, output / "implementation_equivalence.json", register_next=registration)
+        registration.assert_called_once()
+        self.assertEqual(read_json(output / "summary.json")["next_experiment"]["registered_groups"], 1)
         self.assertTrue(read_json(output / "FINAL_ACCEPTED.json")["implementation_equivalence"])
         self.assertEqual(read_json(output / "acceptance.json")["implementation_equivalence"]["status"], "passed")
         manifest = read_json(output / "ANALYZED.json")
