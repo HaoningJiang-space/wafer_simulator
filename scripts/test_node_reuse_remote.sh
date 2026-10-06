@@ -3,13 +3,15 @@ set -euo pipefail
 [[ $(hostname -s) == eex005 ]] || { echo 'Tests must run on eex005' >&2; exit 1; }
 project_root=$(cd "$(dirname "$0")/.." && pwd)
 remote_root=${WAFER_REMOTE_ROOT:-/home/wangziheng/wafer_simulator}
-test_root="$remote_root/runs/node-reuse-contract-001"
+test_root=${WAFER_NATIVE_TEST_OUTPUT:-"$remote_root/runs/node-reuse-contract-001"}
 mkdir "$test_root"
 candidate="$remote_root/build/booksim-node-reuse/rapidchiplet/booksim2/src"
-g++ -std=c++17 -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer \
+# eex005's GCC installation lacks the ASan/UBSan runtime libraries. Checked
+# libstdc++ containers validate iterator/node ownership without those runtimes.
+g++ -std=c++17 -g -O1 -D_GLIBCXX_DEBUG -D_GLIBCXX_ASSERTIONS \
     -I"$candidate" "$project_root/tests/native_node_reuse.cpp" "$candidate/credit.cpp" \
-    -o "$test_root/node-reuse-sanitized"
-ASAN_OPTIONS=detect_leaks=1 "$test_root/node-reuse-sanitized" > "$test_root/node-reuse.log" 2>&1
+    -o "$test_root/node-reuse-checked"
+"$test_root/node-reuse-checked" > "$test_root/node-reuse.log" 2>&1
 for variant in runtime-opt node-reuse; do
     native="$remote_root/build/booksim-$variant/rapidchiplet/booksim2/src"
     includes=(-I"$native" -I"$native/allocators" -I"$native/arbiters" -I"$native/routers"
