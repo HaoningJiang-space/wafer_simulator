@@ -9,12 +9,14 @@ import sys
 from wafer_sim.io import digest, read_json, write_json
 
 UPSTREAM_COMMIT = "fb51a99f908e550318056ebb3e084f3d2fff55bd"
+HISTORICAL_COMMIT = "e436c1de79619e7bcd9977e2a713f8e4a1f7e8f9"
+SOURCE_REVISIONS = {UPSTREAM_COMMIT, HISTORICAL_COMMIT}
 
 
-def extract(upstream, sqlite_directory, output):
+def extract(upstream, sqlite_directory, output, revision_expected=UPSTREAM_COMMIT):
     upstream, sqlite_directory, output = map(lambda p: Path(p).resolve(), (upstream, sqlite_directory, output))
     revision = subprocess.check_output(["git", "-C", str(upstream), "rev-parse", "HEAD"], text=True).strip()
-    if revision != UPSTREAM_COMMIT or subprocess.check_output(
+    if revision_expected not in SOURCE_REVISIONS or revision != revision_expected or subprocess.check_output(
             ["git", "-C", str(upstream), "status", "--porcelain"], text=True).strip():
         raise ValueError("ATLAHS author checkout must be clean at the recorded pin")
     files = sorted(sqlite_directory.glob("*.sqlite"))
@@ -71,7 +73,9 @@ def regenerate(extracted, upstream, original_goal, output, source_host_order):
         raise ValueError("Locally extracted typed event bundle changed")
     if sorted(source_host_order) != list(range(4)):
         raise ValueError("Host order must retain all four source hosts")
-    if subprocess.check_output(["git", "-C", str(upstream), "rev-parse", "HEAD"], text=True).strip() != UPSTREAM_COMMIT:
+    revision = manifest["upstream_commit"]
+    if revision not in SOURCE_REVISIONS or subprocess.check_output(
+            ["git", "-C", str(upstream), "rev-parse", "HEAD"], text=True).strip() != revision:
         raise ValueError("Author revision changed")
     for name, sha in manifest["generator_source_sha256"].items():
         if digest(upstream / name) != sha:
@@ -116,7 +120,7 @@ def regenerate(extracted, upstream, original_goal, output, source_host_order):
     hashes = dict(original=digest(original_goal), regenerated=digest(candidate))
     result = dict(exact_published_goal_match=hashes["original"] == hashes["regenerated"],
         source_host_order=source_host_order, goal_rank_to_host={to_goal[v]: k for k, v in bundle["hosts"].items()},
-        upstream_commit=UPSTREAM_COMMIT, extracted_manifest_sha256=digest(extracted / "EXTRACTED.json"),
+        upstream_commit=revision, extracted_manifest_sha256=digest(extracted / "EXTRACTED.json"),
         benchmark_sha256={str(p): digest(p) for p in (simple, ll)}, environment_controls=controls,
         unique_nic=True, zero_red_copy=False, goal_sha256=hashes, new_simulations_launched=0)
     if not result["exact_published_goal_match"]:
