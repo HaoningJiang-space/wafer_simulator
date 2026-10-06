@@ -12,6 +12,7 @@ fi
 patches=("$project_root/patches/booksim-completion.patch"
          "$project_root/patches/booksim-topology-ref.patch"
          "$project_root/patches/booksim-runtime-opt.patch"
+         "$project_root/patches/booksim-node-reuse.patch"
          "$project_root/patches/booksim-csr-frontier.patch")
 manifest="$build_root/.wafer-csr-frontier-patches"
 patch_digest=$(sha256sum "${patches[@]}" | sha256sum | cut -d ' ' -f1)
