@@ -43,3 +43,6 @@ Performance work is tracked separately from architectural results:
 [dense trace state / empty channel evaluation](docs/RUNTIME_OPTIMIZATION.md).
 The optimized builds use separate worktrees and the same full capture. Their
 complete event histories must match their controls before accepting a speedup.
+The subsequent [arbitration/credit node reuse](docs/NODE_REUSE.md) candidate
+follows the same acceptance rule. [HeteroSTA method transfer](docs/HETEROSTA_TRANSFER.md)
+records the source-based assessment of GPU execution opportunities and limits.
