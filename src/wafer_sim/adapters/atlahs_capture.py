@@ -25,8 +25,8 @@ def extract(upstream, sqlite_directory, output, revision_expected=UPSTREAM_COMMI
     output.mkdir(parents=True, exist_ok=False)
     generator = upstream / "goal_gen/ai/nccl_goal_generator"
     sys.path.insert(0, str(generator))
-    from generator_modules.nsys_events import get_nsys_events
-    from generator_modules.manipulate_events import merge_nsys_events, get_events_parallel_group, merge_stream_if_no_overlap
+    from generator_modules.nsys_events import get_nsys_events, merge_stream_if_no_overlap
+    from generator_modules.manipulate_events import merge_nsys_events, get_events_parallel_group
 
     init, nccl, kernels, comm, hosts, intervals = get_nsys_events(str(sqlite_directory))
     if merge_non_overlap:
