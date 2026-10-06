@@ -1,7 +1,9 @@
 # Heterogeneous STA methods: transfer to this simulator
 
-This is a source-based design assessment, not a GPU implementation or speedup
-claim. Existing complete CPU runs keep their original workload and controls.
+The source assessment below now has a first CPU implementation of flattened
+dependency storage and an ordered ready frontier. This is not a GPU backend or
+a speedup claim. Existing complete CPU runs keep their original workload and
+controls. See [implementation and acceptance](CSR_FRONTIER.md).
 
 ## What the sources actually establish
 

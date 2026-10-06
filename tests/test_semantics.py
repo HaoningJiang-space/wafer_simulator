@@ -83,7 +83,10 @@ class NativeCompletionTests(unittest.TestCase):
         if trace_transform is not None:
             trace_transform(trace)
         write_json(directory / "trace.json", trace)
-        config = booksim.prepare_config(tiny_inputs(), directory, directory / "trace.json", 1, 30, skip)
+        inputs = tiny_inputs()
+        if os.environ.get("WAFER_TEST_DEPENDENCY_PROFILE") == "1" and not original:
+            inputs["booksim_config"]["trace_dependency_profile"] = str(directory / "dependency_profile.json")
+        config = booksim.prepare_config(inputs, directory, directory / "trace.json", 1, 30, skip)
         if original:
             config.write_text("\n".join(line for line in config.read_text().splitlines()
                                        if not line.startswith(("trace_report", "trace_skip_idle")))+"\n")
@@ -203,6 +206,45 @@ class NativeCompletionTests(unittest.TestCase):
             self.assertFalse((self.output / suffix / "trace_report.json").exists())
             # A parser error is required; a crash is not an acceptable rejection.
             self.assertIn("complete-trace", (self.output / suffix / "stdout.log").read_text().lower())
+
+    def test_zero_duration_join_keeps_completion_heap_order(self):
+        # Completing 0 inserts join 1 ahead of already-due 4. Taking all due
+        # events as an unordered frontier would reserve CPU 0 in the wrong order.
+        workload = work([node(0, duration=5), node(4, duration=5, rank=1),
+                         node(1, "join", deps=[0]), node(2, duration=20, deps=[1]),
+                         node(3, duration=30, deps=[4])])
+        for op in workload["nodes"]:
+            if op["id"] in (2, 3):
+                op["cpu_resource"] = 0
+        report, _ = self.execute(workload, "zero_join_heap_order")
+        events = {e["id"]: e for e in report["events"]}
+        self.assertEqual(events[2]["start_cycle"], 5)
+        self.assertEqual(events[3]["start_cycle"], 25)
+        self.assertEqual(report["application_cycles"], 55)
+
+    def test_shared_successor_and_frontier_submission_order(self):
+        workload = work([node(0, duration=10), node(1, duration=10, rank=1),
+                         node(2, duration=15, deps=[0, 1]), node(3, duration=10, deps=[0]),
+                         node(4, duration=25, deps=[1])])
+        for op in workload["nodes"]:
+            if op["id"] >= 2:
+                op["cpu_resource"] = 0
+        report, _ = self.execute(workload, "shared_successor_order")
+        events = {e["id"]: e for e in report["events"]}
+        self.assertEqual([events[i]["start_cycle"] for i in (3, 2, 4)], [10, 20, 35])
+        self.assertEqual(report["application_cycles"], 60)
+
+    def test_native_malformed_dependency_rows_rejected(self):
+        cases = {
+            "duplicate_edge": lambda trace: trace[0].update(rev_deps=[1, 1]),
+            "self_edge": lambda trace: trace[0].update(rev_deps=[0]),
+            "indegree_mismatch": lambda trace: trace[1].update(num_deps=2),
+        }
+        for suffix, transform in cases.items():
+            with self.subTest(case=suffix), self.assertRaisesRegex(RuntimeError, "did not complete"):
+                self.execute(work([node(0), node(1, deps=[0])]), suffix, trace_transform=transform)
+            self.assertFalse((self.output / suffix / "trace_report.json").exists())
+            self.assertIn("dependency", (self.output / suffix / "stdout.log").read_text().lower())
 
     def test_audit_detects_corrupted_completion(self):
         workload = work([node(0, duration=37)])

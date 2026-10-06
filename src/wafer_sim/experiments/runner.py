@@ -9,12 +9,16 @@ import subprocess
 from wafer_sim.adapters import booksim, wow
 from wafer_sim.adapters.goal_booksim import lower
 from wafer_sim.analysis.goal_completion import audit
+from wafer_sim.analysis.dependency_profile import audit as audit_dependency_profile
 from wafer_sim.io import digest, read_json, write_json
 
 
-def _execute(placement, binary, native_config, run_directory, graph_directory, timeout):
+def _execute(placement, binary, native_config, run_directory, graph_directory, timeout,
+             dependency_profile=False):
     record = booksim.run(binary, native_config, run_directory, timeout)
     checked = audit(graph_directory, run_directory)
+    if dependency_profile:
+        audit_dependency_profile(graph_directory, run_directory)
     resources = read_json(Path(run_directory) / "resources.json")
     return dict(placement=placement, **checked, network_metrics=record["network_metrics"],
                 wall_seconds=record["wall_seconds"], resources=resources,
@@ -69,10 +73,13 @@ def run_campaign(config_path, upstream, binary, output):
         identity = contract["work"]
         write_json(directory / "resources.json", resources)
         inputs["booksim_config"]["trace_events_file"] = str(directory / "events.jsonl")
+        if config.get("dependency_profile", False):
+            inputs["booksim_config"]["trace_dependency_profile"] = str(directory / "dependency_profile.json")
         native = booksim.prepare_config(inputs, directory, directory / "trace.json", config["seed"],
                                          config["timeout_seconds"])
         jobs.append((placement, str(Path(binary).resolve()), str(native), str(directory),
-                     config["graph_directory"], config["timeout_seconds"]))
+                     config["graph_directory"], config["timeout_seconds"],
+                     config.get("dependency_profile", False)))
     write_json(output / "registration.json", dict(work=identity, arm_names=config["placements"],
                 all_work_matched=True, physical_cost_matched=False, status="registered_before_execution"))
     print("Full-input equality gate passed; launching registered placement arms", flush=True)
