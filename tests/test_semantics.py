@@ -61,7 +61,7 @@ class NativeCompletionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.root = Path(os.environ.get("WAFER_REMOTE_ROOT", "/home/wangziheng/wafer_simulator"))
-        cls.binary = cls.root / "build/booksim-fixed/rapidchiplet/booksim2/src/booksim"
+        cls.binary = Path(os.environ.get("WAFER_TEST_BINARY", str(cls.root / "build/booksim-fixed/rapidchiplet/booksim2/src/booksim")))
         cls.original = cls.root / "build/booksim-reference/rapidchiplet/booksim2/src/booksim"
         # Do not silently skip native coverage on an incorrectly prepared host.
         if not cls.binary.exists() or not cls.original.exists():
