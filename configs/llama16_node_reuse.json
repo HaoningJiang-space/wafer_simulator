@@ -1,0 +1,28 @@
+{
+  "workload": "ATLAHS_Llama7B_N4_GPU16_TP1_PP1_DP16_BS32_complete_capture",
+  "source_goal": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/llama.goal",
+  "source_sha256": "5f360f2936fffa0813772b967ca1c78763c098a19421633564ff3581b06372ca",
+  "graph_directory": "/home/wangziheng/wafer_simulator/downloads/atlahs/llama16/graph-001",
+  "diameter_mm": 200,
+  "utilization": "rectangular",
+  "placements": [
+    "baseline",
+    "ours_rotated"
+  ],
+  "active_endpoints": 16,
+  "mapping": "row_major",
+  "seed": 1,
+  "flit_bytes": 2000,
+  "network_frequency_hz": 1000000000,
+  "timeout_seconds": 86400,
+  "parallel_placements": 2,
+  "truncate_input": false,
+  "remove_dependencies": false,
+  "thermal_feedback": false,
+  "implementation_patch_files": [
+    "patches/booksim-completion.patch",
+    "patches/booksim-topology-ref.patch",
+    "patches/booksim-runtime-opt.patch",
+    "patches/booksim-node-reuse.patch"
+  ]
+}
