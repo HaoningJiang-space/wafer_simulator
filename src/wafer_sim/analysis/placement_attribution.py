@@ -96,7 +96,8 @@ def render(summary, acceptance, output):
     """Render again after reference equivalence, without rereading large event files."""
     table = summary["table"]
     lines = ["# Baseline–Rotated 完整应用对照与归因", "",
-             f"006 成对完整审计：通过。参考实现等价性：**{acceptance['implementation_equivalence']['status']}**。", "",
+             f"输入实验：`{Path(acceptance['campaign']).name}`。成对完整审计：通过。"
+             f"参考实现等价性：**{acceptance['implementation_equivalence']['status']}**。", "",
              f"应用加速比 T(Baseline)/T(Rotated) = **{summary['application_speedup']:.9f}**；"
              f"完成时间缩短 **{summary['application_time_reduction_percent']:.6f}%**。", "",
              "| 指标 | Baseline | Rotated |", "| --- | ---: | ---: |"]
