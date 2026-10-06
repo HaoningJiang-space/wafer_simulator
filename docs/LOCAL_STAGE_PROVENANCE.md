@@ -13,6 +13,13 @@ after rechecking both complete M0 serializations and the full predecessor graph.
 The native binary remains unchanged. Accepted results and critical-chain
 readback will be written to `runs/model-boundary-analysis-001`.
 
+The second controller started at **14:48:20 UTC**, PID `2727834`, with log
+`logs/model-boundary-M1-002.log`. Both complete M0 traces have again matched
+their original hashes after the predicate repair. The full transformation
+readback confirms identical native predecessor structure (9,002,700 edges),
+unchanged non-transfer operations and no double charging. This is input
+acceptance, not a completed M1 application result.
+
 ## What the source audit established
 
 The two dominant operations are measured intervals between NCCL event groups,
@@ -57,6 +64,14 @@ The complete server-only table is
 [Major stages](results/local-stage-provenance/major_local_stages.csv) and
 [the full category totals and artifact hashes](results/local-stage-provenance/LOCAL_STAGES.json)
 are published here.
+
+An independent delivery check read all **99,428** selected-chain source rows
+against original operation identities and durations, and closed both category
+totals. Its [receipt](results/local-stage-provenance/PROVENANCE_COMPLETE.json)
+records the script, environment and all artifact hashes. The final source and
+attribution regression checks passed **21 tests** on eex005 in
+`runs/local-provenance-unit-005` (12 attribution and 9 source/conversion checks).
+These are semantic software checks, not reduced-work performance experiments.
 
 ## How correspondence was proved
 
