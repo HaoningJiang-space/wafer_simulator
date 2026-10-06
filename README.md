@@ -56,3 +56,8 @@ The next research stage is [accepted placement attribution](docs/POSTRUN_PROTOCO
 read the existing full events, recover both critical chains, pair every message,
 and explain application benefits. It uses the same native implementation and
 does not start another performance or architecture campaign.
+
+The [006 placement result and reviewed interpretation](docs/results/llama16-006/REVIEW.md)
+are now available: mean packet latency falls by 14.7490%, while complete
+conditional replay time falls by 0.13603%. Both full arms and attribution pass;
+direct event equivalence to reference 002 is still pending.

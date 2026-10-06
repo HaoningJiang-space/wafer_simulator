@@ -1,7 +1,13 @@
 # Placement attribution status
 
-Checked on eex005 at **2026-10-06 12:16 UTC**. This is a dated status receipt,
+Checked on eex005 at **2026-10-06 13:02 UTC**. This is a dated status receipt,
 not a claim that pending simulations have completed.
+
+**006 has passed both full-placement audits and read-only attribution.**
+The [reviewed result](results/llama16-006/REVIEW.md) and
+[generated attribution report](results/llama16-006/attribution.md) are available.
+Rotated reduces mean packet latency by 14.7490%, while full conditional replay
+time falls by 0.13603%. Direct full-event equivalence to 002 is still pending.
 
 The research goal is frozen in [POSTRUN_PROTOCOL.md](POSTRUN_PROTOCOL.md).
 The native implementation is unchanged. No additional simulator, reduced-work
@@ -15,11 +21,11 @@ experiment, thermal model or GPU implementation was launched in this stage.
 | 003 | Yes | Preserved intermediate evidence |
 | 004 | Yes | Existing full events used to validate read-only attribution |
 | 005 | Yes | Preserved intermediate evidence |
-| 006 | No; Rotated audited | Target architecture pair; waiting for Baseline |
+| 006 | Yes | Target pair and complete read-only attribution accepted |
 
-At the snapshot, 006 Baseline had processed 137,211,244 of 151,889,580 flits.
-This progress is not application completion. No failure or exclusion marker
-was present in these five campaigns. The compact machine-readable snapshot is
+Both 006 arms retained 5,324,230 operations, 9,002,700 dependency/arrival edges
+and 151,889,580 flits and passed the separate dependency-profile audit.
+No failure or exclusion marker was present. The earlier 12:16 snapshot is
 [postrun-ready-20261006.json](results/postrun-ready-20261006.json).
 
 ## Delivered analysis and checks
@@ -34,10 +40,15 @@ was present in these five campaigns. The compact machine-readable snapshot is
   consumer. Registration never starts a simulation.
 
 Ten analytical semantic tests passed on eex005 in
-`runs/postrun-unit-006/tests.log`, using analysis commit `f4510ed`.
-The subsequent commits correct report wording and campaign identification.
-The log SHA-256 is
-`ba14c76e69fc0091982b0c4fb0e9f353f20b199337624417b072492a701650c9`.
+`runs/postrun-unit-008/tests.log`, using analysis commit `fd8767b`.
+This includes rejecting premature experiment registration and checking analysis
+and finalization environment identities.
+
+The 006 analysis ran from the same `fd8767b` commit. All ten saved artifact
+hashes were checked. A separate CSV delivery check read all 445,740 message
+rows and checked their work totals and three-phase timing identities, both
+critical-chain service sums, 99,428 paired local rows and 32 endpoint records.
+See [the delivery check](results/llama16-006/delivery_check.json).
 
 The complete saved 004 pair passed end-to-end read-only analysis in
 `runs/postrun-full-readback-004-001`. It paired all 445,740 messages and recovered
@@ -50,10 +61,11 @@ downloaded or added to Git.
 
 ## Automatic continuation already running
 
-Postprocessor PID at the snapshot: `2412066` on eex005. It waits for 006's final
-`COMPLETE.json`, generates the architecture report, waits for 002's final gate,
-then directly compares both full input/event hashes and finalizes only after
-equivalence passes. It launches no BookSim process.
+Postprocessor PID confirmed live at the snapshot: `2412066` on eex005.
+It has generated the 006 architecture report and is now waiting for 002's final
+gate. It will compare both full input/event hashes and finalize only after
+equivalence passes. Next-study registration is also deferred until that gate.
+It launches no BookSim process.
 
 - Log: `/home/wangziheng/wafer_simulator/logs/postrun-006-attribution-001.log`
 - Output: `/home/wangziheng/wafer_simulator/runs/postrun-006-attribution-001`
@@ -62,7 +74,8 @@ equivalence passes. It launches no BookSim process.
 
 `ANALYZED.json` means the 006 architecture pair has been analyzed, with reference
 equivalence still explicitly pending. `FINAL_ACCEPTED.json` additionally
-requires direct full-event equivalence to 002. Neither marker exists at this
+requires direct full-event equivalence to 002. `ANALYZED.json` exists;
+`FINAL_ACCEPTED.json` does not at this
 snapshot. Review the actual report and its single next-experiment registration
 after those gates; do not start another full campaign merely because a config
 file has been registered.

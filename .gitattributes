@@ -1,2 +1,4 @@
 # Preserve literal upstream context inside the maintained unified diff.
 patches/*.patch -whitespace
+# Preserve exported CSV bytes so their recorded evidence hashes remain valid.
+docs/results/**/*.csv -text whitespace=cr-at-eol

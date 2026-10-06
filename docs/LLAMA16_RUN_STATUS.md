@@ -1,9 +1,9 @@
 # Full-capture run receipt — 2026-10-06
 
-Status checked **2026-10-06 12:16 UTC**: runs 003, 004 and 005 have passed
-their paired full-completion audits. Run 006 has audited Rotated; Baseline is
-still executing. Run 002 is still executing both arms. The requested 006
-attribution and direct 002-vs-006 equivalence therefore remain pending.
+Status checked **2026-10-06 13:02 UTC**: runs 003 through 006 have passed
+their paired full-completion audits. The 006 attribution report and all message
+pairs are now available and checked. Run 002 is still executing both arms;
+direct 002-vs-006 equivalence and final next-study registration remain pending.
 See [the postrun receipt and validation](POSTRUN_STATUS.md).
 
 The working tree now maintains only the selected run 006 implementation through
