@@ -19,7 +19,7 @@ PYTHONPATH=src /home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.cl
   --config configs/llama16_fixed_state.json \
   --upstream /home/wangziheng/wafer_simulator/upstream/nw-design-for-wsi \
   --binary /home/wangziheng/wafer_simulator/build/booksim-fixed/rapidchiplet/booksim2/src/booksim \
-  --output /home/wangziheng/wafer_simulator/runs/llama16-full-001
+  --output /home/wangziheng/wafer_simulator/runs/llama16-full-002
 ```
 
 Every run keeps configuration, workload, mapped trace, endpoint map, native

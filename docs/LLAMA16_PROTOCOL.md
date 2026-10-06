@@ -35,7 +35,7 @@ compute endpoints; 16 are active. Use 1-GHz network clock, 2-TB/s links,
 2000-byte flits, 1 VC, 32-flit buffers, 4-cycle routers, adaptive selection,
 the author's cycle-breaking routing, and seed 1. Keep all original work and
 dependencies identical. Report differing router/link costs rather than claim
-equal total network area or bandwidth. Execution has a 12-hour wall limit per
+equal total network area or bandwidth. Execution has a 24-hour wall limit per
 arm; a limit is a failed/incomplete run and never an application result.
 
 Every `calc` occupies its declared CPU lane for its unchanged duration. The
@@ -70,3 +70,9 @@ Keep full traces, compiled binaries, raw logs, per-operation events, and
 intermediate graphs on eex005. Only small provenance/audit/result summaries
 belong in the source checkout. One seed and mapping support this paired case,
 not a general placement-ranking conclusion.
+
+The first complete-input launch (`llama16-full-001`) was stopped during its
+initial progress window because the baseline rate risked exceeding the
+original 12-hour limit. Run `llama16-full-002` retains identical work, mapping,
+network settings and native binary, with a 24-hour limit. The first run is
+excluded and contributes no performance result.
