@@ -148,10 +148,12 @@ class AttributionTests(unittest.TestCase):
         destination = self.root / "parallel-relations/trace.json"
         contract = lower(self.graph, destination, [0, 1])
         trace = read_json(destination)
-        self.assertEqual(trace[1]["rev_deps"].count(3), 2)
-        self.assertEqual(trace[3]["num_deps"], 2)
+        self.assertEqual(trace[1]["rev_deps"].count(3), 1)
+        self.assertEqual(trace[3]["num_deps"], 1)
         self.assertEqual(sum(len(row["rev_deps"]) for row in trace),
-                         contract["work"]["original_dependencies"] + contract["work"]["arrival_dependencies"])
+                         contract["work"]["native_dependency_edges"])
+        self.assertEqual(contract["work"]["shared_requires_arrival_predicates"], 2)
+        self.assertTrue(np.array_equal(np.load(self.graph / "dependencies.npy"), deps))
         parents = parent_graph(6, deps, self.pairs)
         chain = recover(self.ops, self.events["baseline"], parents, {})
         self.assertEqual(chain["application_cycles"], 14)

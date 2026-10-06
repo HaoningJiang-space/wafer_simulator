@@ -194,6 +194,16 @@ def audit_target_graph(original_graph, target_graph, provenance):
     actual = np.load(target_graph / "message_pairs.npy", mmap_mode="r")
     if len(expected) != len(actual) or not np.array_equal(expected[np.argsort(expected[:, 0])], actual[np.argsort(actual[:, 0])]):
         raise ValueError("Matched transfer relations do not conserve original and recovered messages")
+    from scipy.sparse import coo_matrix
+    def predicates(path):
+        edges = np.concatenate([np.load(path / name, mmap_mode="r") for name in (
+            "dependencies.npy", "message_pairs.npy")])
+        return coo_matrix((np.ones(len(edges), dtype="i1"), (edges[:, 0], edges[:, 1])),
+                          shape=(len(before), len(before))).tocsr()
+    old_pred, new_pred = predicates(original_graph), predicates(target_graph)
+    if (not np.array_equal(old_pred.indptr, new_pred.indptr) or
+            not np.array_equal(old_pred.indices, new_pred.indices)):
+        raise ValueError("Native predecessor predicates differ from original complete M0")
     old_cost = int(before["amount"][before["kind"] == 0].sum())
     new_cost = int(after["amount"][after["kind"] == 0].sum())
     removed = int(before["amount"][replaced].sum())
@@ -203,6 +213,7 @@ def audit_target_graph(original_graph, target_graph, provenance):
         original_local_cycles=old_cost, remaining_local_cycles=new_cost, replaced_transfer_cycles=removed,
         original_dependencies_byte_identical=True, original_message_pairs_retained=True,
         nontransfer_operations_byte_identical=True, no_transfer_double_charge=True,
+        native_predecessor_graph_identical_to_M0=True, native_dependency_edges=new_pred.nnz,
         target_artifacts_sha256={name: digest(target_graph / name) for name in (
             "operations.npy", "dependencies.npy", "message_pairs.npy", "graph_audit.json")})
     write_json(target_graph.parent / "TRANSFORMATION_AUDIT.json", result)

@@ -64,7 +64,22 @@ def audit(graph_directory, run_directory):
         edges = np.load(graph_directory / name, mmap_mode="r")
         has_predecessor[edges[:, 1]] = True
         edge_count += len(edges)
+    source_relations = edge_count
+    if "native_dependency_edges" in work:
+        from scipy.sparse import coo_matrix
+        relations = [np.load(graph_directory / name, mmap_mode="r") for name in (
+            "dependencies.npy", "message_pairs.npy")]
+        all_edges = np.concatenate(relations)
+        graph = coo_matrix((np.ones(len(all_edges), dtype="i1"), (all_edges[:, 0], all_edges[:, 1])),
+                           shape=(work["instructions"], work["instructions"])).tocsr()
+        edge_count = graph.nnz
+        if (edge_count != work["native_dependency_edges"] or
+                source_relations-edge_count != work["shared_requires_arrival_predicates"]):
+            raise ValueError("Native predicates do not represent all source relation kinds")
     checked = validate(read_json(run_directory / "dependency_profile.json"), work["instructions"],
                        edge_count, int(np.count_nonzero(~has_predecessor)))
+    if "native_dependency_edges" in work:
+        checked.update(source_relation_occurrences=source_relations,
+                       shared_requires_arrival_predicates=source_relations-edge_count)
     write_json(run_directory / "dependency_profile_audit.json", checked)
     return checked

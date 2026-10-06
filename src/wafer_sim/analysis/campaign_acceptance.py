@@ -76,8 +76,12 @@ def accept(campaign):
         if config.get("dependency_profile"):
             profile = read_json(path / "dependency_profile_audit.json")
             if (profile.get("passed") is not True or profile["instructions"] != work["instructions"] or
-                    profile["edges"] != work["original_dependencies"] + work["arrival_dependencies"]):
+                    profile["edges"] != work.get("native_dependency_edges", work["original_dependencies"] + work["arrival_dependencies"])):
                 raise ValueError(f"Dependency-profile audit missing/inconsistent: {name}")
+            if "native_dependency_edges" in work and (
+                    profile.get("source_relation_occurrences") != work["original_dependencies"] + work["arrival_dependencies"] or
+                    profile.get("shared_requires_arrival_predicates") != work["shared_requires_arrival_predicates"]):
+                raise ValueError("Source relation accounting missing from native profile audit")
             validate_profile(read_json(path / "dependency_profile.json"), work["instructions"],
                              profile["edges"], profile["initial_roots"])
         loaded[name] = dict(path=path, contract=contract, audit=audit, resources=resources,

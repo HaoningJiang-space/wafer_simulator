@@ -3,12 +3,15 @@
 Checked on eex005 on 2026-10-06. The 006 implementation and result are frozen;
 random mapping and further simulator optimization remain deferred.
 
-Execution update at **14:38 UTC**: complete M0 lowering identity and M1 input
-audits passed. The single registered full M1 pair has launched on eex005 under
-`runs/llama16-model-boundary-M1-001`, controlled by PID `2712305`.
-The log is `logs/model-boundary-M1-001.log`; neither placement is yet accepted.
-After both full audits pass, the same controller performs model comparison and
-critical-chain readback into `runs/model-boundary-analysis-001`.
+Complete M0 lowering identity and M1 input audits passed. The first full M1
+attempt (`llama16-model-boundary-M1-001`) failed during native input loading:
+006 rejects repeated predecessor IDs. Both failure records are retained and
+provide no application result. The adapter now explicitly represents shared
+requires/arrival predicates once, retaining both source relation kinds in the
+graph and independent audit. The same study retries in `llama16-model-boundary-M1-002`
+after rechecking both complete M0 serializations and the full predecessor graph.
+The native binary remains unchanged. Accepted results and critical-chain
+readback will be written to `runs/model-boundary-analysis-001`.
 
 ## What the source audit established
 
@@ -115,9 +118,13 @@ original dependency lines remain unchanged. The workload, collective algorithm,
 mapping, seed, network and clock controls are fixed.
 
 A recovered receive has both an original requires edge and a matched-arrival
-relation from its send. The adapter preserves both dependency-counter
-occurrences. The critical-chain reader represents their combined reason;
-it does not delete either original input relation. Complete M0 lowering must
+relation from its send. Both await the same completed-send event, so their
+conjunction is one native predecessor predicate. Both source relations remain
+in the input arrays and independent timing audit, and the critical-chain reader
+records both reasons. Profile checks distinguish source relation occurrences
+from unique native predicates. The entire M1 predecessor graph must equal M0's
+graph: the recovered arrivals were already original local requires edges.
+Complete M0 lowering must
 still reproduce both saved traces and contracts, and M1 must pass the complete
 input and graph audits before execution. The native binary is frozen 006.
 

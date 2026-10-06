@@ -18,8 +18,19 @@ def lower(graph_directory, destination, mapping, flit_bytes=2000):
     edges = np.concatenate((deps, pairs))
     reverse = coo_matrix((np.ones(len(edges), dtype="i4"), (edges[:, 0], edges[:, 1])),
                          shape=(len(ops), len(ops))).tocsr()
-    indegree = np.bincount(edges[:, 1], minlength=len(ops))
     parallel_relations = reverse.nnz != len(edges)
+    if parallel_relations:
+        for relations in (deps, pairs):
+            unique = coo_matrix((np.ones(len(relations), dtype="i1"), (relations[:, 0], relations[:, 1])),
+                                shape=(len(ops), len(ops))).tocsr()
+            if unique.nnz != len(relations):
+                raise ValueError("Repeated relations within one source kind are not supported")
+        if np.any(reverse.data > 2):
+            raise ValueError("Unexpected overlapping dependency relations")
+    # Both relation kinds require the very same predecessor completion.
+    # Native 006 accepts unique predecessors only; source arrays/audits retain
+    # every requires and arrival relation. Their conjunction is one predicate.
+    indegree = np.bincount(reverse.indices, minlength=len(ops))
     identities = sorted(set((int(op["rank"]), int(op["nic"])) for op in ops if op["kind"]))
     if len(identities) != len(mapping) or len(set(mapping)) != len(mapping):
         raise ValueError("Endpoint mapping must be injective and cover every host/NIC pair")
@@ -42,11 +53,6 @@ def lower(graph_directory, destination, mapping, flit_bytes=2000):
                     raise ValueError("Zero-byte or same-endpoint communication needs an explicit model")
             begin, end = reverse.indptr[i:i+2]
             successors = reverse.indices[begin:end]
-            if parallel_relations:
-                # A recovered local receive has both its original requires
-                # edge and the matching arrival relation. Preserve both in
-                # native counters, rather than merging only the successors.
-                successors = np.repeat(successors, reverse.data[begin:end])
             entry = dict(id=i, cycle=0, src=src, dst=dst,
                          num_deps=int(indegree[i]),
                          rev_deps=successors.tolist(),
@@ -64,11 +70,16 @@ def lower(graph_directory, destination, mapping, flit_bytes=2000):
                 cpu_lanes=len(set(zip(ops["rank"].tolist(), ops["cpu"].tolist()))),
                 endpoints=len(identities), cpu_stride=cpu_stride,
                 flit_bytes=flit_bytes, input_truncated=False, removed_dependencies=0)
+    if parallel_relations:
+        work.update(native_dependency_edges=reverse.nnz,
+                    shared_requires_arrival_predicates=len(edges)-reverse.nnz)
     contract = dict(work=work, trace_sha256=digest(destination),
                     endpoint_mapping=[dict(host=h, nic=nic, node=node) for (h, nic), node in endpoints.items()],
                     cpu_policy="FCFS in deterministic dependency-ready callback order",
                     send_policy="zero CPU issue overhead; complete after every network flit arrives",
                     receive_policy="complete after local prerequisites, matched send, and CPU availability",
                     calc_policy="unscaled published nanoseconds at 1 GHz; includes opaque local transfers")
+    if parallel_relations:
+        contract["dependency_policy"] = "All source relations retained; requires and arrival from the same completed send share one native predecessor predicate"
     write_json(destination.parent / "contract.json", contract)
     return contract
