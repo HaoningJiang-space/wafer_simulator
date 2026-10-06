@@ -27,15 +27,16 @@ def audit(workload, report, flit_bytes=2000):
         n, event = by_id[i], events[i]
         ready = max([n["release_cycle"]] + [events[d]["finish_cycle"] for d in n["deps"]])
         finish = event["finish_cycle"]
+        start = event.get("start_cycle", ready)
         if not event["completed"] or event["flits_remaining"] != 0:
             raise ValueError("Incomplete node or outstanding payload")
         if event["ready_cycle"] != ready or finish < ready:
             raise ValueError("Dependency/release timing violation")
         if n["kind"] != "message":
-            if finish != ready + n["duration_cycles"]:
+            if finish != start + n["duration_cycles"]:
                 raise ValueError("Compute duration was lost or changed")
             if n["kind"] == "compute":
-                compute_by_rank[n["rank"]].append((ready, finish))
+                compute_by_rank[n["rank"]].append((start, finish))
         else:
             generated, injected = event["generated_cycle"], event["first_inject_cycle"]
             last_injected, first_received = event["last_inject_cycle"], event["first_eject_cycle"]
@@ -53,7 +54,8 @@ def audit(workload, report, flit_bytes=2000):
         # durations on this observed chain, never sum all rank waiting times.
         parent = max(n["deps"], key=lambda d: (events[d]["finish_cycle"], d), default=None)
         parts = paths[parent].copy() if parent is not None and events[parent]["finish_cycle"] >= n["release_cycle"] else dict(compute=0, message=0, release=n["release_cycle"], dispatch=0)
-        parts["message" if n["kind"] == "message" else "compute"] += finish-ready
+        parts["dispatch"] += start-ready
+        parts["message" if n["kind"] == "message" else "compute"] += finish-start
         paths[i] = parts
         finishes[i] = finish
     if workload.get("provenance", {}).get("compute_model") == "one explicitly ordered lane per rank":

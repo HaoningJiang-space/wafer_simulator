@@ -75,6 +75,7 @@ def lower_to_booksim(workload, rank_to_node, flit_bytes=2000):
         "num_deps": len(n["deps"]), "rev_deps": reverse[n["id"]],
         "num_flits": (n["bytes"] + flit_bytes - 1) // flit_bytes,
         "duration": n["duration_cycles"], "ignore": n["kind"] != "message",
+        "cpu_resource": n.get("cpu_resource", -1),
     } for n in workload["nodes"]]
 
 

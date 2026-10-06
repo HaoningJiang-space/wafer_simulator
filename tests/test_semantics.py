@@ -139,6 +139,29 @@ class NativeCompletionTests(unittest.TestCase):
         report, _ = self.execute(workload, "parallel_release")
         self.assertEqual(report["application_cycles"], 127)
 
+    def test_cpu_lanes_serialize_without_serializing_other_lanes(self):
+        workload = work([node(0, duration=30), node(1, duration=20),
+                         node(2, duration=40, rank=1)])
+        for op, lane in zip(workload["nodes"], [0, 0, 1]):
+            op["cpu_resource"] = lane
+        report, _ = self.execute(workload, "cpu_lanes")
+        self.assertEqual(report["application_cycles"], 50)
+        events = {e["id"]: e for e in report["events"]}
+        self.assertEqual(events[1]["start_cycle"], 30)
+        self.assertEqual(events[1]["cpu_predecessor"], 0)
+        self.assertEqual(events[2]["start_cycle"], 0)
+
+    def test_cpu_wait_delays_issue_and_message_does_not_occupy_cpu(self):
+        workload = work([node(0, duration=100), node(1, "message", dst=1, size=64000),
+                         node(2, duration=20)])
+        for op in workload["nodes"]:
+            op["cpu_resource"] = 0
+        report, _ = self.execute(workload, "cpu_and_nic")
+        events = {e["id"]: e for e in report["events"]}
+        self.assertEqual(events[1]["start_cycle"], 100)
+        self.assertEqual(events[2]["finish_cycle"], 120)
+        self.assertGreater(events[1]["finish_cycle"], 120)
+
     def test_incomplete_run_rejected(self):
         workload = work([node(0, duration=37)])
         with self.assertRaisesRegex(RuntimeError, "did not complete"):

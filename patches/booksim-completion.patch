@@ -1,25 +1,27 @@
 diff --git a/rapidchiplet/booksim2/src/booksim_config.cpp b/rapidchiplet/booksim2/src/booksim_config.cpp
-index 1581d7d..1d2416a 100644
+index 1581d7d..2411087 100644
 --- a/rapidchiplet/booksim2/src/booksim_config.cpp
 +++ b/rapidchiplet/booksim2/src/booksim_config.cpp
-@@ -48,6 +48,8 @@ BookSimConfig::BookSimConfig( )
+@@ -48,6 +48,9 @@ BookSimConfig::BookSimConfig( )
    AddStrField( "path_for_xy_info", "" );
    AddStrField( "mode", "" );
    AddStrField( "trace_file", "" );
 +  AddStrField( "trace_report", "" );
++  AddStrField( "trace_events_file", "" );
 +  _int_map["trace_skip_idle"] = 1;
    _int_map["ignore_cycles"] = 0;
    _int_map["trace_time_out"] = 43200; //12 hours
    // ----- End custom options ---------------------------------
 diff --git a/rapidchiplet/booksim2/src/trafficmanager.cpp b/rapidchiplet/booksim2/src/trafficmanager.cpp
-index 55c194e..103da70 100644
+index 55c194e..8b71efa 100644
 --- a/rapidchiplet/booksim2/src/trafficmanager.cpp
 +++ b/rapidchiplet/booksim2/src/trafficmanager.cpp
-@@ -599,6 +599,11 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+@@ -599,6 +599,12 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
  	rc_trace_instructions_simulated = 0;										// Number of instructions simulated so far	
  	rc_trace_messages_simulated = 0;											// Number of messages simulated so far	
  
 +    rc_trace_report = config.GetStr("trace_report");
++    rc_trace_events_file = config.GetStr("trace_events_file");
 +    rc_trace_skip_idle = config.GetInt("trace_skip_idle") != 0;
 +    if (rc_mode == "trace" && (config.GetInt("sim_count") != 1 || rc_ignore_cycles)) {
 +        Error("Complete trace mode requires sim_count=1 and ignore_cycles=0");
@@ -27,7 +29,7 @@ index 55c194e..103da70 100644
  	// NOTE: For trace simulation, set a very high latency threshold to avoid interference
  	if (rc_mode == "trace") {
  		for (int c = 0; c < _classes; ++c) {
-@@ -641,6 +646,12 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+@@ -641,6 +647,12 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
  			rev_deps = item["rev_deps"].get<vector<long>>();
  			ignore = item["ignore"];
  			duration = item["duration"];
@@ -40,15 +42,16 @@ index 55c194e..103da70 100644
  			// Insert into maps
  			msg_source[id] = src;
  			msg_destination[id] = dst;
-@@ -650,6 +661,7 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+@@ -650,6 +662,8 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
  			msg_rev_deps[id] = rev_deps;
  			msg_ignore[id] = ignore;
  			msg_duration[id] = duration;
 +            msg_flits_remaining[id] = num_flits;
++            msg_cpu_resource[id] = item.value("cpu_resource", -1);
  			// Update num packets and max cycle
  			rc_trace_instructions++;
  			// Track if packet started without dependencies
-@@ -658,6 +670,18 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
+@@ -658,6 +672,18 @@ TrafficManager::TrafficManager( const Configuration &config, const vector<Networ
  			}
  		}
  
@@ -67,7 +70,7 @@ index 55c194e..103da70 100644
  		// Initialize the list of packets that are ready to be injected (one list per node)
  		for (int i = 0; i < _nodes; i++) {
  			ready_messages[i] = priority_queue<pair<long,long>, vector<pair<long,long>>, greater<pair<long,long>>>();
-@@ -728,42 +752,112 @@ TrafficManager::~TrafficManager( )
+@@ -728,42 +754,148 @@ TrafficManager::~TrafficManager( )
      Credit::FreeAll();
  }
  
@@ -113,10 +116,25 @@ index 55c194e..103da70 100644
 +    if (!trace_scheduled.insert(id).second) Error("Instruction scheduled twice");
 +    long ready = max(msg_cycle.at(id), global_current_cycle);
 +    msg_ready_cycle[id] = ready;
++    long start = ready;
++    int cpu = msg_cpu_resource.at(id);
++    msg_cpu_predecessor[id] = -1;
++    if (cpu >= 0) {
++        // Fixed-duration GOAL lanes, FCFS in dependency-ready callback order.
++        // Network sends use a zero-overhead issue slot; their network latency
++        // does not occupy the CPU lane. This is an explicit target policy.
++        start = max(start, cpu_free_cycle[cpu]);
++        if (start > ready) msg_cpu_predecessor[id] = cpu_owner.at(cpu);
++        if (msg_duration.at(id) > 0) {
++            cpu_free_cycle[cpu] = start + msg_duration.at(id);
++            cpu_owner[cpu] = id;
++        }
++    }
++    msg_start_cycle[id] = start;
 +    if (msg_ignore.at(id)) {
-+        compute_completions.push(make_pair(ready + msg_duration.at(id), id));
++        compute_completions.push(make_pair(start + msg_duration.at(id), id));
 +    } else {
-+        ready_messages[msg_source.at(id)].push(make_pair(ready, id));
++        ready_messages[msg_source.at(id)].push(make_pair(start, id));
 +    }
 +}
 +
@@ -146,10 +164,18 @@ index 55c194e..103da70 100644
 +    report["flits_ejected"] = rc_trace_ejected_flits;
 +    report["tagged_last_flit_arrived_early"] = rc_trace_tagged_last_early;
 +    report["events"] = json::array();
++    ofstream event_stream;
++    if (!rc_trace_events_file.empty()) {
++        event_stream.open(rc_trace_events_file);
++        if (!event_stream) Error("Cannot write trace events");
++        report["events_file"] = rc_trace_events_file;
++    }
 +    for (const auto & entry : msg_source) {
 +        long id = entry.first;
 +        json event = {{"id", id}, {"completed", trace_completed.count(id) != 0},
 +                      {"ready_cycle", msg_ready_cycle.count(id) ? msg_ready_cycle.at(id) : -1},
++                      {"start_cycle", msg_start_cycle.count(id) ? msg_start_cycle.at(id) : -1},
++                      {"cpu_predecessor", msg_cpu_predecessor.count(id) ? msg_cpu_predecessor.at(id) : -1},
 +                      {"finish_cycle", msg_finish_cycle.count(id) ? msg_finish_cycle.at(id) : -1},
 +                      {"flits_remaining", msg_flits_remaining.at(id)}};
 +        if (!msg_ignore.at(id)) {
@@ -158,7 +184,13 @@ index 55c194e..103da70 100644
 +            event["last_inject_cycle"] = msg_last_inject.count(id) ? msg_last_inject.at(id) : -1;
 +            event["first_eject_cycle"] = msg_first_eject.count(id) ? msg_first_eject.at(id) : -1;
 +        }
-+        report["events"].push_back(event);
++        if (event_stream.is_open()) event_stream << event.dump() << '\n';
++        else report["events"].push_back(event);
++    }
++    if (event_stream.is_open()) {
++        event_stream.flush();
++        if (!event_stream) Error("Failed writing trace events");
++        event_stream.close();
 +    }
 +    ofstream output(rc_trace_report);
 +    if (!output) Error("Cannot write complete-trace report");
@@ -170,6 +202,7 @@ index 55c194e..103da70 100644
 +    global_current_cycle = 0;
 +    const long cycle_limit = static_cast<long>(_sample_period) * 1000;
 +    const auto start = chrono::steady_clock::now();
++    long next_progress = 60;
 +    while (true) {
 +        while (!compute_completions.empty() && compute_completions.top().first <= global_current_cycle) {
 +            const auto event = compute_completions.top();
@@ -181,6 +214,12 @@ index 55c194e..103da70 100644
 +            return 0;
 +        }
 +        const auto seconds = chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now() - start).count();
++        if (seconds >= next_progress) {
++            cout << "TRACE_PROGRESS seconds=" << seconds << " cycle=" << global_current_cycle
++                 << " instructions=" << rc_trace_instructions_simulated << "/" << rc_trace_instructions
++                 << " messages=" << rc_trace_messages_simulated << " flits=" << rc_trace_ejected_flits << endl;
++            next_progress = seconds + 60;
++        }
 +        if (global_current_cycle >= cycle_limit || seconds >= rc_trace_time_out) {
 +            _WriteTraceReport(false);
 +            return 3;
@@ -216,7 +255,7 @@ index 55c194e..103da70 100644
  }
  
  
-@@ -1076,6 +1170,7 @@ void TrafficManager::_Inject(){
+@@ -1076,6 +1208,7 @@ void TrafficManager::_Inject(){
  						} else {
  							// Remove the next message from the ready queue
  							ready_messages[input].pop();
@@ -224,7 +263,7 @@ index 55c194e..103da70 100644
  							// cout << "[" << global_current_cycle << "] Injecting packet " << packet_id << " schedule at cycle " << packet_cycle << endl;
  							// Call Issue function just for its side effects
  							int do_inject = _IssuePacket(input, c);
-@@ -1220,32 +1315,17 @@ int TrafficManager::_Step()
+@@ -1220,32 +1353,17 @@ int TrafficManager::_Step()
                          ++_accepted_packets[f->cl][n];
                      }
                  }
@@ -268,7 +307,7 @@ index 55c194e..103da70 100644
  				// NOTE: End custom code to track packets left in trace simulation
              }
  
-@@ -1268,6 +1348,15 @@ int TrafficManager::_Step()
+@@ -1268,6 +1386,15 @@ int TrafficManager::_Step()
          _net[subnet]->ReadInputs( );
      }
    
@@ -284,7 +323,7 @@ index 55c194e..103da70 100644
      if ( !_empty_network ) {
          _Inject();
      }
-@@ -1459,6 +1548,10 @@ int TrafficManager::_Step()
+@@ -1459,6 +1586,10 @@ int TrafficManager::_Step()
                  _outstanding_classes[n][subnet][f->vc].push(c);
  #endif
  
@@ -295,7 +334,7 @@ index 55c194e..103da70 100644
                  dest_buf->SendingFlit(f);
  	
                  if(_pri_type == network_age_based) {
-@@ -1686,6 +1779,7 @@ void TrafficManager::_DisplayRemaining( ostream & os ) const
+@@ -1686,6 +1817,7 @@ void TrafficManager::_DisplayRemaining( ostream & os ) const
  // Returns 0 for success, 1 for potential deadlock, 2 for unstable simulation
  int TrafficManager::_SingleSim( )
  {
@@ -303,7 +342,7 @@ index 55c194e..103da70 100644
      int converged = 0;
    
      //once warmed up, we require 3 converging runs to end the simulation 
-@@ -1697,62 +1791,7 @@ int TrafficManager::_SingleSim( )
+@@ -1697,62 +1829,7 @@ int TrafficManager::_SingleSim( )
             ( ( _sim_state != running ) || 
               ( converged < 3 ) ) ) {
  
@@ -367,7 +406,7 @@ index 55c194e..103da70 100644
     			// Original BookSim code 
  			if ( clear_last || (( ( _sim_state == warming_up ) && ( ( total_phases % 2 ) == 0 ) )) ) {
  				clear_last = false;
-@@ -2498,7 +2537,7 @@ void TrafficManager::DisplayOverallStats( ostream & os ) const {
+@@ -2498,7 +2575,7 @@ void TrafficManager::DisplayOverallStats( ostream & os ) const {
  
  		// NOTE: Custom code for trace simulation
  		if (rc_mode == "trace") {
@@ -377,27 +416,31 @@ index 55c194e..103da70 100644
  			cout << "Total number of trace messages simulated = " << rc_trace_messages_simulated << endl;
  			cout << "Total number of trace instructions simulated = " << rc_trace_instructions_simulated << endl;
 diff --git a/rapidchiplet/booksim2/src/trafficmanager.hpp b/rapidchiplet/booksim2/src/trafficmanager.hpp
-index d373931..5e9302e 100644
+index d373931..d591d5c 100644
 --- a/rapidchiplet/booksim2/src/trafficmanager.hpp
 +++ b/rapidchiplet/booksim2/src/trafficmanager.hpp
-@@ -93,6 +93,16 @@ protected:
+@@ -93,6 +93,20 @@ protected:
    long rc_trace_instructions;
    long rc_trace_instructions_simulated;
    long rc_trace_messages_simulated;
 +  string rc_trace_report;
++  string rc_trace_events_file;
 +  bool rc_trace_skip_idle;
 +  long rc_trace_finish_cycle = 0;
 +  long rc_trace_ejected_flits = 0;
 +  long rc_trace_tagged_last_early = 0;
 +  priority_queue<pair<long,long>, vector<pair<long,long>>, greater<pair<long,long>>> compute_completions;
 +  map<long, long> msg_ready_cycle, msg_finish_cycle, msg_generate_cycle;
++  map<long, long> msg_start_cycle, msg_cpu_predecessor;
++  map<long, int> msg_cpu_resource;
++  map<int, long> cpu_free_cycle, cpu_owner;
 +  map<long, long> msg_first_inject, msg_last_inject, msg_first_eject;
 +  map<long, int> msg_flits_remaining;
 +  set<long> trace_scheduled, trace_completed;
  
    map<int, priority_queue<pair<long,long>, vector<pair<long,long>>, greater<pair<long,long>>>> ready_messages;
    map<long, vector<long>> msg_rev_deps;
-@@ -286,6 +296,9 @@ protected:
+@@ -286,6 +300,9 @@ protected:
  
    // NOTE: Custom code for trace simulation
    void _HandlePacketWithZeroDependencies(long pkt_id);
