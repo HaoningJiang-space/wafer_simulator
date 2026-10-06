@@ -180,6 +180,8 @@ class AttributionTests(unittest.TestCase):
         summary = analyze(self.campaign, output)
         self.assertEqual(summary["next_experiment"], dict(status="pending_reference_equivalence", registered_groups=0))
         self.assertFalse((output / "next_experiment.json").exists())
+        self.assertEqual(read_json(output / "acceptance.json")["analysis_environment_sha256"],
+                         digest(output / "analysis_environment.json"))
         self.assertEqual(summary["application_speedup"], 14 / 13)
         self.assertEqual(summary["chain_difference"]["accounted_delta_cycles"], 1)
         self.assertEqual([row["send_id"] for row in summary["largest_critical_message_changes"]], [1, 2])
@@ -221,6 +223,8 @@ class AttributionTests(unittest.TestCase):
         registration.assert_called_once()
         self.assertEqual(read_json(output / "summary.json")["next_experiment"]["registered_groups"], 1)
         self.assertTrue(read_json(output / "FINAL_ACCEPTED.json")["implementation_equivalence"])
+        self.assertEqual(read_json(output / "acceptance.json")["finalization_environment_sha256"],
+                         digest(output / "finalization_environment.json"))
         self.assertEqual(read_json(output / "acceptance.json")["implementation_equivalence"]["status"], "passed")
         manifest = read_json(output / "ANALYZED.json")
         self.assertEqual(manifest["artifact_sha256"]["attribution.md"], digest(output / "attribution.md"))

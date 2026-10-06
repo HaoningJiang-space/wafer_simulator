@@ -73,6 +73,9 @@ invokes BookSim. Individual analysis is available through
   accounting, including messages on one or both selected chains.
 - `acceptance.json` and `ANALYZED.json`: source/binary/input/artifact identities
   and explicit implementation-equivalence status.
+- `analysis_environment.json` and `finalization_environment.json`: Python
+  executable hash, package versions and platform at the respective stages;
+  the existing campaign Python-environment record is also hashed as input.
 - `implementation_equivalence.json` and `FINAL_ACCEPTED.json`: direct complete
   002-vs-006 acceptance after the reference finishes. `FINAL_ACCEPTED` covers
   the attribution/equivalence gate; the overall research goal also requires the

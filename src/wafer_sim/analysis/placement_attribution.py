@@ -1,13 +1,25 @@
 """Read-only attribution from accepted complete events; no simulator invocation."""
 import csv
+from importlib.metadata import distributions
 from pathlib import Path
+import platform
 import subprocess
+import sys
 
 import numpy as np
 
 from wafer_sim.analysis.campaign_acceptance import ARMS, accept
 from wafer_sim.analysis.critical_chain import difference, message_timings, parent_graph, recover
 from wafer_sim.io import digest, read_json, write_json
+
+
+def _environment(output, filename):
+    path = Path(output) / filename
+    write_json(path, dict(host=platform.node(), platform=platform.platform(), python=sys.version,
+        python_executable=str(Path(sys.executable).resolve()), python_executable_sha256=digest(sys.executable),
+        packages=sorted((dict(name=d.metadata["Name"], version=d.version) for d in distributions()),
+                        key=lambda d: d["name"].lower())))
+    return digest(path)
 
 
 def _csv(path, rows):
@@ -342,10 +354,14 @@ def analyze(campaign, output):
             inputs[str(path / file)] = digest(path / file)
         if inputs[str(path / "trace.json")] != info["arms"][name]["contract"]["trace_sha256"]:
             raise ValueError("Full mapped input identity changed")
+    original_environment = info["campaign"].parent.parent / "logs/python-environment.txt"
+    if original_environment.exists():
+        inputs[str(original_environment)] = digest(original_environment)
     acceptance = dict(architecture_pair_accepted=True, implementation_equivalence=dict(status="pending"),
                        campaign=str(info["campaign"]), simulator_provenance=info["provenance"],
                        analysis_source_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-                       input_sha256=inputs, work=work)
+                       input_sha256=inputs, work=work,
+                       analysis_environment_sha256=_environment(output, "analysis_environment.json"))
     write_json(output / "summary.json", summary)
     write_json(output / "acceptance.json", acceptance)
     render(summary, acceptance, output)
@@ -380,13 +396,15 @@ def finalize(output, equivalence, register_next=None):
     summary["next_experiment"] = (register_next(accept(acceptance["campaign"]), summary, output) if register_next else
                                   dict(status="needs_result_review", registered_groups=0))
     acceptance["finalization_source_commit"] = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    acceptance["finalization_environment_sha256"] = _environment(output, "finalization_environment.json")
     write_json(output / "summary.json", summary)
     write_json(output / "acceptance.json", acceptance)
     render(summary, acceptance, output)
     manifest = read_json(output / "ANALYZED.json")
     manifest["implementation_equivalence"] = "passed"
     for file in ("acceptance.json", "summary.json", "attribution.md", "next_experiment.json",
-                 "next_experiment_config.json", "next_experiment_decision.json", "implementation_equivalence.json"):
+                 "next_experiment_config.json", "next_experiment_decision.json", "implementation_equivalence.json",
+                 "finalization_environment.json"):
         if (output / file).exists():
             manifest["artifact_sha256"][file] = digest(output / file)
     write_json(output / "ANALYZED.json", manifest)
