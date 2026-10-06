@@ -24,7 +24,7 @@ def tiny_inputs():
     return dict(chiplets={"c": dict(router_latency=4, unit_count=1)},
                 placement={"chiplets": [{"name": "c"}, {"name": "c"}]},
                 routing_table={"type": "default"},
-                booksim_config=dict(mode="trace", trace_file="none", ignore_cycles=0,
+                booksim_config=dict(mode="trace", trace_file="none", ignore_cycles=0, repetitions=3,
                     sim_count=1, trace_time_out=30, time_limit=30, precision=0.001,
                     saturation_factor=2, traffic="uniform", packet_size=1,
                     num_vcs=1, vc_buf_size=32, modular_routing_function="simple_cycle_breaking_set",

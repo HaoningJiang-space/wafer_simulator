@@ -12,6 +12,7 @@ def prepare_config(inputs, directory, trace_path, seed, timeout=120, skip_idle=T
     from rapidchiplet import booksim_wrapper
     directory = Path(directory).resolve()
     config = inputs["booksim_config"].copy()
+    config.pop("repetitions", None)  # author Python orchestration metadata
     config.update(seed=seed, trace_file=str(Path(trace_path).resolve()),
                   trace_report=str(directory / "trace_report.json"),
                   trace_skip_idle=int(skip_idle), mode="trace", ignore_cycles=0,
