@@ -6,7 +6,7 @@ for what is reused, repaired, and not claimed.
 
 Code layers: `workloads` → `adapters` → native BookSim → `analysis`;
 `experiments` orchestrates these layers. `configs/` contains fixed controls;
-`patches/` contains the isolated upstream change. Author source is a Git submodule.
+`patches/` contains isolated upstream changes. Author source is a Git submodule.
 
 Build, tests and experiments run on `wangziheng@eex005`. Local work is editing,
 source review, and Git. The remote root is `/home/wangziheng/wafer_simulator`.
@@ -37,3 +37,9 @@ downloaded **only on eex005**. It is not the missing WoW paper capture. See
 Generated workloads remain unit-test fixtures only; no smoke/prefix experiment
 is part of the formal campaign. `COMPLETE.json` is written only after both
 full placement arms pass the independent all-operation audit.
+
+Performance work is tracked separately from architectural results:
+[topology-copy diagnosis](docs/ROUTING_COPY_DIAGNOSIS.md) and
+[dense trace state / empty channel evaluation](docs/RUNTIME_OPTIMIZATION.md).
+The optimized builds use separate worktrees and the same full capture. Their
+complete event histories must match their controls before accepting a speedup.

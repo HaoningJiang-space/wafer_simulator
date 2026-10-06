@@ -1,6 +1,6 @@
 # Full-capture run receipt — 2026-10-06
 
-Status: **full run 002 executing; no application-performance result yet**.
+Status: **full runs 002, 003 and 004 executing; no application-performance result yet**.
 
 - Host: `wangziheng@eex005`.
 - Run: `/home/wangziheng/wafer_simulator/runs/llama16-full-002`.
@@ -43,3 +43,23 @@ ssh wangziheng@eex005 'tail -3 /home/wangziheng/wafer_simulator/runs/llama16-ful
 
 Do not restart, truncate, reduce message sizes, or substitute a synthetic case
 to obtain a quick number. The configured wall limit is 24 hours per arm.
+
+## Implementation comparisons
+
+These runs retain the same complete input, both placements and fixed physical
+controls. They compare simulator implementations, not new architecture settings.
+
+| Run | Implementation | Exact full-replay reference |
+| --- | --- | --- |
+| `llama16-full-002` | Completion-corrected author implementation | Control |
+| `llama16-full-003-topology-ref` | Immutable routing topology passed by reference | 002 |
+| `llama16-full-004-runtime-opt` | Dense instruction state and empty channel evaluation removed | 003 |
+
+Run 004 passed the full-input equality gate and launched both native processes
+(observed PIDs 2149199 and 2149200). Its recorded source commit is `79784d5` with
+a clean checkout. Its driver log is `logs/llama16-full-004-runtime-opt.log`.
+The binary hash, 15 passing semantic regressions and 12 exact regression-report
+matches are recorded in [the runtime optimization note](RUNTIME_OPTIMIZATION.md).
+The wrappers automatically compare complete event hashes after both candidate
+and reference finish their independent audits. Until those acceptance files
+exist, neither full-capture equivalence nor an end-to-end speedup is established.
