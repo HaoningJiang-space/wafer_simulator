@@ -1,0 +1,19 @@
+{
+  "study": "M0_fixed_local_transfers_vs_M1_explicit_WoW_transfers",
+  "m0_campaign": "/home/wangziheng/wafer_simulator/runs/llama16-full-006-csr-frontier",
+  "source_provenance": "/home/wangziheng/wafer_simulator/runs/local-stage-provenance-001",
+  "prepared_inputs": "/home/wangziheng/wafer_simulator/runs/model-boundary-inputs-001",
+  "m1_campaign": "/home/wangziheng/wafer_simulator/runs/llama16-model-boundary-M1-001",
+  "analysis_output": "/home/wangziheng/wafer_simulator/runs/model-boundary-analysis-001",
+  "binary_sha256": "9807d4a81c07e29bf1f40dec11fbc9dad9f64d66319c6dbdd5103c04b4256255",
+  "registered_comparison_groups": 1,
+  "new_placements": ["baseline", "ours_rotated"],
+  "mapping": "row_major",
+  "seed": 1,
+  "local_policy": "Preserve every original interval and reduction/copy duration; replace both endpoints of each verified local transfer with one target message",
+  "dependencies": "Preserve all original dependencies and all matched arrival relations, including parallel relations",
+  "m0_policy": "Reuse accepted complete M0 events only after full lowered-input and binary identity checks",
+  "native_training_time_claim": false,
+  "thermal_feedback": false,
+  "new_mapping_study": false
+}

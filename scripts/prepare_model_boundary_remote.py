@@ -7,7 +7,7 @@ import sys
 
 from wafer_sim.adapters.goal_booksim import lower
 from wafer_sim.io import digest, read_json, write_json
-from wafer_sim.workloads.local_transfers import materialize
+from wafer_sim.workloads.local_transfers import materialize, audit_target_graph
 from wafer_sim.workloads.goal import ingest
 
 
@@ -56,6 +56,7 @@ def main():
         raise ValueError("M1 lost or added original operations/dependencies")
     if digest(output / "graph/dependencies.npy") != digest(graph / "dependencies.npy"):
         raise ValueError("M1 original dependency array differs")
+    audit_target_graph(graph, output / "graph", root / "runs/local-stage-provenance-001")
     config = read_json("configs/llama16_fixed_state.json")
     old_config = read_json(campaign / "config.json")
     for key in ("placements", "active_endpoints", "mapping", "seed", "flit_bytes", "network_frequency_hz",

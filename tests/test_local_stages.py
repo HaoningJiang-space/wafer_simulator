@@ -10,7 +10,7 @@ from wafer_sim.adapters.atlahs_observer import DTYPE, write_sites, observe_gener
 from wafer_sim.analysis.local_stages import check_correspondence
 from wafer_sim.analysis.source_intervals import covered_time
 from wafer_sim.io import digest, write_json
-from wafer_sim.workloads.local_transfers import pair_transfers
+from wafer_sim.workloads.local_transfers import pair_transfers, audit_target_graph
 
 
 class SourceEvidenceTests(unittest.TestCase):
@@ -117,3 +117,29 @@ def get_inter_node_microevents_dependency(path):
         records = np.fromfile(self.root / "calc_provenance.bin", dtype=DTYPE)
         self.assertEqual(records["category"].tolist(), [5, 4])
         self.assertEqual(records["peer_gpu"].tolist(), [1, -1])
+
+    def test_target_readback_preserves_all_nontransfer_work(self):
+        before = np.array([(0, 1, 0, 3, 1, 1, 0), (0, 2, 0, 3, 2, 2, 0), (0, 3, 0, 7, 3, 3, 0)],
+            dtype=[("rank", "i8"), ("label", "i8"), ("kind", "i8"), ("amount", "i8"),
+                   ("cpu", "i8"), ("line", "i8"), ("tag", "i8")])
+        after = before.copy()
+        after["kind"][:2] = [1, 2]
+        after["amount"][:2] = 4096
+        after["tag"][:2] = 10
+        deps = np.array([[0, 1], [1, 2]], dtype="i4")
+        pairs = np.array([[0, 1]], dtype="i4")
+        np.save(self.graph / "operations.npy", before)
+        np.save(self.regen / "operations.npy", after)
+        for path in (self.graph, self.regen):
+            np.save(path / "dependencies.npy", deps)
+            write_json(path / "graph_audit.json", {"fixture": True})
+        np.save(self.graph / "message_pairs.npy", np.empty((0, 2), dtype="i4"))
+        np.save(self.regen / "message_pairs.npy", pairs)
+        np.save(self.root / "local_transfer_pairs.npy", pairs)
+        np.save(self.root / "local_transfer_bytes.npy", np.array([4096]))
+        result = audit_target_graph(self.graph, self.regen, self.root)
+        self.assertEqual(result["remaining_local_cycles"], 7)
+        after["amount"][2] = 6
+        np.save(self.regen / "operations.npy", after)
+        with self.assertRaisesRegex(ValueError, "non-transfer operation changed"):
+            audit_target_graph(self.graph, self.regen, self.root)

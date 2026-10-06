@@ -206,9 +206,12 @@ def render(summary, acceptance, output):
               "| 消息集合 | 数量 | 累计服务时间差 B−R |", "| --- | ---: | ---: |"]
     for name, group in summary["message_groups"].items():
         lines.append(f"| {name} | {group['messages']:,} | {group['service_delta_cycles']:,} |")
+    local_scope = ("有来源依据的节点内传输已进入 WoW 网络竞争；calc 保留原间隔与 reduction/copy。"
+                   if summary.get("local_transfer_model") == "explicit_wow" else
+                   "calc 包括本地间隔、reduction/copy 与部分 intra-host transfer。")
     lines += ["", "## 解释边界", "",
-              "这是完整 ATLAHS capture 在固定本地执行模型下的条件化回放；calc 包括本地间隔、"
-              "reduction/copy 与部分 intra-host transfer。它不是缺失的 WoW 论文 trace 复现，也不是标定过的原生 wafer 训练时间。", "",
+              "这是完整 ATLAHS capture 在固定本地执行模型下的条件化回放；" + local_scope +
+              "它不是缺失的 WoW 论文 trace 复现，也不是标定过的原生 wafer 训练时间。", "",
               "当前结果只有一种 mapping 和 seed 1；router/link 成本不同。表中的总链路带宽是链路资源之和，"
               "不是可供任意两个区域使用的带宽，也不是应用有效带宽。", "",
               "calc 的位置只记录逻辑 host/CPU lane。该回放模型未把所有 calc lane 分配到物理 reticle，"
@@ -344,6 +347,9 @@ def analyze(campaign, output):
                    observed_order_changes=order_changes,
                    host_wall_seconds={name: info["arms"][name]["execution"]["wall_seconds"] for name in ARMS})
     summary["next_experiment"] = dict(status="pending_reference_equivalence", registered_groups=0)
+    if info["config"].get("local_transfer_model") == "explicit_wow":
+        summary["local_transfer_model"] = "explicit_wow"
+        summary["next_experiment"] = dict(status="model_boundary_result_review", registered_groups=0)
     print("Recording complete-input and artifact hashes", flush=True)
     inputs = {str(graph / file): digest(graph / file) for file in
               ("graph_audit.json", "operations.npy", "dependencies.npy", "message_pairs.npy")}

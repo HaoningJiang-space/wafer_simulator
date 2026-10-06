@@ -68,6 +68,10 @@ def run_campaign(config_path, upstream, binary, output):
         mapping = wow.rank_mapping(endpoints, config["active_endpoints"], config["mapping"])
         print(f"Lowering ALL operations for {placement}", flush=True)
         contract = lower(config["graph_directory"], directory / "trace.json", mapping, config["flit_bytes"])
+        if config.get("local_transfer_model") == "explicit_wow":
+            contract["calc_policy"] = "Original measured intervals and reduction/copy costs; source-verified local transfers replaced by target messages"
+            contract["model_boundary"] = "M1; both original transfer endpoint durations removed"
+            write_json(directory / "contract.json", contract)
         if identity is not None and identity != contract["work"]:
             raise ValueError("Work differs across placement arms")
         identity = contract["work"]
@@ -115,9 +119,12 @@ def run_campaign(config_path, upstream, binary, output):
         writer = csv.DictWriter(stream, fieldnames=list(flat[0]))
         writer.writeheader()
         writer.writerows(flat)
+    local_description = ("Source-verified intra-host transfers use WoW messages; remaining local costs stay fixed."
+                         if config.get("local_transfer_model") == "explicit_wow" else
+                         "Local calc work includes opaque intra-host transfers.")
     explanation = ["# Complete ATLAHS capture: fixed-state WoW comparison", "",
-                   "Every original operation and dependency was retained. Local `calc` work includes",
-                   "opaque intra-host transfers; this is a conditional replay, not native wafer timing.", ""]
+                   "Every original operation and dependency was retained.",
+                   local_description, "This is a conditional replay, not native wafer timing.", ""]
     for row, compact in zip(rows, flat):
         explanation.append(f"- {row['placement']}: {row['application_cycles']} cycles; "
                            f"{compact['speedup_vs_baseline']:.6f}x baseline speed. "

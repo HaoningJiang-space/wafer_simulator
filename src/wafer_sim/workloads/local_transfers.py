@@ -164,3 +164,46 @@ def materialize(original, graph, regenerated, extracted, provenance, output):
         m0_regenerated=False, new_simulations_launched=0)
     write_json(output / "TRANSFORMATION.json", result)
     return result
+
+
+def audit_target_graph(original_graph, target_graph, provenance):
+    """Independently check every rewritten operation and all original relations."""
+    original_graph, target_graph, provenance = map(Path, (original_graph, target_graph, provenance))
+    before = np.load(original_graph / "operations.npy", mmap_mode="r")
+    after = np.load(target_graph / "operations.npy", mmap_mode="r")
+    pairs = np.load(provenance / "local_transfer_pairs.npy", mmap_mode="r")
+    sizes = np.load(provenance / "local_transfer_bytes.npy", mmap_mode="r")
+    if len(before) != len(after):
+        raise ValueError("Operation count changed")
+    replaced = np.zeros(len(before), dtype=bool)
+    replaced[pairs.ravel()] = True
+    if not np.array_equal(before[~replaced], after[~replaced]):
+        raise ValueError("A non-transfer operation changed")
+    for field in ("rank", "label", "cpu", "line"):
+        if not np.array_equal(before[field], after[field]):
+            raise ValueError(f"Original operation identity/resource changed: {field}")
+    sends, recvs = pairs.T
+    if (np.any(after["kind"][sends] != 1) or np.any(after["kind"][recvs] != 2) or
+            not np.array_equal(after["amount"][sends], sizes) or
+            not np.array_equal(after["amount"][recvs], sizes) or
+            not np.array_equal(after["tag"][sends], after["tag"][recvs])):
+        raise ValueError("Recovered transfer identity or size changed")
+    if digest(original_graph / "dependencies.npy") != digest(target_graph / "dependencies.npy"):
+        raise ValueError("Original dependencies changed")
+    expected = np.concatenate((np.load(original_graph / "message_pairs.npy", mmap_mode="r"), pairs))
+    actual = np.load(target_graph / "message_pairs.npy", mmap_mode="r")
+    if len(expected) != len(actual) or not np.array_equal(expected[np.argsort(expected[:, 0])], actual[np.argsort(actual[:, 0])]):
+        raise ValueError("Matched transfer relations do not conserve original and recovered messages")
+    old_cost = int(before["amount"][before["kind"] == 0].sum())
+    new_cost = int(after["amount"][after["kind"] == 0].sum())
+    removed = int(before["amount"][replaced].sum())
+    if old_cost - new_cost != removed:
+        raise ValueError("Fixed cost removal does not equal both transfer endpoint costs")
+    result = dict(passed=True, all_operations_checked=len(before), transfer_operations=int(replaced.sum()),
+        original_local_cycles=old_cost, remaining_local_cycles=new_cost, replaced_transfer_cycles=removed,
+        original_dependencies_byte_identical=True, original_message_pairs_retained=True,
+        nontransfer_operations_byte_identical=True, no_transfer_double_charge=True,
+        target_artifacts_sha256={name: digest(target_graph / name) for name in (
+            "operations.npy", "dependencies.npy", "message_pairs.npy", "graph_audit.json")})
+    write_json(target_graph.parent / "TRANSFORMATION_AUDIT.json", result)
+    return result
