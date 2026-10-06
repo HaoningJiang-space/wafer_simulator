@@ -6,6 +6,7 @@ import subprocess
 
 from wafer_sim.analysis.local_stages import check_correspondence, classify
 from wafer_sim.analysis.source_intervals import analyze_intervals
+from wafer_sim.workloads.local_transfers import recover
 from wafer_sim.io import write_json
 
 parser = argparse.ArgumentParser()
@@ -27,3 +28,4 @@ if result["source_correspondence_passed"]:
     print(classify(graph, args.regenerated, root / "runs/postrun-006-attribution-001", args.output)["chains"], flush=True)
     intervals = analyze_intervals(args.regenerated, root / "downloads/atlahs/llama16/sqlite-001", args.output)
     print(dict(intervals_checked=len(intervals["intervals"])), flush=True)
+    print(recover(graph, args.regenerated, args.output), flush=True)
