@@ -1,6 +1,6 @@
 # Full-capture run receipt — 2026-10-06
 
-Status: **full runs 002, 003 and 004 executing; no application-performance result yet**.
+Status: **full runs 002 through 005 executing; no application-performance result yet**.
 
 - Host: `wangziheng@eex005`.
 - Run: `/home/wangziheng/wafer_simulator/runs/llama16-full-002`.
@@ -54,6 +54,7 @@ controls. They compare simulator implementations, not new architecture settings.
 | `llama16-full-002` | Completion-corrected author implementation | Control |
 | `llama16-full-003-topology-ref` | Immutable routing topology passed by reference | 002 |
 | `llama16-full-004-runtime-opt` | Dense instruction state and empty channel evaluation removed | 003 |
+| `llama16-full-005-node-reuse` | Ordered-container nodes retained across arbitration/credit reuse | 004 |
 
 Run 004 passed the full-input equality gate and launched both native processes
 (observed PIDs 2149199 and 2149200). Its recorded source commit is `79784d5` with
@@ -63,3 +64,9 @@ matches are recorded in [the runtime optimization note](RUNTIME_OPTIMIZATION.md)
 The wrappers automatically compare complete event hashes after both candidate
 and reference finish their independent audits. Until those acceptance files
 exist, neither full-capture equivalence nor an end-to-end speedup is established.
+
+Run 005 also passed the full-input equality gate and launched native processes
+2186310 and 2186311 from clean source commit `e3899f8`. Its driver log is
+`logs/llama16-full-005-node-reuse.log`. The additional 1,500-round arbitration
+comparison and checked-container ownership tests are documented in
+[NODE_REUSE.md](NODE_REUSE.md). Full-capture acceptance is pending.

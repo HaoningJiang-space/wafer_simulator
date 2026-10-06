@@ -50,6 +50,10 @@ and network results after each independent audit. It writes
 `runs/llama16-node-reuse-equivalence.json` only after passing. The existing
 reference runs and binaries remain active and unchanged.
 
+Run 005 passed the complete-input equality gate and launched both native arms
+(observed PIDs 2186310 and 2186311) from clean source commit `e3899f8`.
+End-to-end performance and full event equivalence are still pending.
+
 The GPU/HeteroSTA investigation is a separate design assessment in
 [HETEROSTA_TRANSFER.md](HETEROSTA_TRANSFER.md); this patch is a CPU implementation
 optimization and adds no GPU execution or new simulation approximation.
