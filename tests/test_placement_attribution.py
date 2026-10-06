@@ -156,6 +156,22 @@ class AttributionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "different implementation"):
             accept(self.campaign)
 
+    def test_inconsistent_completion_marker_rejected(self):
+        path = self.campaign / "COMPLETE.json"
+        value = read_json(path)
+        value["comparisons"][0]["application_cycles"] += 1
+        write_json(path, value)
+        with self.assertRaisesRegex(ValueError, "completion marker disagrees"):
+            accept(self.campaign)
+
+    def test_required_profile_gate_cannot_be_omitted(self):
+        path = self.campaign / "config.json"
+        value = read_json(path)
+        value["dependency_profile"] = True
+        write_json(path, value)
+        with self.assertRaises(FileNotFoundError):
+            accept(self.campaign)
+
     def test_outputs_readonly_counts_and_equivalence_binding(self):
         before = {p: digest(p) for p in self.campaign.rglob("*") if p.is_file()}
         output = self.root / "analysis"
@@ -174,7 +190,7 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(sum(int(r["service_cycles"]) for r in chain), 14)
         self.assertEqual(before, {p: digest(p) for p in self.campaign.rglob("*") if p.is_file()})
         verification = dict(passed=True, same_full_work_and_events=True, reference=str(self.root / "reference"),
-            candidate=str(self.campaign), arms=[dict(placement=n, hashes=[dict(file=f,
+            candidate=str(self.campaign), arms=[dict(placement=n, exact_full_event_match=True, hashes=[dict(file=f,
                 sha256=digest(self.campaign / n / f)) for f in ("trace.json", "events.jsonl")])
                 for n in ("baseline", "ours_rotated")])
         bad = copy.deepcopy(verification)
@@ -183,6 +199,11 @@ class AttributionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "differs from attributed"):
             finalize(output, output / "bad-equivalence.json")
         write_json(output / "implementation_equivalence.json", verification)
+        missing = copy.deepcopy(verification)
+        missing["arms"][0]["hashes"].pop()
+        write_json(output / "incomplete-equivalence.json", missing)
+        with self.assertRaisesRegex(ValueError, "both complete input and event hashes"):
+            finalize(output, output / "incomplete-equivalence.json")
         finalize(output, output / "implementation_equivalence.json")
         self.assertTrue(read_json(output / "FINAL_ACCEPTED.json")["implementation_equivalence"])
         self.assertEqual(read_json(output / "acceptance.json")["implementation_equivalence"]["status"], "passed")

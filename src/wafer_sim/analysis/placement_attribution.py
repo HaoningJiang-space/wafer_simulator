@@ -267,9 +267,12 @@ def finalize(output, equivalence):
         raise ValueError("Complete implementation equivalence has not passed")
     if Path(verification["candidate"]).resolve() != Path(acceptance["campaign"]):
         raise ValueError("Equivalence belongs to a different campaign")
-    if {a["placement"] for a in verification["arms"]} != set(ARMS):
+    if len(verification["arms"]) != 2 or {a["placement"] for a in verification["arms"]} != set(ARMS):
         raise ValueError("Equivalence omits a placement")
     for arm in verification["arms"]:
+        if (arm.get("exact_full_event_match") is not True or len(arm["hashes"]) != 2 or
+                {h["file"] for h in arm["hashes"]} != {"trace.json", "events.jsonl"}):
+            raise ValueError("Equivalence must bind both complete input and event hashes")
         for file in arm["hashes"]:
             key = str(Path(acceptance["campaign"]) / arm["placement"] / file["file"])
             if acceptance["input_sha256"].get(key) != file["sha256"]:

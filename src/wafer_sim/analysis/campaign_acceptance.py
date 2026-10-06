@@ -2,6 +2,7 @@
 from pathlib import Path
 
 from wafer_sim.io import digest, read_json
+from wafer_sim.analysis.dependency_profile import validate as validate_profile
 
 ARMS = ("baseline", "ours_rotated")
 
@@ -21,8 +22,11 @@ def accept(campaign):
     rows = {row["placement"]: row for row in results}
     if len(results) != 2 or set(rows) != set(ARMS) or config["placements"] != list(ARMS):
         raise ValueError("Expected exactly the registered Baseline-Rotated pair")
-    if {row["placement"] for row in complete["comparisons"]} != set(ARMS):
+    if len(complete["comparisons"]) != 2 or {row["placement"] for row in complete["comparisons"]} != set(ARMS):
         raise ValueError("Final completion marker has an incomplete pair")
+    for row in complete["comparisons"]:
+        if row["application_cycles"] != rows[row["placement"]]["application_cycles"]:
+            raise ValueError("Final completion marker disagrees with results")
     if (config["truncate_input"] or config["remove_dependencies"] or config["thermal_feedback"] or
             config["network_frequency_hz"] != 1_000_000_000 or config["flit_bytes"] != 2000):
         raise ValueError("This report requires the registered complete fixed-state replay")
@@ -74,6 +78,8 @@ def accept(campaign):
             if (profile.get("passed") is not True or profile["instructions"] != work["instructions"] or
                     profile["edges"] != work["original_dependencies"] + work["arrival_dependencies"]):
                 raise ValueError(f"Dependency-profile audit missing/inconsistent: {name}")
+            validate_profile(read_json(path / "dependency_profile.json"), work["instructions"],
+                             profile["edges"], profile["initial_roots"])
         loaded[name] = dict(path=path, contract=contract, audit=audit, resources=resources,
                             network=network, execution=execution, result=rows[name])
     controls = ("compute_reticles", "network_frequency_hz", "link_bits_per_cycle", "buffer_flits_per_vc",
