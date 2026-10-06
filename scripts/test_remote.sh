@@ -26,6 +26,12 @@ if ! "$remote_root/.venv/bin/python" -m unittest discover -s tests -p test_goal_
     exit 1
 fi
 tail -n 4 "$test_root/readback.log"
+if ! "$remote_root/.venv/bin/python" -m unittest discover -s tests -p test_placement_attribution.py \
+    > "$test_root/attribution.log" 2>&1; then
+    cat "$test_root/attribution.log"
+    exit 1
+fi
+tail -n 4 "$test_root/attribution.log"
 
 # Validate ownership/reset with checked containers; this host lacks ASan runtimes.
 g++ -std=c++17 -g -O1 -D_GLIBCXX_DEBUG -D_GLIBCXX_ASSERTIONS \

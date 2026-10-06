@@ -1,0 +1,288 @@
+"""Read-only attribution from accepted complete events; no simulator invocation."""
+import csv
+from pathlib import Path
+import subprocess
+
+import numpy as np
+
+from wafer_sim.analysis.campaign_acceptance import ARMS, accept
+from wafer_sim.analysis.critical_chain import difference, message_timings, parent_graph, recover
+from wafer_sim.io import digest, read_json, write_json
+
+
+def _csv(path, rows):
+    iterator = iter(rows)
+    first = next(iterator, None)
+    if first is None:
+        raise ValueError(f"Expected nonempty output: {path}")
+    with Path(path).open("w", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(first))
+        writer.writeheader()
+        writer.writerow(first)
+        writer.writerows(iterator)
+
+
+def _endpoint_map(arm):
+    physical = {e["node"]: e for e in arm["network"]["endpoints"]}
+    mapping = {}
+    for entry in arm["contract"]["endpoint_mapping"]:
+        key = (entry["host"], entry["nic"])
+        if key in mapping or entry["node"] not in physical:
+            raise ValueError("Invalid endpoint mapping")
+        mapping[key] = physical[entry["node"]]
+    if len({e["node"] for e in mapping.values()}) != len(mapping):
+        raise ValueError("Non-injective endpoint mapping")
+    return mapping
+
+
+def _chain_rows(ops, events, chain, mapping, cpu_stride):
+    for index, raw_id in enumerate(chain["ids"]):
+        op_id = int(raw_id)
+        op = ops[op_id]
+        host, cpu, nic, kind = (int(op[f]) for f in ("rank", "cpu", "nic", "kind"))
+        endpoint = mapping.get((host, nic)) if kind != 0 else None
+        start, ready, finish = (int(events[f][op_id]) for f in ("start_cycle", "ready_cycle", "finish_cycle"))
+        yield dict(sequence=index, op_id=op_id, kind=("calc", "send", "recv")[kind],
+                   host=host, label=int(op["label"]), cpu=cpu, cpu_resource=host * cpu_stride + cpu,
+                   nic=nic, endpoint=endpoint["node"] if endpoint else "",
+                   router=endpoint["router"] if endpoint else "", layer=endpoint["layer"] if endpoint else "",
+                   x_mm=endpoint["position"]["x"] if endpoint else "",
+                   y_mm=endpoint["position"]["y"] if endpoint else "",
+                   location_scope="network_endpoint" if endpoint else "logical_host_cpu_only",
+                   controlling_predecessor=int(chain["ids"][index - 1]) if index else -1,
+                   predecessor_relation=chain["predecessor_relations"][index],
+                   cpu_predecessor=int(events["cpu_predecessor"][op_id]),
+                   ready_cycle=ready, start_cycle=start, finish_cycle=finish,
+                   cpu_wait_cycles=start - ready, service_cycles=finish - start,
+                   injection_wait_cycles=int(events["first_inject_cycle"][op_id]) - start if kind == 1 else "",
+                   first_inject_to_complete_cycles=finish - int(events["first_inject_cycle"][op_id]) if kind == 1 else "",
+                   original_amount=int(op["amount"]), amount_unit="cycles_at_1GHz" if kind == 0 else "bytes")
+
+
+def _paired_row(index, send_ids, recv_ids, ops, maps, metrics, membership, flit_bytes):
+    send, recv = int(send_ids[index]), int(recv_ids[index])
+    op, target = ops[send], ops[recv]
+    source_key, target_key = (int(op["rank"]), int(op["nic"])), (int(target["rank"]), int(target["nic"]))
+    row = dict(send_id=send, recv_id=recv, tag=int(op["tag"]), source_host=source_key[0],
+               source_nic=source_key[1], destination_host=target_key[0], destination_nic=target_key[1],
+               source_label=int(op["label"]), destination_label=int(target["label"]),
+               payload_bytes=int(op["amount"]), flits=(int(op["amount"]) + flit_bytes - 1) // flit_bytes)
+    for arm in ARMS:
+        source, destination = maps[arm][source_key], maps[arm][target_key]
+        row.update({f"{arm}_source_endpoint": source["node"], f"{arm}_destination_endpoint": destination["node"],
+                    f"{arm}_source_router": source["router"], f"{arm}_destination_router": destination["router"],
+                    f"{arm}_on_chain": bool(membership[arm][send])})
+        row.update({f"{arm}_{field}": int(values[index]) for field, values in metrics[arm].items()})
+    for field in ("cpu_wait", "injection_wait", "first_inject_to_complete", "service", "ready_to_complete", "finish_cycle"):
+        row[f"baseline_minus_rotated_{field}"] = int(metrics[ARMS[0]][field][index]) - int(metrics[ARMS[1]][field][index])
+    return row
+
+
+def render(summary, acceptance, output):
+    """Render again after reference equivalence, without rereading large event files."""
+    table = summary["table"]
+    lines = ["# Baseline–Rotated 完整应用对照与归因", "",
+             f"006 成对完整审计：通过。参考实现等价性：**{acceptance['implementation_equivalence']['status']}**。", "",
+             f"应用加速比 T(Baseline)/T(Rotated) = **{summary['application_speedup']:.9f}**；"
+             f"完成时间缩短 **{summary['application_time_reduction_percent']:.6f}%**。", "",
+             "| 指标 | Baseline | Rotated |", "| --- | ---: | ---: |"]
+    for row in table:
+        values = [f"{v:,.6f}" if isinstance(v, float) else f"{v:,}" for v in (row["baseline"], row["ours_rotated"])]
+        lines.append(f"| {row['metric']} ({row['unit']}) | {values[0]} | {values[1]} |")
+    lines += ["", f"平均 packet latency 变化：降低 {summary['packet_latency_reduction_percent']:.6f}%。"
+              "该比例与应用时间缩短分别报告；不相除定义‘兑现率’。", "",
+              "## 两条实际关键链", "",
+              "每个 placement 独立恢复一条确定性关键链：终点取最大完成时间中 ID 最小者，"
+              "前驱取最大完成时间中 ID 最大者，与已有审计一致。存在同值路径时，这不是所有关键路径的枚举。", "",
+              "每条链的本地服务时间 + 消息服务时间都严格等于应用完成时间。"
+              "消息的 CPU 等待已经由前驱链解释，不能再加到这项总和中。", ""]
+    for arm in ARMS:
+        chain = summary["chains"][arm]
+        lines.append(f"- {arm}: {chain['critical_chain_nodes']:,} 个节点；"
+                     f"本地工作 {chain['critical_local_work_cycles']:,} cycles，"
+                     f"消息服务 {chain['critical_message_cycles']:,} cycles；"
+                     f"本地工作占链时长 {100 * chain['critical_local_work_cycles'] / chain['application_cycles']:.6f}%。")
+    delta = summary["chain_difference"]
+    lines += ["", "两条链可能经过不同操作。以下恒等式逐项核对完成时间差（Baseline − Rotated）：", "",
+              "| 操作类别 | 共同节点服务差 | 仅 Baseline 链服务 | 仅 Rotated 链服务（扣除） |",
+              "| --- | ---: | ---: | ---: |"]
+    for kind in ("local", "message"):
+        lines.append(f"| {kind} | {delta[f'common_{kind}_delta']:,} | {delta[f'baseline_only_{kind}']:,} | {delta[f'rotated_only_{kind}']:,} |")
+    lines += ["", f"逐项相加 = **{delta['accounted_delta_cycles']:,} cycles**，"
+              f"等于观测完成时间差 {delta['application_delta_cycles']:,} cycles。"
+              "这是实际服务时间的记账恒等式，不是逐消息独立加速的反事实效果。", "",
+              "## 关键消息与另一个 placement 的对应记录", "",
+              "下面分别列出两条链上服务时间最大的消息；完整配对包含所有消息，保存在 `message_pairs.csv`。"
+              "‘注入后’区间包括后续 flit 注入、传输及竞争，不能称为纯链路延迟。"]
+    for arm in ARMS:
+        lines += ["", f"### {arm} 的关键消息", "",
+                  "| Send ID | 字节 | B/R 都在选定链上 | B CPU 等待 | R CPU 等待 | B 注入前 | R 注入前 | B 注入后 | R 注入后 |",
+                  "| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |"]
+        for row in summary["top_critical_messages"][arm]:
+            both = row["baseline_on_chain"] and row["ours_rotated_on_chain"]
+            values = [row[f"{name}_{field}"] for field in ("cpu_wait", "injection_wait", "first_inject_to_complete") for name in ARMS]
+            lines.append(f"| {row['send_id']} | {row['payload_bytes']:,} | {both} | " + " | ".join(f"{v:,}" for v in values) + " |")
+    lines += ["", "## 全部消息与关键链覆盖", "",
+              "以下累计值只描述消息集合，多个消息可能重叠，不能相加作为应用完成时间。", "",
+              "| 消息集合 | 数量 | 累计服务时间差 B−R |", "| --- | ---: | ---: |"]
+    for name, group in summary["message_groups"].items():
+        lines.append(f"| {name} | {group['messages']:,} | {group['service_delta_cycles']:,} |")
+    lines += ["", "## 解释边界", "",
+              "这是完整 ATLAHS capture 在固定本地执行模型下的条件化回放；calc 包括本地间隔、"
+              "reduction/copy 与部分 intra-host transfer。它不是缺失的 WoW 论文 trace 复现，也不是标定过的原生 wafer 训练时间。", "",
+              "当前结果只有一种 mapping 和 seed 1；router/link 成本不同。表中的总链路带宽是链路资源之和，"
+              "不是可供任意两个区域使用的带宽，也不是应用有效带宽。", "",
+              "calc 的位置只记录逻辑 host/CPU lane。该回放模型未把所有 calc lane 分配到物理 reticle，"
+              "因此 CSV 不编造其物理坐标。通信端点位置见 `endpoint_mapping.csv`。", "",
+              "消息服务暂未分解到 router、port、VC 或仲裁阻塞；注入等待既可能来自本地注入资源，"
+              "也可能由下游反压造成。当前证据能够定位关键消息和时间区间，尚不能定位内部阻塞资源。", "",
+              "两种 placements 的宿主运行时间仅作为实现成本记录，不用于计算架构加速比。并发与 debugger 采样"
+              "使既有宿主时间比只能视为观测值。", "",
+              "下一轮实验仅在 `next_experiment.json` 登记一组；本分析不启动仿真，也不扩展 thermal 或 GPU。", ""]
+    (Path(output) / "attribution.md").write_text("\n".join(lines))
+
+
+def analyze(campaign, output):
+    info = accept(campaign)
+    graph = Path(info["config"]["graph_directory"])
+    gate = read_json(graph / "graph_audit.json")
+    work = info["work"]
+    if (not gate["dependency_gate_passed"] or gate["truncated"] or gate["removed_dependencies"] or
+            gate["source_sha256"] != work["source_sha256"]):
+        raise ValueError("Original complete graph gate/identity differs")
+    ops = np.load(graph / "operations.npy", mmap_mode="r")
+    deps = np.load(graph / "dependencies.npy", mmap_mode="r")
+    pairs = np.load(graph / "message_pairs.npy", mmap_mode="r")
+    if (len(ops), len(deps), len(pairs)) != (work["instructions"], work["original_dependencies"], work["arrival_dependencies"]):
+        raise ValueError("Complete graph work counts differ")
+    sends = np.flatnonzero(ops["kind"] == 1)
+    order = np.argsort(pairs[:, 0])
+    if not np.array_equal(pairs[order, 0], sends) or len(sends) != work["messages"]:
+        raise ValueError("Not every message has a unique matched receive")
+    recvs = pairs[order, 1]
+    if np.any(ops["kind"][recvs] != 2) or not np.array_equal(ops["amount"][sends], ops["amount"][recvs]):
+        raise ValueError("Paired message identity differs")
+    output = Path(output).resolve()
+    output.mkdir(parents=True, exist_ok=False)
+    parents = parent_graph(len(ops), deps, pairs)
+    events, chains, maps, metrics = {}, {}, {}, {}
+    for name in ARMS:
+        arm = info["arms"][name]
+        events[name] = np.load(arm["path"] / "checked_events.npy", mmap_mode="r")
+        if len(events[name]) != len(ops):
+            raise ValueError("Checked event count differs from full work")
+        chains[name] = recover(ops, events[name], parents, arm["audit"])
+        maps[name] = _endpoint_map(arm)
+        metrics[name] = message_timings(events[name], sends)
+        for metric, audit_key in (("cpu_wait", "mean_cpu_wait_before_send"),
+                                  ("injection_wait", "mean_message_injection_wait"),
+                                  ("first_inject_to_complete", "mean_first_inject_to_complete"),
+                                  ("ready_to_complete", "mean_message_ready_to_complete")):
+            if not np.isclose(metrics[name][metric].mean(), arm["audit"][audit_key], rtol=0, atol=1e-8):
+                raise ValueError(f"Message summary differs from existing audit: {name}/{metric}")
+        directory = output / name
+        directory.mkdir()
+        _csv(directory / "critical_chain.csv", _chain_rows(ops, events[name], chains[name], maps[name], work["cpu_stride"]))
+        print(f"Recovered {name} critical chain: {len(chains[name]['ids'])} nodes", flush=True)
+    delta, left, right = difference(ops, events[ARMS[0]], events[ARMS[1]], chains[ARMS[0]], chains[ARMS[1]])
+    membership = dict(zip(ARMS, (left, right)))
+    row = lambda index: _paired_row(index, sends, recvs, ops, maps, metrics, membership, work["flit_bytes"])
+    _csv(output / "message_pairs.csv", (row(i) for i in range(len(sends))))
+    _csv(output / "endpoint_mapping.csv", (
+        dict(placement=name, host=host, nic=nic, endpoint=e["node"], router=e["router"], layer=e["layer"],
+             x_mm=e["position"]["x"], y_mm=e["position"]["y"])
+        for name in ARMS for (host, nic), e in sorted(maps[name].items())))
+    top = {}
+    for name in ARMS:
+        selected = np.flatnonzero(membership[name][sends])
+        ranked = selected[np.argsort(-metrics[name]["service"][selected], kind="stable")[:10]]
+        top[name] = [row(int(i)) for i in ranked]
+    groups = {}
+    for name, mask in (("both_selected_chains", left[sends] & right[sends]),
+                       ("baseline_chain_only", left[sends] & ~right[sends]),
+                       ("rotated_chain_only", right[sends] & ~left[sends]),
+                       ("neither_selected_chain", ~left[sends] & ~right[sends])):
+        groups[name] = dict(messages=int(mask.sum()), service_delta_cycles=int(
+            (metrics[ARMS[0]]["service"][mask] - metrics[ARMS[1]]["service"][mask]).sum()))
+    table = []
+    for label, unit, source, key in (
+        ("完整应用完成时间", "cycles", "audit", "application_cycles"),
+        ("完整应用完成时间", "seconds at 1 GHz", "audit", "application_seconds_at_1GHz"),
+        ("平均消息就绪至完成", "cycles", "audit", "mean_message_ready_to_complete"),
+        ("平均发送前 CPU 等待", "cycles", "audit", "mean_cpu_wait_before_send"),
+        ("平均首 flit 注入前等待", "cycles", "audit", "mean_message_injection_wait"),
+        ("平均首 flit 注入至消息完成", "cycles", "audit", "mean_first_inject_to_complete"),
+        ("关键链本地工作", "cycles", "audit", "critical_local_work_cycles"),
+        ("关键链消息服务", "cycles", "audit", "critical_message_cycles"),
+        ("计算端点", "count", "resources", "compute_reticles"),
+        ("Routers", "count", "resources", "routers"),
+        ("无向链路", "count", "resources", "undirected_links"),
+        ("总有向链路带宽", "bits/cycle", "resources", "aggregate_directed_link_bits_per_cycle")):
+        table.append(dict(metric=label, unit=unit, **{name: info["arms"][name][source][key] for name in ARMS}))
+    for key in ("Packet latency average", "Network latency average", "Hops average"):
+        table.append(dict(metric=key, unit="hops" if key == "Hops average" else "cycles",
+                          **{name: info["arms"][name]["execution"]["network_metrics"][key] for name in ARMS}))
+    _csv(output / "application_comparison.csv", table)
+    a, b = (chains[name]["application_cycles"] for name in ARMS)
+    pa, pb = (info["arms"][name]["execution"]["network_metrics"]["Packet latency average"] for name in ARMS)
+    summary = dict(campaign=str(info["campaign"]), work=work, table=table, application_speedup=a / b,
+                   application_time_reduction_percent=100 * (a - b) / a,
+                   packet_latency_reduction_percent=100 * (pa - pb) / pa,
+                   chain_difference=delta, chains={name: {k: v for k, v in chains[name].items()
+                       if k not in ("ids", "predecessor_relations")} for name in ARMS},
+                   top_critical_messages=top, message_groups=groups,
+                   host_wall_seconds={name: info["arms"][name]["execution"]["wall_seconds"] for name in ARMS})
+    print("Recording complete-input and artifact hashes", flush=True)
+    inputs = {str(graph / file): digest(graph / file) for file in
+              ("graph_audit.json", "operations.npy", "dependencies.npy", "message_pairs.npy")}
+    for file in ("COMPLETE.json", "config.json", "provenance.json", "registration.json", "results.json", "summary.csv", "comparison.md"):
+        inputs[str(info["campaign"] / file)] = digest(info["campaign"] / file)
+    for name in ARMS:
+        path = info["arms"][name]["path"]
+        for file in ("contract.json", "audit.json", "trace_report.json", "execution.json", "resources.json", "network.json",
+                     "trace.json", "events.jsonl", "checked_events.npy") + (("dependency_profile.json", "dependency_profile_audit.json")
+                         if info["config"].get("dependency_profile") else ()):
+            inputs[str(path / file)] = digest(path / file)
+        if inputs[str(path / "trace.json")] != info["arms"][name]["contract"]["trace_sha256"]:
+            raise ValueError("Full mapped input identity changed")
+    acceptance = dict(architecture_pair_accepted=True, implementation_equivalence=dict(status="pending"),
+                       campaign=str(info["campaign"]), simulator_provenance=info["provenance"],
+                       analysis_source_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+                       input_sha256=inputs, work=work)
+    write_json(output / "summary.json", summary)
+    write_json(output / "acceptance.json", acceptance)
+    render(summary, acceptance, output)
+    artifacts = [p for p in output.rglob("*") if p.is_file()]
+    write_json(output / "ANALYZED.json", dict(architecture_pair_accepted=True,
+        implementation_equivalence="pending", artifact_sha256={str(p.relative_to(output)): digest(p) for p in artifacts}))
+    print(f"Complete-pair attribution written: {output}", flush=True)
+    return summary
+
+
+def finalize(output, equivalence):
+    output, equivalence = Path(output).resolve(), Path(equivalence).resolve()
+    acceptance = read_json(output / "acceptance.json")
+    verification = read_json(equivalence)
+    if verification.get("passed") is not True or not verification.get("same_full_work_and_events"):
+        raise ValueError("Complete implementation equivalence has not passed")
+    if Path(verification["candidate"]).resolve() != Path(acceptance["campaign"]):
+        raise ValueError("Equivalence belongs to a different campaign")
+    if {a["placement"] for a in verification["arms"]} != set(ARMS):
+        raise ValueError("Equivalence omits a placement")
+    for arm in verification["arms"]:
+        for file in arm["hashes"]:
+            key = str(Path(acceptance["campaign"]) / arm["placement"] / file["file"])
+            if acceptance["input_sha256"].get(key) != file["sha256"]:
+                raise ValueError("Equivalence differs from attributed input/events")
+    acceptance["implementation_equivalence"] = dict(status="passed", path=str(equivalence), sha256=digest(equivalence),
+                                                      reference=verification["reference"])
+    write_json(output / "acceptance.json", acceptance)
+    render(read_json(output / "summary.json"), acceptance, output)
+    manifest = read_json(output / "ANALYZED.json")
+    manifest["implementation_equivalence"] = "passed"
+    for file in ("acceptance.json", "attribution.md"):
+        manifest["artifact_sha256"][file] = digest(output / file)
+    write_json(output / "ANALYZED.json", manifest)
+    write_json(output / "FINAL_ACCEPTED.json", dict(architecture_pair_accepted=True, implementation_equivalence=True,
+        acceptance_sha256=digest(output / "acceptance.json"), report_sha256=digest(output / "attribution.md"),
+        equivalence_sha256=digest(equivalence)))

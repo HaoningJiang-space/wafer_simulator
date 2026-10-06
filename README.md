@@ -51,3 +51,8 @@ old build scripts and incremental patches are recoverable at Git commit
 runs and their automatic event comparisons remain intact. See
 [run status](docs/LLAMA16_RUN_STATUS.md), [CSR semantics](docs/CSR_FRONTIER.md),
 and [HeteroSTA transfer](docs/HETEROSTA_TRANSFER.md).
+
+The next research stage is [accepted placement attribution](docs/POSTRUN_PROTOCOL.md):
+read the existing full events, recover both critical chains, pair every message,
+and explain application benefits. It uses the same native implementation and
+does not start another performance or architecture campaign.
