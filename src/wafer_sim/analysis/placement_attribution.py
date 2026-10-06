@@ -162,9 +162,11 @@ def render(summary, acceptance, output):
     order = summary["observed_order_changes"]
     lines += ["", f"两条选定链共有 {order['common_nodes']:,} 个操作；共同操作的相对顺序是否一致："
               f"{order['common_order_equal']}。关键链并集中的 {order['critical_local_nodes']:,} 个本地操作里，"
-              f"有 {order['critical_local_cpu_predecessor_changes']:,} 个操作的 CPU 前驱发生变化。"
+              f"有 {order['critical_local_cpu_predecessor_changes']:,} 个操作的 CPU 等待前驱记录发生变化。"
               f"全部本地操作中则有 {order['all_local_cpu_predecessor_changes']:,} 个前驱发生变化。"
-              "这些记录直接表明资源执行顺序发生了变化；它们还不能独立证明是哪一条消息造成了最终时间差。", ""]
+              "原生 cpu_predecessor 仅在 start > ready 时记录，−1 表示没有额外 CPU 等待；"
+              "它不是该 lane 的完整执行顺序。因此前驱变化计数描述阻塞关系变化，不能直接当作"
+              "CPU 操作换序次数，也不能独立证明是哪一条消息造成了最终时间差。", ""]
     lines += ["",
               "## 关键消息与另一个 placement 的对应记录", "",
               "下面分别列出两条链上服务时间最大的消息；完整配对包含所有消息，保存在 `message_pairs.csv`。"

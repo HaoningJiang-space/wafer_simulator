@@ -96,6 +96,9 @@ coordinates. The capture's fixed local work includes opaque intra-host activity;
 results remain conditional replay times, not calibrated native wafer training.
 
 Internal router/port/VC contention is not reconstructed from message timestamps.
+The native `cpu_predecessor` records a blocking owner only when `start > ready`;
+`-1` means no extra CPU wait. Counts of changed predecessors are changes in
+observed blocking relations, not a count of CPU-lane operation reorderings.
 Use the observed message/phase attribution first, then decide whether one
 specific missing observation is needed. Raw event/CSV artifacts stay on eex005;
 only compact checked summaries and reports should enter GitHub.
