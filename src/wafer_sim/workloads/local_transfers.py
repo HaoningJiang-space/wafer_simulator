@@ -76,3 +76,91 @@ def recover(graph, regenerated, provenance):
     result["scope"] = "Source transfer model byte arguments and original cross-GPU dependency pairing; no M1 execution"
     write_json(provenance / "LOCAL_TRANSFERS.json", result)
     return result
+
+
+def materialize(original, graph, regenerated, extracted, provenance, output):
+    """M0 remains the original file; M1 changes only verified transfer calcs.
+
+    Both transfer endpoint costs are removed. The send becomes target network
+    service and its paired receive becomes a zero-service dependency marker.
+    All existing requires lines are retained verbatim, including send->receive.
+    """
+    import pickle
+    original, graph, regenerated, extracted, provenance, output = map(Path, (
+        original, graph, regenerated, extracted, provenance, output))
+    association = read_json(provenance / "SOURCE_CORRESPONDENCE.json")
+    transfers = read_json(provenance / "LOCAL_TRANSFERS.json")
+    regeneration = read_json(regenerated / "REGENERATION.json")
+    extraction = read_json(extracted / "EXTRACTED.json")
+    if not association["source_correspondence_passed"] or not transfers["all_transfers_paired"]:
+        raise ValueError("M1 requires complete source association and transfer pairing")
+    if digest(original) != association["original_goal_sha256"]:
+        raise ValueError("M0 source changed")
+    for record in (association["input_sha256"], transfers["input_sha256"]):
+        for path, sha in record.items():
+            if digest(path) != sha:
+                raise ValueError(f"Accepted provenance changed: {path}")
+    for name, sha in transfers["artifact_sha256"].items():
+        if digest(provenance / name) != sha:
+            raise ValueError(f"Transfer pairing changed: {name}")
+    if (digest(extracted / "EXTRACTED.json") != regeneration["extracted_manifest_sha256"] or
+            digest(extracted / "events.pkl") != extraction["bundle_sha256"]):
+        raise ValueError("Source GPU identities changed")
+    with (extracted / "events.pkl").open("rb") as f:
+        bundle = pickle.load(f)  # Only our hash-checked, locally extracted file.
+    gpu_to_nic = {int(gpu): (rank, nic) for rank, host in enumerate(regeneration["source_host_order"])
+                  for nic, gpu in enumerate(bundle["groups"][host])}
+    ops = np.load(graph / "operations.npy", mmap_mode="r")
+    source = np.memmap(regenerated / "calc_provenance.bin", dtype=DTYPE, mode="r")
+    if digest(regenerated / "calc_provenance.bin") != read_json(regenerated / "CALC_PROVENANCE.json")["binary_sha256"]:
+        raise ValueError("Source records changed")
+    calc_ids = np.flatnonzero(ops["kind"] == 0)
+    position = np.full(len(ops), -1, dtype="i8")
+    position[calc_ids] = np.arange(len(calc_ids))
+    pairs = np.load(provenance / "local_transfer_pairs.npy", mmap_mode="r")
+    sizes = np.load(provenance / "local_transfer_bytes.npy", mmap_mode="r")
+    role, peer, nic = np.zeros(len(ops), dtype="i1"), np.full(len(ops), -1, dtype="i4"), np.full(len(ops), -1, dtype="i4")
+    amounts, tags = np.zeros(len(ops), dtype="u8"), np.zeros(len(ops), dtype="u8")
+    first_tag = int(ops["tag"].max()) + 1
+    for index, (send, recv) in enumerate(pairs):
+        send, recv = int(send), int(recv)
+        a, b = source[position[send]], source[position[recv]]
+        source_host, source_nic = gpu_to_nic[int(a["gpu"])]
+        target_host, target_nic = gpu_to_nic[int(b["gpu"])]
+        if source_host != int(ops[send]["rank"]) or target_host != int(ops[recv]["rank"]) or (source_host, source_nic) == (target_host, target_nic):
+            raise ValueError("Source GPU does not match distinct target endpoints")
+        role[send], role[recv] = 1, 2
+        peer[send], peer[recv] = target_host, source_host
+        nic[send], nic[recv] = source_nic, target_nic
+        amounts[send] = amounts[recv] = int(sizes[index])
+        tags[send] = tags[recv] = first_tag + index
+    output.mkdir(parents=True, exist_ok=False)
+    destination = output / "M1.goal"
+    op_id = changed = 0
+    with original.open() as inp, destination.open("w") as out:
+        for number, line in enumerate(inp, 1):
+            if ": " in line:
+                if number != int(ops[op_id]["line"]):
+                    raise ValueError("Source operation line mapping changed")
+                if role[op_id]:
+                    kind, direction = ("send", "to") if role[op_id] == 1 else ("recv", "from")
+                    line = (f"l{ops[op_id]['label']}: {kind} {amounts[op_id]}b {direction} {peer[op_id]} "
+                            f"tag {tags[op_id]} cpu {ops[op_id]['cpu']} nic {nic[op_id]}\n")
+                    changed += 1
+                op_id += 1
+            out.write(line)
+    if op_id != len(ops) or changed != 2 * len(pairs):
+        raise ValueError("Transfer substitution did not conserve operation identities")
+    result = dict(model="M1", m0_source=str(original.resolve()), m0_source_sha256=digest(original),
+        source_goal=str(destination.resolve()), source_sha256=digest(destination),
+        operation_count=op_id, changed_transfer_operations=changed, explicit_local_messages=len(pairs),
+        added_message_bytes=int(sizes.sum()), added_flits=int(((sizes + 1999) // 2000).sum()),
+        original_nontransfer_lines_unchanged=True, removed_dependencies=0,
+        retained_local_costs="All measured intervals, reduction/copy and zero synchronization costs remain byte-identical",
+        transfer_costs="Replace both fixed endpoint costs with one target network message; no double charging",
+        gpu_to_host_nic={str(k): list(v) for k, v in gpu_to_nic.items()},
+        source_correspondence_sha256=digest(provenance / "SOURCE_CORRESPONDENCE.json"),
+        transfer_pairing_sha256=digest(provenance / "LOCAL_TRANSFERS.json"),
+        m0_regenerated=False, new_simulations_launched=0)
+    write_json(output / "TRANSFORMATION.json", result)
+    return result

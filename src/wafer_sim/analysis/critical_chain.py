@@ -4,14 +4,14 @@ from scipy.sparse import coo_matrix
 
 
 def parent_graph(instructions, dependencies, message_pairs):
-    edges = np.concatenate((dependencies, message_pairs))
-    kinds = np.concatenate((np.ones(len(dependencies), dtype="i1"),
-                            np.full(len(message_pairs), 2, dtype="i1")))
-    graph = coo_matrix((kinds, (edges[:, 1], edges[:, 0])),
-                       shape=(instructions, instructions)).tocsr()
-    if graph.nnz != len(edges):
-        raise ValueError("Duplicate graph edges require an explicit relation representation")
-    return graph
+    def relation(edges, code):
+        graph = coo_matrix((np.ones(len(edges), dtype="i4"), (edges[:, 1], edges[:, 0])),
+                           shape=(instructions, instructions)).tocsr()
+        graph.data[:] = code
+        return graph
+    # This is a predecessor relation view only; lowering/profiles retain every
+    # edge occurrence. Code 3 records both requires and matched arrival.
+    return relation(dependencies, 1) + relation(message_pairs, 2)
 
 
 def recover(operations, events, parents, expected):
@@ -56,7 +56,8 @@ def recover(operations, events, parents, expected):
         reasons = []
         index = int(np.searchsorted(logical, parent))
         if index < len(logical) and logical[index] == parent:
-            reasons.append({1: "requires", 2: "message_arrival"}[int(parents.data[begin + index])])
+            reasons.append({1: "requires", 2: "message_arrival", 3: "requires+message_arrival"}[
+                int(parents.data[begin + index])])
         if cpu == parent:
             reasons.append("cpu_resource")
         relations.append("+".join(reasons))

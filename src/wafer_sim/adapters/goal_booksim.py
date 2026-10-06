@@ -19,6 +19,7 @@ def lower(graph_directory, destination, mapping, flit_bytes=2000):
     reverse = coo_matrix((np.ones(len(edges), dtype="i4"), (edges[:, 0], edges[:, 1])),
                          shape=(len(ops), len(ops))).tocsr()
     indegree = np.bincount(edges[:, 1], minlength=len(ops))
+    parallel_relations = reverse.nnz != len(edges)
     identities = sorted(set((int(op["rank"]), int(op["nic"])) for op in ops if op["kind"]))
     if len(identities) != len(mapping) or len(set(mapping)) != len(mapping):
         raise ValueError("Endpoint mapping must be injective and cover every host/NIC pair")
@@ -39,9 +40,16 @@ def lower(graph_directory, destination, mapping, flit_bytes=2000):
                 dst = endpoints[int(recv["rank"]), int(recv["nic"])]
                 if src == dst or not op["amount"]:
                     raise ValueError("Zero-byte or same-endpoint communication needs an explicit model")
+            begin, end = reverse.indptr[i:i+2]
+            successors = reverse.indices[begin:end]
+            if parallel_relations:
+                # A recovered local receive has both its original requires
+                # edge and the matching arrival relation. Preserve both in
+                # native counters, rather than merging only the successors.
+                successors = np.repeat(successors, reverse.data[begin:end])
             entry = dict(id=i, cycle=0, src=src, dst=dst,
                          num_deps=int(indegree[i]),
-                         rev_deps=reverse.indices[reverse.indptr[i]:reverse.indptr[i+1]].tolist(),
+                         rev_deps=successors.tolist(),
                          num_flits=(int(op["amount"])+flit_bytes-1)//flit_bytes if network else 0,
                          duration=int(op["amount"]) if op["kind"] == 0 else 0,
                          ignore=not network, cpu_resource=int(op["rank"])*cpu_stride+int(op["cpu"]))

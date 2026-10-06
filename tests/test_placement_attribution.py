@@ -142,6 +142,21 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(change["rotated_only_message"], 9)
         self.assertEqual(change["common_local_delta"], 0)
 
+    def test_requires_and_arrival_both_survive_native_lowering(self):
+        deps = np.concatenate((self.deps, self.pairs))
+        np.save(self.graph / "dependencies.npy", deps)
+        destination = self.root / "parallel-relations/trace.json"
+        contract = lower(self.graph, destination, [0, 1])
+        trace = read_json(destination)
+        self.assertEqual(trace[1]["rev_deps"].count(3), 2)
+        self.assertEqual(trace[3]["num_deps"], 2)
+        self.assertEqual(sum(len(row["rev_deps"]) for row in trace),
+                         contract["work"]["original_dependencies"] + contract["work"]["arrival_dependencies"])
+        parents = parent_graph(6, deps, self.pairs)
+        chain = recover(self.ops, self.events["baseline"], parents, {})
+        self.assertEqual(chain["application_cycles"], 14)
+        self.assertIn("requires+message_arrival", chain["predecessor_relations"])
+
     def test_partial_pair_and_failure_marker_rejected(self):
         (self.campaign / "COMPLETE.json").unlink()
         with self.assertRaises(FileNotFoundError):
