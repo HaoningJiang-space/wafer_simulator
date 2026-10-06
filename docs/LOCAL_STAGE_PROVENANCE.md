@@ -20,6 +20,10 @@ readback confirms identical native predecessor structure (9,002,700 edges),
 unchanged non-transfer operations and no double charging. This is input
 acceptance, not a completed M1 application result.
 
+The [14:56 UTC snapshot](results/local-stage-provenance/M1_RUNNING.json)
+confirms both retry arms reached native simulation with empty stderr and no
+failure marker. It is a dated progress record, not completion evidence.
+
 ## What the source audit established
 
 The two dominant operations are measured intervals between NCCL event groups,
@@ -152,6 +156,17 @@ Even M1 preserves composite intervals and GPU-derived reduction/copy costs.
 Its result will test this transfer boundary under fixed remaining local costs;
 it will not be calibrated native WoW training time. Router/link costs still
 differ between placements, and internal port/VC causes remain unobserved.
+
+A small M1 placement difference would show that expanding this identified
+transfer class does not materially change the placement gap under the retained
+local-cost assumptions. It would not prove that native wafer execution is
+compute-dominated: composite intervals and reduction/copy costs still need
+target-resource modeling or calibration before that claim is supported.
+Conversely, a changed placement gap must be traced through critical messages,
+resource waits and chain changes before attributing it to this boundary.
+Compute dominance and frozen communication costs are not mutually exclusive
+explanations; this controlled comparison tests the latter's effect without
+claiming to settle the former.
 
 The 002–006 direct full-event comparison continues independently. Neither
 source correspondence nor M0 lowering identity claims that it has finished.

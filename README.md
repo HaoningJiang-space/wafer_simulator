@@ -4,6 +4,16 @@ Pinned author geometry and BookSim, complete same-workload execution, independen
 completion checks, and placement comparison. Read [the source audit](docs/UPSTREAM_AUDIT.md)
 for what is reused, repaired, and not claimed.
 
+The research question is whether a WoW Logic-on-Interconnect placement with
+better network metrics also completes the same AI workload sooner, and which
+execution costs must be modeled to make that judgment. The current study
+compares Baseline and Rotated under fixed operating conditions. It tests one
+specific boundary: original GPU-cluster-local transfers represented as fixed
+`calc` costs versus those same transfers competing for target wafer resources.
+Remaining measured intervals and reduction/copy costs stay fixed. This is a
+controlled workload-model comparison, not calibrated native wafer training
+time. Thermal modeling and further simulator optimization are deferred.
+
 The repository maintains one native implementation: the selected CSR-frontier
 version, including the preceding completion, routing-reference, dense-state and
 node-reuse changes. The combined `patches/booksim-wafer.patch` applies directly
@@ -66,3 +76,5 @@ and recovers 1,337,280 intra-host transfers. Complete M0 lowered traces and
 contracts are unchanged. One [registered M0/M1 study](configs/llama16_model_boundary.json)
 reuses M0 and runs both M1 placements with those transfers on target resources.
 Mapping experiments remain deferred; the native binary remains frozen 006.
+The [dated execution snapshot](docs/results/local-stage-provenance/M1_RUNNING.json)
+records both M1 arms past input loading; their application results are pending.
