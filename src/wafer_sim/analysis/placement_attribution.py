@@ -78,6 +78,20 @@ def _paired_row(index, send_ids, recv_ids, ops, maps, metrics, membership, flit_
     return row
 
 
+def _local_row(op_id, ops, events, membership, stride):
+    op = ops[op_id]
+    row = dict(op_id=int(op_id), host=int(op["rank"]), label=int(op["label"]), cpu=int(op["cpu"]),
+               cpu_resource=int(op["rank"]) * stride + int(op["cpu"]), duration_cycles=int(op["amount"]))
+    for name in ARMS:
+        row[f"{name}_on_chain"] = bool(membership[name][op_id])
+        for field in ("ready_cycle", "start_cycle", "finish_cycle", "cpu_predecessor"):
+            row[f"{name}_{field}"] = int(events[name][field][op_id])
+        if row[f"{name}_finish_cycle"] - row[f"{name}_start_cycle"] != row["duration_cycles"]:
+            raise ValueError("Local duration differs across the paired observed records")
+    row["baseline_minus_rotated_start_cycle"] = row["baseline_start_cycle"] - row["ours_rotated_start_cycle"]
+    return row
+
+
 def render(summary, acceptance, output):
     """Render again after reference equivalence, without rereading large event files."""
     table = summary["table"]
@@ -111,6 +125,19 @@ def render(summary, acceptance, output):
     lines += ["", f"逐项相加 = **{delta['accounted_delta_cycles']:,} cycles**，"
               f"等于观测完成时间差 {delta['application_delta_cycles']:,} cycles。"
               "这是实际服务时间的记账恒等式，不是逐消息独立加速的反事实效果。", "",
+              "本地操作的原始 duration 在两个 placements 中完全相同。‘仅某条链上的本地工作’之差"
+              "表示关键链选择了不同的固定操作，不能解释成本地计算单元变快。"
+              "关键链并集中的本地操作配对见 `critical_local_pairs.csv`。", "",
+              "### 各关键链中的本地阶段", "",
+              "| 所属链 | 操作 ID | Host/CPU | 固定 duration | B/R 都在选定链上 | B 开始 | R 开始 | B CPU 前驱 | R CPU 前驱 |",
+              "| --- | ---: | --- | ---: | --- | ---: | ---: | ---: | ---: |"]
+    for name in ARMS:
+        for row in summary["top_critical_local"][name]:
+            both = row["baseline_on_chain"] and row["ours_rotated_on_chain"]
+            lines.append(f"| {name} | {row['op_id']} | {row['host']}/{row['cpu']} | {row['duration_cycles']:,} | {both} | "
+                         f"{row['baseline_start_cycle']:,} | {row['ours_rotated_start_cycle']:,} | "
+                         f"{row['baseline_cpu_predecessor']} | {row['ours_rotated_cpu_predecessor']} |")
+    lines += ["",
               "## 关键消息与另一个 placement 的对应记录", "",
               "下面分别列出两条链上服务时间最大的消息；完整配对包含所有消息，保存在 `message_pairs.csv`。"
               "‘注入后’区间包括后续 flit 注入、传输及竞争，不能称为纯链路延迟。"]
@@ -186,6 +213,15 @@ def analyze(campaign, output):
         print(f"Recovered {name} critical chain: {len(chains[name]['ids'])} nodes", flush=True)
     delta, left, right = difference(ops, events[ARMS[0]], events[ARMS[1]], chains[ARMS[0]], chains[ARMS[1]])
     membership = dict(zip(ARMS, (left, right)))
+    local_ids = np.flatnonzero((left | right) & (ops["kind"] == 0))
+    if len(local_ids):
+        _csv(output / "critical_local_pairs.csv", (_local_row(int(i), ops, events, membership, work["cpu_stride"])
+                                                   for i in local_ids))
+    top_local = {}
+    for name in ARMS:
+        selected = np.flatnonzero(membership[name] & (ops["kind"] == 0))
+        ranked = selected[np.argsort(ops["amount"][selected], kind="stable")[-10:][::-1]]
+        top_local[name] = [_local_row(int(i), ops, events, membership, work["cpu_stride"]) for i in ranked]
     row = lambda index: _paired_row(index, sends, recvs, ops, maps, metrics, membership, work["flit_bytes"])
     _csv(output / "message_pairs.csv", (row(i) for i in range(len(sends))))
     _csv(output / "endpoint_mapping.csv", (
@@ -230,7 +266,7 @@ def analyze(campaign, output):
                    packet_latency_reduction_percent=100 * (pa - pb) / pa,
                    chain_difference=delta, chains={name: {k: v for k, v in chains[name].items()
                        if k not in ("ids", "predecessor_relations")} for name in ARMS},
-                   top_critical_messages=top, message_groups=groups,
+                   top_critical_messages=top, top_critical_local=top_local, message_groups=groups,
                    host_wall_seconds={name: info["arms"][name]["execution"]["wall_seconds"] for name in ARMS})
     print("Recording complete-input and artifact hashes", flush=True)
     inputs = {str(graph / file): digest(graph / file) for file in

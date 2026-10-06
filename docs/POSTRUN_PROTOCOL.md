@@ -48,6 +48,9 @@ invokes BookSim. Individual analysis is available through
 - `message_pairs.csv`: every send matched by the original operation ID/receive
   pair, per-arm endpoints, timestamps, three-phase decomposition and membership
   in each selected chain.
+- `critical_local_pairs.csv`: local operations in either selected chain, with
+  unchanged duration and both arms' start/finish/CPU-predecessor records. A change
+  in the chain's local-work total does not mean any individual `calc` accelerated.
 - `endpoint_mapping.csv`: complete active endpoint mappings and physical positions.
 - `summary.json` and `attribution.md`: compact attribution and exact between-chain
   accounting, including messages on one or both selected chains.

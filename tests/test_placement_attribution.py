@@ -188,6 +188,10 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(chain[0]["location_scope"], "logical_host_cpu_only")
         self.assertEqual(chain[0]["endpoint"], "")
         self.assertEqual(sum(int(r["service_cycles"]) for r in chain), 14)
+        with (output / "critical_local_pairs.csv").open() as stream:
+            local = list(csv.DictReader(stream))
+        self.assertEqual([int(r["op_id"]) for r in local], [0, 5])
+        self.assertEqual([int(r["duration_cycles"]) for r in local], [2, 2])
         self.assertEqual(before, {p: digest(p) for p in self.campaign.rglob("*") if p.is_file()})
         verification = dict(passed=True, same_full_work_and_events=True, reference=str(self.root / "reference"),
             candidate=str(self.campaign), arms=[dict(placement=n, exact_full_event_match=True, hashes=[dict(file=f,
