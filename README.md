@@ -16,13 +16,20 @@ source review, and Git. The remote root is `/home/wangziheng/wafer_simulator`.
 bash scripts/build_remote.sh
 PYTHONPATH=src /home/wangziheng/wafer_simulator/.venv/bin/python -m unittest discover -s tests -v
 PYTHONPATH=src /home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.cli \
-  --config configs/fixed_state.json \
+  --config configs/llama16_fixed_state.json \
   --upstream /home/wangziheng/wafer_simulator/upstream/nw-design-for-wsi \
   --binary /home/wangziheng/wafer_simulator/build/booksim-fixed/rapidchiplet/booksim2/src/booksim \
-  --output /home/wangziheng/wafer_simulator/runs/fixed-state-001
+  --output /home/wangziheng/wafer_simulator/runs/llama16-full-001
 ```
 
 Every run keeps configuration, workload, mapped trace, endpoint map, native
 configuration, raw stdout/stderr, binary/input hashes, per-event completion
 report, independent audit, and paired comparison. Result directories must be
 new. Wall-clock timeout is never treated as application completion.
+
+The formal input is the complete public ATLAHS Llama 7B 16-GPU GOAL capture,
+downloaded **only on eex005**. It is not the missing WoW paper capture. See
+[the registered controls and input limits](docs/LLAMA16_PROTOCOL.md).
+Generated workloads remain unit-test fixtures only; no smoke/prefix experiment
+is part of the formal campaign. `COMPLETE.json` is written only after both
+full placement arms pass the independent all-operation audit.

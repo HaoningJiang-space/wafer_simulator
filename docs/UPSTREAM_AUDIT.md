@@ -17,8 +17,10 @@ change both topology adapter and simulator and weaken baseline attribution.
 The WoW config explicitly says the Llama traces are too large for GitHub. The
 `traces_goal/` directory contains only a placeholder. ATLAHS lists a separate
 public trace collection at https://storage2.spcl.ethz.ch/traces/ (16/64/128-GPU
-Llama 7B captures). It is not the missing WoW trace set; download attempts on
-2026-10-06 failed. No measured Llama trace is included in the present campaign.
+Llama 7B captures). It is not the missing WoW trace set. On 2026-10-06 HTTPS
+failed, but direct HTTP from eex005 succeeded. The complete 383,857,060-byte
+16-GPU GOAL file is stored on the server and has passed all-message matching
+and full dependency-graph checks. See `LLAMA16_PROTOCOL.md` for provenance.
 
 ## Source findings requiring semantic regression tests
 
@@ -46,19 +48,23 @@ and flit count, and application terminal time.
 
 ## Scope and fairness
 
-The initial workload is a complete generated synchronous data-parallel training
-schedule: fixed forward/backward work, ring reduce-scatter/all-gather, optimizer,
-and iteration dependencies. It is a conditional schedule experiment, not a
-Llama execution capture or a calibrated GPU compute model. Reduction arithmetic
-is not independently timed. The conservative ring step waits for outgoing and
-incoming completion; no claim about an optimal NCCL algorithm is made.
+The generated schedule campaign was stopped and excluded after the user
+explicitly disallowed smoke experiments. Synthetic DAGs are retained solely
+as semantic unit-test fixtures, never as formal performance evidence.
 
-200-mm rectangular LoI, 20 active ranks, same workload JSON, fixed 1-GHz network,
+The formal campaign uses the complete ATLAHS capture: 200-mm rectangular LoI,
+16 active endpoints on 20 compute reticles, same work and fixed 1-GHz network,
 2-TB/s links (2000-byte flits), 1 VC and 32-flit buffers. Rank mapping is explicit
-and fixed by the same policy across arms. Compare four author placements and
-two mapping policies, three seeds. Total network resource costs differ and are
+and fixed by the same row-major policy across arms. Compare baseline and rotated
+author placements, seed 1. Total network resource costs differ and are
 reported; this is not a fixed-total-network-area or fixed-total-bandwidth study.
 No power, thermal, DVFS, native execution or physical signoff claims.
+
+CPU identifiers are serialized resource lanes. `calc` durations are held fixed
+at their published nanosecond values, including opaque intra-host transfers.
+The send-completion policy remains the WoW all-payload-arrived abstraction;
+this is not a reproduction of ATLAHS's eager/rendezvous protocol or its measured
+GPU platform. All local and network work must complete before reporting time.
 
 BookSim includes its BSD-style LICENSE.md. The top-level author artifact has no
 repository-wide license file. Retain it as a pinned external dependency and do
