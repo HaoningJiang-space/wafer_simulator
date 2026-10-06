@@ -25,10 +25,21 @@ def _execute(placement, binary, native_config, run_directory, graph_directory, t
                 report_sha256=digest(Path(run_directory) / "trace_report.json"))
 
 
-def run_campaign(config_path, upstream, binary, output):
+def run_campaign(config_path, upstream, binary, output, reference_campaign=None):
     if platform.node().split(".")[0] != "eex005":
         raise RuntimeError("Run the complete experiment on eex005")
     config = read_json(config_path)
+    reference = Path(reference_campaign).resolve() if reference_campaign else None
+    if config.get("local_transfer_model") == "explicit_wow":
+        if reference is None or not read_json(reference / "COMPLETE.json")["all_arms_audited"]:
+            raise ValueError("M1 requires the frozen accepted M0 reference")
+        reference_config = read_json(reference / "config.json")
+        for key in ("placements", "active_endpoints", "mapping", "seed", "network_frequency_hz",
+                    "flit_bytes", "diameter_mm", "utilization"):
+            if config[key] != reference_config[key]:
+                raise ValueError(f"M1 fixed control differs from M0: {key}")
+        if digest(binary) != read_json(reference / "provenance.json")["binary_sha256"]:
+            raise ValueError("M1 binary differs from frozen M0")
     if config["truncate_input"] or config["remove_dependencies"] or config["thermal_feedback"]:
         raise ValueError("This campaign requires complete input at fixed running state")
     if config["network_frequency_hz"] != 1000000000 or config["flit_bytes"] != 2000:
@@ -57,6 +68,8 @@ def run_campaign(config_path, upstream, binary, output):
         directory = output / placement
         networks[placement] = wow.export_placement(upstream, directory, placement,
                                                    config["diameter_mm"], config["utilization"])
+        if reference and read_json(directory / "network.json") != read_json(reference / placement / "network.json"):
+            raise ValueError(f"M1 physical network differs from M0: {placement}")
     counts = {resources["compute_reticles"] for _, _, resources in networks.values()}
     if len(counts) != 1 or min(counts) < config["active_endpoints"]:
         raise ValueError("Unequal compute capacity across placement arms")
@@ -66,6 +79,8 @@ def run_campaign(config_path, upstream, binary, output):
         if resources["network_frequency_hz"] != config["network_frequency_hz"]:
             raise ValueError("Network frequency differs from registered control")
         mapping = wow.rank_mapping(endpoints, config["active_endpoints"], config["mapping"])
+        if reference and mapping != [row["node"] for row in read_json(reference / placement / "contract.json")["endpoint_mapping"]]:
+            raise ValueError(f"M1 endpoint mapping differs from M0: {placement}")
         print(f"Lowering ALL operations for {placement}", flush=True)
         contract = lower(config["graph_directory"], directory / "trace.json", mapping, config["flit_bytes"])
         if config.get("local_transfer_model") == "explicit_wow":

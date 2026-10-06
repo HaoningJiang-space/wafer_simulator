@@ -33,7 +33,7 @@ def main():
         transformation_audit_sha256=digest(prepared / "TRANSFORMATION_AUDIT.json"),
         source_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()))
     run_campaign(record["config"], "/home/wangziheng/wafer_simulator/upstream/nw-design-for-wsi",
-                 record["binary"], study["m1_campaign"])
+                 record["binary"], study["m1_campaign"], reference_campaign=m0)
     compare(m0, study["m1_campaign"], prepared, study["source_provenance"], study["analysis_output"])
 
 
