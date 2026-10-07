@@ -76,8 +76,9 @@ meeting these declared goals; do not add router microarchitecture to erase tails
 ## Diagnostic correction before accepting the study
 
 The first pair (7->0, 6->1) had no observed shared directed link; its two-sink
-result cannot certify the fourth mechanism. The accepted study instead fixes
-(0->2, 1->3), with endpoint 2 at 8 B/cycle. This is one geometry diagnostic, not
+result cannot certify the fourth mechanism. The subsequent (0->2, 1->3)
+pair also failed the actual-path gate. Inspection showed 0->2 uses output
+6->32; the accepted diagnostic fixes (0->2, 6->3), with endpoint 2 at 8 B/cycle. This is one geometry diagnostic, not
 a mapping search. A shared-link assertion must pass on the actual bounded
 BookSim paths before proceeding to application runs. The earlier complete run
 remains traceable but does not meet this mechanism-coverage gate.
