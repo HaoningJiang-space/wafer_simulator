@@ -13,6 +13,12 @@ def audit(binding, timing, result):
         *timing.services, *(l.service for l in timing.links),
         *(s for e in timing.endpoints for s in (e.injection,e.ejection)))}
     records,by_resource,by_token = result["services"],defaultdict(list),defaultdict(list)
+    native_messages = None
+    if result.get("network_backend") == "booksim":
+        from wafer_sim.analysis.online_network import audit_messages
+        audit_messages(binding.network, result["network_messages"])
+        native_messages = {m["token"]:m for m in result["network_messages"]}
+    network_tokens = set()
     physical = nx.Graph()
     physical.add_nodes_from(dict(binding.network.endpoint_routers).values())
     physical.add_edges_from(binding.network.router_links)
@@ -69,6 +75,19 @@ def audit(binding, timing, result):
         for index,phase in enumerate(plan.phases):
             row = phases[op,index]
             token = f"{op}/phase/{index}"
+            if phase.transfer is not None and native_messages is not None:
+                network_tokens.add(token)
+                t = phase.transfer
+                m = native_messages[token]
+                if (row["ready"] != previous or row["kind"] != "transfer" or
+                        row["network_token"] != token or row["transfer_bytes"] != t.size_bytes or
+                        m["ready"] != previous or m["finish"] != row["finish"] or
+                        m["source"] != t.source_endpoint or m["destination"] != t.destination_endpoint or
+                        m["bytes"] != t.size_bytes or m["data"] != t.data or
+                        m["source_memory"] != t.source_memory or m["destination_memory"] != t.destination_memory):
+                    raise ValueError("Native transfer differs from admitted phase")
+                previous = row["finish"]
+                continue
             expected_tokens.add(token)
             events = by_token[token]
             if (row["ready"] != previous or row["kind"] != phase.kind or
@@ -114,6 +133,8 @@ def audit(binding, timing, result):
             raise ValueError("Operation finished before its last phase")
     if expected_tokens != set(by_token) or len(phases) != sum(len(p.phases) for p in binding.plans.values()):
         raise ValueError("Extra or missing phase/service")
+    if native_messages is not None and network_tokens != set(native_messages):
+        raise ValueError("Extra or missing native transmission")
     allocations, used = {},dict.fromkeys(binding.memory,0)
     def reserve(key,memory,size):
         if key in allocations: raise ValueError("Duplicate allocation")

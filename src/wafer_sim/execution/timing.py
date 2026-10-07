@@ -63,13 +63,14 @@ class ResourceCalendar:
         return result
 
 
-def execute(binding, timing):
+def execute(binding, timing, *, network=None, cycle_limit=1000000):
     target = TimedTarget(binding,timing)
     state = StorageState(binding)
     clock = ResourceCalendar(target.services)
     operations, phases, lifecycle = {}, [], []
     dependency_ready = {}
     pending = list(binding.graph.order)
+    network_callbacks = {}
 
     def submit_phase(op):
         index,phase = state.active[op],state.next_phase(op)
@@ -77,7 +78,10 @@ def execute(binding, timing):
         row = dict(operation=op,phase=index,kind=phase.kind,ready=clock.now,finish=None)
         if phase.transfer:
             row["transfer_bytes"] = phase.transfer.size_bytes
-            row["path"] = target.route(phase.transfer.source_endpoint,phase.transfer.destination_endpoint)
+            if network is None:
+                row["path"] = target.route(phase.transfer.source_endpoint,phase.transfer.destination_endpoint)
+            else:
+                row["network_token"] = token
         phases.append(row)
         def complete():
             row["finish"] = clock.now
@@ -87,7 +91,11 @@ def execute(binding, timing):
                 lifecycle.append(dict(event="complete",operation=op,cycle=clock.now,used_bytes=state.used.copy()))
             else:
                 submit_phase(op)
-        clock.submit(token,target.steps(phase),complete)
+        if network is not None and phase.transfer:
+            network.submit(token,phase.transfer,clock.now)
+            network_callbacks[token] = complete
+        else:
+            clock.submit(token,target.steps(phase),complete)
 
     while True:
         # Stable topological input order within each admission opportunity.
@@ -108,16 +116,29 @@ def execute(binding, timing):
         if len(state.completed) == len(binding.plans):
             complete = True
             break
-        if not clock.events:
+        if not clock.events and not network_callbacks:
             complete = False
             break
-        clock.advance()
+        if network is None:
+            clock.advance()
+        else:
+            boundary = min(clock.events[0][0],cycle_limit) if clock.events else cycle_limit
+            completed_tokens = network.advance(boundary)
+            clock.now = network.now
+            # Receive completions at a boundary precede local completions at
+            # that boundary. Every later submission observes all prior cycles.
+            for token in completed_tokens:
+                network_callbacks.pop(token)()
+            if not completed_tokens and clock.events and clock.events[0][0] == clock.now:
+                clock.advance()
+            if clock.now >= cycle_limit:
+                raise TimeoutError("Target execution reached its declared cycle limit")
     blocked = {}
     for op in pending:
         decision = state.admission(op)
         blocked[op] = dict(missing_dependencies=decision.missing_dependencies,
                           shortage_bytes=decision.shortage_bytes)
-    return dict(complete=complete,application_cycles=clock.now if complete else None,
+    result = dict(complete=complete,application_cycles=clock.now if complete else None,
         stopped_cycle=clock.now,operations=operations,phases=phases,services=clock.records,
         resources=clock.resource_summary(),blocked=blocked,lifecycle=lifecycle,
         storage={k:v for k,v in state.snapshot().items() if k != "timing_evaluated"},
@@ -126,3 +147,9 @@ def execute(binding, timing):
             arbitration="nonpreemptive FCFS at each resource; latency follows serialization",
             network="minimum-hop lexicographic route; whole-message store-and-forward",
             within_phase="demands in declared order",time="integer cycles; rational rates rounded up"))
+    if network is not None:
+        result["network_backend"] = "booksim"
+        result["network_messages"] = sorted(network.messages,key=lambda m:m["id"])
+        result["policy"]["network"] = "live BookSim; all-flit reception at end-of-cycle boundary"
+        result["policy"]["ties"] = "network completions before local completions at the same boundary"
+    return result
