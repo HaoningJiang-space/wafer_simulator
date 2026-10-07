@@ -129,7 +129,7 @@ native training throughput.
   [local_transfers.py](../src/wafer_sim/workloads/local_transfers.py),
   [source report](LOCAL_STAGE_PROVENANCE.md).
 - Geometry and endpoint ordering: [wow.py](../src/wafer_sim/adapters/wow.py),
-  author [exporter](../third_party/nw-design-for-wsi/export_to_rapidchiplet.py).
+  author [exporter at the pinned revision](https://github.com/spcl/nw-design-for-wsi/blob/9470042fb2d8b5368556e46cc75ac818dbf31522/export_to_rapidchiplet.py).
 - Lane IDs, dependency predicates and messages:
   [goal_booksim.py](../src/wafer_sim/adapters/goal_booksim.py).
 - Issue, completion, credit and event semantics: frozen
