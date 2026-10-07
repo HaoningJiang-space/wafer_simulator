@@ -18,7 +18,7 @@ from wafer_sim.workloads.spatial import Workload
 
 def fixture():
     export=exported()
-    export['inputs']['booksim_config']=dict(num_vcs=1,packet_size=1,wait_for_tail_credit=0,
+    export['inputs']['booksim_config']=dict(mode='trace',num_vcs=1,packet_size=1,wait_for_tail_credit=0,
         hold_switch_for_packet=0,alloc_iters=1,priority='none',vc_allocator='separable_input_first',
         sw_allocator='separable_input_first')
     hardware,rates,_=build_wow_target(export,dict(scope='test',region_capacity_bytes=65536,
@@ -86,6 +86,6 @@ class PacketPipelineTests(unittest.TestCase):
 
     def test_unsupported_native_modes_are_not_silently_approximated(self):
         _,_,_,e=fixture()
-        for key,value in (('num_vcs',2),('packet_size',2),('wait_for_tail_credit',1),('speculative',1)):
+        for key,value in (('mode','traffic'),('num_vcs',2),('packet_size',2),('wait_for_tail_credit',1),('speculative',1)):
             changed=copy.deepcopy(e);changed['inputs']['booksim_config'][key]=value
             with self.assertRaises(ValueError): contract(changed,2000)

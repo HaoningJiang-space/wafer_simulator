@@ -10,7 +10,7 @@ from wafer_sim.architecture.timing import Service
 
 def contract(export, flit_bytes):
     config=export['inputs']['booksim_config']
-    required=dict(num_vcs=1,packet_size=1,wait_for_tail_credit=0,hold_switch_for_packet=0,
+    required=dict(mode='trace',num_vcs=1,packet_size=1,wait_for_tail_credit=0,hold_switch_for_packet=0,
                   alloc_iters=1,priority='none',vc_allocator='separable_input_first',
                   sw_allocator='separable_input_first')
     if any(config.get(k)!=v for k,v in required.items()):
