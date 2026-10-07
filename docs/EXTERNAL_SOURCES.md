@@ -39,7 +39,8 @@ The established eex005 runtime paths can be restored with:
 
 Use `--check` for a read-only verification. Existing checkouts at another commit
 or with changes are preserved and cause an error. No reset, clean or upstream
-source edit is performed. Builds still apply patches in isolated worktrees.
+source edit is performed. Untracked Python bytecode files under `__pycache__`
+are counted separately as runtime products. Builds still apply patches in isolated worktrees.
 
 The Chakra schema environment has its own pinned requirements and
 [setup script](../scripts/setup_chakra_remote.sh); it does not install Chakra's

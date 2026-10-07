@@ -61,6 +61,7 @@ def inspect_rank(path, schema):
     examples = {}
     min_start, max_end = None, 0
     work_records = []
+    gpu_children, scope_markers = Counter(), {}
     with path.open("rb") as stream:
         metadata = read_metadata(stream, schema)
         for offset, node in nodes(stream, schema):
@@ -75,6 +76,10 @@ def inspect_rank(path, schema):
             domain = "CPU" if attributes.get("is_cpu_op") is True else (
                 "GPU" if attributes.get("is_cpu_op") is False else "unspecified")
             counts[f"nodes:{kind}:{domain}"] += 1
+            if domain == "GPU":
+                gpu_children.update(node.ctrl_deps)
+            if node.name.startswith("ProfilerStep#"):
+                scope_markers[node.id] = node.name
             attrs_count.update(attributes.keys())
             names[(kind, domain, node.name)] += 1
             for key in ("num_ops", "num_flops", "tensor_size", "comm_size", "comm_type"):
@@ -114,6 +119,7 @@ def inspect_rank(path, schema):
                         examples[key] = dict(id=node.id, byte_offset=offset)
                 else:
                     work.update(node_id=node.id, byte_offset=offset,
+                        source_duration_micros=node.duration_micros,
                         source_data_deps=list(node.data_deps), source_ctrl_deps=list(node.ctrl_deps))
                     work_records.append(work)
                     counts["normalized_matrix_primitives"] += 1
@@ -132,6 +138,21 @@ def inspect_rank(path, schema):
     if not dependencies:
         raise ValueError("Empty Chakra rank is not a complete training input")
     combined = {i: dependencies[i] | controls[i] for i in dependencies}
+    # Associate by retained call-parent references only. Missing GPU children
+    # are evidence about the capture/linking coverage, not zero compute work.
+    for work in work_records:
+        work["direct_gpu_children"] = gpu_children[work["node_id"]]
+        if work["direct_gpu_children"]:
+            counts["normalized_matrix_with_direct_gpu_child"] += 1
+        current, visited = work["node_id"], set()
+        while current not in scope_markers and current not in visited:
+            visited.add(current)
+            parents = controls.get(current, set())
+            if len(parents) != 1:
+                break
+            current = next(iter(parents))
+        work["source_profiler_step"] = scope_markers.get(current)
+        counts["matrix_source_scope:" + str(work["source_profiler_step"])] += 1
     report = dict(metadata_version=metadata.version, metadata_attributes=attribute_values(metadata),
         nodes=len(dependencies), bytes_read=final_offset,
         counts=dict(sorted(counts.items())), attributes=dict(sorted(attrs_count.items())),
@@ -141,4 +162,5 @@ def inspect_rank(path, schema):
         combined_reference_graph=graph_summary(combined),
         nonzero_start_time_range_micros=[min_start, max_end], examples=examples,
         source_duration_is_target_work=False, tensor_versions_inferred=False)
+    report["source_scope_markers"] = scope_markers
     return report, signatures, work_records

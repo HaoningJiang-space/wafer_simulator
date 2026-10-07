@@ -34,9 +34,14 @@ def main():
             dest.parent.mkdir(parents=True, exist_ok=True)
             subprocess.run(["git", "clone", "--no-checkout", entry["mirror"], str(dest)], check=True)
             subprocess.run(["git", "-C", str(dest), "checkout", "--detach", entry["commit"]], check=True)
-        if git("-C", dest, "rev-parse", "HEAD") != entry["commit"] or git("-C", dest, "status", "--porcelain"):
+        status = git("-C", dest, "status", "--porcelain", "--untracked-files=all").splitlines()
+        caches = [line for line in status if line.startswith("?? ") and
+                  "__pycache__/" in line[3:] and line.endswith(".pyc")]
+        changed = [line for line in status if line not in caches]
+        if git("-C", dest, "rev-parse", "HEAD") != entry["commit"] or changed:
             raise ValueError(f"Existing source is changed or at another revision; preserved: {dest}")
-        print(json.dumps(dict(path=str(dest), commit=entry["commit"], mirror=entry["mirror"], clean=True)))
+        print(json.dumps(dict(path=str(dest), commit=entry["commit"], mirror=entry["mirror"],
+                              authored_source_clean=True, ignored_runtime_bytecode_files=len(caches))))
 
 
 if __name__ == "__main__":
