@@ -81,11 +81,17 @@ does not gate this implementation.
 
 The [first fixed-rule WoW block pair](results/transformer-wow-001/REVIEW.md)
 now connects the Transformer to the accepted BookSim kernel online. Baseline
-and Rotated finish in 13,062 and 13,430 cycles with common analytical local
+and Rotated originally finished in 13,062 and 13,430 cycles with common analytical local
 resources. The selected endpoint pairs have different path costs; four
 serialized critical transfers explain the difference. This validates one
 complete declared block, not a complete native Llama execution or a general
 placement ranking.
+
+The [collective-action correction and bounded study](results/collective-execution-001/REVIEW.md)
+replace generic AllReduce lowering: corrected TP2 times are 12,550/12,918, with
+the same placement gap. Explicit concurrent TP4/TP8 gathers now exercise shared
+resources. Two predetermined mapping policies reveal small ordering changes and
+a case where lower mean message time does not improve application completion.
 
 | Object | Required information | Event or constraint |
 | --- | --- | --- |

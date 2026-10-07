@@ -12,7 +12,7 @@ from wafer_sim.execution.plan import Allocation, OperationPlan
 POLICY = "direct_exchange_rank_order_sum"
 
 
-def bind_operation(op, graph, target, homes, root_compute):
+def bind_operation(op, target, homes, root_compute):
     collective = op.collective
     rank_inputs = dict(zip(collective.members, op.inputs))
     rank_outputs = dict(zip(collective.members, op.outputs))

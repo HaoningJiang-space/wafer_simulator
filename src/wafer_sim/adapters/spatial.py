@@ -1,9 +1,9 @@
 """Bind logical work to explicit memory, compute and network service demands.
 
 No durations or hardware capacities are inferred. No network run is launched.
-Staging is whole-object, serialized within each operation and uncached between
-operations. A service backend must arbitrate equal resource IDs, including
-ports shared across regions, and complete each phase before advancing it.
+Staging is whole-object and uncached between operations. Ordinary operations
+have sequential phases; explicit collectives reuse their action DAG. A service
+backend arbitrates shared IDs and advances only completed dependencies.
 """
 from types import MappingProxyType
 
@@ -102,7 +102,7 @@ def bind(workload, target, placement):
             raise ValueError("Target compute resource cannot serve the declared work unit")
         if op.collective is not None:
             from wafer_sim.adapters.collective_operation import bind_operation
-            plans[op.id] = bind_operation(op, graph, target, homes, c.id)
+            plans[op.id] = bind_operation(op, target, homes, c.id)
             continue
         allocations, phases = [], []
 

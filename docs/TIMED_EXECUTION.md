@@ -22,6 +22,12 @@ are requested when the previous service completes, not reserved across a
 whole future path. Completion ties use event submission order, and operation
 admission uses stable topological order. These are explicit scheduling choices.
 
+Explicit collective operations use the existing [collective action DAG](COLLECTIVE_TIMING.md).
+All ready actions are submitted to this same calendar/network interface; phases
+are not serialized solely because they belong to one collective. Ordinary
+operations retain sequential phases. Global collective admission and final
+output visibility remain governed by the shared storage state.
+
 By default, network transfers use injection, directed link and ejection byte servers on
 the target's actual router graph. Routing selects a minimum-hop path with
 lowest router ID on ties. The initial backend uses whole-message
@@ -75,6 +81,11 @@ consistency. The previously accepted 113-cycle unit's full event record remains
 identical. See the [review and extension evidence](results/transformer-execution-001/REVIEW.md).
 
 ## First complete execution unit
+
+This original generic multi-output unit is retained as an exact event-regression
+fixture. The newer explicit collective-action tests validate actual gather/SUM/
+broadcast materialization and concurrency; they supersede interpreting the
+generic multi-output service sequence as that collective algorithm.
 
 `configs/timed_execution_example.json` defines three compute/memory regions,
 four routers and shared directed links. Every tensor has four float32 elements.

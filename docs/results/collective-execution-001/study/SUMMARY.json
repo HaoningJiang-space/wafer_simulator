@@ -1,0 +1,2020 @@
+{
+  "cases": [
+    {
+      "mapping": "row_major",
+      "name": "tp4-row_major",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 11026,
+            "operations": 58,
+            "passed": true,
+            "phases": 216,
+            "services": 244,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 11026,
+          "coarse_cycles": 11098,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 3121,
+              "capacity_wait_cycles": 0,
+              "duration": 1990,
+              "finish": 5111,
+              "ready": 3121
+            },
+            "ffn_sum": {
+              "admitted": 8588,
+              "capacity_wait_cycles": 0,
+              "duration": 1990,
+              "finish": 10578,
+              "ready": 8588
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3718,
+            "memory": 6784,
+            "network": 524
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "ea036bf0c6383885f2fb32719cda83cddd47b81f1779294e036f162b187a44d0",
+          "memory_queue_wait_cycles": 6924,
+          "network_audit": {
+            "flits": 36,
+            "messages": 12,
+            "padded_bytes": 72000,
+            "passed": true,
+            "payload_bytes": 49152,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 18,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 21,
+                "flits": 12,
+                "source": 6
+              },
+              {
+                "destination": 32,
+                "flits": 12,
+                "source": 6
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 7
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 7
+              },
+              {
+                "destination": 6,
+                "flits": 12,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 12,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 18,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 6,
+                "flits": 12,
+                "source": 32
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 32
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 32
+              },
+              {
+                "destination": 7,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 7,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 43
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 58368,
+            "1": 47104,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 47104,
+            "3": 47104,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 3,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 12,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 11022,
+            "operations": 58,
+            "passed": true,
+            "phases": 216,
+            "services": 244,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 11022,
+          "coarse_cycles": 11076,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 3121,
+              "capacity_wait_cycles": 0,
+              "duration": 1988,
+              "finish": 5109,
+              "ready": 3121
+            },
+            "ffn_sum": {
+              "admitted": 8586,
+              "capacity_wait_cycles": 0,
+              "duration": 1988,
+              "finish": 10574,
+              "ready": 8586
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3718,
+            "memory": 6784,
+            "network": 520
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "ea036bf0c6383885f2fb32719cda83cddd47b81f1779294e036f162b187a44d0",
+          "memory_queue_wait_cycles": 6968,
+          "network_audit": {
+            "flits": 36,
+            "messages": 12,
+            "padded_bytes": 72000,
+            "passed": true,
+            "payload_bytes": 49152,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 8,
+                "source": 1
+              },
+              {
+                "destination": 42,
+                "flits": 4,
+                "source": 1
+              },
+              {
+                "destination": 26,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 28,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 0,
+                "flits": 8,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 8,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 26,
+                "flits": 12,
+                "source": 25
+              },
+              {
+                "destination": 2,
+                "flits": 12,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 26
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 29
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 29,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 0,
+                "flits": 4,
+                "source": 40
+              },
+              {
+                "destination": 40,
+                "flits": 4,
+                "source": 42
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 58368,
+            "1": 47104,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 0,
+            "3": 47104,
+            "4": 47104,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 3,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 12,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            3,
+            1,
+            4
+          ]
+        }
+      ],
+      "shards": 4
+    },
+    {
+      "mapping": "nearest_root",
+      "name": "tp4-nearest_root",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 10816,
+            "operations": 58,
+            "passed": true,
+            "phases": 216,
+            "services": 244,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 10816,
+          "coarse_cycles": 10844,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 3121,
+              "capacity_wait_cycles": 0,
+              "duration": 1885,
+              "finish": 5006,
+              "ready": 3121
+            },
+            "ffn_sum": {
+              "admitted": 8483,
+              "capacity_wait_cycles": 0,
+              "duration": 1885,
+              "finish": 10368,
+              "ready": 8483
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3718,
+            "memory": 6784,
+            "network": 314
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "ea036bf0c6383885f2fb32719cda83cddd47b81f1779294e036f162b187a44d0",
+          "memory_queue_wait_cycles": 7276,
+          "network_audit": {
+            "flits": 36,
+            "messages": 12,
+            "padded_bytes": 72000,
+            "passed": true,
+            "payload_bytes": 49152,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 18,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 21,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 18,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 58368,
+            "1": 47104,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 47104,
+            "6": 47104,
+            "7": 0,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 3,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 12,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            5,
+            6
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 10834,
+            "operations": 58,
+            "passed": true,
+            "phases": 216,
+            "services": 244,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 10834,
+          "coarse_cycles": 10864,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 3121,
+              "capacity_wait_cycles": 0,
+              "duration": 1894,
+              "finish": 5015,
+              "ready": 3121
+            },
+            "ffn_sum": {
+              "admitted": 8492,
+              "capacity_wait_cycles": 0,
+              "duration": 1894,
+              "finish": 10386,
+              "ready": 8492
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3718,
+            "memory": 6784,
+            "network": 332
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "ea036bf0c6383885f2fb32719cda83cddd47b81f1779294e036f162b187a44d0",
+          "memory_queue_wait_cycles": 7228,
+          "network_audit": {
+            "flits": 36,
+            "messages": 12,
+            "padded_bytes": 72000,
+            "passed": true,
+            "payload_bytes": 49152,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 0,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 12,
+                "source": 25
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 58368,
+            "1": 47104,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 47104,
+            "6": 47104,
+            "7": 0,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 3,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 12,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            5,
+            6
+          ]
+        }
+      ],
+      "shards": 4
+    },
+    {
+      "mapping": "row_major",
+      "name": "tp8-row_major",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 12534,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 12534,
+          "coarse_cycles": 12580,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 2179,
+              "capacity_wait_cycles": 0,
+              "duration": 3727,
+              "finish": 5906,
+              "ready": 2179
+            },
+            "ffn_sum": {
+              "admitted": 8359,
+              "capacity_wait_cycles": 0,
+              "duration": 3727,
+              "finish": 12086,
+              "ready": 8359
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3080,
+            "memory": 9040,
+            "network": 414
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "7fc68df0285c4bf4ab1502fc8c943b9132905b77cd083158b0fe28ec49038da2",
+          "memory_queue_wait_cycles": 27730,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 42,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 6
+              },
+              {
+                "destination": 32,
+                "flits": 24,
+                "source": 6
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 7
+              },
+              {
+                "destination": 40,
+                "flits": 12,
+                "source": 7
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 6,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 42,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 6,
+                "flits": 24,
+                "source": 32
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 32
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 32
+              },
+              {
+                "destination": 7,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 32,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 7,
+                "flits": 12,
+                "source": 40
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 51
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 51
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 58368,
+            "1": 29696,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 29696,
+            "3": 29696,
+            "4": 29696,
+            "5": 29696,
+            "6": 29696,
+            "7": 29696,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 12452,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 12452,
+          "coarse_cycles": 12482,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 2179,
+              "capacity_wait_cycles": 0,
+              "duration": 3686,
+              "finish": 5865,
+              "ready": 2179
+            },
+            "ffn_sum": {
+              "admitted": 8318,
+              "capacity_wait_cycles": 0,
+              "duration": 3686,
+              "finish": 12004,
+              "ready": 8318
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3080,
+            "memory": 9040,
+            "network": 332
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "7fc68df0285c4bf4ab1502fc8c943b9132905b77cd083158b0fe28ec49038da2",
+          "memory_queue_wait_cycles": 28102,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 36,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 12,
+                "source": 1
+              },
+              {
+                "destination": 42,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 26,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 28,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 0,
+                "flits": 12,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 26,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 2,
+                "flits": 24,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 26
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 30,
+                "flits": 12,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 12,
+                "source": 29
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 29,
+                "flits": 12,
+                "source": 30
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 0,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 42
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 58368,
+            "1": 29696,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 29696,
+            "3": 29696,
+            "4": 29696,
+            "5": 29696,
+            "6": 29696,
+            "7": 0,
+            "8": 29696,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            3,
+            1,
+            4,
+            2,
+            5,
+            8,
+            6
+          ]
+        }
+      ],
+      "shards": 8
+    },
+    {
+      "mapping": "nearest_root",
+      "name": "tp8-nearest_root",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 12538,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 12538,
+          "coarse_cycles": 12584,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 2179,
+              "capacity_wait_cycles": 0,
+              "duration": 3729,
+              "finish": 5908,
+              "ready": 2179
+            },
+            "ffn_sum": {
+              "admitted": 8361,
+              "capacity_wait_cycles": 0,
+              "duration": 3729,
+              "finish": 12090,
+              "ready": 8361
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3080,
+            "memory": 9040,
+            "network": 418
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "7fc68df0285c4bf4ab1502fc8c943b9132905b77cd083158b0fe28ec49038da2",
+          "memory_queue_wait_cycles": 28300,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 42,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 20,
+                "flits": 10,
+                "source": 5
+              },
+              {
+                "destination": 25,
+                "flits": 8,
+                "source": 5
+              },
+              {
+                "destination": 62,
+                "flits": 12,
+                "source": 5
+              },
+              {
+                "destination": 21,
+                "flits": 18,
+                "source": 6
+              },
+              {
+                "destination": 32,
+                "flits": 12,
+                "source": 6
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 7
+              },
+              {
+                "destination": 60,
+                "flits": 6,
+                "source": 10
+              },
+              {
+                "destination": 61,
+                "flits": 6,
+                "source": 11
+              },
+              {
+                "destination": 5,
+                "flits": 18,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 10,
+                "source": 20
+              },
+              {
+                "destination": 6,
+                "flits": 18,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 18,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 34,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 18,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 18,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 27,
+                "flits": 8,
+                "source": 25
+              },
+              {
+                "destination": 0,
+                "flits": 8,
+                "source": 27
+              },
+              {
+                "destination": 6,
+                "flits": 12,
+                "source": 32
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 32
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 32
+              },
+              {
+                "destination": 7,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 10,
+                "flits": 6,
+                "source": 60
+              },
+              {
+                "destination": 62,
+                "flits": 6,
+                "source": 60
+              },
+              {
+                "destination": 11,
+                "flits": 6,
+                "source": 61
+              },
+              {
+                "destination": 62,
+                "flits": 6,
+                "source": 61
+              },
+              {
+                "destination": 5,
+                "flits": 12,
+                "source": 62
+              },
+              {
+                "destination": 60,
+                "flits": 6,
+                "source": 62
+              },
+              {
+                "destination": 61,
+                "flits": 6,
+                "source": 62
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 58368,
+            "1": 29696,
+            "10": 29696,
+            "11": 29696,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 29696,
+            "3": 0,
+            "4": 0,
+            "5": 29696,
+            "6": 29696,
+            "7": 29696,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            5,
+            6,
+            2,
+            7,
+            10,
+            11
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 12572,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 12572,
+          "coarse_cycles": 12614,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 2179,
+              "capacity_wait_cycles": 0,
+              "duration": 3746,
+              "finish": 5925,
+              "ready": 2179
+            },
+            "ffn_sum": {
+              "admitted": 8378,
+              "capacity_wait_cycles": 0,
+              "duration": 3746,
+              "finish": 12124,
+              "ready": 8378
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3080,
+            "memory": 9040,
+            "network": 452
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "7fc68df0285c4bf4ab1502fc8c943b9132905b77cd083158b0fe28ec49038da2",
+          "memory_queue_wait_cycles": 28282,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 30,
+                "source": 0
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 8,
+                "source": 1
+              },
+              {
+                "destination": 42,
+                "flits": 4,
+                "source": 1
+              },
+              {
+                "destination": 26,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 28,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 46,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 46,
+                "flits": 6,
+                "source": 7
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 10
+              },
+              {
+                "destination": 0,
+                "flits": 8,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 8,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 26,
+                "flits": 18,
+                "source": 25
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 2,
+                "flits": 18,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 26
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 29
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 29,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 0,
+                "flits": 10,
+                "source": 40
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 40,
+                "flits": 4,
+                "source": 42
+              },
+              {
+                "destination": 10,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 46
+              },
+              {
+                "destination": 7,
+                "flits": 6,
+                "source": 46
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 58368,
+            "1": 29696,
+            "10": 29696,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 29696,
+            "3": 29696,
+            "4": 0,
+            "5": 29696,
+            "6": 29696,
+            "7": 29696,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            5,
+            6,
+            2,
+            10,
+            3,
+            7
+          ]
+        }
+      ],
+      "shards": 8
+    }
+  ],
+  "native_wafer_compute_calibrated": false,
+  "physical_cost_matched": false,
+  "source_commit": "916a9827e4fa316ed5911c3892b6efa5e9b16dcb"
+}

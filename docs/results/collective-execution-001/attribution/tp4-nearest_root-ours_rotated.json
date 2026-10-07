@@ -1,0 +1,718 @@
+{
+  "collectives": {
+    "attention_sum": {
+      "admitted": 3121,
+      "capacity_wait_cycles": 0,
+      "critical_transfers": [
+        {
+          "action": "0/chunk/2->0/network",
+          "finish": 3325,
+          "start": 3249
+        },
+        {
+          "action": "0/broadcast/3/network",
+          "finish": 4887,
+          "start": 4797
+        }
+      ],
+      "finish": 5015,
+      "ready": 3121,
+      "transfers": [
+        {
+          "action": "0/chunk/1->0/network",
+          "finish": 3341,
+          "kind": "transfer",
+          "network_token": "attention_sum/phase/2",
+          "operation": "attention_sum",
+          "phase": 2,
+          "predecessors": [
+            1
+          ],
+          "ready": 3249,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/chunk/2->0/network",
+          "finish": 3325,
+          "kind": "transfer",
+          "network_token": "attention_sum/phase/6",
+          "operation": "attention_sum",
+          "phase": 6,
+          "predecessors": [
+            5
+          ],
+          "ready": 3249,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/chunk/3->0/network",
+          "finish": 3343,
+          "kind": "transfer",
+          "network_token": "attention_sum/phase/10",
+          "operation": "attention_sum",
+          "phase": 10,
+          "predecessors": [
+            9
+          ],
+          "ready": 3249,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/broadcast/1/network",
+          "finish": 4629,
+          "kind": "transfer",
+          "network_token": "attention_sum/phase/16",
+          "operation": "attention_sum",
+          "phase": 16,
+          "predecessors": [
+            15
+          ],
+          "ready": 4541,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/broadcast/2/network",
+          "finish": 4745,
+          "kind": "transfer",
+          "network_token": "attention_sum/phase/19",
+          "operation": "attention_sum",
+          "phase": 19,
+          "predecessors": [
+            18
+          ],
+          "ready": 4669,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/broadcast/3/network",
+          "finish": 4887,
+          "kind": "transfer",
+          "network_token": "attention_sum/phase/22",
+          "operation": "attention_sum",
+          "phase": 22,
+          "predecessors": [
+            21
+          ],
+          "ready": 4797,
+          "transfer_bytes": 4096
+        }
+      ]
+    },
+    "ffn_sum": {
+      "admitted": 8492,
+      "capacity_wait_cycles": 0,
+      "critical_transfers": [
+        {
+          "action": "0/chunk/2->0/network",
+          "finish": 8696,
+          "start": 8620
+        },
+        {
+          "action": "0/broadcast/3/network",
+          "finish": 10258,
+          "start": 10168
+        }
+      ],
+      "finish": 10386,
+      "ready": 8492,
+      "transfers": [
+        {
+          "action": "0/chunk/1->0/network",
+          "finish": 8712,
+          "kind": "transfer",
+          "network_token": "ffn_sum/phase/2",
+          "operation": "ffn_sum",
+          "phase": 2,
+          "predecessors": [
+            1
+          ],
+          "ready": 8620,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/chunk/2->0/network",
+          "finish": 8696,
+          "kind": "transfer",
+          "network_token": "ffn_sum/phase/6",
+          "operation": "ffn_sum",
+          "phase": 6,
+          "predecessors": [
+            5
+          ],
+          "ready": 8620,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/chunk/3->0/network",
+          "finish": 8714,
+          "kind": "transfer",
+          "network_token": "ffn_sum/phase/10",
+          "operation": "ffn_sum",
+          "phase": 10,
+          "predecessors": [
+            9
+          ],
+          "ready": 8620,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/broadcast/1/network",
+          "finish": 10000,
+          "kind": "transfer",
+          "network_token": "ffn_sum/phase/16",
+          "operation": "ffn_sum",
+          "phase": 16,
+          "predecessors": [
+            15
+          ],
+          "ready": 9912,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/broadcast/2/network",
+          "finish": 10116,
+          "kind": "transfer",
+          "network_token": "ffn_sum/phase/19",
+          "operation": "ffn_sum",
+          "phase": 19,
+          "predecessors": [
+            18
+          ],
+          "ready": 10040,
+          "transfer_bytes": 4096
+        },
+        {
+          "action": "0/broadcast/3/network",
+          "finish": 10258,
+          "kind": "transfer",
+          "network_token": "ffn_sum/phase/22",
+          "operation": "ffn_sum",
+          "phase": 22,
+          "predecessors": [
+            21
+          ],
+          "ready": 10168,
+          "transfer_bytes": 4096
+        }
+      ]
+    }
+  },
+  "first_flit_router_excess_cycles": 0,
+  "messages": [
+    {
+      "destination": 0,
+      "finish": 3341,
+      "first_flit": 0,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 0,
+      "ready": 3249,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 1
+        },
+        {
+          "excess_cycles": 0,
+          "router": 22
+        },
+        {
+          "excess_cycles": 0,
+          "router": 20
+        },
+        {
+          "excess_cycles": 0,
+          "router": 0
+        }
+      ],
+      "routers": [
+        1,
+        22,
+        20,
+        0
+      ],
+      "source": 1,
+      "token": "attention_sum/phase/2"
+    },
+    {
+      "destination": 0,
+      "finish": 3325,
+      "first_flit": 3,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 1,
+      "ready": 3249,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 5
+        },
+        {
+          "excess_cycles": 0,
+          "router": 25
+        },
+        {
+          "excess_cycles": 0,
+          "router": 0
+        }
+      ],
+      "routers": [
+        5,
+        25,
+        0
+      ],
+      "source": 5,
+      "token": "attention_sum/phase/6"
+    },
+    {
+      "destination": 0,
+      "finish": 3343,
+      "first_flit": 6,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 2,
+      "ready": 3249,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 6
+        },
+        {
+          "excess_cycles": 0,
+          "router": 27
+        },
+        {
+          "excess_cycles": 0,
+          "router": 25
+        },
+        {
+          "excess_cycles": 0,
+          "router": 0
+        }
+      ],
+      "routers": [
+        6,
+        27,
+        25,
+        0
+      ],
+      "source": 6,
+      "token": "attention_sum/phase/10"
+    },
+    {
+      "destination": 1,
+      "finish": 4629,
+      "first_flit": 9,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 3,
+      "ready": 4541,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 0
+        },
+        {
+          "excess_cycles": 0,
+          "router": 20
+        },
+        {
+          "excess_cycles": 0,
+          "router": 22
+        },
+        {
+          "excess_cycles": 0,
+          "router": 1
+        }
+      ],
+      "routers": [
+        0,
+        20,
+        22,
+        1
+      ],
+      "source": 0,
+      "token": "attention_sum/phase/16"
+    },
+    {
+      "destination": 5,
+      "finish": 4745,
+      "first_flit": 12,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 4,
+      "ready": 4669,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 0
+        },
+        {
+          "excess_cycles": 0,
+          "router": 25
+        },
+        {
+          "excess_cycles": 0,
+          "router": 5
+        }
+      ],
+      "routers": [
+        0,
+        25,
+        5
+      ],
+      "source": 0,
+      "token": "attention_sum/phase/19"
+    },
+    {
+      "destination": 6,
+      "finish": 4887,
+      "first_flit": 15,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 5,
+      "ready": 4797,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 0
+        },
+        {
+          "excess_cycles": 0,
+          "router": 25
+        },
+        {
+          "excess_cycles": 0,
+          "router": 27
+        },
+        {
+          "excess_cycles": 0,
+          "router": 6
+        }
+      ],
+      "routers": [
+        0,
+        25,
+        27,
+        6
+      ],
+      "source": 0,
+      "token": "attention_sum/phase/22"
+    },
+    {
+      "destination": 0,
+      "finish": 8712,
+      "first_flit": 18,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 6,
+      "ready": 8620,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 1
+        },
+        {
+          "excess_cycles": 0,
+          "router": 22
+        },
+        {
+          "excess_cycles": 0,
+          "router": 20
+        },
+        {
+          "excess_cycles": 0,
+          "router": 0
+        }
+      ],
+      "routers": [
+        1,
+        22,
+        20,
+        0
+      ],
+      "source": 1,
+      "token": "ffn_sum/phase/2"
+    },
+    {
+      "destination": 0,
+      "finish": 8696,
+      "first_flit": 21,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 7,
+      "ready": 8620,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 5
+        },
+        {
+          "excess_cycles": 0,
+          "router": 25
+        },
+        {
+          "excess_cycles": 0,
+          "router": 0
+        }
+      ],
+      "routers": [
+        5,
+        25,
+        0
+      ],
+      "source": 5,
+      "token": "ffn_sum/phase/6"
+    },
+    {
+      "destination": 0,
+      "finish": 8714,
+      "first_flit": 24,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 8,
+      "ready": 8620,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 6
+        },
+        {
+          "excess_cycles": 0,
+          "router": 27
+        },
+        {
+          "excess_cycles": 0,
+          "router": 25
+        },
+        {
+          "excess_cycles": 0,
+          "router": 0
+        }
+      ],
+      "routers": [
+        6,
+        27,
+        25,
+        0
+      ],
+      "source": 6,
+      "token": "ffn_sum/phase/10"
+    },
+    {
+      "destination": 1,
+      "finish": 10000,
+      "first_flit": 27,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 9,
+      "ready": 9912,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 0
+        },
+        {
+          "excess_cycles": 0,
+          "router": 20
+        },
+        {
+          "excess_cycles": 0,
+          "router": 22
+        },
+        {
+          "excess_cycles": 0,
+          "router": 1
+        }
+      ],
+      "routers": [
+        0,
+        20,
+        22,
+        1
+      ],
+      "source": 0,
+      "token": "ffn_sum/phase/16"
+    },
+    {
+      "destination": 5,
+      "finish": 10116,
+      "first_flit": 30,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 10,
+      "ready": 10040,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 0
+        },
+        {
+          "excess_cycles": 0,
+          "router": 25
+        },
+        {
+          "excess_cycles": 0,
+          "router": 5
+        }
+      ],
+      "routers": [
+        0,
+        25,
+        5
+      ],
+      "source": 0,
+      "token": "ffn_sum/phase/19"
+    },
+    {
+      "destination": 6,
+      "finish": 10258,
+      "first_flit": 33,
+      "first_flit_router_excess_cycles": 0,
+      "first_injection_wait": 0,
+      "message": 11,
+      "ready": 10168,
+      "router_residence": [
+        {
+          "excess_cycles": 0,
+          "router": 0
+        },
+        {
+          "excess_cycles": 0,
+          "router": 25
+        },
+        {
+          "excess_cycles": 0,
+          "router": 27
+        },
+        {
+          "excess_cycles": 0,
+          "router": 6
+        }
+      ],
+      "routers": [
+        0,
+        25,
+        27,
+        6
+      ],
+      "source": 0,
+      "token": "ffn_sum/phase/22"
+    }
+  ],
+  "scope": "Observed first-injected-flit residence beyond configured router pipeline on its actual path; includes arbitration/credit effects, not a counterfactual or unique cause. Shared-link totals include sequential messages.",
+  "shared_links": [
+    {
+      "destination": 20,
+      "first_arrival": 4572,
+      "flits": 6,
+      "last_arrival": 9947,
+      "messages": 2,
+      "source": 0
+    },
+    {
+      "destination": 25,
+      "first_arrival": 4702,
+      "flits": 12,
+      "last_arrival": 10205,
+      "messages": 4,
+      "source": 0
+    },
+    {
+      "destination": 22,
+      "first_arrival": 3282,
+      "flits": 6,
+      "last_arrival": 8657,
+      "messages": 2,
+      "source": 1
+    },
+    {
+      "destination": 25,
+      "first_arrival": 3284,
+      "flits": 6,
+      "last_arrival": 8659,
+      "messages": 2,
+      "source": 5
+    },
+    {
+      "destination": 27,
+      "first_arrival": 3281,
+      "flits": 6,
+      "last_arrival": 8656,
+      "messages": 2,
+      "source": 6
+    },
+    {
+      "destination": 0,
+      "first_arrival": 3322,
+      "flits": 6,
+      "last_arrival": 8697,
+      "messages": 2,
+      "source": 20
+    },
+    {
+      "destination": 22,
+      "first_arrival": 4588,
+      "flits": 6,
+      "last_arrival": 9963,
+      "messages": 2,
+      "source": 20
+    },
+    {
+      "destination": 1,
+      "first_arrival": 4614,
+      "flits": 6,
+      "last_arrival": 9989,
+      "messages": 2,
+      "source": 22
+    },
+    {
+      "destination": 20,
+      "first_arrival": 3298,
+      "flits": 6,
+      "last_arrival": 8673,
+      "messages": 2,
+      "source": 22
+    },
+    {
+      "destination": 0,
+      "first_arrival": 3310,
+      "flits": 12,
+      "last_arrival": 8699,
+      "messages": 4,
+      "source": 25
+    },
+    {
+      "destination": 5,
+      "first_arrival": 4730,
+      "flits": 6,
+      "last_arrival": 10105,
+      "messages": 2,
+      "source": 25
+    },
+    {
+      "destination": 27,
+      "first_arrival": 4847,
+      "flits": 6,
+      "last_arrival": 10222,
+      "messages": 2,
+      "source": 25
+    },
+    {
+      "destination": 6,
+      "first_arrival": 4872,
+      "flits": 6,
+      "last_arrival": 10247,
+      "messages": 2,
+      "source": 27
+    },
+    {
+      "destination": 25,
+      "first_arrival": 3298,
+      "flits": 6,
+      "last_arrival": 8673,
+      "messages": 2,
+      "source": 27
+    }
+  ]
+}

@@ -66,6 +66,14 @@ rank-local asynchronous collective completion. With workers on different memory
 regions, the two collectives move **16,384 logical bytes** through the network;
 link-service bytes can be larger because each physical hop serves those bytes.
 
+The timed model now binds this explicit collective through the existing action
+DAG. Independent source reads/gathers can overlap; the root result is written
+once, then read for each broadcast. Root accesses share their memory port. All
+participant inputs and output/staging reservations are required at entry, and
+global completion still waits for every destination write. The earlier generic
+multi-output lowering overcharged root materialization and is superseded; see
+[collective timing](COLLECTIVE_TIMING.md).
+
 ## Target and validation
 
 `configs/transformer_block.json` declares a two-region analytical machine with
@@ -104,4 +112,6 @@ entire logical block and common compute/memory parameters. It replaces the
 hand-declared network and endpoint map with each author's actual resource graph
 and the same row-major mapping rule. Live BookSim receives only currently ready
 transfers. The [accepted pair](results/transformer-wow-001/REVIEW.md) reports
-13,062/13,430 cycles and traces their difference through both AllReduces.
+the historical 13,062/13,430 cycles. Its [corrected action-based successor](results/collective-execution-001/REVIEW.md)
+reports 12,550/12,918 cycles, followed by a separately registered eight-head
+TP4/TP8 and two-mapping study.

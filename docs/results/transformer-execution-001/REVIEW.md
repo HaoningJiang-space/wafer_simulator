@@ -1,5 +1,10 @@
 # Backend review and complete Transformer forward execution
 
+> Model correction: these historical results used generic multi-output lowering
+> for AllReduce, including a duplicated root result write. The logical block and
+> numerical validation remain useful; these absolute times are not the current
+> collective model. See the [corrected action execution and WoW study](../collective-execution-001/REVIEW.md).
+
 Checked on **eex005, 2026-10-07**, source `9f3c8e6`. This milestone first reviews
 the existing target timing capability, then extends it to a complete, declared
 Transformer forward block. Source capture recovery, full Llama execution,

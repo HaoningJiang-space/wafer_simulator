@@ -5,6 +5,11 @@ entire already validated forward block from `configs/transformer_block.json`:
 30 operators, 557,056 MACs, two logical workers and two root-gather/SUM/broadcast
 collectives. No source capture or fixed source duration is substituted.
 
+The current AllReduce binding uses the [collective action DAG](COLLECTIVE_TIMING.md),
+including one root result materialization. The initial generic multi-output
+result is historical; corrected TP2 and concurrent TP4/TP8 evidence is in the
+[collective execution report](results/collective-execution-001/REVIEW.md).
+
 ## Fixed and changed controls
 
 Only author placement changes: `baseline` versus `ours_rotated`, both WoW LoI,

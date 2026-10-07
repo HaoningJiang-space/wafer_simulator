@@ -19,20 +19,27 @@ communication retargeting.
 
 The [complete Transformer forward block](docs/TRANSFORMER_EXECUTION.md)
 now executes on the same backend: 30 operations, two SUM AllReduces and 557,056
-MACs. Its [checked result](docs/results/transformer-execution-001/REVIEW.md) is
-15,862 cycles under the declared model, with separate compute/memory/network
-rate controls. Dense numerical equivalence and 93 semantic checks pass. These
+MACs. Its [initial result](docs/results/transformer-execution-001/REVIEW.md) was
+15,862 cycles under the original generic lowering, with separate resource-rate
+controls; the collective correction below supersedes that lowering. Dense numerical equivalence passes. These
 parameters are analytical, not calibrated WoW compute or SRAM specifications.
 
-The block is now connected to **live author WoW networks**. The
-[first checked placement pair](docs/results/transformer-wow-001/REVIEW.md)
-finishes in **13,062 cycles on Baseline and 13,430 on Rotated**, at 1 GHz.
-The same row-major mapping rule selects different physical endpoint pairs;
-four critical transfers each take 92 more cycles on Rotated, explaining the
-368-cycle application difference. All 102 semantic/interface tests pass, and
-both arms match the standalone BookSim's message timestamps exactly. No two
-messages overlap in this case. It establishes path-cost propagation, not a
-general ranking or a congestion result. See the [controls and live interface](docs/TRANSFORMER_WOW_PROTOCOL.md).
+The block now uses the existing **collective action DAG** with the live author
+WoW network. This fixes the generic binder's duplicated root result write and
+allows independent gathers to overlap. The [corrected TP2 pair and bounded
+TP4/TP8 study](docs/results/collective-execution-001/REVIEW.md) report
+**12,550 cycles on Baseline and 12,918 on Rotated** for the original four-head
+TP2 block. A serialized-action control separates 256 cycles from corrected
+materialization and another 256 from overlap. The old 13,062/13,430 result is
+retained with a correction notice; its 368-cycle placement gap remains.
+
+The separate eight-head study observes 3/7 simultaneous messages at TP4/TP8.
+Row-major and nearest-root mappings change the placement ordering, but the
+differences are small. TP8 nearest-root lowers average message time yet increases
+application time: shared root-memory service and the last critical broadcast
+matter. All twelve corrected/control/study arms pass independent execution and
+standalone BookSim timestamp checks. See [collective timing](docs/COLLECTIVE_TIMING.md)
+and the [network interface](docs/TRANSFORMER_WOW_PROTOCOL.md).
 
 The research question is whether a WoW Logic-on-Interconnect placement with
 better network metrics also completes the same AI workload sooner, and which

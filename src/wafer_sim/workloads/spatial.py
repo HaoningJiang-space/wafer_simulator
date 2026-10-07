@@ -1,11 +1,15 @@
 """Logical immutable data/work, without source durations or target placement.
 
-Version 1 supports whole, non-aliasing data objects and already-lowered
-collectives. Provenance labels describe evidence, not an accuracy certificate.
+Supports whole, non-aliasing data objects and explicit AllReduce operations.
+Provenance labels describe evidence, not an accuracy certificate.
 """
 from dataclasses import dataclass
 from types import MappingProxyType
 from collections.abc import Mapping
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from wafer_sim.workloads.collectives import Collective
 
 from wafer_sim.workloads.dag import validate as validate_dag
 
@@ -38,7 +42,7 @@ class Operation:
     scratch_bytes: int
     control_deps: tuple[str, ...]
     provenance: str
-    collective: object | None = None
+    collective: "Collective | None" = None
 
 
 @dataclass(frozen=True)

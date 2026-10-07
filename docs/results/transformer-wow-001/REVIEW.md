@@ -1,5 +1,11 @@
 # 完整 Transformer block：WoW 在线执行与 placement 对照
 
+> 模型修正：本目录保留原始运行记录。随后确认通用多输出 lowering 在每次
+> TP2 AllReduce 的 root 多写了 4,096 bytes；这里的绝对完成时间已由
+> [collective action 执行结果](../collective-execution-001/REVIEW.md)取代。
+> 修正并允许独立 action 重叠后为 12,550／12,918 cycles，差值仍为 368 cycles。
+> 原始 JSON 文件及哈希没有改写。
+
 在 eex005 完成。**同一个完整 block 在 Baseline 上需要 13,062 cycles，
 Rotated 上需要 13,430 cycles。**在这组固定行优先映射和共同计算／内存参数下，
 Rotated 增加 368 cycles（2.82%）。四条关键传输各增加 92 cycles，差异经两次
