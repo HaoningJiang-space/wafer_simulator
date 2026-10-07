@@ -68,11 +68,15 @@ This is a research contract, not a claim that the current code implements all
 these inputs. Source-supported transfer bytes alone do not reconstruct tensor
 identity, liveness or mathematical semantics.
 
-## Minimum spatial execution contract to specify next
+## Current spatial execution contract
 
 The [v1 contract implementation](SPATIAL_CONTRACT.md) now covers logical objects,
-resource binding and finite storage state. Timing arbitration and a complete
-semantic Llama input remain separate work; M0/M1 results are unchanged.
+resource binding and finite storage state. The [timed backend](TIMED_EXECUTION.md)
+now adds target service rates, shared-resource arbitration and event-driven
+completion. A complete analytical A/B/AllReduce/C unit is its first validated
+input; a complete semantic Llama input remains separate. M0/M1 results are
+unchanged. Old Chakra recovery is frozen at the accepted source boundary and
+does not gate this implementation.
 
 | Object | Required information | Event or constraint |
 | --- | --- | --- |
@@ -133,9 +137,11 @@ later topics while this execution layer is being established.
 
 1. **Workload abstraction.** Recover computation quantities, data objects,
    transfers and required dependencies. Separate source durations, host call
-   hierarchy, source scheduling and GPU kernel records. The new full Chakra
-   source is being normalized using actual shapes and identities; its CPU
-   dispatcher operators are not target CPU resources. Alias/view and in-place
+   hierarchy, source scheduling and GPU kernel records. The full Chakra
+   source remains a partially normalized input with missing evidence; its CPU
+   dispatcher operators are not target CPU resources. Independent explicitly
+   defined logical workloads can develop and validate the target backend now.
+   Alias/view and in-place
    mutation semantics must establish object versions and lifetimes. No duplicate
    charge for a logical operator and its implementation kernels. A model
    comparison must use one complete logical workload identity in both models;

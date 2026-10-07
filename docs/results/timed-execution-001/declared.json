@@ -1,0 +1,1655 @@
+{
+  "audit": {
+    "application_cycles": 113,
+    "operations": 6,
+    "passed": true,
+    "phases": 30,
+    "services": 42,
+    "source_duration_used": false
+  },
+  "case": "declared",
+  "collective": {
+    "algorithm": "root gather, sum, broadcast",
+    "completion": "both output homes written before either C begins",
+    "element_bytes": 4,
+    "elements": 4,
+    "operation": "AllReduce",
+    "participants": [
+      1,
+      2
+    ],
+    "reduction": "sum",
+    "root": 1
+  },
+  "placement": {
+    "compute": {
+      "A": "compute-0",
+      "AllReduce": "compute-1",
+      "B0": "compute-1",
+      "B1": "compute-2",
+      "C0": "compute-1",
+      "C1": "compute-2"
+    },
+    "data": {
+      "b0": "1",
+      "b1": "2",
+      "out0": "1",
+      "out1": "2",
+      "seed": "0",
+      "sum0": "1",
+      "sum1": "2",
+      "x": "0"
+    }
+  },
+  "result": {
+    "application_cycles": 113,
+    "blocked": {},
+    "complete": true,
+    "lifecycle": [
+      {
+        "cycle": 0,
+        "event": "admit",
+        "operation": "A",
+        "used_bytes": {
+          "0": 32,
+          "1": 0,
+          "2": 0
+        }
+      },
+      {
+        "cycle": 12,
+        "event": "complete",
+        "operation": "A",
+        "used_bytes": {
+          "0": 16,
+          "1": 0,
+          "2": 0
+        }
+      },
+      {
+        "cycle": 12,
+        "event": "admit",
+        "operation": "B0",
+        "used_bytes": {
+          "0": 16,
+          "1": 32,
+          "2": 0
+        }
+      },
+      {
+        "cycle": 12,
+        "event": "admit",
+        "operation": "B1",
+        "used_bytes": {
+          "0": 16,
+          "1": 32,
+          "2": 32
+        }
+      },
+      {
+        "cycle": 52,
+        "event": "complete",
+        "operation": "B0",
+        "used_bytes": {
+          "0": 16,
+          "1": 16,
+          "2": 32
+        }
+      },
+      {
+        "cycle": 56,
+        "event": "complete",
+        "operation": "B1",
+        "used_bytes": {
+          "0": 0,
+          "1": 16,
+          "2": 16
+        }
+      },
+      {
+        "cycle": 56,
+        "event": "admit",
+        "operation": "AllReduce",
+        "used_bytes": {
+          "0": 0,
+          "1": 64,
+          "2": 32
+        }
+      },
+      {
+        "cycle": 105,
+        "event": "complete",
+        "operation": "AllReduce",
+        "used_bytes": {
+          "0": 0,
+          "1": 16,
+          "2": 16
+        }
+      },
+      {
+        "cycle": 105,
+        "event": "admit",
+        "operation": "C0",
+        "used_bytes": {
+          "0": 0,
+          "1": 32,
+          "2": 16
+        }
+      },
+      {
+        "cycle": 105,
+        "event": "admit",
+        "operation": "C1",
+        "used_bytes": {
+          "0": 0,
+          "1": 32,
+          "2": 32
+        }
+      },
+      {
+        "cycle": 113,
+        "event": "complete",
+        "operation": "C0",
+        "used_bytes": {
+          "0": 0,
+          "1": 16,
+          "2": 32
+        }
+      },
+      {
+        "cycle": 113,
+        "event": "complete",
+        "operation": "C1",
+        "used_bytes": {
+          "0": 0,
+          "1": 16,
+          "2": 16
+        }
+      }
+    ],
+    "operations": {
+      "A": {
+        "admitted": 0,
+        "capacity_wait_cycles": 0,
+        "finish": 12,
+        "ready": 0
+      },
+      "AllReduce": {
+        "admitted": 56,
+        "capacity_wait_cycles": 0,
+        "finish": 105,
+        "ready": 56
+      },
+      "B0": {
+        "admitted": 12,
+        "capacity_wait_cycles": 0,
+        "finish": 52,
+        "ready": 12
+      },
+      "B1": {
+        "admitted": 12,
+        "capacity_wait_cycles": 0,
+        "finish": 56,
+        "ready": 12
+      },
+      "C0": {
+        "admitted": 105,
+        "capacity_wait_cycles": 0,
+        "finish": 113,
+        "ready": 105
+      },
+      "C1": {
+        "admitted": 105,
+        "capacity_wait_cycles": 0,
+        "finish": 113,
+        "ready": 105
+      }
+    },
+    "peak_bytes": {
+      "0": 32,
+      "1": 64,
+      "2": 32
+    },
+    "phases": [
+      {
+        "finish": 2,
+        "kind": "memory_read",
+        "operation": "A",
+        "phase": 0,
+        "ready": 0
+      },
+      {
+        "finish": 10,
+        "kind": "compute",
+        "operation": "A",
+        "phase": 1,
+        "ready": 2
+      },
+      {
+        "finish": 12,
+        "kind": "memory_write",
+        "operation": "A",
+        "phase": 2,
+        "ready": 10
+      },
+      {
+        "finish": 14,
+        "kind": "memory_read",
+        "operation": "B0",
+        "phase": 0,
+        "ready": 12
+      },
+      {
+        "finish": 16,
+        "kind": "memory_read",
+        "operation": "B1",
+        "phase": 0,
+        "ready": 12
+      },
+      {
+        "finish": 30,
+        "kind": "transfer",
+        "operation": "B0",
+        "path": [
+          10,
+          11,
+          20
+        ],
+        "phase": 1,
+        "ready": 14,
+        "transfer_bytes": 16
+      },
+      {
+        "finish": 34,
+        "kind": "transfer",
+        "operation": "B1",
+        "path": [
+          10,
+          11,
+          30
+        ],
+        "phase": 1,
+        "ready": 16,
+        "transfer_bytes": 16
+      },
+      {
+        "finish": 32,
+        "kind": "memory_write",
+        "operation": "B0",
+        "phase": 2,
+        "ready": 30
+      },
+      {
+        "finish": 34,
+        "kind": "memory_read",
+        "operation": "B0",
+        "phase": 3,
+        "ready": 32
+      },
+      {
+        "finish": 36,
+        "kind": "memory_write",
+        "operation": "B1",
+        "phase": 2,
+        "ready": 34
+      },
+      {
+        "finish": 50,
+        "kind": "compute",
+        "operation": "B0",
+        "phase": 4,
+        "ready": 34
+      },
+      {
+        "finish": 38,
+        "kind": "memory_read",
+        "operation": "B1",
+        "phase": 3,
+        "ready": 36
+      },
+      {
+        "finish": 54,
+        "kind": "compute",
+        "operation": "B1",
+        "phase": 4,
+        "ready": 38
+      },
+      {
+        "finish": 52,
+        "kind": "memory_write",
+        "operation": "B0",
+        "phase": 5,
+        "ready": 50
+      },
+      {
+        "finish": 56,
+        "kind": "memory_write",
+        "operation": "B1",
+        "phase": 5,
+        "ready": 54
+      },
+      {
+        "finish": 58,
+        "kind": "memory_read",
+        "operation": "AllReduce",
+        "phase": 0,
+        "ready": 56
+      },
+      {
+        "finish": 74,
+        "kind": "transfer",
+        "operation": "AllReduce",
+        "path": [
+          30,
+          11,
+          20
+        ],
+        "phase": 1,
+        "ready": 58,
+        "transfer_bytes": 16
+      },
+      {
+        "finish": 76,
+        "kind": "memory_write",
+        "operation": "AllReduce",
+        "phase": 2,
+        "ready": 74
+      },
+      {
+        "finish": 80,
+        "kind": "memory_read",
+        "operation": "AllReduce",
+        "phase": 3,
+        "ready": 76
+      },
+      {
+        "finish": 81,
+        "kind": "compute",
+        "operation": "AllReduce",
+        "phase": 4,
+        "ready": 80
+      },
+      {
+        "finish": 85,
+        "kind": "memory_write",
+        "operation": "AllReduce",
+        "phase": 5,
+        "ready": 81
+      },
+      {
+        "finish": 87,
+        "kind": "memory_read",
+        "operation": "AllReduce",
+        "phase": 6,
+        "ready": 85
+      },
+      {
+        "finish": 103,
+        "kind": "transfer",
+        "operation": "AllReduce",
+        "path": [
+          20,
+          11,
+          30
+        ],
+        "phase": 7,
+        "ready": 87,
+        "transfer_bytes": 16
+      },
+      {
+        "finish": 105,
+        "kind": "memory_write",
+        "operation": "AllReduce",
+        "phase": 8,
+        "ready": 103
+      },
+      {
+        "finish": 107,
+        "kind": "memory_read",
+        "operation": "C0",
+        "phase": 0,
+        "ready": 105
+      },
+      {
+        "finish": 107,
+        "kind": "memory_read",
+        "operation": "C1",
+        "phase": 0,
+        "ready": 105
+      },
+      {
+        "finish": 111,
+        "kind": "compute",
+        "operation": "C0",
+        "phase": 1,
+        "ready": 107
+      },
+      {
+        "finish": 111,
+        "kind": "compute",
+        "operation": "C1",
+        "phase": 1,
+        "ready": 107
+      },
+      {
+        "finish": 113,
+        "kind": "memory_write",
+        "operation": "C0",
+        "phase": 2,
+        "ready": 111
+      },
+      {
+        "finish": 113,
+        "kind": "memory_write",
+        "operation": "C1",
+        "phase": 2,
+        "ready": 111
+      }
+    ],
+    "policy": {
+      "admission": "stable topological order; atomic whole-operation capacity",
+      "arbitration": "nonpreemptive FCFS at each resource; latency follows serialization",
+      "network": "minimum-hop lexicographic route; whole-message store-and-forward",
+      "time": "integer cycles; rational rates rounded up",
+      "within_phase": "demands in declared order"
+    },
+    "resources": {
+      "compute-0": {
+        "busy_cycles": 8,
+        "queue_wait_cycles": 0,
+        "requests": 1,
+        "work": {
+          "mac": 64
+        }
+      },
+      "compute-1": {
+        "busy_cycles": 21,
+        "queue_wait_cycles": 0,
+        "requests": 3,
+        "work": {
+          "mac": 160,
+          "scalar_add": 4
+        }
+      },
+      "compute-2": {
+        "busy_cycles": 20,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "mac": 160
+        }
+      },
+      "eject-1": {
+        "busy_cycles": 4,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 32
+        }
+      },
+      "eject-2": {
+        "busy_cycles": 4,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 32
+        }
+      },
+      "inject-0": {
+        "busy_cycles": 4,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 32
+        }
+      },
+      "inject-1": {
+        "busy_cycles": 2,
+        "queue_wait_cycles": 0,
+        "requests": 1,
+        "work": {
+          "bytes": 16
+        }
+      },
+      "inject-2": {
+        "busy_cycles": 2,
+        "queue_wait_cycles": 0,
+        "requests": 1,
+        "work": {
+          "bytes": 16
+        }
+      },
+      "link-10-11": {
+        "busy_cycles": 8,
+        "queue_wait_cycles": 2,
+        "requests": 2,
+        "work": {
+          "bytes": 32
+        }
+      },
+      "link-11-20": {
+        "busy_cycles": 8,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 32
+        }
+      },
+      "link-11-30": {
+        "busy_cycles": 8,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 32
+        }
+      },
+      "link-20-11": {
+        "busy_cycles": 4,
+        "queue_wait_cycles": 0,
+        "requests": 1,
+        "work": {
+          "bytes": 16
+        }
+      },
+      "link-30-11": {
+        "busy_cycles": 4,
+        "queue_wait_cycles": 0,
+        "requests": 1,
+        "work": {
+          "bytes": 16
+        }
+      },
+      "memory-0": {
+        "busy_cycles": 8,
+        "queue_wait_cycles": 2,
+        "requests": 4,
+        "work": {
+          "bytes": 64
+        }
+      },
+      "memory-1": {
+        "busy_cycles": 22,
+        "queue_wait_cycles": 0,
+        "requests": 9,
+        "work": {
+          "bytes": 176
+        }
+      },
+      "memory-2": {
+        "busy_cycles": 14,
+        "queue_wait_cycles": 0,
+        "requests": 7,
+        "work": {
+          "bytes": 112
+        }
+      }
+    },
+    "services": [
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 2,
+        "id": 0,
+        "ready": 0,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 2,
+        "start": 0,
+        "step": 0,
+        "token": "A/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 64,
+        "category": "compute",
+        "finish": 10,
+        "id": 1,
+        "ready": 2,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 10,
+        "start": 2,
+        "step": 0,
+        "token": "A/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 12,
+        "id": 2,
+        "ready": 10,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 12,
+        "start": 10,
+        "step": 0,
+        "token": "A/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 14,
+        "id": 3,
+        "ready": 12,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 14,
+        "start": 12,
+        "step": 0,
+        "token": "B0/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 16,
+        "id": 4,
+        "ready": 12,
+        "resource": "memory-0",
+        "resource_predecessor": 3,
+        "resource_released": 16,
+        "start": 14,
+        "step": 0,
+        "token": "B1/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 16,
+        "id": 5,
+        "ready": 14,
+        "resource": "inject-0",
+        "resource_predecessor": null,
+        "resource_released": 16,
+        "start": 14,
+        "step": 0,
+        "token": "B0/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 18,
+        "id": 6,
+        "ready": 16,
+        "resource": "inject-0",
+        "resource_predecessor": null,
+        "resource_released": 18,
+        "start": 16,
+        "step": 0,
+        "token": "B1/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 22,
+        "id": 7,
+        "ready": 16,
+        "resource": "link-10-11",
+        "resource_predecessor": null,
+        "resource_released": 20,
+        "start": 16,
+        "step": 1,
+        "token": "B0/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 26,
+        "id": 8,
+        "ready": 18,
+        "resource": "link-10-11",
+        "resource_predecessor": 7,
+        "resource_released": 24,
+        "start": 20,
+        "step": 1,
+        "token": "B1/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 28,
+        "id": 9,
+        "ready": 22,
+        "resource": "link-11-20",
+        "resource_predecessor": null,
+        "resource_released": 26,
+        "start": 22,
+        "step": 2,
+        "token": "B0/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 32,
+        "id": 10,
+        "ready": 26,
+        "resource": "link-11-30",
+        "resource_predecessor": null,
+        "resource_released": 30,
+        "start": 26,
+        "step": 2,
+        "token": "B1/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 30,
+        "id": 11,
+        "ready": 28,
+        "resource": "eject-1",
+        "resource_predecessor": null,
+        "resource_released": 30,
+        "start": 28,
+        "step": 3,
+        "token": "B0/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 32,
+        "id": 12,
+        "ready": 30,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 32,
+        "start": 30,
+        "step": 0,
+        "token": "B0/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 34,
+        "id": 13,
+        "ready": 32,
+        "resource": "eject-2",
+        "resource_predecessor": null,
+        "resource_released": 34,
+        "start": 32,
+        "step": 3,
+        "token": "B1/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 34,
+        "id": 14,
+        "ready": 32,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 34,
+        "start": 32,
+        "step": 0,
+        "token": "B0/phase/3",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 36,
+        "id": 15,
+        "ready": 34,
+        "resource": "memory-2",
+        "resource_predecessor": null,
+        "resource_released": 36,
+        "start": 34,
+        "step": 0,
+        "token": "B1/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 128,
+        "category": "compute",
+        "finish": 50,
+        "id": 16,
+        "ready": 34,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 50,
+        "start": 34,
+        "step": 0,
+        "token": "B0/phase/4",
+        "unit": "mac"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 38,
+        "id": 17,
+        "ready": 36,
+        "resource": "memory-2",
+        "resource_predecessor": null,
+        "resource_released": 38,
+        "start": 36,
+        "step": 0,
+        "token": "B1/phase/3",
+        "unit": "bytes"
+      },
+      {
+        "amount": 128,
+        "category": "compute",
+        "finish": 54,
+        "id": 18,
+        "ready": 38,
+        "resource": "compute-2",
+        "resource_predecessor": null,
+        "resource_released": 54,
+        "start": 38,
+        "step": 0,
+        "token": "B1/phase/4",
+        "unit": "mac"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 52,
+        "id": 19,
+        "ready": 50,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 52,
+        "start": 50,
+        "step": 0,
+        "token": "B0/phase/5",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 56,
+        "id": 20,
+        "ready": 54,
+        "resource": "memory-2",
+        "resource_predecessor": null,
+        "resource_released": 56,
+        "start": 54,
+        "step": 0,
+        "token": "B1/phase/5",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 58,
+        "id": 21,
+        "ready": 56,
+        "resource": "memory-2",
+        "resource_predecessor": null,
+        "resource_released": 58,
+        "start": 56,
+        "step": 0,
+        "token": "AllReduce/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 60,
+        "id": 22,
+        "ready": 58,
+        "resource": "inject-2",
+        "resource_predecessor": null,
+        "resource_released": 60,
+        "start": 58,
+        "step": 0,
+        "token": "AllReduce/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 66,
+        "id": 23,
+        "ready": 60,
+        "resource": "link-30-11",
+        "resource_predecessor": null,
+        "resource_released": 64,
+        "start": 60,
+        "step": 1,
+        "token": "AllReduce/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 72,
+        "id": 24,
+        "ready": 66,
+        "resource": "link-11-20",
+        "resource_predecessor": null,
+        "resource_released": 70,
+        "start": 66,
+        "step": 2,
+        "token": "AllReduce/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 74,
+        "id": 25,
+        "ready": 72,
+        "resource": "eject-1",
+        "resource_predecessor": null,
+        "resource_released": 74,
+        "start": 72,
+        "step": 3,
+        "token": "AllReduce/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 76,
+        "id": 26,
+        "ready": 74,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 76,
+        "start": 74,
+        "step": 0,
+        "token": "AllReduce/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 32,
+        "category": "memory",
+        "finish": 80,
+        "id": 27,
+        "ready": 76,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 80,
+        "start": 76,
+        "step": 0,
+        "token": "AllReduce/phase/3",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4,
+        "category": "compute",
+        "finish": 81,
+        "id": 28,
+        "ready": 80,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 81,
+        "start": 80,
+        "step": 0,
+        "token": "AllReduce/phase/4",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 32,
+        "category": "memory",
+        "finish": 85,
+        "id": 29,
+        "ready": 81,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 85,
+        "start": 81,
+        "step": 0,
+        "token": "AllReduce/phase/5",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 87,
+        "id": 30,
+        "ready": 85,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 87,
+        "start": 85,
+        "step": 0,
+        "token": "AllReduce/phase/6",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 89,
+        "id": 31,
+        "ready": 87,
+        "resource": "inject-1",
+        "resource_predecessor": null,
+        "resource_released": 89,
+        "start": 87,
+        "step": 0,
+        "token": "AllReduce/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 95,
+        "id": 32,
+        "ready": 89,
+        "resource": "link-20-11",
+        "resource_predecessor": null,
+        "resource_released": 93,
+        "start": 89,
+        "step": 1,
+        "token": "AllReduce/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 101,
+        "id": 33,
+        "ready": 95,
+        "resource": "link-11-30",
+        "resource_predecessor": null,
+        "resource_released": 99,
+        "start": 95,
+        "step": 2,
+        "token": "AllReduce/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "network",
+        "finish": 103,
+        "id": 34,
+        "ready": 101,
+        "resource": "eject-2",
+        "resource_predecessor": null,
+        "resource_released": 103,
+        "start": 101,
+        "step": 3,
+        "token": "AllReduce/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 105,
+        "id": 35,
+        "ready": 103,
+        "resource": "memory-2",
+        "resource_predecessor": null,
+        "resource_released": 105,
+        "start": 103,
+        "step": 0,
+        "token": "AllReduce/phase/8",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 107,
+        "id": 36,
+        "ready": 105,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 107,
+        "start": 105,
+        "step": 0,
+        "token": "C0/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 107,
+        "id": 37,
+        "ready": 105,
+        "resource": "memory-2",
+        "resource_predecessor": null,
+        "resource_released": 107,
+        "start": 105,
+        "step": 0,
+        "token": "C1/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 32,
+        "category": "compute",
+        "finish": 111,
+        "id": 38,
+        "ready": 107,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 111,
+        "start": 107,
+        "step": 0,
+        "token": "C0/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 32,
+        "category": "compute",
+        "finish": 111,
+        "id": 39,
+        "ready": 107,
+        "resource": "compute-2",
+        "resource_predecessor": null,
+        "resource_released": 111,
+        "start": 107,
+        "step": 0,
+        "token": "C1/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 113,
+        "id": 40,
+        "ready": 111,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 113,
+        "start": 111,
+        "step": 0,
+        "token": "C0/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 16,
+        "category": "memory",
+        "finish": 113,
+        "id": 41,
+        "ready": 111,
+        "resource": "memory-2",
+        "resource_predecessor": null,
+        "resource_released": 113,
+        "start": 111,
+        "step": 0,
+        "token": "C1/phase/2",
+        "unit": "bytes"
+      }
+    ],
+    "stopped_cycle": 113,
+    "storage": {
+      "active_phases": {},
+      "all_operations_completed": true,
+      "available_data": [
+        "out0",
+        "out1"
+      ],
+      "completed": [
+        "A",
+        "AllReduce",
+        "B0",
+        "B1",
+        "C0",
+        "C1"
+      ],
+      "peak_bytes": {
+        "0": 32,
+        "1": 64,
+        "2": 32
+      },
+      "used_bytes": {
+        "0": 0,
+        "1": 16,
+        "2": 16
+      }
+    },
+    "timing_evaluated": true
+  },
+  "target": {
+    "compute": [
+      {
+        "id": "compute-0",
+        "memory": "0",
+        "provenance": "Complete analytical execution unit; not a Llama prefix or measured hardware",
+        "work_units": [
+          "mac",
+          "scalar_add"
+        ]
+      },
+      {
+        "id": "compute-1",
+        "memory": "1",
+        "provenance": "Complete analytical execution unit; not a Llama prefix or measured hardware",
+        "work_units": [
+          "mac",
+          "scalar_add"
+        ]
+      },
+      {
+        "id": "compute-2",
+        "memory": "2",
+        "provenance": "Complete analytical execution unit; not a Llama prefix or measured hardware",
+        "work_units": [
+          "mac",
+          "scalar_add"
+        ]
+      }
+    ],
+    "memory": [
+      {
+        "capacity_bytes": 128,
+        "endpoint": 0,
+        "id": "0",
+        "provenance": "Complete analytical execution unit; not a Llama prefix or measured hardware",
+        "read_port": "memory-0",
+        "write_port": "memory-0"
+      },
+      {
+        "capacity_bytes": 128,
+        "endpoint": 1,
+        "id": "1",
+        "provenance": "Complete analytical execution unit; not a Llama prefix or measured hardware",
+        "read_port": "memory-1",
+        "write_port": "memory-1"
+      },
+      {
+        "capacity_bytes": 128,
+        "endpoint": 2,
+        "id": "2",
+        "provenance": "Complete analytical execution unit; not a Llama prefix or measured hardware",
+        "read_port": "memory-2",
+        "write_port": "memory-2"
+      }
+    ],
+    "network": {
+      "endpoint_routers": [
+        [
+          0,
+          10
+        ],
+        [
+          1,
+          20
+        ],
+        [
+          2,
+          30
+        ]
+      ],
+      "provenance": "Complete analytical execution unit; not a Llama prefix or measured hardware",
+      "router_links": [
+        [
+          10,
+          11
+        ],
+        [
+          11,
+          20
+        ],
+        [
+          11,
+          30
+        ]
+      ]
+    }
+  },
+  "timing": {
+    "endpoints": [
+      {
+        "ejection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 8,
+          "resource": "eject-0",
+          "unit": "bytes"
+        },
+        "endpoint": 0,
+        "injection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 8,
+          "resource": "inject-0",
+          "unit": "bytes"
+        }
+      },
+      {
+        "ejection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 8,
+          "resource": "eject-1",
+          "unit": "bytes"
+        },
+        "endpoint": 1,
+        "injection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 8,
+          "resource": "inject-1",
+          "unit": "bytes"
+        }
+      },
+      {
+        "ejection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 8,
+          "resource": "eject-2",
+          "unit": "bytes"
+        },
+        "endpoint": 2,
+        "injection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 8,
+          "resource": "inject-2",
+          "unit": "bytes"
+        }
+      }
+    ],
+    "links": [
+      {
+        "destination": 11,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 4,
+          "resource": "link-10-11",
+          "unit": "bytes"
+        },
+        "source": 10
+      },
+      {
+        "destination": 10,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 4,
+          "resource": "link-11-10",
+          "unit": "bytes"
+        },
+        "source": 11
+      },
+      {
+        "destination": 20,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 4,
+          "resource": "link-11-20",
+          "unit": "bytes"
+        },
+        "source": 11
+      },
+      {
+        "destination": 11,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 4,
+          "resource": "link-20-11",
+          "unit": "bytes"
+        },
+        "source": 20
+      },
+      {
+        "destination": 30,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 4,
+          "resource": "link-11-30",
+          "unit": "bytes"
+        },
+        "source": 11
+      },
+      {
+        "destination": 11,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 4,
+          "resource": "link-30-11",
+          "unit": "bytes"
+        },
+        "source": 30
+      }
+    ],
+    "provenance": "Complete analytical execution unit; not a Llama prefix or measured hardware",
+    "services": [
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 8,
+        "resource": "compute-0",
+        "unit": "mac"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-0",
+        "unit": "scalar_add"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 8,
+        "resource": "memory-0",
+        "unit": "bytes"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 8,
+        "resource": "compute-1",
+        "unit": "mac"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-1",
+        "unit": "scalar_add"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 8,
+        "resource": "memory-1",
+        "unit": "bytes"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 8,
+        "resource": "compute-2",
+        "unit": "mac"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-2",
+        "unit": "scalar_add"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 8,
+        "resource": "memory-2",
+        "unit": "bytes"
+      }
+    ]
+  },
+  "workload": {
+    "data": [
+      {
+        "id": "seed",
+        "producer": null,
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "retain": false,
+        "size_bytes": 16
+      },
+      {
+        "id": "x",
+        "producer": "A",
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "retain": false,
+        "size_bytes": 16
+      },
+      {
+        "id": "b0",
+        "producer": "B0",
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "retain": false,
+        "size_bytes": 16
+      },
+      {
+        "id": "b1",
+        "producer": "B1",
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "retain": false,
+        "size_bytes": 16
+      },
+      {
+        "id": "sum0",
+        "producer": "AllReduce",
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "retain": false,
+        "size_bytes": 16
+      },
+      {
+        "id": "sum1",
+        "producer": "AllReduce",
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "retain": false,
+        "size_bytes": 16
+      },
+      {
+        "id": "out0",
+        "producer": "C0",
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "retain": true,
+        "size_bytes": 16
+      },
+      {
+        "id": "out1",
+        "producer": "C1",
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "retain": true,
+        "size_bytes": 16
+      }
+    ],
+    "operations": [
+      {
+        "control_deps": [],
+        "id": "A",
+        "inputs": [
+          "seed"
+        ],
+        "outputs": [
+          "x"
+        ],
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            64
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "B0",
+        "inputs": [
+          "x"
+        ],
+        "outputs": [
+          "b0"
+        ],
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            128
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "B1",
+        "inputs": [
+          "x"
+        ],
+        "outputs": [
+          "b1"
+        ],
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            128
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "AllReduce",
+        "inputs": [
+          "b0",
+          "b1"
+        ],
+        "outputs": [
+          "sum0",
+          "sum1"
+        ],
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "scalar_add",
+            4
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "C0",
+        "inputs": [
+          "sum0"
+        ],
+        "outputs": [
+          "out0"
+        ],
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "C1",
+        "inputs": [
+          "sum1"
+        ],
+        "outputs": [
+          "out1"
+        ],
+        "provenance": "Declared analytical execution unit; 4 float32 elements per tensor",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32
+          ]
+        ]
+      }
+    ]
+  }
+}

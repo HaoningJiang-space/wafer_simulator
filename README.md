@@ -8,11 +8,14 @@ The [research direction](docs/RESEARCH_DIRECTION.md) derives a compute–memory�
 execution contract from spatial locality and finite resources. It separates
 logical work, compute/data mapping, execution policy and target resources.
 The [spatial contract v1](docs/SPATIAL_CONTRACT.md) implements separate work/data
-identities, target binding and finite-region storage lifetimes. It declares
-service demands but does not yet predict time or retarget the full Llama capture.
-The current implementation is a
-conditional WoW replay with partial communication retargeting; it does not yet
-implement a source-machine-independent workload model.
+identities, target binding and finite-region storage lifetimes. The
+[timed resource backend](docs/TIMED_EXECUTION.md) now turns compute work, memory
+bytes and network transfers into completion events using explicit target rates
+and shared-resource queues. The first [complete analytical execution](docs/results/timed-execution-001/REVIEW.md)
+finishes in 113 cycles, with separately checked compute, memory and network
+rate interventions. This target execution capability is distinct from the
+accepted full Llama path, which remains a conditional WoW replay with partial
+communication retargeting.
 
 The research question is whether a WoW Logic-on-Interconnect placement with
 better network metrics also completes the same AI workload sooner, and which
@@ -31,8 +34,9 @@ to the pinned author revision. There are no alternative optimization builds or
 configs in the working tree. See [selection and verification](docs/IMPLEMENTATION.md).
 
 Code layers separate `workloads`, `architecture`, target-binding `adapters`,
-`execution` and `analysis`; `experiments` orchestrates these layers. The current
-timed replay uses native BookSim. `configs/` contains fixed controls;
+`execution` and `analysis`; `experiments` orchestrates these layers. Full-capture
+replay uses native BookSim; the target resource calendar currently uses an
+explicit coarse store-and-forward network model. `configs/` contains fixed controls;
 `patches/` contains isolated upstream changes. All reused external source is
 included as [pinned ordinary files](docs/EXTERNAL_SOURCES.md) under `third_party/`.
 A normal clone of this repository obtains all project source. The maintained
@@ -43,6 +47,12 @@ execution, layered validation, then a fixed-mapping Baseline–Rotated applicati
 case. Subsequent studies jointly vary topology, mapping and workload. Basic
 geometry/connectivity/capacity belongs in the first machine model; detailed
 physical closure and power/thermal remain later work.
+
+Current development starts with a complete, declared A/fanout-B/SUM-AllReduce/C
+execution unit. Old Chakra recovery is frozen and is not a prerequisite. The
+next scale is a separately defined Transformer unit, then a supported full
+application. Mstatic remains a separate pending M0/M1 model comparison; this
+milestone launches no new full-capture or placement run.
 
 Build, tests and experiments run on `wangziheng@eex005`. Local work is editing,
 source review, and Git. The remote root is `/home/wangziheng/wafer_simulator`.

@@ -1,0 +1,111 @@
+{
+  "architecture_calibrated": false,
+  "cases": [
+    {
+      "application_cycles": 113,
+      "audit": {
+        "application_cycles": 113,
+        "operations": 6,
+        "passed": true,
+        "phases": 30,
+        "services": 42,
+        "source_duration_used": false
+      },
+      "case": "declared",
+      "operation_finishes": {
+        "A": 12,
+        "AllReduce": 105,
+        "B0": 52,
+        "B1": 56,
+        "C0": 113,
+        "C1": 113
+      },
+      "peak_bytes": {
+        "0": 32,
+        "1": 64,
+        "2": 32
+      }
+    },
+    {
+      "application_cycles": 99,
+      "audit": {
+        "application_cycles": 99,
+        "operations": 6,
+        "passed": true,
+        "phases": 30,
+        "services": 42,
+        "source_duration_used": false
+      },
+      "case": "double_compute_rate",
+      "operation_finishes": {
+        "A": 8,
+        "AllReduce": 93,
+        "B0": 40,
+        "B1": 44,
+        "C0": 99,
+        "C1": 99
+      },
+      "peak_bytes": {
+        "0": 32,
+        "1": 64,
+        "2": 32
+      }
+    },
+    {
+      "application_cycles": 97,
+      "audit": {
+        "application_cycles": 97,
+        "operations": 6,
+        "passed": true,
+        "phases": 30,
+        "services": 42,
+        "source_duration_used": false
+      },
+      "case": "double_memory_rate",
+      "operation_finishes": {
+        "A": 10,
+        "AllReduce": 91,
+        "B0": 46,
+        "B1": 50,
+        "C0": 97,
+        "C1": 97
+      },
+      "peak_bytes": {
+        "0": 32,
+        "1": 64,
+        "2": 32
+      }
+    },
+    {
+      "application_cycles": 93,
+      "audit": {
+        "application_cycles": 93,
+        "operations": 6,
+        "passed": true,
+        "phases": 30,
+        "services": 42,
+        "source_duration_used": false
+      },
+      "case": "double_network_rate",
+      "operation_finishes": {
+        "A": 12,
+        "AllReduce": 85,
+        "B0": 46,
+        "B1": 48,
+        "C0": 93,
+        "C1": 93
+      },
+      "peak_bytes": {
+        "0": 32,
+        "1": 64,
+        "2": 32
+      }
+    }
+  ],
+  "logical_work_and_placement_sha256": "0540fb377ae2513160e1f873fc033f01992ddd9112b99508e684f8903e0987c6",
+  "network_model": "store-and-forward resource calendar",
+  "new_booksim_or_llama_runs": 0,
+  "old_chakra_recovery_required": false,
+  "source_commit": "42bb6b421f8b5351c748021ce3f40000f9c33a36",
+  "source_time_replayed": false
+}
