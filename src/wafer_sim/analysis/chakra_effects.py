@@ -5,6 +5,7 @@ import json
 
 from wafer_sim.workloads.chakra import read_metadata, nodes, decode_io, attribute_values
 from wafer_sim.workloads.chakra_effects import effects
+from wafer_sim.workloads.chakra_layout import decode_layout
 
 
 def inspect_effects(path, schema, output, rank):
@@ -31,6 +32,14 @@ def inspect_effects(path, schema, output, rank):
                                              decode_io(node.inputs), decode_io(node.outputs))
                 except (ValueError, SyntaxError, TypeError, RecursionError) as error:
                     row["effects"] = dict(category="unsupported_descriptor_or_rule", reason=str(error))
+                # Optional conversion extension. Invalid present metadata fails
+                # the extraction; legacy absence is never a contiguous default.
+                layouts = {}
+                for side in ("inputs", "outputs"):
+                    if f"wafer.{side}.strides.v1" in attrs:
+                        layouts.update(decode_layout(decode_io(getattr(node, side)), attrs, side))
+                if layouts:
+                    row["source_layouts"] = layouts
                 effect = row["effects"]
                 refs = effect.get("inputs", []) + effect.get("outputs", [])
                 devices = {r["source_device"] for r in refs if r["num_elements"]}

@@ -1,0 +1,21 @@
+diff --git a/src/converter/pytorch_converter.py b/src/converter/pytorch_converter.py
+--- a/src/converter/pytorch_converter.py
++++ b/src/converter/pytorch_converter.py
+@@ -309,6 +309,17 @@ class PyTorchConverter:
+         protobuf_node.outputs.values = str(json_node.outputs["values"])
+         protobuf_node.outputs.shapes = str(json_node.outputs["shapes"])
+         protobuf_node.outputs.types = str(json_node.outputs["types"])
++        # IOInfo has no stride field. Preserve the original nested descriptor
++        # in optional attributes; absent source strides remain absent.
++        for side in ("inputs", "outputs"):
++            source_io = getattr(json_node, side)
++            if "strides" in source_io:
++                protobuf_node.attr.append(
++                    ChakraAttr(
++                        name=f"wafer.{side}.strides.v1",
++                        string_val=json.dumps(source_io["strides"], separators=(",", ":")),
++                    )
++                )
+         protobuf_node.attr.extend(
+             [
+                 ChakraAttr(name="rf_id", int64_val=json_node.rf_id),
