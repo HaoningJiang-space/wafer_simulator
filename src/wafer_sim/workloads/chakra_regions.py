@@ -7,7 +7,7 @@ from wafer_sim.io import digest, write_json
 from wafer_sim.workloads.call_regions import Call, partition_calls
 
 
-MATRIX_FIELDS = ("node_id", "operator", "byte_offset", "work_amount", "work_unit", "extra_scalar_adds",
+MATRIX_FIELDS = ("node_id", "operator", "byte_offset", "work_amount", "work_unit",
                  "input_logical_bytes", "output_logical_bytes", "source_profiler_step", "direct_gpu_children")
 
 
@@ -20,6 +20,10 @@ def matrix_index(path):
             if row["node_id"] in per_rank or row["source_time_used"] or row["work_unit"] != "mac":
                 raise ValueError("Invalid or duplicate accepted matrix record")
             per_rank[row["node_id"]] = {key: row[key] for key in MATRIX_FIELDS}
+            # The accepted mm/bmm schema has no separate epilogue-add field;
+            # retain that absence instead of assuming TE's richer schema.
+            if "extra_scalar_adds" in row:
+                per_rank[row["node_id"]]["extra_scalar_adds"] = row["extra_scalar_adds"]
     return ranks
 
 

@@ -6,7 +6,7 @@ from pathlib import Path
 import tempfile
 
 from wafer_sim.workloads.call_regions import Call, partition_calls, quotient
-from wafer_sim.workloads.chakra_regions import write_partition
+from wafer_sim.workloads.chakra_regions import write_partition, matrix_index, MATRIX_FIELDS
 from wafer_sim.analysis.call_regions import validate_partition
 
 
@@ -170,6 +170,16 @@ class RegionReadbackTests(unittest.TestCase):
         self.save(path, self.read(path)[:-1])
         with self.assertRaises(ValueError):
             self.validate()
+
+    def test_matrix_record_schemas_preserved(self):
+        path = self.root / "matrix.jsonl"
+        plain = {key: 0 for key in MATRIX_FIELDS}
+        plain.update(rank=0, node_id=10, operator="aten::mm", work_unit="mac", source_time_used=False)
+        te = dict(plain, node_id=11, operator="tex_ts::te_gemm_ts", extra_scalar_adds=4)
+        path.write_text(json.dumps(plain) + "\n" + json.dumps(te) + "\n")
+        records = matrix_index(path)[0]
+        self.assertNotIn("extra_scalar_adds", records[10])
+        self.assertEqual(records[11]["extra_scalar_adds"], 4)
 
 
 if __name__ == "__main__":

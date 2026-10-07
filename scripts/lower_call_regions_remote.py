@@ -78,6 +78,9 @@ def main():
             or sum(len(records) for records in matrices.values()) != config["matrix_records"]):
         raise ValueError("Complete sixteen-rank source and matrix set required")
     args.output.mkdir(parents=True, exist_ok=False)
+    write_json(args.output / "ENVIRONMENT.json", dict(host=platform.node(), python=sys.version,
+        executable=sys.executable, executable_sha256=digest(Path(sys.executable).resolve()),
+        packages=subprocess.check_output([sys.executable, "-m", "pip", "freeze"], text=True).splitlines()))
     write_json(args.output / "STARTED.json", dict(source_commit=commit, config=config,
                config_sha256=digest(config_path), tests_receipt_sha256=digest(args.tests),
                environment=dict(host=platform.node(), python=sys.version, executable=sys.executable),
