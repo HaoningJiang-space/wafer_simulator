@@ -38,6 +38,7 @@ def write(path, value):
 
 def unused(roots):
     roots = tuple(str(p) for p in roots)
+    excluded = []
     for proc in Path('/proc').iterdir():
         if not proc.name.isdigit() or int(proc.name) == os.getpid():
             continue
@@ -54,6 +55,18 @@ def unused(roots):
                     raise RuntimeError(f'Live reference: {proc.name} {target}')
         except FileNotFoundError:
             continue
+        except PermissionError:
+            # Nondumpable SSH session daemons have the user's UID, but their
+            # child shells/jobs are separate processes and remain checked.
+            try:
+                command = (proc/'comm').read_text().strip()
+            except FileNotFoundError:
+                continue
+            if command != 'sshd':
+                raise
+            excluded.append(dict(pid=int(proc.name), command=command,
+                                 reason='Nondumpable session daemon; user child processes checked'))
+    return excluded
 
 
 def main():
@@ -81,7 +94,7 @@ def main():
                 retained[str(f)] = sha(f)
     retained[str(ROOT/'build/booksim-online/online_booksim')] = sha(ROOT/'build/booksim-online/online_booksim')
     roots = [ROOT/'runs'/n for n in RUNS] + [ROOT/'build'/n for n in BUILDS]
-    unused(roots)
+    excluded = unused(roots)
     entries = []
     for name, reason in RUNS.items():
         run = ROOT/'runs'/name
@@ -110,6 +123,7 @@ def main():
                 mtime_ns=st.st_mtime_ns, reason='Obsolete optimization build object; source and binary retained', archive=False))
     a.output.mkdir()
     record = dict(applied=False, source_commit=subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
+                  process_check_exclusions=excluded,
                   entries=entries, retained_sha256=retained,
                   logical_bytes=sum(e['bytes'] for e in entries),
                   allocated_bytes=sum(e['allocated_bytes'] for e in entries))
@@ -122,7 +136,7 @@ def main():
                 shutil.copy2(e['path'], target)
                 if sha(target) != e['sha256']:
                     raise ValueError('Receipt copy mismatch')
-        unused(roots)
+        record['process_check_exclusions_before_delete'] = unused(roots)
         for e in entries:
             f = Path(e['path']); st = f.stat()
             if st.st_size != e['bytes'] or st.st_mtime_ns != e['mtime_ns'] or sha(f) != e['sha256']:
