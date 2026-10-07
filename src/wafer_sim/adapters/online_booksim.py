@@ -10,6 +10,14 @@ from wafer_sim.io import digest, write_json
 from wafer_sim.workloads.spatial import natural
 
 
+def prepare_online_config(inputs, directory, seed=1):
+    from wafer_sim.adapters.booksim import prepare_config
+    directory = Path(directory).resolve()
+    write_json(directory/"empty_network_input.json", [])
+    return prepare_config(inputs, directory, directory/"empty_network_input.json", seed,
+                          timeout=60, skip_idle=False)
+
+
 class OnlineBookSim:
     def __init__(self, binary, config, directory, *, flit_bytes, timeout=60):
         natural(flit_bytes, "flit bytes", positive=True)
