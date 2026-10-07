@@ -1,0 +1,43 @@
+{
+  "arms": [
+    {
+      "candidate_wall_seconds": 9523.530280195177,
+      "exact_full_event_match": true,
+      "hashes": [
+        {
+          "file": "trace.json",
+          "sha256": "5c614411f1764a415f4ea3e9fb989d2e06d511347e663568c881d44159c1118b"
+        },
+        {
+          "file": "events.jsonl",
+          "sha256": "f62e20007fbc9cfc676347cd7582415a796d682b411d1a154aa86181d22032b2"
+        }
+      ],
+      "observed_wall_ratio": 4.650377669421978,
+      "placement": "baseline",
+      "reference_wall_seconds": 44288.01254908368
+    },
+    {
+      "candidate_wall_seconds": 7358.447779793292,
+      "exact_full_event_match": true,
+      "hashes": [
+        {
+          "file": "trace.json",
+          "sha256": "a73efd59b2573979f958f74e1f5caeeb61533f5d03c334327df2e44041df9b1f"
+        },
+        {
+          "file": "events.jsonl",
+          "sha256": "fd09ca1cee86dcdb5001fb036f6ee8a210aada3b24f40b96acf0efc9e82cbfc3"
+        }
+      ],
+      "observed_wall_ratio": 3.44619409068229,
+      "placement": "ours_rotated",
+      "reference_wall_seconds": 25358.63925531786
+    }
+  ],
+  "candidate": "/home/wangziheng/wafer_simulator/runs/llama16-full-006-csr-frontier",
+  "passed": true,
+  "reference": "/home/wangziheng/wafer_simulator/runs/llama16-full-002",
+  "same_full_work_and_events": true,
+  "wall_time_caveat": "Runs overlap and the reference was briefly debugger-sampled; ratios are observational"
+}

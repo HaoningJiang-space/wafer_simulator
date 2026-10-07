@@ -1,0 +1,96 @@
+{
+  "common_interhost_messages": {
+    "M0/baseline": {
+      "cpu_wait": 12329.173246735765,
+      "first_inject_to_complete": 927.8910014806838,
+      "injection_wait": 608.2012451204738,
+      "messages": 445740,
+      "ready_to_complete": 13865.265493336923
+    },
+    "M0/ours_rotated": {
+      "cpu_wait": 12338.697987616099,
+      "first_inject_to_complete": 820.2549019607843,
+      "injection_wait": 594.7827949028582,
+      "messages": 445740,
+      "ready_to_complete": 13753.735684479741
+    },
+    "M1/baseline": {
+      "cpu_wait": 25714.727401624266,
+      "first_inject_to_complete": 1135.9778458294072,
+      "injection_wait": 1986.1816462511779,
+      "messages": 445740,
+      "ready_to_complete": 28836.88689370485
+    },
+    "M1/ours_rotated": {
+      "cpu_wait": 25253.41403957464,
+      "first_inject_to_complete": 950.5135011441647,
+      "injection_wait": 1885.8321465428276,
+      "messages": 445740,
+      "ready_to_complete": 28089.759687261634
+    }
+  },
+  "delta_m1_minus_delta_m0_cycles": 10752893,
+  "input_sha256": {
+    "/home/wangziheng/wafer_simulator/runs/llama16-full-006-csr-frontier/COMPLETE.json": "4427bd26ea692eb6351666b74e9c65f05b432678b7ae3118fee91f02e073dde2",
+    "/home/wangziheng/wafer_simulator/runs/llama16-model-boundary-M1-002/COMPLETE.json": "7e54181facd6f16343dfde0361fc0f5efa99adbc319bf11a2f8959a32276abbb",
+    "/home/wangziheng/wafer_simulator/runs/model-boundary-analysis-001/M1/ANALYZED.json": "2665d54fb1f1170c058293d1607942e1efd5293da2e1d40eca2a8279708cff8b",
+    "/home/wangziheng/wafer_simulator/runs/model-boundary-inputs-001/M0_IDENTITY.json": "28436d93f488b1e65cb67d5266bf5c202a10ece97761c184d6be29a2b3002201",
+    "/home/wangziheng/wafer_simulator/runs/model-boundary-inputs-001/TRANSFORMATION_AUDIT.json": "9b2b1104e939a4b2d7706fceb13a44ef743e285dddd1b69bc3f1b83106d12fee"
+  },
+  "limitation": "Conditional replay with unchanged source intervals and reduction/copy; expanded message population makes across-model all-message means incomparable",
+  "model_effects": {
+    "M0": {
+      "baseline_minus_rotated_cycles": 2365264,
+      "reduction_percent": 0.13602978370315222,
+      "speedup": 1.0013621507677746
+    },
+    "M1": {
+      "baseline_minus_rotated_cycles": 13118157,
+      "reduction_percent": 0.6429444128730343,
+      "speedup": 1.006471049379168
+    }
+  },
+  "passed": true,
+  "rows": [
+    {
+      "application_cycles": 1738783916,
+      "application_seconds": 1.738783916,
+      "critical_local_cycles": 1738008976,
+      "critical_message_cycles": 774940,
+      "mean_message_ready_to_complete": 13865.265493336923,
+      "mean_packet_cycles": 617.417,
+      "model": "M0",
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 1736418652,
+      "application_seconds": 1.736418652,
+      "critical_local_cycles": 1735665330,
+      "critical_message_cycles": 753322,
+      "mean_message_ready_to_complete": 13753.735684479741,
+      "mean_packet_cycles": 526.354,
+      "model": "M0",
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 2040325219,
+      "application_seconds": 2.040325219,
+      "critical_local_cycles": 2032642481,
+      "critical_message_cycles": 7682738,
+      "mean_message_ready_to_complete": 32696.944002310687,
+      "mean_packet_cycles": 708.699,
+      "model": "M1",
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 2027207062,
+      "application_seconds": 2.027207062,
+      "critical_local_cycles": 2020270878,
+      "critical_message_cycles": 6936184,
+      "mean_message_ready_to_complete": 31957.41823984027,
+      "mean_packet_cycles": 602.876,
+      "model": "M1",
+      "placement": "ours_rotated"
+    }
+  ]
+}
