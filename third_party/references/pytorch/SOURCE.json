@@ -1,11 +1,13 @@
 {
   "upstream": "https://github.com/pytorch/pytorch",
   "commit": "7cd48df2dae7e2194438b162968c47d1f05bf20e",
-  "purpose": "Exact observer reference linked by the pinned Chakra tensor reader; inspected for identity, offset and stride recording semantics, not built or imported",
+  "purpose": "Pinned observer, c10d operator and parameter-recording references for tensor identity and collective argument semantics; not built or imported",
   "scope": "Selected unmodified reference files, not a complete PyTorch checkout or a runtime dependency",
   "files_sha256": {
     "LICENSE": "d63aaf3622186b2a761832a5704edeef1f25d08f5b9c50ac4e435befc8e348a8",
-    "torch/csrc/profiler/standalone/execution_trace_observer.cpp": "b3a0cfccfb189367628dfe6f24623a074bf65d6b24213e240e017e6f7dcd085e"
+    "torch/csrc/profiler/standalone/execution_trace_observer.cpp": "b3a0cfccfb189367628dfe6f24623a074bf65d6b24213e240e017e6f7dcd085e",
+    "torch/csrc/distributed/c10d/Ops.cpp": "26883b57ea608f0eaac6da38cb54b7d8e87f342d8fd7e9a918e2cfe1eb7aaac4",
+    "torch/csrc/distributed/c10d/ParamCommsUtils.hpp": "80be45e3a12dc0fa0be9299e59d0afd90e9b26ad09780c6583fcabc55e8a8f36"
   },
   "capture_build_version_established": false
 }

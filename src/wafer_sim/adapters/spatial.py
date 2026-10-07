@@ -27,10 +27,9 @@ def network_from_wow(export):
                    "WoW export object SHA-256 " + object_digest(export))
 
 
-def bind(workload, target, placement):
+def validate_target(target):
     import networkx as nx
 
-    graph = validate(workload)
     network = target.network
     identifier(network.provenance, "Network provenance")
     for rows in (network.endpoint_routers, network.router_links):
@@ -80,6 +79,13 @@ def bind(workload, target, placement):
             raise ValueError("Compute work units must be unique immutable tuples")
         for unit in c.work_units:
             identifier(unit, "Supported work unit")
+    return memory, compute, attachments, component
+
+
+def bind(workload, target, placement):
+    graph = validate(workload)
+    network = target.network
+    memory, compute, attachments, component = validate_target(target)
     homes, assigned = dict(placement.data), dict(placement.compute)
     if set(homes) != set(graph.data) or set(assigned) != set(graph.operations):
         raise ValueError("Placement must cover all and only logical objects/operations")

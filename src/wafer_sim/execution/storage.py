@@ -8,6 +8,7 @@ No eviction, spill, address-alias inference or hidden infinite storage.
 from dataclasses import dataclass
 
 from wafer_sim.execution.plan import Allocation
+from wafer_sim.execution.reservations import ReservationPool
 
 
 @dataclass(frozen=True)
@@ -20,9 +21,8 @@ class Admission:
 class StorageState:
     def __init__(self, binding):
         self.binding = binding
-        self.used = {m: 0 for m in binding.memory}
-        self.peak = self.used.copy()
-        self.allocations = {}
+        self.pool = ReservationPool(binding.memory)
+        self.used, self.peak, self.allocations = self.pool.used, self.pool.peak, self.pool.allocations
         self.available = set()
         self.completed = set()
         self.active = {}
@@ -37,24 +37,14 @@ class StorageState:
         self._reserve(initial)
 
     def _shortages(self, reservations):
-        needed = dict.fromkeys(self.used, 0)
-        for a in reservations:
-            needed[a.memory] += a.size_bytes
-        return tuple((m, self.used[m] + size - self.binding.memory[m].capacity_bytes)
-                     for m, size in sorted(needed.items())
-                     if self.used[m] + size > self.binding.memory[m].capacity_bytes)
+        return self.pool.shortages(reservations)
 
     def _reserve(self, reservations):
-        for a in reservations:
-            if a.key in self.allocations:
-                raise ValueError("Storage identity allocated twice")
-            self.allocations[a.key] = a
-            self.used[a.memory] += a.size_bytes
-            self.peak[a.memory] = max(self.peak[a.memory], self.used[a.memory])
+        if not self.pool.reserve(reservations):
+            raise ValueError("Storage reservation exceeds capacity")
 
     def _release(self, key):
-        a = self.allocations.pop(key)
-        self.used[a.memory] -= a.size_bytes
+        self.pool.release(key)
 
     def admission(self, op):
         if op not in self.binding.plans:
