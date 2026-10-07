@@ -82,19 +82,27 @@ def main():
     calls = {(r["rank"], c["node_id"]): c for r in reports for c in r["calls"]}
     logical = []
     for match in matched["collectives"]:
-        if match["participant_and_volume_match"]:
-            logical.append(asdict(from_match(match, calls)))
+        if match["logical_semantics_supported"]:
+            item = asdict(from_match(match, calls))
+            item["source_ports"] = [dict(rank=ref["rank"], call_node=ref["node_id"],
+                input_operands=[s["source"] for s in calls[(ref["rank"], ref["node_id"])]["intent"]["slots"]],
+                output_operands=[s["destination"] for s in calls[(ref["rank"], ref["node_id"])]["intent"]["slots"]],
+                gpu_nodes=calls[(ref["rank"], ref["node_id"])]["gpu_nodes"],
+                source_wait_nodes=calls[(ref["rank"], ref["node_id"])]["source_wait_nodes"],
+                cpu_return_completes_output=False) for ref in match["calls"]]
+            logical.append(item)
     write_json(args.output / "MATCHES.json", matched)
     write_json(args.output / "LOGICAL.json", dict(collectives=logical, complete_target_workload=False,
         source_aliases_resolved=False, target_data_versions_bound=False, simulated_application_time=None))
     summary = dict(source_commit=commit, counts=dict(counts), rank_count=16,
         cpu_collectives=len(calls), logical_collectives=len(logical),
         matched_calls=sum(len(m["calls"]) for m in matched["collectives"] if m["participant_and_volume_match"]),
+        matched_collectives=sum(m["participant_and_volume_match"] for m in matched["collectives"]),
         cpu_collectives_without_identity=sum(c["identity"] is None for c in calls.values()),
         logical_kinds=dict(Counter(c["kind"] for c in logical)),
         parser_errors=sum(len(r["errors"]) for r in reports),
         unmatched_gpu_collectives=sum(g["owner"] is None for r in reports for g in r["gpu_collectives"]),
-        cross_rank_rejections=dict(Counter(reason for m in matched["collectives"] for reason in m["issues"])),
+        normalization_issues=dict(Counter(reason for m in matched["collectives"] for reason in m["issues"])),
         complete_target_workload=False, new_simulations_launched=0)
     write_json(args.output / "SUMMARY.json", summary)
     write_json(args.output / "VALIDATED.json", dict(passed=True, ranks=validations, source_commit=commit,

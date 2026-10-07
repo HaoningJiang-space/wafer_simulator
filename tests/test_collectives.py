@@ -112,6 +112,17 @@ class SourceCollectiveTests(unittest.TestCase):
         values[-3:-1] = [-1, -1]
         self.assertIsNone(parameter_record((values, shapes, types))["members"])
 
+    def test_wait_device_count_is_not_group_size(self):
+        values, shapes, types = param("wait", local=1)
+        values[-3:] = [-1, -1, 1]
+        parsed = parameter_record((values, shapes, types))
+        self.assertEqual(parsed["recorded_size_field"], 1)
+        self.assertIsNone(parsed["group_size"])
+        self.assertEqual(parsed["local_rank"], 1)
+        a, b = report(3,0), report(7,1)
+        b["parameters"].append(dict(node_id=3, **parsed))
+        self.assertTrue(match_collectives([a,b])["collectives"][0]["participant_and_volume_match"])
+
     def test_duplicate_affine_participants_rejected(self):
         values, shapes, types = param()
         values[-2] = 0

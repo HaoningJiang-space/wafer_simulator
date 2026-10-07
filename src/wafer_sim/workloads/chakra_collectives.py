@@ -97,22 +97,28 @@ def parameter_record(inputs):
     for value in (seq, local_rank):
         natural(value, "collective sequence/local rank")
     natural(size, "communicator size", positive=True)
-    if (not isinstance(group, list) or len(group) != 2 or not all(isinstance(s, str) and s for s in group)
-            or local_rank >= size or not isinstance(kind, str)
+    if (not isinstance(group, list) or len(group) != 2 or not all(isinstance(s, str) for s in group)
+            or (kind != "wait" and (local_rank >= size or not all(group))) or not isinstance(kind, str)
             or any(type(v) is not int for v in (first, stride))
             or not isinstance(insplit, list) or not isinstance(outsplit, list)):
         raise ValueError("Invalid collective identity record")
     for split in insplit + outsplit:
         natural(split, "split size")
     members = None
-    if first >= 0 and stride >= 0:
+    if kind == "wait":
+        # WorkNCCL::wait records a device-count placeholder (1), not the
+        # communicator size. Its rank can therefore exceed that placeholder.
+        # Retain it verbatim, but never use it to declare membership.
+        pass
+    elif first >= 0 and stride >= 0:
         if size > 1 and stride == 0:
             raise ValueError("Nonunique affine communicator")
         members = [first + i*stride for i in range(size)]
     elif (first, stride) != (-1, -1):
         raise ValueError("Partial communicator rank description")
     return dict(sequence=seq, group=group[0], description=group[1], local_rank=local_rank,
-                kind=kind, group_size=size, members=members, input_splits=insplit, output_splits=outsplit,
+                kind=kind, group_size=None if kind == "wait" else size, recorded_size_field=size,
+                members=members, input_splits=insplit, output_splits=outsplit,
                 identity_source="record_param_comms input arguments, not autograd seq_id")
 
 
@@ -161,7 +167,10 @@ def resolve_rank(rows, rank):
             node = parents[0] if len(parents) == 1 else 0
         return None
     children, devices = defaultdict(list), defaultdict(list)
+    wait_index = defaultdict(list)
     for node, param in params.items():
+        if param["kind"] == "wait" and param["group"]:
+            wait_index[(param["group"], param["sequence"])].append(node)
         root = c10d_ancestor(by_id[node]["source_ctrl_deps"][0])
         if root is not None:
             children[root].append((node, param))
@@ -196,8 +205,7 @@ def resolve_rank(rows, rank):
                 intent["reduction_evidence"] = "attached source GPU kernel symbols"
             identity = call["identity"]
             if identity is not None:
-                call["source_wait_nodes"] = [node for node, p in params.items() if p["kind"] == "wait" and
-                    (p["group"], p["sequence"]) == (identity["group"], identity["sequence"])]
+                call["source_wait_nodes"] = wait_index[(identity["group"], identity["sequence"])]
                 if intent["required_group_size"] not in {None, identity["group_size"]}:
                     call["issues"].append("operand_ratio_disagrees_with_group_size")
         except (ValueError, TypeError, KeyError) as error:
@@ -230,6 +238,8 @@ def match_collectives(rank_reports):
         for group in report["groups"]:
             declare(group["pg_name"], group["group_size"], group["ranks"], group["pg_desc"], dict(rank=rank, kind="init_table"))
         for param in report["parameters"]:
+            if param["kind"] == "wait":
+                continue
             declare(param["group"], param["group_size"], param["members"], param["description"],
                     dict(rank=rank, node_id=param["node_id"], kind="parameter_record"))
             if param["members"] is not None and param["members"][param["local_rank"]] != rank:
@@ -258,11 +268,13 @@ def match_collectives(rank_reports):
             issues.append("collective_kind_or_operand_mismatch")
         reductions = {c["intent"]["reduction"] for c in calls if c["intent"]}
         kind = signatures[0][0] if signatures else None
-        if len(calls) > 1 and kind in {"allreduce", "reduce_scatter"} and reductions != {"sum"}:
+        participant_match = not issues
+        if declaration["size"] > 1 and kind in {"allreduce", "reduce_scatter"} and reductions != {"sum"}:
             issues.append("reduction_operator_unresolved")
         matched = dict(group=group, sequence=sequence, members=members, kind=kind,
             calls=[dict(rank=c["rank"], node_id=c["node_id"]) for c in sorted(calls, key=lambda c:c["rank"])],
-            issues=sorted(set(issues)), participant_and_volume_match=not issues,
+            issues=sorted(set(issues)), participant_and_volume_match=participant_match,
+            logical_semantics_supported=not issues,
             target_data_versions_bound=False, target_execution_complete=False)
         matches.append(matched)
     return dict(groups=list(groups.values()), collectives=matches, complete_target_workload=False)
