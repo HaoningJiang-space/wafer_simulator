@@ -10,7 +10,7 @@ from types import MappingProxyType
 from wafer_sim.workloads.spatial import identifier, natural, validate
 from wafer_sim.io import object_digest
 from wafer_sim.architecture.spatial import Network
-from wafer_sim.execution.plan import Allocation, Demand, Transfer, Phase, OperationPlan, Binding
+from wafer_sim.execution.plan import Allocation, Demand, Transfer, Phase, OperationPlan, Binding, ExecutionPolicy
 
 
 def network_from_wow(export):
@@ -82,7 +82,8 @@ def validate_target(target):
     return memory, compute, attachments, component
 
 
-def bind(workload, target, placement):
+def bind(workload, target, placement, *, execution_policy=None):
+    execution_policy = execution_policy or ExecutionPolicy()
     graph = validate(workload)
     network = target.network
     memory, compute, attachments, component = validate_target(target)
@@ -102,7 +103,7 @@ def bind(workload, target, placement):
             raise ValueError("Target compute resource cannot serve the declared work unit")
         if op.collective is not None:
             from wafer_sim.adapters.collective_operation import bind_operation
-            plans[op.id] = bind_operation(op, target, homes, c.id)
+            plans[op.id] = bind_operation(op, target, homes, c.id, execution_policy)
             continue
         allocations, phases = [], []
 

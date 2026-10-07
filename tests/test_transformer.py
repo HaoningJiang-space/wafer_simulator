@@ -90,9 +90,10 @@ class TransformerTests(unittest.TestCase):
         result=record["result"]
         self.assertTrue(record["audit"]["passed"])
         for collective,next_stage in (("attention_sum","attention_residual"),("ffn_sum","output")):
+            op=next(o for o in record["workload"]["operations"] if o["id"]==collective)
             for r in range(2):
                 self.assertEqual(result["operations"][f"r{r}/{next_stage}"]["ready"],
-                                 result["operations"][collective]["finish"])
+                                 result["output_ready"][op["outputs"][r]])
         # Only persistent parameters and the two final outputs remain live.
         self.assertEqual(sum(result["storage"]["used_bytes"].values()),
                          record["logical_summary"]["parameter_bytes"]+8192)

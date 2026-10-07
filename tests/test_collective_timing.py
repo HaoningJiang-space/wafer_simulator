@@ -9,7 +9,7 @@ from wafer_sim.adapters.spatial import bind
 from wafer_sim.analysis.timing import audit
 from wafer_sim.analysis.timed_attribution import critical_chain
 from wafer_sim.analysis.collective_contention import summarize
-from wafer_sim.execution.plan import Placement
+from wafer_sim.execution.plan import Placement, ExecutionPolicy, OperationPlan, Phase, Demand, Allocation
 from wafer_sim.execution.storage import StorageState
 from wafer_sim.execution.timing import execute
 from wafer_sim.workloads.collectives import Collective, Slot
@@ -99,12 +99,87 @@ class CollectiveTimingTests(unittest.TestCase):
             ready=[i for i in state.ready_phases("sum") if i!=final]
             if not ready: break
             for i in ready:state.begin_phase("sum",i);state.complete_phase("sum",i)
-        self.assertNotIn("y0",state.available)
+        self.assertIn("y0",state.available)
+        self.assertNotIn("y1",state.available)
+        self.assertNotIn("sum",state.completed)
         self.assertIn("x1",state.available)
         self.assertTrue(any(k[0]=="collective_stage" for k in state.allocations))
         state.begin_phase("sum",final);state.complete_phase("sum",final)
         self.assertEqual(state.available,{"y0","y1"})
         self.assertFalse(any(k[0]=="collective_stage" for k in state.allocations))
+
+    def _with_consumer(self, control=False):
+        binding,timing=case(4)
+        from wafer_sim.workloads.spatial import validate
+        data=tuple(replace(d,retain=False) if d.id=="y0" else d for d in binding.graph.data.values())
+        consumer=Operation("consume",("y0",),("z",),(("scalar_add",2),),0,
+                           ("sum",) if control else (),"fixture")
+        graph=validate(Workload(data+(DataObject("z",8,"consume",True,"fixture"),),
+                               tuple(binding.graph.operations.values())+(consumer,)))
+        port=binding.memory["0"]
+        plans=dict(binding.plans,consume=OperationPlan((Allocation(("object","z"),"0",8),),(
+            Phase("memory_read",(Demand(port.read_port,"bytes",8),)),
+            Phase("compute",(Demand("compute-0","scalar_add",2),)),
+            Phase("memory_write",(Demand(port.write_port,"bytes",8),)))))
+        return replace(binding,graph=graph,plans=plans,homes=dict(binding.homes,z="0")),replace(timing,
+            links=tuple(replace(l,service=replace(l.service,latency_cycles=100)) for l in timing.links))
+
+    def test_local_output_consumer_can_retire_before_collective_but_internal_reads_stay_pinned(self):
+        binding,timing=self._with_consumer()
+        result=execute(binding,timing)
+        self.assertEqual(result["operations"]["consume"]["ready"],result["output_ready"]["y0"])
+        self.assertLess(result["operations"]["consume"]["retired"],result["operations"]["sum"]["retired"])
+        self.assertTrue(audit(binding,timing,result)["passed"])
+        self.assertEqual(sum(critical_chain(binding,result)["cycles"].values()),result["application_cycles"])
+        # Replay lifetimes up to the early consumer retirement: the producer's
+        # result and receive stages must still exist for outstanding actions.
+        state=StorageState(binding);state.try_begin("sum")
+        plan=binding.plans["sum"]
+        while "y0" not in state.available:
+            for i in state.ready_phases("sum"):
+                state.begin_phase("sum",i);state.complete_phase("sum",i)
+        self.assertTrue(state.try_begin("consume").admitted)
+        for i in range(3):state.complete_phase("consume",i)
+        self.assertIn(("object","y0"),state.allocations)
+        self.assertTrue(any(k[0]=="collective_stage" for k in state.allocations))
+        while "sum" not in state.completed:
+            for i in state.ready_phases("sum"):
+                state.begin_phase("sum",i);state.complete_phase("sum",i)
+        self.assertNotIn(("object","y0"),state.allocations)
+        self.assertFalse(any(k[0]=="collective_stage" for k in state.allocations))
+
+    def test_explicit_control_dependency_still_waits_for_retirement(self):
+        binding,timing=self._with_consumer(control=True)
+        result=execute(binding,timing)
+        self.assertEqual(result["operations"]["consume"]["ready"],result["operations"]["sum"]["retired"])
+        self.assertTrue(audit(binding,timing,result)["passed"])
+
+    def test_global_control_only_changes_publication_requirements(self):
+        binding,timing=self._with_consumer()
+        plan=binding.plans["sum"]
+        global_plan=replace(plan,output_requirements=tuple((d,tuple(range(len(plan.phases))))
+                            for d in binding.graph.operations["sum"].outputs))
+        result=execute(replace(binding,plans=dict(binding.plans,sum=global_plan)),timing)
+        self.assertEqual(result["operations"]["consume"]["ready"],result["operations"]["sum"]["retired"])
+        self.assertTrue(audit(replace(binding,plans=dict(binding.plans,sum=global_plan)),timing,result)["passed"])
+
+    def test_readback_rejects_early_visibility_and_early_storage_release(self):
+        binding,timing=self._with_consumer()
+        result=execute(binding,timing)
+        broken=copy.deepcopy(result);broken["output_ready"]["y0"]-=1
+        with self.assertRaisesRegex(ValueError,"Output published"):audit(binding,timing,broken)
+        broken=copy.deepcopy(result)
+        event=next(e for e in broken["lifecycle"] if e["event"]=="retire" and e["operation"]=="consume")
+        event["used_bytes"]["0"]-=8
+        with self.assertRaisesRegex(ValueError,"Storage accounting"):audit(binding,timing,broken)
+
+    def test_algorithm_and_completion_are_explicit_target_policy(self):
+        with self.assertRaisesRegex(ValueError,"algorithm"):ExecutionPolicy(collective_algorithm="ring")
+        with self.assertRaisesRegex(ValueError,"completion"):ExecutionPolicy(collective_completion="inject")
+        binding,timing=case()
+        bad=replace(binding.plans["sum"],output_requirements=(("y0",(0,)),))
+        with self.assertRaisesRegex(ValueError,"Output readiness"):
+            execute(replace(binding,plans={"sum":bad}),timing)
 
     def test_capacity_shortage_reserves_nothing_and_reports_incomplete(self):
         binding,timing=case(4,24)

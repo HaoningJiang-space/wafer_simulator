@@ -1,8 +1,9 @@
 """Finite-region admission and lifetime semantics, without a timing engine.
 
 The caller chooses admission order and reports completion of each service
-phase. Reservations are atomic across regions. Data becomes visible only at
-operation completion; copies are retained through all consumers' completion.
+phase. Reservations are atomic across regions. Local collective outputs become
+visible at their final writes. Copies survive both producer retirement (which
+protects internal broadcast reads) and all consumers' retirement.
 No eviction, spill, address-alias inference or hidden infinite storage.
 """
 from dataclasses import dataclass
@@ -24,6 +25,7 @@ class StorageState:
         self.pool = ReservationPool(binding.memory)
         self.used, self.peak, self.allocations = self.pool.used, self.pool.peak, self.pool.allocations
         self.available = set()
+        self.published = set()
         self.completed = set()
         self.active = {}
         self.phase_started, self.phase_finished = {}, {}
@@ -36,6 +38,7 @@ class StorageState:
         if self._shortages(initial):
             raise ValueError("Initial live data exceeds regional capacity")
         self._reserve(initial)
+        self.published.update(self.available)
 
     def _shortages(self, reservations):
         return self.pool.shortages(reservations)
@@ -52,7 +55,9 @@ class StorageState:
             raise ValueError("Unknown operation")
         if op in self.completed or op in self.active:
             raise ValueError("Operation already admitted or completed")
-        missing = tuple(sorted(self.binding.graph.predecessors[op] - self.completed))
+        operation = self.binding.graph.operations[op]
+        missing = tuple(sorted(set(operation.control_deps) - self.completed |
+            {self.binding.graph.data[d].producer for d in operation.inputs if d not in self.available}))
         shortages = self._shortages(self.binding.plans[op].reservations)
         return Admission(not missing and not shortages, missing, shortages)
 
@@ -80,6 +85,13 @@ class StorageState:
             raise ValueError("Phase lacks completed action prerequisites")
         self.phase_started[op].add(index)
 
+    def _release_dead(self, data):
+        obj = self.binding.graph.data[data]
+        if (not self.remaining[data] and not obj.retain and
+                (obj.producer is None or obj.producer in self.completed) and data in self.available):
+            self._release(("object", data))
+            self.available.remove(data)
+
     def next_phase(self, op):
         if op not in self.active:
             raise ValueError("Operation has not been admitted")
@@ -98,22 +110,24 @@ class StorageState:
         self.phase_finished[op].add(index)
         self.phase_started[op].discard(index)
         self.active[op] += 1
-        if self.active[op] != len(self.binding.plans[op].phases):
-            return
         operation = self.binding.graph.operations[op]
+        published = tuple(d for d in operation.outputs if d not in self.published
+                          and set(plan.output_phases(d)) <= self.phase_finished[op])
+        self.available.update(published)
+        self.published.update(published)
+        if self.active[op] != len(self.binding.plans[op].phases):
+            return published
         del self.active[op]
         del self.phase_started[op], self.phase_finished[op]
         self.completed.add(op)
-        self.available.update(operation.outputs)
         for d in operation.inputs:
             self.remaining[d].remove(op)
         for d in operation.inputs + operation.outputs:
-            if not self.remaining[d] and not self.binding.graph.data[d].retain:
-                self._release(("object", d))
-                self.available.remove(d)
+            self._release_dead(d)
         for a in self.binding.plans[op].reservations:
             if a.key[0] != "object":
                 self._release(a.key)
+        return published
 
     def snapshot(self):
         return dict(used_bytes=self.used.copy(), peak_bytes=self.peak.copy(),

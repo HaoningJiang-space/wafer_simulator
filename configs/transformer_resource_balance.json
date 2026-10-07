@@ -1,0 +1,9 @@
+{
+  "name": "tp8_row_major_memory_balance_v1",
+  "heads": 8,
+  "shards": 8,
+  "mapping": "row_major",
+  "memory_bytes_per_cycle": [32, 64, 128, 256, 512, 1024],
+  "controls": "Same complete eight-head TP8 block, row-major endpoint selection and assignment, direct-root rank-order SUM, rank-local output publication, fixed compute services, capacity, author network and seed. Change only common read/write memory-port bandwidth in both placements.",
+  "scope": "Analytical resource sensitivity; no calibrated performance, no required crossover or ranking reversal. Compare each placement to itself along bandwidth, and Baseline/Rotated pairs at each point."
+}

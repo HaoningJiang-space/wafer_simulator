@@ -12,6 +12,7 @@ from wafer_sim.analysis.online_network import audit_messages
 from wafer_sim.analysis.timing import audit
 from wafer_sim.analysis.timed_attribution import critical_chain,message_summary
 from wafer_sim.execution.timing import execute
+from wafer_sim.execution.plan import ExecutionPolicy
 from wafer_sim.experiments.network_reference import compare_reference
 from wafer_sim.workloads.transformer import build_block
 from wafer_sim.io import read_json,write_json,object_digest
@@ -31,7 +32,8 @@ def run_placement(config, workload_config, root, runtime_root, method):
     block=build_block(**workload_config["block"])
     mapping=wow.rank_mapping(endpoints,block.dimensions["shards"],config["mapping"])
     placement=place_block(block,mapping)
-    binding=bind(block.workload,target,placement)
+    policy=ExecutionPolicy(**config.get("execution_policy", {}))
+    binding=bind(block.workload,target,placement,execution_policy=policy)
     schedule=config.get("action_schedule","dependencies")
     if schedule not in {"dependencies","serial_control"}:
         raise ValueError("Unknown collective action schedule")
@@ -54,7 +56,7 @@ def run_placement(config, workload_config, root, runtime_root, method):
         Path(runtime_root)/"build/booksim/rapidchiplet/booksim2/src/booksim",native["network_messages"],config["network_seed"])
     coarse=json.loads(json.dumps(execute(binding,timing)))
     coarse_checked=audit(binding,timing,coarse)
-    record=dict(placement=method,action_schedule=schedule,logical_workload=asdict(block.workload),tensors=block.tensors,
+    record=dict(placement=method,action_schedule=schedule,execution_policy=asdict(policy),logical_workload=asdict(block.workload),tensors=block.tensors,
         operators=block.operators,collectives=block.collectives,mapping=asdict(placement),
         worker_endpoints=mapping,worker_locations=[endpoints[e] for e in mapping],
         target=asdict(target),timing=asdict(timing),resource_contract=contract,
@@ -67,13 +69,14 @@ def run_placement(config, workload_config, root, runtime_root, method):
     messages=message_summary(native["network_messages"])
     write_json(directory/"messages.json",messages)
     collective_times={c["operation"]:dict(native["operations"][c["operation"]],
+        output_ready={str(r):native["output_ready"][d] for r,d in zip(c["participants"],c["output_objects"])},
         duration=native["operations"][c["operation"]]["finish"]-native["operations"][c["operation"]]["admitted"])
         for c in block.collectives}
     active=peak_messages=0
     for _,change in sorted([(m["ready"],1) for m in native["network_messages"]]+
                            [(m["finish"],-1) for m in native["network_messages"]]):
         active+=change; peak_messages=max(peak_messages,active)
-    summary=dict(placement=method,action_schedule=schedule,booksim_cycles=native["application_cycles"],
+    summary=dict(placement=method,action_schedule=schedule,execution_policy=asdict(policy),booksim_cycles=native["application_cycles"],
         coarse_cycles=coarse["application_cycles"],critical_chain_cycles=chain["cycles"],
         collectives=collective_times,messages=messages,network_resources=resources,
         worker_endpoints=mapping,worker_locations=[endpoints[e] for e in mapping],

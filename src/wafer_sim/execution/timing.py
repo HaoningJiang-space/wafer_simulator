@@ -68,6 +68,7 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
     state = StorageState(binding)
     clock = ResourceCalendar(target.services)
     operations, phases, lifecycle = {}, [], []
+    output_ready = {d.id: 0 for d in binding.graph.data.values() if d.producer is None}
     dependency_ready = {}
     pending = list(binding.graph.order)
     network_callbacks = {}
@@ -93,10 +94,16 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
         phases.append(row)
         def complete():
             row["finish"] = clock.now
-            state.complete_phase(op,index)
+            before = state.used.copy()
+            published = state.complete_phase(op,index)
+            for data in published:
+                output_ready[data] = clock.now
+                lifecycle.append(dict(event="output_ready",operation=op,data=data,
+                                      cycle=clock.now,used_bytes=before))
             if op in state.completed:
                 operations[op]["finish"] = clock.now
-                lifecycle.append(dict(event="complete",operation=op,cycle=clock.now,used_bytes=state.used.copy()))
+                operations[op]["retired"] = clock.now
+                lifecycle.append(dict(event="retire",operation=op,cycle=clock.now,used_bytes=state.used.copy()))
             else:
                 submit_ready(op)
         if network is not None and phase.transfer:
@@ -117,7 +124,7 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
                 continue
             state.try_begin(op)
             pending.remove(op)
-            operations[op] = dict(ready=dependency_ready[op],admitted=clock.now,finish=None,
+            operations[op] = dict(ready=dependency_ready[op],admitted=clock.now,finish=None,retired=None,
                 capacity_wait_cycles=clock.now-dependency_ready[op])
             lifecycle.append(dict(event="admit",operation=op,cycle=clock.now,used_bytes=state.used.copy()))
             submit_ready(op)
@@ -147,7 +154,7 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
         blocked[op] = dict(missing_dependencies=decision.missing_dependencies,
                           shortage_bytes=decision.shortage_bytes)
     result = dict(complete=complete,application_cycles=clock.now if complete else None,
-        stopped_cycle=clock.now,operations=operations,phases=phases,services=clock.records,
+        stopped_cycle=clock.now,operations=operations,output_ready=output_ready,phases=phases,services=clock.records,
         resources=clock.resource_summary(),blocked=blocked,lifecycle=lifecycle,
         storage={k:v for k,v in state.snapshot().items() if k != "timing_evaluated"},
         peak_bytes=state.peak.copy(),timing_evaluated=True,
@@ -161,5 +168,5 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
         result["policy"]["network"] = "live BookSim; all-flit reception at end-of-cycle boundary"
         result["policy"]["ties"] = "network completions before local completions at the same boundary"
     if any(p.dependencies is not None for p in binding.plans.values()):
-        result["policy"]["collectives"] = "explicit action DAG; all participants admitted atomically; all output writes precede operation completion"
+        result["policy"]["collectives"] = "explicit action DAG and output requirements; atomic admission; all actions precede retirement; producer outputs and staging pinned until retirement"
     return result

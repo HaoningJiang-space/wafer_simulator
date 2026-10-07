@@ -16,6 +16,8 @@ def main():
     parser.add_argument("test_receipt",type=Path)
     parser.add_argument("--study",action="store_true",help="Registered eight-head TP4/TP8 and two-policy study")
     parser.add_argument("--serial-control",action="store_true",help="TP2 diagnostic: serialize the same corrected collective actions")
+    parser.add_argument("--global-completion-control",action="store_true",help="Retain historical collective publication at global retirement")
+    parser.add_argument("--balance",action="store_true",help="Registered TP8 row-major memory-bandwidth pairs")
     args=parser.parse_args()
     repo=Path(__file__).resolve().parents[1]
     runtime=Path("/home/wangziheng/wafer_simulator")
@@ -29,20 +31,25 @@ def main():
             not Path(tests["tests_log"]).read_text().rstrip().endswith("OK")):
         raise ValueError("Passing same-revision native interface and semantic tests required")
     config=read_json(repo/"configs/transformer_wow_pair.json")
-    if args.study and args.serial_control: raise ValueError("Separate architecture study and serial control")
+    if sum((args.study,args.serial_control,args.balance))>1: raise ValueError("Separate study, balance and serial control")
+    if args.balance and args.global_completion_control: raise ValueError("Balance uses registered rank-local semantics")
     if args.serial_control: config["action_schedule"]="serial_control"
+    if args.global_completion_control:
+        config["execution_policy"]["collective_completion"]="global_retirement"
     source_config=repo/config["workload_config"]
     workload=read_json(source_config)
     if not args.output.is_absolute(): raise ValueError("Fresh absolute output required")
     args.output.mkdir(exist_ok=False)
     study=read_json(repo/"configs/transformer_collective_study.json") if args.study else None
-    write_json(args.output/"CONFIG.json",dict(experiment=config,workload=workload,study=study))
+    balance=read_json(repo/"configs/transformer_resource_balance.json") if args.balance else None
+    write_json(args.output/"CONFIG.json",dict(experiment=config,workload=workload,study=study,balance=balance))
     native=runtime/"build/booksim/rapidchiplet/booksim2/src/booksim"
     online=runtime/"build/booksim-online/online_booksim"
     write_json(args.output/"STARTED.json",dict(source_commit=commit,host=platform.node(),
         python=sys.version,executable=sys.executable,executable_sha256=digest(Path(sys.executable).resolve()),
         config_sha256=digest(repo/"configs/transformer_wow_pair.json"),workload_config_sha256=digest(source_config),
         study_config_sha256=digest(repo/"configs/transformer_collective_study.json") if study else None,
+        balance_config_sha256=digest(repo/"configs/transformer_resource_balance.json") if balance else None,
         tests_receipt_sha256=digest(args.test_receipt),native_binary_sha256=digest(native),
         online_binary_sha256=digest(online),online_source_sha256=digest(repo/"src/wafer_sim/adapters/native/online_booksim.cpp"),
         build_source_commit=(runtime/"build/booksim-online/source_commit").read_text().strip(),
@@ -51,25 +58,28 @@ def main():
         packages=subprocess.check_output([sys.executable,"-m","pip","freeze"],text=True).splitlines()))
     rows=[]
     try:
-        if study:
+        if study or balance:
             cases=[]
-            for shards in study["shards"]:
-                for mapping in study["mappings"]:
-                    name=f"tp{shards}-{mapping}"
+            variants=([(p,m,workload["memory_bytes_per_cycle"],study["heads"],f"tp{p}-{m}")
+                       for p in study["shards"] for m in study["mappings"]] if study else
+                      [(balance["shards"],balance["mapping"],bw,balance["heads"],f"memory-{bw}")
+                       for bw in balance["memory_bytes_per_cycle"]])
+            for shards,mapping,bw,heads,name in variants:
                     directory=args.output/name;directory.mkdir()
                     case_config=dict(config,mapping=mapping)
-                    case_workload=dict(workload,block=dict(workload["block"],heads=study["heads"],shards=shards))
+                    case_workload=dict(workload,memory_bytes_per_cycle=bw,
+                                       block=dict(workload["block"],heads=heads,shards=shards))
                     write_json(directory/"CONFIG.json",dict(experiment=case_config,workload=case_workload))
                     pair=[run_placement(case_config,case_workload,directory,runtime,m) for m in config["placements"]]
                     if (len({r["logical_identity"] for r in pair}) != 1 or
                             len({r["compute_memory_identity"] for r in pair}) != 1):
                         raise ValueError("Study pair changed work or local resources")
-                    case=dict(name=name,shards=shards,mapping=mapping,placements=pair)
+                    case=dict(name=name,shards=shards,mapping=mapping,memory_bytes_per_cycle=bw,placements=pair)
                     write_json(directory/"SUMMARY.json",case)
                     cases.append(dict(case,placements=[{k:v for k,v in r.items() if k not in {"messages","worker_locations"}}
                                                        for r in pair]))
                     print(name,[(r["placement"],r["booksim_cycles"],r["peak_outstanding_messages"]) for r in pair],flush=True)
-            for shards in study["shards"]:
+            for shards in sorted({v[0] for v in variants}):
                 selected=[r for c in cases if c["shards"]==shards for r in c["placements"]]
                 if len({r["logical_identity"] for r in selected})!=1:
                     raise ValueError("Mapping changed the logical workload")

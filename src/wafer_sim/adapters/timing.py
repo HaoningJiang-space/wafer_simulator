@@ -56,7 +56,7 @@ class TimedTarget:
         for neighbors in self.neighbors.values(): neighbors.sort()
         self.paths = {}
         # Validate all demands before starting execution, including late phases.
-        for plan in binding.plans.values():
+        for op, plan in binding.plans.items():
             if plan.dependencies is not None:
                 if (len(plan.dependencies) != len(plan.phases) or
                         len(plan.action_ids) != len(plan.phases) or
@@ -64,6 +64,14 @@ class TimedTarget:
                         any(len(set(deps)) != len(deps) or any(type(p) is not int or not 0 <= p < i for p in deps)
                             for i, deps in enumerate(plan.dependencies))):
                     raise ValueError("Action DAG must be unique and topologically ordered")
+            if plan.output_requirements:
+                requirements = dict(plan.output_requirements)
+                if (len(requirements) != len(plan.output_requirements) or
+                        set(requirements) != set(binding.graph.operations[op].outputs) or
+                        any(not deps or len(set(deps)) != len(deps) or
+                            any(type(i) is not int or not 0 <= i < len(plan.phases) for i in deps)
+                            for deps in requirements.values())):
+                    raise ValueError("Output readiness must cover exact outputs with valid phase requirements")
             for phase in plan.phases: self.steps(phase)
 
     def route(self, source, destination):

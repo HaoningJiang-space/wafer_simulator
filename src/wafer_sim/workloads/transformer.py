@@ -73,10 +73,9 @@ def build_block(*, batch, sequence, hidden, heads, ffn_hidden, shards):
                   dict(scalar_add=elements*(p-1)))
         operations[-1] = replace(operations[-1], collective=Collective(name, "allreduce", tuple(range(p)),
             (Slot(elements,elements,4,"float32"),), "sum", None, PROVENANCE))
-        collectives.append(dict(operation=name, participants=list(range(p)), root=0,
+        collectives.append(dict(operation=name, participants=list(range(p)), kind="allreduce",
             input_objects=list(inputs), output_objects=list(outputs), elements=elements,
-            element_bytes=4, reduction="sum", algorithm="root gather, sum, broadcast",
-            completion="all output homes written before any dependent operation"))
+            element_bytes=4, reduction="sum"))
         return outputs
 
     originals, attention_partials = [], []

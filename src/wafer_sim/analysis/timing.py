@@ -139,6 +139,14 @@ def audit(binding, timing, result):
         raise ValueError("Extra or missing phase/service")
     if native_messages is not None and network_tokens != set(native_messages):
         raise ValueError("Extra or missing native transmission")
+    expected_ready = {d.id: 0 for d in binding.graph.data.values() if d.producer is None}
+    for op, plan in binding.plans.items():
+        if result["operations"][op].get("retired") != result["operations"][op]["finish"]:
+            raise ValueError("Retirement clock mismatch")
+        for data in binding.graph.operations[op].outputs:
+            expected_ready[data] = max(phases[op, i]["finish"] for i in plan.output_phases(data))
+    if result.get("output_ready") != expected_ready:
+        raise ValueError("Output published before required final writes or missing readiness")
     allocations, used = {},dict.fromkeys(binding.memory,0)
     def reserve(key,memory,size):
         if key in allocations: raise ValueError("Duplicate allocation")
@@ -154,6 +162,7 @@ def audit(binding, timing, result):
         if d.producer is None and (remaining[d.id] or d.retain):
             reserve(("object",d.id),binding.homes[d.id],d.size_bytes)
     admitted,completed = set(),set()
+    published = {d.id for d in binding.graph.data.values() if d.producer is None}
     peak = used.copy()
     last_cycle = 0
     for event in result["lifecycle"]:
@@ -161,21 +170,36 @@ def audit(binding, timing, result):
         if cycle < last_cycle: raise ValueError("Lifecycle records are not chronological")
         last_cycle = cycle
         if event["event"] == "admit":
-            if op in admitted or not binding.graph.predecessors[op] <= completed:
+            operation = binding.graph.operations[op]
+            if (op in admitted or not set(operation.control_deps) <= completed or
+                    not set(operation.inputs) <= published or
+                    any(("object", d) not in allocations for d in operation.inputs)):
                 raise ValueError("Premature or duplicate admission")
             if cycle != result["operations"][op]["admitted"]: raise ValueError("Admission clock mismatch")
             for a in binding.plans[op].reservations: reserve(a.key,a.memory,a.size_bytes)
             admitted.add(op)
-        elif event["event"] == "complete":
+        elif event["event"] == "output_ready":
+            data = event["data"]
+            if (op not in admitted or op in completed or data in published or
+                    data not in binding.graph.operations[op].outputs or cycle != expected_ready[data] or
+                    ("object", data) not in allocations):
+                raise ValueError("Invalid output-ready event")
+            published.add(data)
+        elif event["event"] == "retire":
             if op not in admitted or op in completed or cycle != result["operations"][op]["finish"]:
                 raise ValueError("Invalid operation completion")
             operation = binding.graph.operations[op]
+            if not set(operation.outputs) <= published:
+                raise ValueError("Retired operation has unpublished outputs")
+            completed.add(op)
             for d in operation.inputs: remaining[d].remove(op)
             for d in operation.inputs+operation.outputs:
-                if not remaining[d] and not binding.graph.data[d].retain: release(("object",d))
+                obj = binding.graph.data[d]
+                if (not remaining[d] and not obj.retain and
+                        (obj.producer is None or obj.producer in completed) and ("object",d) in allocations):
+                    release(("object",d))
             for a in binding.plans[op].reservations:
                 if a.key[0] != "object": release(a.key)
-            completed.add(op)
         else:
             raise ValueError("Unknown lifecycle event")
         if used != event["used_bytes"]: raise ValueError("Storage accounting mismatch")
@@ -184,8 +208,11 @@ def audit(binding, timing, result):
         raise ValueError("Incomplete work or incorrect peak capacity")
     if used != result["storage"]["used_bytes"]:
         raise ValueError("Final resident capacity differs from lifecycle")
-    for op,parents in binding.graph.predecessors.items():
-        ready = max((result["operations"][p]["finish"] for p in parents),default=0)
+    if published != set(binding.graph.data):
+        raise ValueError("Missing data publication")
+    for op, operation in binding.graph.operations.items():
+        ready = max([result["operations"][p]["finish"] for p in operation.control_deps] +
+                    [expected_ready[d] for d in operation.inputs], default=0)
         if ready != result["operations"][op]["ready"]: raise ValueError("Dependency-ready clock mismatch")
         row = result["operations"][op]
         if row["admitted"] < ready or row["capacity_wait_cycles"] != row["admitted"]-ready:

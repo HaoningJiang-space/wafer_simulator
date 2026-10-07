@@ -14,7 +14,10 @@ def critical_chain(binding, result):
 
     for op,plan in binding.plans.items():
         row = result["operations"][op]
-        parents = [f"op:{p}:finish" for p in binding.graph.predecessors[op]] or ["root"]
+        operation = binding.graph.operations[op]
+        parents = ([f"op:{p}:finish" for p in operation.control_deps] +
+                   [f"data:{d}:ready" for d in operation.inputs
+                    if binding.graph.data[d].producer is not None]) or ["root"]
         node(f"op:{op}:ready",row["ready"],parents)
         node(f"op:{op}:admit",row["admitted"],[f"op:{op}:ready"],
              row["capacity_wait_cycles"],"capacity",operation=op)
@@ -46,6 +49,9 @@ def critical_chain(binding, result):
             node(f"phase:{op}:{index}:finish",p["finish"],[previous])
         node(f"op:{op}:finish",row["finish"],
              [f"phase:{op}:{i}:finish" for i in range(len(plan.phases))])
+        for data in operation.outputs:
+            node(f"data:{data}:ready",result["output_ready"][data],
+                 [f"phase:{op}:{i}:finish" for i in plan.output_phases(data)])
     for key,row in nodes.items():
         if key == "root": continue
         if row["time"] != max(nodes[p]["time"] for p in row["parents"])+row["duration"]:

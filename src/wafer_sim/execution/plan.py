@@ -44,6 +44,18 @@ class Phase:
 
 
 @dataclass(frozen=True)
+class ExecutionPolicy:
+    collective_algorithm: str = "direct_exchange_rank_order_sum"
+    collective_completion: str = "rank_local"
+
+    def __post_init__(self):
+        if self.collective_algorithm != "direct_exchange_rank_order_sum":
+            raise ValueError("Unsupported collective algorithm")
+        if self.collective_completion not in {"rank_local", "global_retirement"}:
+            raise ValueError("Unsupported collective completion policy")
+
+
+@dataclass(frozen=True)
 class OperationPlan:
     reservations: tuple[Allocation, ...]
     phases: tuple[Phase, ...]
@@ -51,9 +63,15 @@ class OperationPlan:
     dependencies: tuple[tuple[int, ...], ...] | None = None
     action_ids: tuple[str, ...] = ()
     policy: str = ""
+    # Empty means ordinary operation outputs publish at retirement. Explicit
+    # collective requirements name the writes that make each local value ready.
+    output_requirements: tuple[tuple[str, tuple[int, ...]], ...] = ()
 
     def predecessors(self, index):
         return self.dependencies[index] if self.dependencies is not None else ((index-1,) if index else ())
+
+    def output_phases(self, data):
+        return dict(self.output_requirements)[data] if self.output_requirements else tuple(range(len(self.phases)))
 
 
 @dataclass(frozen=True)
