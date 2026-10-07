@@ -5,6 +5,7 @@ from test_timed_execution import local_binding, timing
 from wafer_sim.adapters.timing import TimedTarget
 from wafer_sim.architecture.timing import Link, Service
 from wafer_sim.analysis.transfer_granularity import isolated_comparison, summarize_isolated
+from wafer_sim.analysis.transfer_study import compare_messages
 
 
 class GranularityTests(unittest.TestCase):
@@ -42,3 +43,16 @@ class GranularityTests(unittest.TestCase):
         for change in (dict(flits=[]),dict(expected_flits=4),dict(bytes=25),dict(finish=0)):
             with self.assertRaises(ValueError): isolated_comparison(target,self.message(**change))
         self.assertIsNone(summarize_isolated([],5)['meets_service_target'])
+
+    def test_message_comparison_separates_ready_clock_and_service_error(self):
+        a=self.message(token='x',ready=0,finish=12)
+        b=self.message(token='x',ready=20,finish=32)
+        row=compare_messages([a],[b])[0]
+        self.assertEqual(row['error_cycles'],0)
+        self.assertNotEqual(row['reference_ready'],row['candidate_ready'])
+        self.assertTrue(row['matched_paths'])
+
+    def test_message_comparison_rejects_missing_or_changed_work(self):
+        a=self.message(token='x')
+        for values in ([],[a,a],[self.message(token='x',bytes=18)]):
+            with self.assertRaises(ValueError): compare_messages([a],values)

@@ -12,6 +12,20 @@ def plot(summary,path):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
+    if 'pipeline_cycles' in summary['rows'][0]:
+        fig,axes=plt.subplots(1,3,figsize=(11,3.6),layout='constrained')
+        rows=summary['rows'];x=list(range(len(rows)))
+        comparisons=[('Application completion','application_ape_percent','pipeline_application_ape_percent'),
+            ('Isolated service: worst case',None,'pipeline_isolated_max_ape_percent'),
+            ('Application messages: worst case','coarse_message_max_ape_percent','pipeline_message_max_ape_percent')]
+        for ax,(title,old,new) in zip(axes,comparisons):
+            original=[r[old] if old else r['isolated']['max_matched_ape_percent'] for r in rows]
+            ax.bar([v-.18 for v in x],original,.36,color='#247BA0',label='Whole message')
+            ax.bar([v+.18 for v in x],[r[new] for r in rows],.36,color='#D35E32',label='Packet pipeline')
+            ax.set(xticks=x,xticklabels=[r['case'] for r in rows],title=title,ylabel='Absolute percentage error (%)')
+            ax.grid(axis='y',alpha=.2)
+        axes[0].legend(frameon=False)
+        fig.savefig(path,dpi=180);plt.close(fig);return
     fig,axes=plt.subplots(1,2,figsize=(9,3.6),layout='constrained')
     colors={'s16':'#247BA0','s64':'#D35E32'}
     for case in ('s16','s64'):
@@ -46,6 +60,13 @@ def main():
     write_json(args.output/'ACCEPTANCE.json',acceptance)
     fields=('case','sequence','reference_cycles','coarse_cycles','error_cycles','application_ape_percent',
             'application_target_met','complete_operations','message_count','logical_message_bytes','native_flits','peak_region_bytes')
+    if 'pipeline_cycles' in summary['rows'][0]:
+        fields+=('pipeline_cycles','pipeline_application_ape_percent','pipeline_isolated_max_ape_percent',
+            'pipeline_message_mape_percent','pipeline_message_max_ape_percent','pipeline_application_target_met','pipeline_isolated_target_met')
+        messages=[dict(case=case,context=context,**row) for case,detail in details.items()
+            for context,rows in [('application',detail['pipeline']['messages']),('isolated',detail['pipeline']['isolated_messages'])] for row in rows]
+        with (args.output/'pipeline_messages.csv').open('w') as f:
+            w=csv.DictWriter(f,list(messages[0]));w.writeheader();w.writerows(messages)
     with (args.output/'application.csv').open('w') as f:
         w=csv.DictWriter(f,fields,extrasaction='ignore');w.writeheader();w.writerows(summary['rows'])
     fields=('case','source','destination','bytes','flits','physical_links','matched_path','reference_cycles',
