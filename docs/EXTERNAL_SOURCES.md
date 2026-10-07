@@ -68,5 +68,8 @@ notices are retained without relicensing.
 The selected PyTorch observer reference under `third_party/references/pytorch`
 is also stored here, with its original license and file hashes in `SOURCE.json`.
 It is the exact revision linked by Chakra's tensor reader (`7cd48df2`), used to
-inspect descriptor/stride recording. It is not built or imported, is not a full
-PyTorch checkout, and does not establish the capture's exact PyTorch build.
+inspect descriptor/stride recording. The same pinned reference now includes
+c10d `Ops.cpp`, `ParamCommsUtils.hpp` and `ProcessGroupNCCL.cpp` to check tensor
+argument roles, communicator parameter fields and Work wait recording. These
+selected files are not built or imported, are not a full PyTorch checkout, and
+do not establish the capture's exact PyTorch build.

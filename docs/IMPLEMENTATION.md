@@ -2,8 +2,13 @@
 
 The active implementation is the CSR-frontier version used by full run 006.
 The user requested keeping only the fastest current version in the codebase.
-The selection below uses available progress from complete-input runs; final
-end-to-end timings and full-event equivalence remain pending.
+The historical selection below used available progress from complete-input
+runs. Both placements have since completed, and direct 002–006 full-event
+equivalence [passed](results/model-boundary-001/implementation_equivalence.json).
+The original progress observations below are not isolated end-to-end speedups.
+Duplicate bulk files in obsolete 003–005 runs now resolve to their byte-identical
+006 copies through the [cleanup receipt](results/remote-cleanup-001/REVIEW.md);
+unique logs and audit records remain.
 
 ## Selection evidence, 2026-10-06 10:59:56 UTC
 

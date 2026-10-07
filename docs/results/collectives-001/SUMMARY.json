@@ -1,0 +1,33 @@
+{
+  "complete_target_workload": false,
+  "counts": {
+    "cpu_collectives_with_explicit_identity": 3840,
+    "cpu_collectives_with_operand_roles": 33632,
+    "cpu_collectives_with_source_wait": 3840,
+    "gpu_collective_records": 6496,
+    "gpu_comm_size_differs_from_logical_input": 6272,
+    "selected_records": 111312,
+    "source_ctrl_entries": 4530939,
+    "source_data_entries": 5258091,
+    "source_nodes": 4530939
+  },
+  "cpu_collectives": 33632,
+  "cpu_collectives_without_identity": 29792,
+  "logical_collectives": 2766,
+  "logical_kinds": {
+    "allgather": 20,
+    "allreduce": 1126,
+    "barrier": 20,
+    "broadcast": 1600
+  },
+  "matched_calls": 3840,
+  "matched_collectives": 2790,
+  "new_simulations_launched": 0,
+  "normalization_issues": {
+    "reduction_operator_unresolved": 24
+  },
+  "parser_errors": 0,
+  "rank_count": 16,
+  "source_commit": "2360c9064d121fd65b4c4e5803818cfeab8f3615",
+  "unmatched_gpu_collectives": 0
+}

@@ -79,7 +79,9 @@ full placement arms pass the independent all-operation audit.
 Historical optimization notes and existing remote runs remain evidence. Their
 old build scripts and incremental patches are recoverable at Git commit
 `f530c82`; they are not maintained implementation choices. The completed full
-runs and their automatic event comparisons remain intact. See
+runs and their automatic event comparisons remain recorded. Duplicate bulk
+files in obsolete runs resolve to the identical retained 006 artifacts through
+the [cleanup receipt](docs/results/remote-cleanup-001/REVIEW.md). See
 [run status](docs/LLAMA16_RUN_STATUS.md), [CSR semantics](docs/CSR_FRONTIER.md),
 and [HeteroSTA transfer](docs/HETEROSTA_TRANSFER.md).
 
@@ -132,3 +134,12 @@ retaining every original dependency port. All 73 semantic tests and the full
 records once; unresolved scopes stay explicit. Full target lowering still needs
 collective completion, compiled-scope interpretation and layout/allocation
 recovery before these regions can define wafer resource activity or timing.
+
+The [collective frontend](docs/results/collectives-001/REVIEW.md) now recovers
+operand roles and bytes for all 33,632 CPU collective calls in the full source.
+Explicit identities match 3,840 calls into 2,790 instances; 29,792 coalesced calls
+remain unresolved rather than being matched by order or size. The
+[target collective contract](docs/COLLECTIVES.md) adds shared finite storage,
+memory/network/reduction demands and rank-local completion. All 101 semantic
+tests and the full-source readback pass. This is a resource-demand and completion
+interface; tensor-version integration and calibrated application timing remain.
