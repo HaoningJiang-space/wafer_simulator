@@ -155,6 +155,51 @@ class TimedExecutionTests(unittest.TestCase):
         self.assertGreater(result["resources"]["link-10-11"]["queue_wait_cycles"],0)
         self.assertEqual(result["storage"]["used_bytes"],{"0":0,"1":16,"2":16})
 
+    def test_audit_checks_terminal_state_and_capacity_wait(self):
+        b=local_binding(); original=execute(b,timing())
+        changes = [(["operations","f","capacity_wait_cycles"],99),
+                   (["storage","available_data"],[]),
+                   (["storage","completed"],[]),
+                   (["storage","all_operations_completed"],False),
+                   (["stopped_cycle"],99)]
+        for path,value in changes:
+            changed=copy.deepcopy(original); node=changed
+            for key in path[:-1]: node=node[key]
+            node[path[-1]]=value
+            with self.assertRaises(ValueError): audit(b,timing(),changed)
+
+    def test_audit_rejects_non_fcfs_service_order(self):
+        # Two independent equal tasks on one server: invert their service order
+        # while preserving all durations, dependencies, capacity and non-overlap.
+        w=Workload((),(op("a"),op("b")))
+        b=bind(w,target(),Placement({"a":"compute-A","b":"compute-A"},{}))
+        changed=execute(b,timing())
+        a,z=changed["services"]
+        for key in ("start","resource_released","finish","resource_predecessor"):
+            a[key],z[key]=z[key],a[key]
+        a["resource_predecessor"]=1
+        with self.assertRaisesRegex(ValueError,"FCFS"): audit(b,timing(),changed)
+
+    def test_audit_rejects_false_predecessor_on_idle_resource(self):
+        b=local_binding(); result=execute(b,timing())
+        result["services"][0]["resource_predecessor"]=0
+        with self.assertRaisesRegex(ValueError,"FCFS"): audit(b,timing(),result)
+
+    def test_audit_rejects_valid_but_wrong_tie_route(self):
+        hardware=target()
+        edges=((10,20),(20,11),(10,21),(21,11))
+        hardware=replace(hardware,network=replace(hardware.network,router_links=edges))
+        w=Workload((data("x",8),),(op("f",("x",)),))
+        b=bind(w,hardware,Placement({"f":"compute-A"},{"x":"B"}))
+        rates=replace(timing(),links=tuple(Link(a,z,Service(f"{a}->{z}","bytes",4))
+                    for x,y in edges for a,z in ((x,y),(y,x))))
+        result=execute(b,rates)
+        self.assertTrue(audit(b,rates,result)["passed"])
+        row=next(p for p in result["phases"] if p["kind"]=="transfer")
+        self.assertEqual(row["path"],(11,20,10))
+        row["path"]=(11,21,10)
+        with self.assertRaisesRegex(ValueError,"route policy"): audit(b,rates,result)
+
     def test_fixed_work_changes_time_only_through_declared_rates(self):
         config=read_json(Path(__file__).resolve().parents[1]/"configs/timed_execution_example.json")
         original=run_case(config,"declared")

@@ -3,6 +3,8 @@ from collections import defaultdict
 from fractions import Fraction
 from math import ceil
 
+import networkx as nx
+
 
 def audit(binding, timing, result):
     if not result["complete"] or result["application_cycles"] is None:
@@ -11,10 +13,30 @@ def audit(binding, timing, result):
         *timing.services, *(l.service for l in timing.links),
         *(s for e in timing.endpoints for s in (e.injection,e.ejection)))}
     records,by_resource,by_token = result["services"],defaultdict(list),defaultdict(list)
+    physical = nx.Graph()
+    physical.add_nodes_from(dict(binding.network.endpoint_routers).values())
+    physical.add_edges_from(binding.network.router_links)
+    distances = {}
+    last_ready = 0
+    resource_tail = {}
     if set(result["operations"]) != set(binding.plans):
         raise ValueError("Extra or missing operation timing")
     for i,event in enumerate(records):
         if event["id"] != i: raise ValueError("Service identities not complete and ordered")
+        if any(type(event[k]) is not int or event[k] < 0 for k in
+               ("ready", "start", "resource_released", "finish")):
+            raise ValueError("Service clocks must be nonnegative integer cycles")
+        if event["ready"] < last_ready:
+            raise ValueError("Service submissions are not chronological")
+        last_ready = event["ready"]
+        tail = resource_tail.get(event["resource"])
+        free = records[tail]["resource_released"] if tail is not None else 0
+        expected_start = max(event["ready"], free)
+        expected_predecessor = tail if free > event["ready"] else None
+        if (event["start"] != expected_start or
+                event["resource_predecessor"] != expected_predecessor):
+            raise ValueError("Resource trace violates work-conserving FCFS policy")
+        resource_tail[event["resource"]] = i
         service = services[event["resource"],event["unit"]]
         duration = ceil(Fraction(event["amount"]*service.rate_denominator,service.rate_numerator))
         if (event["start"] < event["ready"] or event["resource_released"]-event["start"] != duration or
@@ -68,6 +90,17 @@ def audit(binding, timing, result):
                 if (not path or path[0] != attachments[t.source_endpoint] or
                         path[-1] != attachments[t.destination_endpoint] or len(set(path)) != len(path)):
                     raise ValueError("Transfer path endpoint or loop mismatch")
+                end = attachments[t.destination_endpoint]
+                if end not in distances:
+                    distances[end] = nx.single_source_shortest_path_length(physical,end)
+                distance = distances[end]
+                expected = [attachments[t.source_endpoint]]
+                while expected[-1] != end:
+                    current = expected[-1]
+                    expected.append(min(n for n in physical.neighbors(current)
+                                        if distance.get(n) == distance[current]-1))
+                if tuple(expected) != path:
+                    raise ValueError("Transfer violates minimum-hop lexicographic route policy")
                 route = [endpoints[t.source_endpoint].injection,
                          *(links[a,b] for a,b in zip(path,path[1:])),endpoints[t.destination_endpoint].ejection]
                 demands = [(s.resource,"bytes",t.size_bytes) for s in route]
@@ -129,7 +162,17 @@ def audit(binding, timing, result):
     for op,parents in binding.graph.predecessors.items():
         ready = max((result["operations"][p]["finish"] for p in parents),default=0)
         if ready != result["operations"][op]["ready"]: raise ValueError("Dependency-ready clock mismatch")
+        row = result["operations"][op]
+        if row["admitted"] < ready or row["capacity_wait_cycles"] != row["admitted"]-ready:
+            raise ValueError("Capacity-wait accounting mismatch")
+    expected_available = sorted(d.id for d in binding.graph.data.values() if d.retain)
+    storage = result["storage"]
+    if (storage["available_data"] != expected_available or storage["completed"] != sorted(completed)
+            or storage["active_phases"] or not storage["all_operations_completed"]
+            or storage["peak_bytes"] != peak or result["blocked"] or not result["timing_evaluated"]):
+        raise ValueError("Terminal execution state differs from checked lifecycle")
     makespan = max(r["finish"] for r in result["operations"].values())
-    if makespan != result["application_cycles"]: raise ValueError("Terminal work excluded")
+    if makespan != result["application_cycles"] or makespan != result["stopped_cycle"]:
+        raise ValueError("Terminal work excluded")
     return dict(passed=True,operations=len(completed),phases=len(phases),services=len(records),
                 application_cycles=makespan,source_duration_used=False)
