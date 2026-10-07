@@ -79,6 +79,11 @@ rank-local、容量、计算服务率、网络时钟/参数、seed 1 和两个�
 这些百分比为 `(Baseline − Rotated) / Baseline`，不是 simulator 墙钟加速。
 64→128 的绝对和相对 gap 都缩小，因此“内存越快，topology 优势必然越大”不成立。
 
+![带宽对完成时间、placement 差距与关键链组成的影响](figures/resource_balance.svg)
+
+可下载 [PDF](figures/resource_balance.pdf)；图由服务器上的标准 Matplotlib
+从已验收的归因数据生成，输入及图文件哈希见 [FIGURES.json](figures/FIGURES.json)。
+
 ### 关键链怎样变化
 
 下表为一条观测关键链上的 compute / memory / network 服务周期，三项相加为总时间。

@@ -56,3 +56,14 @@ python scripts/run_transformer_wow_remote.py BALANCE TESTS/SEMANTICS.json --bala
 Each arm includes live native execution, independent timing/lifetime readback,
 standalone native network replay of the observed schedule, and the existing
 coarse network control. Only an entirely checked run receives `COMPLETE.json`.
+
+Read back the accepted runs without further simulation:
+
+```sh
+python scripts/analyze_resource_balance_remote.py HISTORICAL GLOBAL LOCAL BALANCE ANALYSIS
+python scripts/plot_resource_balance_remote.py ANALYSIS FIGURES
+```
+
+`HISTORICAL` is the accepted `transformer-collective-study-001` directory.
+The [accepted report](results/rank-local-balance-001/REVIEW.md) records all concrete
+run paths, source revisions, results and evidence boundaries.
