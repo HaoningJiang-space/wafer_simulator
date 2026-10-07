@@ -1,7 +1,9 @@
 # 研究对象：reticle 聚合资源抽象的适用范围
 
-状态：2026-10-07 原文和 pinned source 核对完成；尚未实现显式 local NoC，
-没有新的模型误差、性能或饱和结果。原有 collective / placement 案例冻结。
+状态：原文和 pinned source 核对完成，原有 collective / placement 案例冻结。
+本文第 1–6 节保留当时的研究边界；后续已完成网络流水和
+[存储—网络边界对照](results/memory-boundary-001/REVIEW.md)。后者以明确的 streaming
+DMA 设计假设为参考；没有实现显式 local NoC，也没有原生硬件标定或网络饱和结论。
 已归档：[12 点只读模型误差](results/model-fidelity-saved-001/REVIEW.md)、
 [端点与外部连接复核](results/reticle-boundary-audit-001/REVIEW.md)。
 
@@ -12,7 +14,7 @@ endpoint 模型能否以可接受的成本，预测应用完成时间与架构�
 精度—成本是验证这个问题的方法；它不再是一组脱离具体机制的后端规模 sweep。
 不先认定所有 reticles 都必须逐 GPC、逐 flit 模拟，也不预设高 radix 收益消失。
 本文件中已确认的“未建模”只是范围描述，不是必须实现的功能列表。有限边界 FIFO
-与双向反馈也属于待检验候选，不能因代码没有它们就预定它们是主要误差来源。
+与双向反馈需要按目标合同检验，不能因原代码没有它们就预定它们是主要误差来源。
 
 ## 1. 原文支持什么，不能过度推断什么
 
@@ -42,7 +44,7 @@ Pinned upstream `9470042fb2d8b5368556e46cc75ac818dbf31522`，来源位于
 | `rapidchiplet/booksim_wrapper.py:245–259` | 每个 unit 单独接 node；外部邻接连接另占 router ports | 原模型已拥有多输入端口及内部 router 竞争 |
 | `rapidchiplet/booksim2/src/trafficmanager.cpp` | 注入受 buffer/credit 限制；收到 flit 后返回 credit 并 retire | 网络内有双向反压；接收与目标 SRAM 写服务未连接 |
 
-## 3. 我们当前模型具体缺在哪里
+## 3. 原整消息模型的范围（保留为比较基线）
 
 当前 `adapters/wow.py` 用 `trace-llama7B` 导出，即使随后运行的是 analytical
 Transformer，也仍是 **每 compute reticle 一个网络 endpoint**。
@@ -153,3 +155,9 @@ Rotated 收益。不能给 R 更多 GPC、更多供数通道或不同内存总�
   候选在当前两例的应用APE为0%/0.0154%，孤立服务全部对齐，应用内最大消息
   误差3.5714%；剩余差异定位到共享输出的消息服务顺序。未改变默认后端，
   不以此验证本地聚合，也不继续为了逐事件对齐增加模型。
+- [存储—网络边界对照](results/memory-boundary-001/REVIEW.md)已固定 BookSim 完成。
+  同预算 streaming DMA 假设下，whole-message 对 s16/s64 应用时间低估
+  7.723%/7.111%；原因涉及 memory 请求粒度及 rank-local 服务交错，不能只称作
+  overlap 差异。简单分片恢复两例 makespan，但 RX 峰值 18/60 槽超过规定 8 槽，
+  且消息提交误差超过预登记目标。可选有限端点反馈保留必要占用状态；这些结果
+  不证明所有 workload 的应用时间需要 finite FIFO，也不启动完整 8-GPC NoC。

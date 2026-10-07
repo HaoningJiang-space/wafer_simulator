@@ -27,6 +27,18 @@ This optional model does not reproduce finite-credit/input arbitration or
 adaptive routing, and does not replace the default backend or validate reticle
 compute/SRAM aggregation. Both original backends retain exact accepted events.
 
+The [memory–network boundary study](docs/results/memory-boundary-001/REVIEW.md)
+now holds native BookSim fixed and compares whole-message stages, chunk service,
+and finite receiving credit. Under the registered streaming-DMA hypothesis,
+s16/s64 become 13,583/55,944 cycles, versus 12,534/51,966 for whole-message stages.
+Chunk requests interleave with rank-local work on the shared memory port; overlap
+does not imply a faster complete application. Immediate-credit chunk service
+matches these makespans but exceeds the eight-slot RX budget (18/60 slots) and
+misestimates individual message commits. The optional bounded endpoint model
+preserves capacity and checked lifetimes, at higher measured execution cost.
+This is conditional boundary-model evidence, not calibrated native wafer timing.
+151 tests, 30 complete runs, 460 artifact hashes and 18 command replays passed.
+
 The [research direction](docs/RESEARCH_DIRECTION.md) derives a compute–memory–network
 execution contract from spatial locality and finite resources. It separates
 logical work, compute/data mapping, execution policy and target resources.
@@ -113,12 +125,12 @@ included as [pinned ordinary files](docs/EXTERNAL_SOURCES.md) under `third_party
 A normal clone of this repository obtains all project source. The maintained
 branch is `main`.
 
-The research sequence is workload abstraction, target compute–memory–network
-execution, layered validation, then a fixed-mapping Baseline–Rotated application
-case. Resource-balance controls precede a second collective algorithm, then
-larger workload and joint topology/mapping studies. Basic
-geometry/connectivity/capacity belongs in the first machine model; detailed
-physical closure and power/thermal remain later work.
+The current research sequence is a declared target-resource contract, matched
+simulation abstractions, independent mechanism checks, complete-work prediction
+errors and measured simulation cost. Existing collective/placement cases support
+that comparison; further algorithms and mapping studies are deferred. Basic
+geometry/connectivity/capacity remains part of the machine contract. Detailed
+physical closure and power/thermal remain outside this milestone.
 
 Current development has progressed from the complete A/fanout-B/AllReduce/C
 unit to a separately defined Transformer forward block on both WoW placements. Old Chakra recovery

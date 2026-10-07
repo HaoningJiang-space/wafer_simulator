@@ -1,0 +1,244 @@
+{
+  "affinity": [
+    254,
+    255
+  ],
+  "binaries": {
+    "accepted_online": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+    "boundary": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+    "standalone": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+  },
+  "build_manifest_sha256": "f682ca3a36899e700393b9d25a139e79f17f011287fbbb6d269be75dcc9a87e2",
+  "build_source": "bec105197a710ee90c6f3519a10e5832e718592e",
+  "executable_sha256": "c101b58503f6a58ef7d66d9b23886560e04fbb059e75aeb6e7ab6db67e9177cb",
+  "host": "eex005",
+  "load": [
+    1.93,
+    1.21,
+    1.63
+  ],
+  "packages": [
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "fonttools==4.66.1",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "networkx==3.7",
+    "numpy==2.5.3",
+    "packaging==26.3",
+    "pandas==3.0.6",
+    "pillow==12.3.0",
+    "pymetis==2025.2.2",
+    "pyparsing==3.3.3",
+    "python-dateutil==2.9.0.post0",
+    "scipy==1.18.1",
+    "shapely==2.1.2",
+    "six==1.17.0",
+    "typing_extensions==4.16.0"
+  ],
+  "python": "3.13.13 | packaged by Anaconda, Inc. | (main, Apr 14 2026, 06:19:41) [GCC 14.3.0]",
+  "registration": {
+    "algorithm": "direct_exchange_rank_order_sum",
+    "application_tolerance_cycles": 100,
+    "application_tolerance_percent": 2,
+    "cases": [
+      {
+        "name": "s16",
+        "sequence": 16
+      },
+      {
+        "name": "s64",
+        "sequence": 64
+      }
+    ],
+    "flit_bytes": 2000,
+    "mapping": "row_major",
+    "mechanisms": [
+      {
+        "flows": [
+          [
+            1,
+            0,
+            32000
+          ]
+        ],
+        "name": "single"
+      },
+      {
+        "flows": [
+          [
+            1,
+            0,
+            32000
+          ]
+        ],
+        "memory_overrides": {
+          "1": 8
+        },
+        "name": "slow_source"
+      },
+      {
+        "flows": [
+          [
+            1,
+            0,
+            32000
+          ],
+          [
+            5,
+            0,
+            32000
+          ],
+          [
+            6,
+            0,
+            32000
+          ]
+        ],
+        "memory_overrides": {
+          "0": 8
+        },
+        "name": "incast"
+      },
+      {
+        "flows": [
+          [
+            0,
+            2,
+            32000
+          ],
+          [
+            6,
+            3,
+            32000
+          ]
+        ],
+        "memory_overrides": {
+          "2": 8
+        },
+        "name": "shared_slow_sink",
+        "requires_shared_directed_link": true
+      }
+    ],
+    "message_tolerance_cycles": 20,
+    "message_tolerance_percent": 5,
+    "modes": [
+      "serial",
+      "pipeline",
+      "bounded"
+    ],
+    "name": "memory_network_boundary_v1",
+    "network_seed": 1,
+    "placement": "baseline",
+    "repetitions": 3,
+    "rx_slots": 8,
+    "scope": "Conditional streaming DMA target; shared read/write ports; FIFO storage carved out of unchanged SRAM. BookSim internal network fixed. Whole-object consumer visibility.",
+    "tx_slots": 2
+  },
+  "source_commit": "b6a89eab788dbb32a9de80fb07a306837bf5f1a1",
+  "source_hashes": {
+    "docs/MEMORY_NETWORK_BOUNDARY_PROTOCOL.md": "986aa6a98d7f58796711c879c520f4a798e63dbfeb0fb38520f84e65eee9766d",
+    "patches/booksim-endpoint-hooks.patch": "e19628b0f5676d187f49c04a719bd9a221da586e002af38902c1b3d020008333",
+    "patches/booksim-wafer.patch": "2e44498b90fd5f06c6ff58a09141d38c6dd1979d477a6d7fcb93118ff9f40344",
+    "src/wafer_sim/__init__.py": "70f425c539166f1abb22b3c99938f64deddca6b668b400dca86579d0a33a70d4",
+    "src/wafer_sim/adapters/__init__.py": "fcba0d9b558132b8a70e76e2b9f3b5a6d36de972fef46d17be6317cd913b2d73",
+    "src/wafer_sim/adapters/atlahs_capture.py": "3df005b040a9c551c2a3572c58bfab30632c1a05abd51ee63229b21ff3a1356e",
+    "src/wafer_sim/adapters/atlahs_observer.py": "34733de12bffda1cc4213dffdbc9150949174e404d336d31b558890eb48d94d2",
+    "src/wafer_sim/adapters/booksim.py": "68626b1b715fd3436ef81411beb1ac33498a784e0ac6d49f1ca3f0984c9bd58f",
+    "src/wafer_sim/adapters/boundary_booksim.py": "b3ff473dfad949b3ba1326e93fa882f93154976d6342db28525cdfa186ca857d",
+    "src/wafer_sim/adapters/collective_operation.py": "067776f2be70849c7f8bbfae387d3aff70bc7382d8e789845adc3f33a603f3e4",
+    "src/wafer_sim/adapters/collectives.py": "b77ea17db65cd59c9ef585a1a3bff2aa3ece5cc0bd674f0012e84576657e0e1d",
+    "src/wafer_sim/adapters/declared_target.py": "bd9720d78c46fde797631bfb774012d4aaca3c96d7ee40fac813bae35ca1619b",
+    "src/wafer_sim/adapters/goal_booksim.py": "f01dc6cb005c1894c67369ef83d79d9768623b3279c093a2bbe33eebcb7baa15",
+    "src/wafer_sim/adapters/memory_boundary.py": "8a34917bcbc903ec35b6a43587f8c7b013546faf054e2293479b5844f3e6994a",
+    "src/wafer_sim/adapters/native/endpoint_manager.hpp": "b8ad8703d61c65c0aa9cfbe3cb5c7a55a425e35384de9a4a4f1a3027ee8c62ea",
+    "src/wafer_sim/adapters/native/online_booksim.cpp": "552485a3882629462f35d6cd4592ccaacbade2c303cbaa895a5abbb36e30cde6",
+    "src/wafer_sim/adapters/online_booksim.py": "842c2fd01ae9bc245a332a6c6ce656ddae87d377dc00a2da84d3ab717bc44869",
+    "src/wafer_sim/adapters/packet_pipeline.py": "ea4a79b69208af63f05728912a74eb7240569e688825414aedb88ec0f4d53da1",
+    "src/wafer_sim/adapters/spatial.py": "fdeb56bf27754efa8fdd46169ac33f47d6004f3d67d30a0346248c0ae6c189c7",
+    "src/wafer_sim/adapters/timing.py": "10557907beaa14dd6e67e90bb4762c6896dbb9918628787d275b26c14c9269bd",
+    "src/wafer_sim/adapters/transformer.py": "82ec7852dcf06bfcf1f81a1dcfc32dea7b5f706e82438c2a6fcdd842e33bc8b3",
+    "src/wafer_sim/adapters/tree_collective.py": "78d872f9af3af9223922f872211febe95955ea4e2f6cdf5c06e9d349448033aa",
+    "src/wafer_sim/adapters/wow.py": "d2cbf8e7339d001a25cb91aed7175309b9018d5531b5b8119cae9b8de87605cd",
+    "src/wafer_sim/adapters/wow_target.py": "7b8475e2812bff843b22ce844abbf74050777ddda99bac023f1591a96fc17932",
+    "src/wafer_sim/analysis/__init__.py": "77f6de9f814a6582021bda4834b15e9c79275cfcf3828dc6a305540b993675ea",
+    "src/wafer_sim/analysis/audit.py": "269d694c0c396a3b2d3fd2ad6403ca0ecea5fb9f40da9116506f3608bc121bf3",
+    "src/wafer_sim/analysis/boundary_study.py": "2cd3277280f9932a7827cdf704e9505dc0f839dfe6d2736c193deaa3a6c07c90",
+    "src/wafer_sim/analysis/call_regions.py": "5965d9f74478b098d1ed488715201a5caace3fafb2bfbe107fda97ab3c46e053",
+    "src/wafer_sim/analysis/campaign_acceptance.py": "3b0f9001ea5d61592dbe4db93c481ec4cd595894e285a94c3befb00573a563c5",
+    "src/wafer_sim/analysis/chakra_effects.py": "291d29fd615cb6cd5291f9de68410554e16fdb6502427e6492fa3cd898ea15be",
+    "src/wafer_sim/analysis/chakra_source.py": "3b520361fedccc9b78c26367e0e34447f90ee0d77f1c6e0ab5c39cab6118118d",
+    "src/wafer_sim/analysis/collective_contention.py": "f7db52c669f8597ac3cb54786e3ac7c5408979819a155a1e0a9f57b7b7cabad3",
+    "src/wafer_sim/analysis/collective_ports.py": "30fd2b8e43161255877dd7f449762e0787515ea2d5dd5701a85543733201f241",
+    "src/wafer_sim/analysis/collective_projection.py": "39ab8a535cb3bb6e51c9af61cba4b6d735d4f40fa02d5a83800c80515d2719b1",
+    "src/wafer_sim/analysis/collective_recovery.py": "e18e712754dd50ad08f7e494105e7894269c1ebf7a4f5ba96e113e2102bddf47",
+    "src/wafer_sim/analysis/collective_sources.py": "d65b481020aee1555ebe129bcb7ca1ce5362813e75e738e86ce5be710e414082",
+    "src/wafer_sim/analysis/comparison.py": "e6cafbba23a99008805a9806f72475578c9e79f9c5ba0a89df29a002cb6637e6",
+    "src/wafer_sim/analysis/critical_chain.py": "9f1bf7f5b9fae43e427498385ac38f18910b7cf9b930d77c67fe638a9699346c",
+    "src/wafer_sim/analysis/dependency_profile.py": "6900257d178e3d824e5d04e51750c4b6c72a8365bea31d78fd5f5863f2221d2c",
+    "src/wafer_sim/analysis/dependency_structure.py": "c43fcd2c0b8841fbf17161f1b39a14975ee5aa09f92b0308b8ea641d527a5521",
+    "src/wafer_sim/analysis/goal_completion.py": "33ef89b5980bccabc1bb46ea131eaa0e2a88f3000d1fee6c5d7fcad3a8cc3498",
+    "src/wafer_sim/analysis/local_stages.py": "95f33421321e41c17c2f52a3a1c9ac8ece50516fbd8825411303160177ae7a8a",
+    "src/wafer_sim/analysis/memory_boundary.py": "a7b16ef5ddee36fe73d2a19d2bc09c62961968160eb65c4d6661a04275a7e6e7",
+    "src/wafer_sim/analysis/model_boundary.py": "76df5390b5abf4c4e548eed31f5f8056827697e5e2c5b0718f073c9fabbb2763",
+    "src/wafer_sim/analysis/model_fidelity.py": "70094a5cd88a8182bb62137e2fd301e1f5c3ec8b0def8a6eb7b22d7dea9ec76d",
+    "src/wafer_sim/analysis/online_network.py": "a1a9522fb2cb7984f66c0b5fe7ccacd51796ebd3f5c63c3f3cd21af70aa0a024",
+    "src/wafer_sim/analysis/packet_pipeline.py": "e503ce20718d5c417a86351cca5f36c4c9c465d08ec4ca469bbdc277f3676da0",
+    "src/wafer_sim/analysis/placement_attribution.py": "96ee5cbd810b4a111dc6ab9220d39c76ba72f44312441a951e154b403780a71f",
+    "src/wafer_sim/analysis/resource_balance.py": "9157c81a2d8386cf459793f84c8a2c8fb9dbf42eea519ffb506aa577cdb6e7ae",
+    "src/wafer_sim/analysis/source_intervals.py": "f482e64f6c5caf15b245c66445f76c84c1fa87b42d6d798f41502c27180d8da5",
+    "src/wafer_sim/analysis/spatial_traffic.py": "8a1ea212e13e7d4965512523ad24abf23d3d4f9f7c49051ff78aa24273beb9d9",
+    "src/wafer_sim/analysis/timed_attribution.py": "2e2e8a238b884e0dc03ef9a969e2870d49f26542f7bad81264ab48a394068f2c",
+    "src/wafer_sim/analysis/timing.py": "917efdf730ccacf49b726adfab1a6dab248ec5b4a8843ca6ac5bde39c64332b1",
+    "src/wafer_sim/analysis/transfer_granularity.py": "41c4795a6e47d100c4bb635f6f62f015bfac9ac7cf70c36da4751128542642b3",
+    "src/wafer_sim/analysis/transfer_study.py": "4d04c339008f574c08f636b1ec929bb0a2c078ae13ec415c5ce2e8000fca05f1",
+    "src/wafer_sim/analysis/wow_transformer.py": "22e5da4e730570d0feb97bca558599194f1d5e0a68e07aafbebac44025966455",
+    "src/wafer_sim/architecture/__init__.py": "e3fb37b55de4a174633354453e2c88f34e1b0fb1c5eb347efebca2f787d9ff37",
+    "src/wafer_sim/architecture/spatial.py": "1d0125eb046be9569909a186b9ec12341552a544d86f11f7df628e5b84a894fe",
+    "src/wafer_sim/architecture/timing.py": "f3d48f4f54541f5cd0b4be51bb00580736aa21c34ea0fc53f5e59cc9356fc318",
+    "src/wafer_sim/cli.py": "f2845c86fdd9b9bdd905185a422574f7d22fe6c508ad9dc7ff398b5ce2d107ab",
+    "src/wafer_sim/execution/__init__.py": "9347bc26e805270c1b80d3351fed2872f20071fb0b4c1fcb492c74632d93ff82",
+    "src/wafer_sim/execution/collectives.py": "9e5e520707cca47fdb8d044934bd322950f30eef945cf1bb1d2417f2f6115dd2",
+    "src/wafer_sim/execution/memory_boundary.py": "08772ca611d6336d6c0cc1b68553bc644264f065b80b620f4b0d87ac2c984849",
+    "src/wafer_sim/execution/packet_pipeline.py": "d49457eee947719dd61c95a3f3658c2ffeb4f2fed1dfd955005a0113840ea0bb",
+    "src/wafer_sim/execution/plan.py": "71944fb4c9eab0f40a2ac745fbff6cedb03f51d6928fd02223468e795975d821",
+    "src/wafer_sim/execution/reservations.py": "8971299cd1266e81ea615e5d1cfca002f69f1487817a84bb3c60a1d00fbd8920",
+    "src/wafer_sim/execution/storage.py": "c3a5b5a67edc242d3aed4cfbe44199a4e1eb70149e69e4c02cf6d9bfede26aa1",
+    "src/wafer_sim/execution/timing.py": "e81c0a31142333b45c22c20b1a90bbac1521d2da264648f38700c8cfd581f9a5",
+    "src/wafer_sim/execution/values.py": "21f5cc605f39807faa30bc627afc7d6e8359ac9f541a1f5c21a59a9649f6b99a",
+    "src/wafer_sim/experiments/__init__.py": "5c1daab86f801cea53845aaa8cd68200219e89038b3490a6fbb3e594ee6c9d24",
+    "src/wafer_sim/experiments/memory_boundary.py": "9c5355dc036be8c806001a5834ecb998371ac2918536e17e52c4f11a5f71e71f",
+    "src/wafer_sim/experiments/network_reference.py": "96c143927af6c57515004a129e0c86928e6e166fe2e1a3c71e5779a68ccf890e",
+    "src/wafer_sim/experiments/next_experiment.py": "9c5a9667ee4d8f18d4c00c1b60a898b969656a81b3932ad5b5a83ba27dfbdec2",
+    "src/wafer_sim/experiments/runner.py": "06fd5f37a119dea718dbaa2d0926e97dc88f97cd5b589c173417575d3e316c6d",
+    "src/wafer_sim/experiments/target_execution.py": "b345da87176d64520fc8d922e6277d9a13ef6983579731b0a37e47afd81feb97",
+    "src/wafer_sim/experiments/timed_example.py": "0f36aefb52c6669666c3ae4827f0cd04b734fa1315856c822f0dadd7b89eee32",
+    "src/wafer_sim/experiments/transfer_granularity.py": "e8504d7c1db0e6024cb1eeb45bf7e86ab99ca88d9a2a9b79b8a9de8379bf506d",
+    "src/wafer_sim/experiments/transformer.py": "1c5d9c28a6d77585e106702518a95fc73a14e3af5fa0e9620a37260d2f3ba558",
+    "src/wafer_sim/experiments/wow_transformer.py": "eae09265124d772f3f0b88d257a35cdec3b5f7efa4894fea0fade1b6752c0532",
+    "src/wafer_sim/io.py": "13eecede1438f87d940096560b9453c4580d8cbcdc84e9829929425e7ad842f8",
+    "src/wafer_sim/vendor.py": "385136600d9f9b156fc021fa053b49b383617341bf47297875548c8b1b9d7c6c",
+    "src/wafer_sim/workloads/__init__.py": "979c24a7d2fd4d87b6964c753208f1325af350528246d9c80a511900db0f291e",
+    "src/wafer_sim/workloads/boundary_mechanisms.py": "2cb4967dcd817bab980fad4286568d1d90e25e44817b27c0dfea7ad9b5400d7b",
+    "src/wafer_sim/workloads/call_regions.py": "3d1f9701f2d34adae8c62c1a6e8f15de1541328ebe6aa8ec10ed545c7b22b523",
+    "src/wafer_sim/workloads/chakra.py": "3a971450249f555dac487eda87cb46ad3926446f050ab1edb0abb6dd6ac2e13e",
+    "src/wafer_sim/workloads/chakra_collectives.py": "42fe542811f5e2fc48c4c58aa9ed6df67972acca7459b6d9eb640276be6a854d",
+    "src/wafer_sim/workloads/chakra_effects.py": "2cdb4609fa5918772962234bd8d222191ea434f12bca21a3fcf3fc2ad1962305",
+    "src/wafer_sim/workloads/chakra_layout.py": "02e6607067e0bf3b591becac18b5fac46a01edb0c21e328645b5a8b9d477d4ed",
+    "src/wafer_sim/workloads/chakra_regions.py": "2eb37c684e5b408693e1abfd5955b0b4459ca44781907426147909e92e42b480",
+    "src/wafer_sim/workloads/chakra_work.py": "49e8c37cc60c5776f40e30ff1017ab191cd3585fd4765d320f36f8e90c78523f",
+    "src/wafer_sim/workloads/collective_recovery.py": "66158e4084101107975566dc3d4748326d3fd1c6e176d1dd11006b2d4d339c82",
+    "src/wafer_sim/workloads/collective_values.py": "7fb43d1fd7abba1dd6fdb94749d2c70b26713e8be04a49285dc33710706d24ab",
+    "src/wafer_sim/workloads/collectives.py": "e21e8f4874f26b2c15b8372c5db41e6495d884ac42df3558a8003d96951f0dee",
+    "src/wafer_sim/workloads/dag.py": "6212ca8aef01875c1dfce98dddab2072f0531655797297ef5d17edadd92942e0",
+    "src/wafer_sim/workloads/goal.py": "7bbe717b1d84df0111fd526b2d460bee0164991cf46a780ee2f408b6d2b8cfe6",
+    "src/wafer_sim/workloads/local_transfers.py": "444e20ec7e496bfa3e9ffa91ca4bdf0c6b5aaaa5a320cda698f5d4a86d2ac73e",
+    "src/wafer_sim/workloads/spatial.py": "19730f0542e5a20d549859b1bfc05defd202ba912ff5e5519609b0a244361534",
+    "src/wafer_sim/workloads/tensor_effect_binding.py": "1a372d7ac0417e9e73a63a3ea0f367e7183146b3cb1609a8547a3611fcd62d0f",
+    "src/wafer_sim/workloads/tensor_versions.py": "e566d3c71854614b9a84534ad861e52332bac9a78290ce9a0636346ee75db935",
+    "src/wafer_sim/workloads/timed_example.py": "6c2f2805476ac3e360cd9073ed89448bdf9fad79127c03054ad505ed7191d81d",
+    "src/wafer_sim/workloads/training.py": "5a17d0f6ee7b54b4e74a764832a8058754a1b73fa435a2b6abc1a4bcb0d40624",
+    "src/wafer_sim/workloads/transformer.py": "55230cfb5fd09eeb09d0946e7df241aa5044d687b8e90a67c68f013853527b04"
+  },
+  "tests_sha256": "c777e0930ff6f2a1f5ee6696a91650bc3f2e6b68e776ffc318d4c34449121bcf"
+}

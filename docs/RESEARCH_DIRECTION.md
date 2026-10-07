@@ -230,7 +230,7 @@ Freeze both algorithms and mapping comparisons. The immediate question is
 [whether aggregate compute/memory/endpoint resources are sufficient](RETICLE_BOUNDARY_RESEARCH.md).
 The author central-router model has finite ports and credits; our trace-mode
 endpoint count is one, while the author synthetic mode has eight. Current
-memory phases do not control native ejection credit. These are precise scope
+whole-message memory phases do not control native ejection credit. These are precise scope
 boundaries to examine, not proof that the author's topology results are wrong.
 Missing mechanisms are candidates, not a prescribed implementation queue.
 Separate parameter uncertainty, abstraction error and changes in the machine.
@@ -249,7 +249,12 @@ has now removed isolated service error and reduced complete-work error to
 3.5714% at a merging output, with identical aggregate link slots but different
 message order. Keep the candidate optional and the reference intact; this is
 bounded mechanism and cost evidence, not unseen-workload generalization.
-There is no evidence-driven requirement yet for a full 8-GPC NoC or finite FIFO.
+The subsequent [boundary study](results/memory-boundary-001/REVIEW.md) fixes native
+BookSim and tests an explicit streaming-DMA target. Chunk memory requests change
+shared-port interleaving and application time. Finite receive feedback preserves
+capacity and changes message commits, while the checked chunk-model makespans
+are unchanged. Keep this optional endpoint model for that declared contract;
+the result does not establish a calibrated WoW DMA model or require a full 8-GPC NoC.
 The saved 12-case coarse/native analysis is retained; the generic cost sweep is deferred.
 Keep aggregation when it meets the declared prediction objective. The broader architecture
 sequence above is a future use case, not the current development queue.

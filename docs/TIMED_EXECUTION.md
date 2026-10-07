@@ -56,6 +56,22 @@ adapter. This is not the default backend. See its
 [contract](PACKET_PIPELINE_PROTOCOL.md) and
 [same-work accuracy/cost comparison](results/packet-pipeline-001/REVIEW.md).
 
+The optional `MemoryBoundary` interface instead retains native BookSim and fuses
+only exclusive source-read / transfer / destination-write chains. Chunk memory
+requests share the original resource calendar. A TX slot is reserved before
+read, native injection requires completed read service, and a bounded RX slot
+is held until destination write completes. Only full-object commit completes
+the original movement. Fixed TX/RX capacity is carved out of the original SRAM
+for every comparison arm. Immediate-credit `pipeline` is a diagnostic model:
+its measured RX overflow is an abstraction failure, not feasible extra storage.
+See the [declared target](MEMORY_NETWORK_BOUNDARY_PROTOCOL.md) and
+[checked results](results/memory-boundary-001/REVIEW.md). This changes endpoint
+service, not internal router arbitration, and is not the default backend.
+
+`cycle_limit` is a positive integral **inclusive** completion boundary for all
+backends. Events exactly at the limit are drained; an execution requiring a
+later boundary returns incomplete rather than exceeding the limit silently.
+
 Admission still atomically reserves output, staging and scratch storage across
 regions. An admission blocked by capacity retries after a service completion;
 it never busy-waits through idle cycles. If no event can release the blockage,

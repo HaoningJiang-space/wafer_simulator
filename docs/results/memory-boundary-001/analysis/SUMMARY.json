@@ -1,0 +1,1259 @@
+{
+  "mechanisms": [
+    {
+      "case": "single",
+      "fixed_native_packet_flight": 68,
+      "last_commit": 1139,
+      "read_packet_cycles": 63,
+      "recurrence_passed": true,
+      "shared_directed_links": [],
+      "write_packet_cycles": 63
+    },
+    {
+      "case": "slow_source",
+      "fixed_native_packet_flight": 68,
+      "last_commit": 4131,
+      "read_packet_cycles": 250,
+      "recurrence_passed": true,
+      "shared_directed_links": [],
+      "write_packet_cycles": 63
+    },
+    {
+      "case": "incast",
+      "shared_directed_links": [
+        [
+          22,
+          0
+        ]
+      ]
+    },
+    {
+      "case": "shared_slow_sink",
+      "shared_directed_links": [
+        [
+          6,
+          32
+        ]
+      ]
+    },
+    {
+      "case": "s16",
+      "shared_directed_links": [
+        [
+          0,
+          22
+        ],
+        [
+          1,
+          23
+        ],
+        [
+          2,
+          35
+        ],
+        [
+          3,
+          43
+        ],
+        [
+          4,
+          51
+        ],
+        [
+          5,
+          20
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          6,
+          32
+        ],
+        [
+          7,
+          33
+        ],
+        [
+          7,
+          40
+        ],
+        [
+          8,
+          41
+        ],
+        [
+          8,
+          48
+        ],
+        [
+          20,
+          5
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          21,
+          6
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          22,
+          0
+        ],
+        [
+          22,
+          20
+        ],
+        [
+          22,
+          21
+        ],
+        [
+          22,
+          23
+        ],
+        [
+          23,
+          1
+        ],
+        [
+          23,
+          22
+        ],
+        [
+          32,
+          6
+        ],
+        [
+          32,
+          33
+        ],
+        [
+          32,
+          35
+        ],
+        [
+          33,
+          7
+        ],
+        [
+          33,
+          32
+        ],
+        [
+          35,
+          2
+        ],
+        [
+          35,
+          32
+        ],
+        [
+          40,
+          7
+        ],
+        [
+          40,
+          41
+        ],
+        [
+          40,
+          43
+        ],
+        [
+          41,
+          8
+        ],
+        [
+          41,
+          40
+        ],
+        [
+          43,
+          3
+        ],
+        [
+          43,
+          40
+        ],
+        [
+          48,
+          8
+        ],
+        [
+          48,
+          51
+        ],
+        [
+          51,
+          4
+        ],
+        [
+          51,
+          48
+        ]
+      ]
+    },
+    {
+      "case": "s64",
+      "shared_directed_links": [
+        [
+          0,
+          22
+        ],
+        [
+          0,
+          27
+        ],
+        [
+          0,
+          28
+        ],
+        [
+          1,
+          23
+        ],
+        [
+          1,
+          29
+        ],
+        [
+          1,
+          34
+        ],
+        [
+          2,
+          35
+        ],
+        [
+          2,
+          37
+        ],
+        [
+          3,
+          43
+        ],
+        [
+          3,
+          45
+        ],
+        [
+          4,
+          51
+        ],
+        [
+          4,
+          53
+        ],
+        [
+          5,
+          20
+        ],
+        [
+          5,
+          25
+        ],
+        [
+          6,
+          21
+        ],
+        [
+          6,
+          32
+        ],
+        [
+          7,
+          33
+        ],
+        [
+          7,
+          40
+        ],
+        [
+          7,
+          71
+        ],
+        [
+          8,
+          41
+        ],
+        [
+          8,
+          48
+        ],
+        [
+          20,
+          5
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          21,
+          6
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          22,
+          0
+        ],
+        [
+          22,
+          20
+        ],
+        [
+          22,
+          21
+        ],
+        [
+          22,
+          23
+        ],
+        [
+          23,
+          1
+        ],
+        [
+          23,
+          22
+        ],
+        [
+          25,
+          5
+        ],
+        [
+          25,
+          27
+        ],
+        [
+          27,
+          0
+        ],
+        [
+          27,
+          25
+        ],
+        [
+          28,
+          0
+        ],
+        [
+          28,
+          29
+        ],
+        [
+          29,
+          1
+        ],
+        [
+          29,
+          28
+        ],
+        [
+          32,
+          6
+        ],
+        [
+          32,
+          33
+        ],
+        [
+          32,
+          35
+        ],
+        [
+          33,
+          7
+        ],
+        [
+          33,
+          32
+        ],
+        [
+          34,
+          33
+        ],
+        [
+          34,
+          35
+        ],
+        [
+          35,
+          2
+        ],
+        [
+          35,
+          32
+        ],
+        [
+          36,
+          1
+        ],
+        [
+          37,
+          36
+        ],
+        [
+          40,
+          7
+        ],
+        [
+          40,
+          41
+        ],
+        [
+          40,
+          43
+        ],
+        [
+          41,
+          8
+        ],
+        [
+          41,
+          40
+        ],
+        [
+          43,
+          3
+        ],
+        [
+          43,
+          40
+        ],
+        [
+          44,
+          2
+        ],
+        [
+          45,
+          44
+        ],
+        [
+          48,
+          8
+        ],
+        [
+          48,
+          51
+        ],
+        [
+          51,
+          4
+        ],
+        [
+          51,
+          48
+        ],
+        [
+          52,
+          3
+        ],
+        [
+          53,
+          52
+        ],
+        [
+          70,
+          6
+        ],
+        [
+          71,
+          70
+        ]
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "ape": 36.32575757575758,
+      "application_cycles": 3599,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "case": "single",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 3001,
+        "network": 98
+      },
+      "error_cycles": 959,
+      "logical_network_bytes": 32000,
+      "max_message_ape": 84.19666374012291,
+      "max_message_error_cycles": 959,
+      "memory_busy_cycles": 3001,
+      "memory_bytes": 96004,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 16,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 52004
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 2640,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "case": "single",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 1127,
+        "network": 68,
+        "source_queue": 945
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 32000,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 3017,
+      "memory_bytes": 96004,
+      "message_target_met": true,
+      "mode": "pipeline",
+      "network_flits": 16,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 2
+        },
+        "peak_tx_slots": {
+          "1": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 52004
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 2640,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "case": "single",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 1127,
+        "network": 68,
+        "source_queue": 945
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 32000,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 3017,
+      "memory_bytes": 96004,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 16,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 2
+        },
+        "peak_tx_slots": {
+          "1": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 52004
+    },
+    {
+      "ape": 17.169744318181817,
+      "application_cycles": 6599,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "case": "slow_source",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 6001,
+        "network": 98
+      },
+      "error_cycles": 967,
+      "logical_network_bytes": 32000,
+      "max_message_ape": 23.408375695957396,
+      "max_message_error_cycles": 967,
+      "memory_busy_cycles": 6001,
+      "memory_bytes": 96004,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 16,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 52004
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 5632,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "case": "slow_source",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 1314,
+        "network": 68,
+        "source_queue": 3750
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 32000,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 6009,
+      "memory_bytes": 96004,
+      "message_target_met": true,
+      "mode": "pipeline",
+      "network_flits": 16,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 1
+        },
+        "peak_tx_slots": {
+          "1": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 52004
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 5632,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "case": "slow_source",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 1314,
+        "network": 68,
+        "source_queue": 3750
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 32000,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 6009,
+      "memory_bytes": 96004,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 16,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 1
+        },
+        "peak_tx_slots": {
+          "1": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 52004
+    },
+    {
+      "ape": 4.096297499188048,
+      "application_cycles": 25641,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "case": "incast",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 25001,
+        "network": 140
+      },
+      "error_cycles": 1009,
+      "logical_network_bytes": 96000,
+      "max_message_ape": 55.80775513713352,
+      "max_message_error_cycles": 6491,
+      "memory_busy_cycles": 27003,
+      "memory_bytes": 288012,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 48,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 116012
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 24632,
+      "application_target_met": true,
+      "capacity_feasible": false,
+      "case": "incast",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 24064,
+        "network": 68
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 96000,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 27027,
+      "memory_bytes": 288012,
+      "message_target_met": true,
+      "mode": "pipeline",
+      "network_flits": 48,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 45
+        },
+        "peak_tx_slots": {
+          "1": 2,
+          "5": 2,
+          "6": 2
+        },
+        "rx_overflow_slots": 37
+      },
+      "peak_total_reserved_bytes": 116012
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 24632,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "case": "incast",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 24064,
+        "network": 68
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 96000,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 27027,
+      "memory_bytes": 288012,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 48,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 8
+        },
+        "peak_tx_slots": {
+          "1": 2,
+          "5": 2,
+          "6": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 116012
+    },
+    {
+      "ape": 11.114942528735632,
+      "application_cycles": 9667,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "case": "shared_slow_sink",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 9001,
+        "network": 166
+      },
+      "error_cycles": 967,
+      "logical_network_bytes": 64000,
+      "max_message_ape": 80.05008347245409,
+      "max_message_error_cycles": 967,
+      "memory_busy_cycles": 12002,
+      "memory_bytes": 192008,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 32,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 52004
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 8700,
+      "application_target_met": true,
+      "capacity_feasible": false,
+      "case": "shared_slow_sink",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 8064,
+        "network": 136
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 64000,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 12026,
+      "memory_bytes": 192008,
+      "message_target_met": true,
+      "mode": "pipeline",
+      "network_flits": 32,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "2": 13,
+          "3": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "6": 2
+        },
+        "rx_overflow_slots": 5
+      },
+      "peak_total_reserved_bytes": 52004
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 8700,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "case": "shared_slow_sink",
+      "critical_chain_cycles": {
+        "compute": 500,
+        "memory": 8064,
+        "network": 136
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 64000,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 12026,
+      "memory_bytes": 192008,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 32,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "2": 8,
+          "3": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "6": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 52004
+    },
+    {
+      "ape": 7.722888905249208,
+      "application_cycles": 12534,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "case": "s16",
+      "critical_chain_cycles": {
+        "compute": 3080,
+        "memory": 9040,
+        "network": 414
+      },
+      "error_cycles": -1049,
+      "logical_network_bytes": 114688,
+      "max_message_ape": 46.80203045685279,
+      "max_message_error_cycles": 854,
+      "memory_busy_cycles": 33280,
+      "memory_bytes": 1064960,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 84,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 82464
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 13583,
+      "application_target_met": true,
+      "capacity_feasible": false,
+      "case": "s16",
+      "critical_chain_cycles": {
+        "compute": 3080,
+        "memory": 7134,
+        "network": 390,
+        "source_queue": 2979
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 114688,
+      "max_message_ape": 28.402366863905325,
+      "max_message_error_cycles": 384,
+      "memory_busy_cycles": 33336,
+      "memory_bytes": 1064960,
+      "message_target_met": false,
+      "mode": "pipeline",
+      "network_flits": 84,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 18,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "rx_overflow_slots": 10
+      },
+      "peak_total_reserved_bytes": 83488
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 13583,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "case": "s16",
+      "critical_chain_cycles": {
+        "compute": 3080,
+        "memory": 7134,
+        "network": 390,
+        "source_queue": 2979
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 114688,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 33336,
+      "memory_bytes": 1064960,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 84,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 8,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 83488
+    },
+    {
+      "ape": 7.11068211068211,
+      "application_cycles": 51966,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "case": "s64",
+      "critical_chain_cycles": {
+        "compute": 15392,
+        "memory": 36064,
+        "network": 510
+      },
+      "error_cycles": -3978,
+      "logical_network_bytes": 458752,
+      "max_message_ape": 64.29918290383407,
+      "max_message_error_cycles": 3041,
+      "memory_busy_cycles": 132352,
+      "memory_bytes": 4235264,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 252,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 217632
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 55944,
+      "application_target_met": true,
+      "capacity_feasible": false,
+      "case": "s64",
+      "critical_chain_cycles": {
+        "compute": 15392,
+        "memory": 28204,
+        "network": 254,
+        "source_queue": 12094
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 458752,
+      "max_message_ape": 27.50223813786929,
+      "max_message_error_cycles": 1536,
+      "memory_busy_cycles": 132576,
+      "memory_bytes": 4235264,
+      "message_target_met": false,
+      "mode": "pipeline",
+      "network_flits": 252,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 60,
+          "1": 2,
+          "2": 3,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "rx_overflow_slots": 52
+      },
+      "peak_total_reserved_bytes": 221728
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 55944,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "case": "s64",
+      "critical_chain_cycles": {
+        "compute": 15392,
+        "memory": 28204,
+        "network": 254,
+        "source_queue": 12094
+      },
+      "error_cycles": 0,
+      "logical_network_bytes": 458752,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 132576,
+      "memory_bytes": 4235264,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 252,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 8,
+          "1": 2,
+          "2": 3,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 221728
+    }
+  ],
+  "scope": "Conditional streaming DMA design; same analytical memory/compute, not measured WoW accuracy",
+  "source_windows": [
+    {
+      "case": "s16",
+      "competing_by_operation": {},
+      "competing_memory_service": 0,
+      "idle_or_other_latency": 0,
+      "last_supply": 5647,
+      "mode": "serial",
+      "operation": "attention_sum",
+      "own_read_service": 896,
+      "source": 0,
+      "span": 896,
+      "start": 4751
+    },
+    {
+      "case": "s16",
+      "competing_by_operation": {},
+      "competing_memory_service": 0,
+      "idle_or_other_latency": 0,
+      "last_supply": 11827,
+      "mode": "serial",
+      "operation": "ffn_sum",
+      "own_read_service": 896,
+      "source": 0,
+      "span": 896,
+      "start": 10931
+    },
+    {
+      "case": "s16",
+      "competing_by_operation": {
+        "r0/attention_residual": 384,
+        "r0/ffn_up": 256,
+        "r0/ln2": 272
+      },
+      "competing_memory_service": 912,
+      "idle_or_other_latency": 4,
+      "last_supply": 6504,
+      "mode": "pipeline",
+      "operation": "attention_sum",
+      "own_read_service": 903,
+      "source": 0,
+      "span": 1819,
+      "start": 4685
+    },
+    {
+      "case": "s16",
+      "competing_by_operation": {
+        "r0/output": 384
+      },
+      "competing_memory_service": 384,
+      "idle_or_other_latency": 5,
+      "last_supply": 12945,
+      "mode": "pipeline",
+      "operation": "ffn_sum",
+      "own_read_service": 903,
+      "source": 0,
+      "span": 1292,
+      "start": 11653
+    },
+    {
+      "case": "s16",
+      "competing_by_operation": {
+        "r0/attention_residual": 384,
+        "r0/ffn_up": 256,
+        "r0/ln2": 272
+      },
+      "competing_memory_service": 912,
+      "idle_or_other_latency": 4,
+      "last_supply": 6504,
+      "mode": "bounded",
+      "operation": "attention_sum",
+      "own_read_service": 903,
+      "source": 0,
+      "span": 1819,
+      "start": 4685
+    },
+    {
+      "case": "s16",
+      "competing_by_operation": {
+        "r0/output": 384
+      },
+      "competing_memory_service": 384,
+      "idle_or_other_latency": 5,
+      "last_supply": 12945,
+      "mode": "bounded",
+      "operation": "ffn_sum",
+      "own_read_service": 903,
+      "source": 0,
+      "span": 1292,
+      "start": 11653
+    },
+    {
+      "case": "s64",
+      "competing_by_operation": {},
+      "competing_memory_service": 0,
+      "idle_or_other_latency": 0,
+      "last_supply": 26188,
+      "mode": "serial",
+      "operation": "attention_sum",
+      "own_read_service": 3584,
+      "source": 0,
+      "span": 3584,
+      "start": 22604
+    },
+    {
+      "case": "s64",
+      "competing_by_operation": {},
+      "competing_memory_service": 0,
+      "idle_or_other_latency": 0,
+      "last_supply": 49519,
+      "mode": "serial",
+      "operation": "ffn_sum",
+      "own_read_service": 3584,
+      "source": 0,
+      "span": 3584,
+      "start": 45935
+    },
+    {
+      "case": "s64",
+      "competing_by_operation": {
+        "r0/attention_residual": 1536,
+        "r0/ffn_up": 768,
+        "r0/gelu": 128,
+        "r0/ln2": 1040
+      },
+      "competing_memory_service": 3472,
+      "idle_or_other_latency": 6,
+      "last_supply": 29610,
+      "mode": "pipeline",
+      "operation": "attention_sum",
+      "own_read_service": 3612,
+      "source": 0,
+      "span": 7090,
+      "start": 22520
+    },
+    {
+      "case": "s64",
+      "competing_by_operation": {
+        "r0/output": 1536
+      },
+      "competing_memory_service": 1536,
+      "idle_or_other_latency": 6,
+      "last_supply": 53962,
+      "mode": "pipeline",
+      "operation": "ffn_sum",
+      "own_read_service": 3612,
+      "source": 0,
+      "span": 5154,
+      "start": 48808
+    },
+    {
+      "case": "s64",
+      "competing_by_operation": {
+        "r0/attention_residual": 1536,
+        "r0/ffn_up": 768,
+        "r0/gelu": 128,
+        "r0/ln2": 1040
+      },
+      "competing_memory_service": 3472,
+      "idle_or_other_latency": 6,
+      "last_supply": 29610,
+      "mode": "bounded",
+      "operation": "attention_sum",
+      "own_read_service": 3612,
+      "source": 0,
+      "span": 7090,
+      "start": 22520
+    },
+    {
+      "case": "s64",
+      "competing_by_operation": {
+        "r0/output": 1536
+      },
+      "competing_memory_service": 1536,
+      "idle_or_other_latency": 6,
+      "last_supply": 53962,
+      "mode": "bounded",
+      "operation": "ffn_sum",
+      "own_read_service": 3612,
+      "source": 0,
+      "span": 5154,
+      "start": 48808
+    }
+  ]
+}
