@@ -1,0 +1,14 @@
+{
+  "name": "transformer_forward_wow_pair_v1",
+  "workload_config": "configs/transformer_block.json",
+  "placements": ["baseline", "ours_rotated"],
+  "wafer_diameter_mm": 200,
+  "wafer_utilization": "rectangular",
+  "mapping": "row_major",
+  "network_seed": 1,
+  "network_frequency_hz": 1000000000,
+  "flit_bytes": 2000,
+  "cycle_limit": 1000000,
+  "network_models": ["booksim", "store_and_forward"],
+  "scope": "Complete declared forward block on author WoW networks; common analytical compute/memory, unmatched physical cost"
+}
