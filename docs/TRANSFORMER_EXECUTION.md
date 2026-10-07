@@ -59,10 +59,9 @@ service; additional tiled rereads, cache behavior, matrix-engine utilization and
 internal kernel traffic are not modeled. These are ideal operator-service
 assumptions, not a claim to reproduce a GPU or a fabricated wafer kernel.
 
-Both collectives reuse the existing conservative lowering: gather at worker 0,
-sum, then materialize all destination outputs. The collective completes only
-after every output home has been written. This is not a ring algorithm or
-rank-local asynchronous collective completion. With workers on different memory
+Both collectives use the declared direct-root policy: gather at worker 0,
+sum, then write replicas at their destination homes. A rank can continue after
+its own result write; collective retirement waits for all actions. With workers on different memory
 regions, the two collectives move **16,384 logical bytes** through the network;
 link-service bytes can be larger because each physical hop serves those bytes.
 
@@ -70,7 +69,7 @@ The timed model now binds this explicit collective through the existing action
 DAG. Independent source reads/gathers can overlap; the root result is written
 once, then read for each broadcast. Root accesses share their memory port. All
 participant inputs and output/staging reservations are required at entry, and
-global completion still waits for every destination write. The earlier generic
+retirement still waits for every destination write. The earlier generic
 multi-output lowering overcharged root materialization and is superseded; see
 [collective timing](COLLECTIVE_TIMING.md).
 

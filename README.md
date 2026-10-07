@@ -41,6 +41,16 @@ matter. All twelve corrected/control/study arms pass independent execution and
 standalone BookSim timestamp checks. See [collective timing](docs/COLLECTIVE_TIMING.md)
 and the [network interface](docs/TRANSFORMER_WOW_PROTOCOL.md).
 
+The [rank-local and memory-balance result](docs/results/rank-local-balance-001/REVIEW.md)
+now separates each rank's output readiness from collective retirement. All eight
+existing TP4/TP8 cases retain their completion times despite earlier local work;
+the tail rank still determines the next collective and final output. A fixed TP8
+row-major memory-bandwidth sweep from 32 to 1024 B/cycle changes Baseline/Rotated
+from 12,534/12,452 to 4,461/4,225 cycles. The gap is nonmonotonic across the sweep.
+The high-bandwidth range is compute dominated with greater network sensitivity,
+not a demonstrated network-bandwidth bottleneck. See the
+[completion policy and experiment protocol](docs/RANK_LOCAL_BALANCE.md).
+
 The research question is whether a WoW Logic-on-Interconnect placement with
 better network metrics also completes the same AI workload sooner, and which
 execution costs must be modeled to make that judgment. The current block study
@@ -70,7 +80,8 @@ branch is `main`.
 
 The research sequence is workload abstraction, target compute–memory–network
 execution, layered validation, then a fixed-mapping Baseline–Rotated application
-case. Subsequent studies jointly vary topology, mapping and workload. Basic
+case. Resource-balance controls precede a second collective algorithm, then
+larger workload and joint topology/mapping studies. Basic
 geometry/connectivity/capacity belongs in the first machine model; detailed
 physical closure and power/thermal remain later work.
 

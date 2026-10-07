@@ -68,10 +68,12 @@ cross-operation cache reuse or storage aliasing is implied. The first version
 requires one memory region per endpoint; several memory domains behind one
 endpoint require a distinct local-DMA model and are rejected.
 
-An output becomes globally available only after the producer's final phase,
-including all destination writes. The consumer cannot proceed on first-flit
-injection or network arrival alone. Inputs stay live through the completion
-of their last consumer; temporary staging/scratch frees at operation completion.
+Ordinary outputs become available after their producer's final phase. Explicit
+collective outputs have per-object final-write requirements, permitting local
+consumers to continue before the producer retires. A consumer cannot proceed on
+first-flit injection or network arrival alone. Inputs outlive their consumers;
+producer-owned output reservations and temporary staging remain pinned through
+producer retirement, including outstanding internal broadcast reads.
 Retained outputs remain charged. Each service phase has a unique ordinal;
 unadmitted, duplicate and out-of-order completion calls are rejected.
 

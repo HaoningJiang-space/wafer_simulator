@@ -1,0 +1,100 @@
+{
+  "balance": {
+    "controls": "Same complete eight-head TP8 block, row-major endpoint selection and assignment, direct-root rank-order SUM, rank-local output publication, fixed compute services, capacity, author network and seed. Change only common read/write memory-port bandwidth in both placements.",
+    "heads": 8,
+    "mapping": "row_major",
+    "memory_bytes_per_cycle": [
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024
+    ],
+    "name": "tp8_row_major_memory_balance_v1",
+    "scope": "Analytical resource sensitivity; no calibrated performance, no required crossover or ranking reversal. Compare each placement to itself along bandwidth, and Baseline/Rotated pairs at each point.",
+    "shards": 8
+  },
+  "experiment": {
+    "cycle_limit": 1000000,
+    "execution_policy": {
+      "collective_algorithm": "direct_exchange_rank_order_sum",
+      "collective_completion": "rank_local"
+    },
+    "flit_bytes": 2000,
+    "mapping": "row_major",
+    "name": "transformer_forward_wow_pair_v1",
+    "network_frequency_hz": 1000000000,
+    "network_models": [
+      "booksim",
+      "store_and_forward"
+    ],
+    "network_seed": 1,
+    "placements": [
+      "baseline",
+      "ours_rotated"
+    ],
+    "scope": "Complete declared forward block on author WoW networks; common analytical compute/memory, unmatched physical cost",
+    "wafer_diameter_mm": 200,
+    "wafer_utilization": "rectangular",
+    "workload_config": "configs/transformer_block.json"
+  },
+  "study": null,
+  "workload": {
+    "block": {
+      "batch": 1,
+      "ffn_hidden": 128,
+      "heads": 4,
+      "hidden": 64,
+      "sequence": 16,
+      "shards": 2
+    },
+    "compute_rates": {
+      "mac": 64,
+      "scalar_add": 16,
+      "scalar_div": 4,
+      "scalar_erf": 4,
+      "scalar_exp": 4,
+      "scalar_max": 16,
+      "scalar_mul": 16,
+      "scalar_rsqrt": 4
+    },
+    "controlled_cases": [
+      "declared",
+      "double_compute_rate",
+      "double_memory_rate",
+      "double_network_rate"
+    ],
+    "endpoint_bytes_per_cycle": 32,
+    "endpoint_routers": [
+      [
+        0,
+        10
+      ],
+      [
+        1,
+        20
+      ]
+    ],
+    "link_bytes_per_cycle": 16,
+    "link_latency_cycles": 2,
+    "memory_bytes_per_cycle": 32,
+    "name": "declared_preln_transformer_forward_tp2_v1",
+    "region_capacity_bytes": 262144,
+    "router_links": [
+      [
+        10,
+        11
+      ],
+      [
+        11,
+        20
+      ]
+    ],
+    "scope": "Analytical target and complete float32 block; no calibrated WoW or source timings",
+    "worker_endpoints": [
+      0,
+      1
+    ]
+  }
+}

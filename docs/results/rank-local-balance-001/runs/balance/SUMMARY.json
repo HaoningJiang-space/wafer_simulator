@@ -1,0 +1,4121 @@
+{
+  "cases": [
+    {
+      "mapping": "row_major",
+      "memory_bytes_per_cycle": 32,
+      "name": "memory-32",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 12534,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 12534,
+          "coarse_cycles": 12580,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 2179,
+              "capacity_wait_cycles": 0,
+              "duration": 3727,
+              "finish": 5906,
+              "output_ready": {
+                "0": 4751,
+                "1": 5079,
+                "2": 5275,
+                "3": 5453,
+                "4": 5631,
+                "5": 5593,
+                "6": 5728,
+                "7": 5906
+              },
+              "ready": 2179,
+              "retired": 5906
+            },
+            "ffn_sum": {
+              "admitted": 8359,
+              "capacity_wait_cycles": 0,
+              "duration": 3727,
+              "finish": 12086,
+              "output_ready": {
+                "0": 10931,
+                "1": 11259,
+                "2": 11455,
+                "3": 11633,
+                "4": 11811,
+                "5": 11773,
+                "6": 11908,
+                "7": 12086
+              },
+              "ready": 8359,
+              "retired": 12086
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3080,
+            "memory": 9040,
+            "network": 414
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 29522,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 42,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 6
+              },
+              {
+                "destination": 32,
+                "flits": 24,
+                "source": 6
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 7
+              },
+              {
+                "destination": 40,
+                "flits": 12,
+                "source": 7
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 6,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 42,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 6,
+                "flits": 24,
+                "source": 32
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 32
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 32
+              },
+              {
+                "destination": 7,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 32,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 7,
+                "flits": 12,
+                "source": 40
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 51
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 51
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62464,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33920,
+            "3": 33920,
+            "4": 33792,
+            "5": 33792,
+            "6": 33792,
+            "7": 29696,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 12452,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 12452,
+          "coarse_cycles": 12482,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 2179,
+              "capacity_wait_cycles": 0,
+              "duration": 3686,
+              "finish": 5865,
+              "output_ready": {
+                "0": 4751,
+                "1": 5171,
+                "2": 5223,
+                "3": 5435,
+                "4": 5487,
+                "5": 5595,
+                "6": 5809,
+                "7": 5865
+              },
+              "ready": 2179,
+              "retired": 5865
+            },
+            "ffn_sum": {
+              "admitted": 8318,
+              "capacity_wait_cycles": 0,
+              "duration": 3686,
+              "finish": 12004,
+              "output_ready": {
+                "0": 10890,
+                "1": 11310,
+                "2": 11362,
+                "3": 11574,
+                "4": 11626,
+                "5": 11734,
+                "6": 11948,
+                "7": 12004
+              },
+              "ready": 8318,
+              "retired": 12004
+            }
+          },
+          "compute_memory_identity": "f1ae56f8d7afbc6218e9f8507b610416155b4f35c5a4b5c955a67da80f737464",
+          "critical_chain_cycles": {
+            "compute": 3080,
+            "memory": 9040,
+            "network": 332
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 29894,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 36,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 12,
+                "source": 1
+              },
+              {
+                "destination": 42,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 26,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 28,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 0,
+                "flits": 12,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 26,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 2,
+                "flits": 24,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 26
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 30,
+                "flits": 12,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 12,
+                "source": 29
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 29,
+                "flits": 12,
+                "source": 30
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 0,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 42
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62464,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33792,
+            "3": 33920,
+            "4": 33792,
+            "5": 33792,
+            "6": 29696,
+            "7": 0,
+            "8": 33792,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            3,
+            1,
+            4,
+            2,
+            5,
+            8,
+            6
+          ]
+        }
+      ],
+      "shards": 8
+    },
+    {
+      "mapping": "row_major",
+      "memory_bytes_per_cycle": 64,
+      "name": "memory-64",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 8078,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 8078,
+          "coarse_cycles": 8124,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1635,
+              "capacity_wait_cycles": 0,
+              "duration": 2191,
+              "finish": 3826,
+              "output_ready": {
+                "0": 3183,
+                "1": 3383,
+                "2": 3515,
+                "3": 3629,
+                "4": 3743,
+                "5": 3641,
+                "6": 3712,
+                "7": 3826
+              },
+              "ready": 1635,
+              "retired": 3826
+            },
+            "ffn_sum": {
+              "admitted": 5631,
+              "capacity_wait_cycles": 0,
+              "duration": 2191,
+              "finish": 7822,
+              "output_ready": {
+                "0": 7179,
+                "1": 7379,
+                "2": 7511,
+                "3": 7625,
+                "4": 7739,
+                "5": 7637,
+                "6": 7708,
+                "7": 7822
+              },
+              "ready": 5631,
+              "retired": 7822
+            }
+          },
+          "compute_memory_identity": "b8632c7991626f8b16c58d28eb325a32f00f44903e0f547c6fa679afc9d94677",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 4328,
+            "network": 414
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 13266,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 42,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 6
+              },
+              {
+                "destination": 32,
+                "flits": 24,
+                "source": 6
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 7
+              },
+              {
+                "destination": 40,
+                "flits": 12,
+                "source": 7
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 6,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 42,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 6,
+                "flits": 24,
+                "source": 32
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 32
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 32
+              },
+              {
+                "destination": 7,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 32,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 7,
+                "flits": 12,
+                "source": 40
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 51
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 51
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62464,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33920,
+            "3": 33792,
+            "4": 33792,
+            "5": 33792,
+            "6": 33792,
+            "7": 29696,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 8012,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 8012,
+          "coarse_cycles": 8060,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1635,
+              "capacity_wait_cycles": 0,
+              "duration": 2158,
+              "finish": 3793,
+              "output_ready": {
+                "0": 3183,
+                "1": 3475,
+                "2": 3463,
+                "3": 3611,
+                "4": 3599,
+                "5": 3643,
+                "6": 3793,
+                "7": 3785
+              },
+              "ready": 1635,
+              "retired": 3793
+            },
+            "ffn_sum": {
+              "admitted": 5598,
+              "capacity_wait_cycles": 0,
+              "duration": 2158,
+              "finish": 7756,
+              "output_ready": {
+                "0": 7146,
+                "1": 7438,
+                "2": 7426,
+                "3": 7574,
+                "4": 7562,
+                "5": 7606,
+                "6": 7756,
+                "7": 7748
+              },
+              "ready": 5598,
+              "retired": 7756
+            }
+          },
+          "compute_memory_identity": "b8632c7991626f8b16c58d28eb325a32f00f44903e0f547c6fa679afc9d94677",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 4200,
+            "network": 476
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 13382,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 36,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 12,
+                "source": 1
+              },
+              {
+                "destination": 42,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 26,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 28,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 0,
+                "flits": 12,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 26,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 2,
+                "flits": 24,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 26
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 30,
+                "flits": 12,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 12,
+                "source": 29
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 29,
+                "flits": 12,
+                "source": 30
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 0,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 42
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62464,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33792,
+            "3": 33920,
+            "4": 33792,
+            "5": 33792,
+            "6": 33792,
+            "7": 0,
+            "8": 29696,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            3,
+            1,
+            4,
+            2,
+            5,
+            8,
+            6
+          ]
+        }
+      ],
+      "shards": 8
+    },
+    {
+      "mapping": "row_major",
+      "memory_bytes_per_cycle": 128,
+      "name": "memory-128",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 5940,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 5940,
+          "coarse_cycles": 6022,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1427,
+              "capacity_wait_cycles": 0,
+              "duration": 1436,
+              "finish": 2863,
+              "output_ready": {
+                "0": 2463,
+                "1": 2599,
+                "2": 2681,
+                "3": 2781,
+                "4": 2863,
+                "5": 2729,
+                "6": 2768,
+                "7": 2850
+              },
+              "ready": 1427,
+              "retired": 2863
+            },
+            "ffn_sum": {
+              "admitted": 4344,
+              "capacity_wait_cycles": 0,
+              "duration": 1436,
+              "finish": 5780,
+              "output_ready": {
+                "0": 5380,
+                "1": 5516,
+                "2": 5598,
+                "3": 5698,
+                "4": 5780,
+                "5": 5646,
+                "6": 5685,
+                "7": 5767
+              },
+              "ready": 4344,
+              "retired": 5780
+            }
+          },
+          "compute_memory_identity": "ba896daba8e86f891ad002ece80fd8325dd05c3d4c727e311c57cd31ed6691bf",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 1972,
+            "network": 632
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 5586,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 24,
+                "source": 0
+              },
+              {
+                "destination": 28,
+                "flits": 18,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 34,
+                "flits": 18,
+                "source": 1
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 6
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 7
+              },
+              {
+                "destination": 40,
+                "flits": 12,
+                "source": 7
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 6,
+                "flits": 12,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 42,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 29,
+                "flits": 18,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 18,
+                "source": 29
+              },
+              {
+                "destination": 6,
+                "flits": 24,
+                "source": 32
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 32
+              },
+              {
+                "destination": 7,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 32,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 33,
+                "flits": 12,
+                "source": 34
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 7,
+                "flits": 12,
+                "source": 40
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 51
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 51
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62592,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33920,
+            "3": 33792,
+            "4": 29696,
+            "5": 33792,
+            "6": 33792,
+            "7": 33792,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 5920,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 5920,
+          "coarse_cycles": 5960,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1427,
+              "capacity_wait_cycles": 0,
+              "duration": 1426,
+              "finish": 2853,
+              "output_ready": {
+                "0": 2463,
+                "1": 2691,
+                "2": 2647,
+                "3": 2763,
+                "4": 2719,
+                "5": 2726,
+                "6": 2853,
+                "7": 2808
+              },
+              "ready": 1427,
+              "retired": 2853
+            },
+            "ffn_sum": {
+              "admitted": 4334,
+              "capacity_wait_cycles": 0,
+              "duration": 1426,
+              "finish": 5760,
+              "output_ready": {
+                "0": 5370,
+                "1": 5598,
+                "2": 5554,
+                "3": 5670,
+                "4": 5626,
+                "5": 5633,
+                "6": 5760,
+                "7": 5715
+              },
+              "ready": 4334,
+              "retired": 5760
+            }
+          },
+          "compute_memory_identity": "ba896daba8e86f891ad002ece80fd8325dd05c3d4c727e311c57cd31ed6691bf",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 2100,
+            "network": 484
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 5766,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 24,
+                "source": 0
+              },
+              {
+                "destination": 40,
+                "flits": 12,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 12,
+                "source": 1
+              },
+              {
+                "destination": 42,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 26,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 28,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 29,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 0,
+                "flits": 12,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 26,
+                "flits": 18,
+                "source": 25
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 2,
+                "flits": 18,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 26
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 12,
+                "source": 29
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 29
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 29,
+                "flits": 12,
+                "source": 30
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 0,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 42,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 42
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 42
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62592,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33792,
+            "3": 33920,
+            "4": 33792,
+            "5": 33792,
+            "6": 33792,
+            "7": 0,
+            "8": 29696,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            3,
+            1,
+            4,
+            2,
+            5,
+            8,
+            6
+          ]
+        }
+      ],
+      "shards": 8
+    },
+    {
+      "mapping": "row_major",
+      "memory_bytes_per_cycle": 256,
+      "name": "memory-256",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 4954,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 4954,
+          "coarse_cycles": 5042,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1323,
+              "capacity_wait_cycles": 0,
+              "duration": 1100,
+              "finish": 2423,
+              "output_ready": {
+                "0": 2103,
+                "1": 2207,
+                "2": 2273,
+                "3": 2357,
+                "4": 2423,
+                "5": 2273,
+                "6": 2296,
+                "7": 2362
+              },
+              "ready": 1323,
+              "retired": 2423
+            },
+            "ffn_sum": {
+              "admitted": 3742,
+              "capacity_wait_cycles": 0,
+              "duration": 1100,
+              "finish": 4842,
+              "output_ready": {
+                "0": 4522,
+                "1": 4626,
+                "2": 4692,
+                "3": 4776,
+                "4": 4842,
+                "5": 4692,
+                "6": 4715,
+                "7": 4781
+              },
+              "ready": 3742,
+              "retired": 4842
+            }
+          },
+          "compute_memory_identity": "3e66554fc700c6c8144126338240ce71fba62f05bc8ccaeacc86bc856d810107",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 986,
+            "network": 632
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 2162,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 20,
+                "source": 0
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 28,
+                "flits": 16,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 34,
+                "flits": 12,
+                "source": 1
+              },
+              {
+                "destination": 36,
+                "flits": 4,
+                "source": 1
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 42,
+                "flits": 4,
+                "source": 2
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 6
+              },
+              {
+                "destination": 32,
+                "flits": 8,
+                "source": 6
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 7
+              },
+              {
+                "destination": 40,
+                "flits": 8,
+                "source": 7
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 6,
+                "flits": 14,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 42,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 14,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 29,
+                "flits": 16,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 16,
+                "source": 29
+              },
+              {
+                "destination": 6,
+                "flits": 24,
+                "source": 32
+              },
+              {
+                "destination": 33,
+                "flits": 8,
+                "source": 32
+              },
+              {
+                "destination": 7,
+                "flits": 14,
+                "source": 33
+              },
+              {
+                "destination": 32,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 37,
+                "flits": 4,
+                "source": 36
+              },
+              {
+                "destination": 2,
+                "flits": 4,
+                "source": 37
+              },
+              {
+                "destination": 7,
+                "flits": 12,
+                "source": 40
+              },
+              {
+                "destination": 41,
+                "flits": 2,
+                "source": 40
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 41,
+                "flits": 4,
+                "source": 42
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 51
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 51
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62592,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33920,
+            "3": 33792,
+            "4": 29696,
+            "5": 33920,
+            "6": 33920,
+            "7": 33792,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 4862,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 4862,
+          "coarse_cycles": 4910,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1323,
+              "capacity_wait_cycles": 0,
+              "duration": 1054,
+              "finish": 2377,
+              "output_ready": {
+                "0": 2103,
+                "1": 2299,
+                "2": 2239,
+                "3": 2339,
+                "4": 2279,
+                "5": 2270,
+                "6": 2377,
+                "7": 2321
+              },
+              "ready": 1323,
+              "retired": 2377
+            },
+            "ffn_sum": {
+              "admitted": 3696,
+              "capacity_wait_cycles": 0,
+              "duration": 1054,
+              "finish": 4750,
+              "output_ready": {
+                "0": 4476,
+                "1": 4672,
+                "2": 4612,
+                "3": 4712,
+                "4": 4652,
+                "5": 4643,
+                "6": 4750,
+                "7": 4694
+              },
+              "ready": 3696,
+              "retired": 4750
+            }
+          },
+          "compute_memory_identity": "3e66554fc700c6c8144126338240ce71fba62f05bc8ccaeacc86bc856d810107",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 1018,
+            "network": 508
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 2342,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 12,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 24,
+                "source": 0
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 12,
+                "source": 1
+              },
+              {
+                "destination": 29,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 42,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 26,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 28,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 0,
+                "flits": 12,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 12,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 26,
+                "flits": 18,
+                "source": 25
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 2,
+                "flits": 18,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 26
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 12,
+                "source": 29
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 29
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 29,
+                "flits": 12,
+                "source": 30
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 0,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 42
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62592,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33792,
+            "3": 33792,
+            "4": 33792,
+            "5": 33792,
+            "6": 33792,
+            "7": 0,
+            "8": 29696,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            3,
+            1,
+            4,
+            2,
+            5,
+            8,
+            6
+          ]
+        }
+      ],
+      "shards": 8
+    },
+    {
+      "mapping": "row_major",
+      "memory_bytes_per_cycle": 512,
+      "name": "memory-512",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 4597,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 4597,
+          "coarse_cycles": 4741,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1271,
+              "capacity_wait_cycles": 0,
+              "duration": 1000,
+              "finish": 2271,
+              "output_ready": {
+                "0": 1991,
+                "1": 2079,
+                "2": 2151,
+                "3": 2213,
+                "4": 2271,
+                "5": 2113,
+                "6": 2128,
+                "7": 2186
+              },
+              "ready": 1271,
+              "retired": 2271
+            },
+            "ffn_sum": {
+              "admitted": 3509,
+              "capacity_wait_cycles": 0,
+              "duration": 1000,
+              "finish": 4509,
+              "output_ready": {
+                "0": 4229,
+                "1": 4317,
+                "2": 4389,
+                "3": 4451,
+                "4": 4509,
+                "5": 4351,
+                "6": 4366,
+                "7": 4424
+              },
+              "ready": 3509,
+              "retired": 4509
+            }
+          },
+          "compute_memory_identity": "845b853a52808ef4f7e6ce2d514f22352a7f0084fb5c4fbd35b65c860f60254e",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 301,
+            "network": 960
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 874,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 20,
+                "source": 0
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 28,
+                "flits": 16,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 34,
+                "flits": 22,
+                "source": 1
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 6
+              },
+              {
+                "destination": 32,
+                "flits": 2,
+                "source": 6
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 7
+              },
+              {
+                "destination": 40,
+                "flits": 12,
+                "source": 7
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 6,
+                "flits": 8,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 42,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 8,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 12,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 29,
+                "flits": 16,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 16,
+                "source": 29
+              },
+              {
+                "destination": 6,
+                "flits": 24,
+                "source": 32
+              },
+              {
+                "destination": 35,
+                "flits": 2,
+                "source": 32
+              },
+              {
+                "destination": 7,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 32,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 34
+              },
+              {
+                "destination": 35,
+                "flits": 4,
+                "source": 34
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 7,
+                "flits": 12,
+                "source": 40
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 51
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 51
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62592,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33920,
+            "3": 33792,
+            "4": 29696,
+            "5": 33920,
+            "6": 33920,
+            "7": 33792,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 4401,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 4401,
+          "coarse_cycles": 4453,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1271,
+              "capacity_wait_cycles": 0,
+              "duration": 902,
+              "finish": 2173,
+              "output_ready": {
+                "0": 1952,
+                "1": 2132,
+                "2": 2064,
+                "3": 2156,
+                "4": 2088,
+                "5": 2071,
+                "6": 2173,
+                "7": 2105
+              },
+              "ready": 1271,
+              "retired": 2173
+            },
+            "ffn_sum": {
+              "admitted": 3411,
+              "capacity_wait_cycles": 0,
+              "duration": 902,
+              "finish": 4313,
+              "output_ready": {
+                "0": 4092,
+                "1": 4272,
+                "2": 4204,
+                "3": 4296,
+                "4": 4228,
+                "5": 4211,
+                "6": 4313,
+                "7": 4245
+              },
+              "ready": 3411,
+              "retired": 4313
+            }
+          },
+          "compute_memory_identity": "845b853a52808ef4f7e6ce2d514f22352a7f0084fb5c4fbd35b65c860f60254e",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 397,
+            "network": 668
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 980,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 18,
+                "source": 0
+              },
+              {
+                "destination": 40,
+                "flits": 18,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 12,
+                "source": 1
+              },
+              {
+                "destination": 29,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 42,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 26,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 28,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 0,
+                "flits": 12,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 26,
+                "flits": 18,
+                "source": 25
+              },
+              {
+                "destination": 2,
+                "flits": 18,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 12,
+                "source": 29
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 29
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 29,
+                "flits": 12,
+                "source": 30
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 0,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 42,
+                "flits": 12,
+                "source": 40
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 42
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 42
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 42
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62592,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33792,
+            "3": 33792,
+            "4": 33792,
+            "5": 33920,
+            "6": 33792,
+            "7": 0,
+            "8": 29696,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            3,
+            1,
+            4,
+            2,
+            5,
+            8,
+            6
+          ]
+        }
+      ],
+      "shards": 8
+    },
+    {
+      "mapping": "row_major",
+      "memory_bytes_per_cycle": 1024,
+      "name": "memory-1024",
+      "placements": [
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 4461,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 4461,
+          "coarse_cycles": 4593,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1247,
+              "capacity_wait_cycles": 0,
+              "duration": 970,
+              "finish": 2217,
+              "output_ready": {
+                "0": 1951,
+                "1": 2031,
+                "2": 2105,
+                "3": 2161,
+                "4": 2217,
+                "5": 2057,
+                "6": 2070,
+                "7": 2126
+              },
+              "ready": 1247,
+              "retired": 2217
+            },
+            "ffn_sum": {
+              "admitted": 3415,
+              "capacity_wait_cycles": 0,
+              "duration": 970,
+              "finish": 4385,
+              "output_ready": {
+                "0": 4119,
+                "1": 4199,
+                "2": 4273,
+                "3": 4329,
+                "4": 4385,
+                "5": 4225,
+                "6": 4238,
+                "7": 4294
+              },
+              "ready": 3415,
+              "retired": 4385
+            }
+          },
+          "compute_memory_identity": "2f6e043a108866b9420a462790fd537e30982b69edadd9c178f048211cbaa08e",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 153,
+            "network": 972
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 412,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 22,
+                "flits": 20,
+                "source": 0
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 28,
+                "flits": 16,
+                "source": 0
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 34,
+                "flits": 16,
+                "source": 1
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 21,
+                "flits": 30,
+                "source": 6
+              },
+              {
+                "destination": 32,
+                "flits": 8,
+                "source": 6
+              },
+              {
+                "destination": 33,
+                "flits": 18,
+                "source": 7
+              },
+              {
+                "destination": 40,
+                "flits": 12,
+                "source": 7
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 6,
+                "flits": 14,
+                "source": 21
+              },
+              {
+                "destination": 22,
+                "flits": 30,
+                "source": 21
+              },
+              {
+                "destination": 0,
+                "flits": 42,
+                "source": 22
+              },
+              {
+                "destination": 21,
+                "flits": 14,
+                "source": 22
+              },
+              {
+                "destination": 23,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 23
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 25
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 29,
+                "flits": 16,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 16,
+                "source": 29
+              },
+              {
+                "destination": 6,
+                "flits": 24,
+                "source": 32
+              },
+              {
+                "destination": 33,
+                "flits": 2,
+                "source": 32
+              },
+              {
+                "destination": 35,
+                "flits": 6,
+                "source": 32
+              },
+              {
+                "destination": 7,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 32,
+                "flits": 18,
+                "source": 33
+              },
+              {
+                "destination": 33,
+                "flits": 16,
+                "source": 34
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 32,
+                "flits": 6,
+                "source": 35
+              },
+              {
+                "destination": 7,
+                "flits": 12,
+                "source": 40
+              },
+              {
+                "destination": 41,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 43,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 41
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 43
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 51,
+                "flits": 6,
+                "source": 48
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 51
+              },
+              {
+                "destination": 48,
+                "flits": 6,
+                "source": 51
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7424000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 124,
+            "undirected_links": 232,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62592,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33920,
+            "3": 33792,
+            "4": 29696,
+            "5": 33920,
+            "6": 33920,
+            "7": 33920,
+            "8": 0,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "baseline",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "action_schedule": "dependencies",
+          "audit": {
+            "application_cycles": 4225,
+            "operations": 114,
+            "passed": true,
+            "phases": 440,
+            "services": 492,
+            "source_duration_used": false
+          },
+          "booksim_cycles": 4225,
+          "coarse_cycles": 4257,
+          "collectives": {
+            "attention_sum": {
+              "admitted": 1247,
+              "capacity_wait_cycles": 0,
+              "duration": 852,
+              "finish": 2099,
+              "output_ready": {
+                "0": 1896,
+                "1": 2068,
+                "2": 1998,
+                "3": 2088,
+                "4": 2018,
+                "5": 1999,
+                "6": 2099,
+                "7": 2029
+              },
+              "ready": 1247,
+              "retired": 2099
+            },
+            "ffn_sum": {
+              "admitted": 3297,
+              "capacity_wait_cycles": 0,
+              "duration": 852,
+              "finish": 4149,
+              "output_ready": {
+                "0": 3946,
+                "1": 4118,
+                "2": 4048,
+                "3": 4138,
+                "4": 4068,
+                "5": 4049,
+                "6": 4149,
+                "7": 4079
+              },
+              "ready": 3297,
+              "retired": 4149
+            }
+          },
+          "compute_memory_identity": "2f6e043a108866b9420a462790fd537e30982b69edadd9c178f048211cbaa08e",
+          "critical_chain_cycles": {
+            "compute": 3336,
+            "memory": 193,
+            "network": 696
+          },
+          "execution_policy": {
+            "collective_algorithm": "direct_exchange_rank_order_sum",
+            "collective_completion": "rank_local"
+          },
+          "first_injection_wait_cycles": 0,
+          "logical_identity": "5073d3a826e233eb5e7f3ed6ec62620f110b720cc3a144828362d0138ad8f1eb",
+          "memory_queue_wait_cycles": 452,
+          "network_audit": {
+            "flits": 84,
+            "messages": 28,
+            "padded_bytes": 168000,
+            "passed": true,
+            "payload_bytes": 114688,
+            "physical_link_flits": [
+              {
+                "destination": 20,
+                "flits": 6,
+                "source": 0
+              },
+              {
+                "destination": 25,
+                "flits": 18,
+                "source": 0
+              },
+              {
+                "destination": 40,
+                "flits": 18,
+                "source": 0
+              },
+              {
+                "destination": 22,
+                "flits": 12,
+                "source": 1
+              },
+              {
+                "destination": 29,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 42,
+                "flits": 6,
+                "source": 1
+              },
+              {
+                "destination": 26,
+                "flits": 12,
+                "source": 2
+              },
+              {
+                "destination": 28,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 2
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 3
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 4
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 5
+              },
+              {
+                "destination": 27,
+                "flits": 6,
+                "source": 6
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 8
+              },
+              {
+                "destination": 0,
+                "flits": 12,
+                "source": 20
+              },
+              {
+                "destination": 22,
+                "flits": 6,
+                "source": 20
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 22
+              },
+              {
+                "destination": 20,
+                "flits": 12,
+                "source": 22
+              },
+              {
+                "destination": 0,
+                "flits": 24,
+                "source": 25
+              },
+              {
+                "destination": 26,
+                "flits": 18,
+                "source": 25
+              },
+              {
+                "destination": 2,
+                "flits": 18,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 12,
+                "source": 26
+              },
+              {
+                "destination": 25,
+                "flits": 6,
+                "source": 27
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 28
+              },
+              {
+                "destination": 1,
+                "flits": 12,
+                "source": 29
+              },
+              {
+                "destination": 30,
+                "flits": 6,
+                "source": 29
+              },
+              {
+                "destination": 3,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 8,
+                "flits": 6,
+                "source": 30
+              },
+              {
+                "destination": 29,
+                "flits": 12,
+                "source": 30
+              },
+              {
+                "destination": 2,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 34,
+                "flits": 6,
+                "source": 33
+              },
+              {
+                "destination": 4,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 33,
+                "flits": 6,
+                "source": 34
+              },
+              {
+                "destination": 0,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 5,
+                "flits": 6,
+                "source": 40
+              },
+              {
+                "destination": 42,
+                "flits": 12,
+                "source": 40
+              },
+              {
+                "destination": 1,
+                "flits": 6,
+                "source": 42
+              },
+              {
+                "destination": 6,
+                "flits": 6,
+                "source": 42
+              },
+              {
+                "destination": 40,
+                "flits": 6,
+                "source": 42
+              }
+            ]
+          },
+          "network_resources": {
+            "aggregate_directed_link_bits_per_cycle": 7232000,
+            "buffer_flits_per_vc": 32,
+            "compute_reticles": 20,
+            "link_bits_per_cycle": 16000,
+            "network_frequency_hz": 1000000000.0,
+            "physical_cost_matched": false,
+            "router_latency_cycles": 4,
+            "routers": 100,
+            "undirected_links": 226,
+            "virtual_channels": 1
+          },
+          "peak_bytes": {
+            "0": 62592,
+            "1": 33920,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "2": 33920,
+            "3": 33792,
+            "4": 33792,
+            "5": 33920,
+            "6": 33792,
+            "7": 0,
+            "8": 29696,
+            "9": 0
+          },
+          "peak_outstanding_messages": 7,
+          "placement": "ours_rotated",
+          "standalone_reference": {
+            "compared_fields": {
+              "finish_cycle": "last_eject",
+              "first_eject_cycle": "first_eject",
+              "first_inject_cycle": "first_inject",
+              "generated_cycle": "generated",
+              "last_inject_cycle": "last_inject",
+              "ready_cycle": "ready"
+            },
+            "messages": 28,
+            "passed": true,
+            "role": "post-execution network-interface validation, not application replay",
+            "standalone_binary_sha256": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+          },
+          "worker_endpoints": [
+            0,
+            3,
+            1,
+            4,
+            2,
+            5,
+            8,
+            6
+          ]
+        }
+      ],
+      "shards": 8
+    }
+  ],
+  "native_wafer_compute_calibrated": false,
+  "physical_cost_matched": false,
+  "source_commit": "c526aec28780f498624f3139564a448a4ff0dbbb"
+}

@@ -19,14 +19,14 @@ precedes reduction; the single result write precedes broadcast reads. Independen
 gathers can overlap. Root memory accesses still serialize on the declared port;
 concurrency does not give each action a private bandwidth supply.
 
-The Transformer retains its conservative whole-operation policy: all participant
-inputs must be available and all output/staging storage is atomically reserved
-before collective entry. Outputs become visible to dependent operations only
-after every action completes, including all destination writes. Inputs and
-staging remain allocated until then. This intentionally does not add rank-local
-early entry, rank-local wait completion, streaming reduction or a new allocator.
-Existing capture/value-aware `CollectiveState` retains its separate entry policy;
-the spatial executor consumes the same action model with global block completion.
+All participant inputs and atomic output/staging reservations are required at
+entry. Each rank output now becomes visible after its own final write; data
+consumers may proceed before collective retirement. Explicit control dependencies
+still wait for retirement. Inputs, staging and producer-owned output reservations
+remain pinned through retirement and outputs also outlive their consumers. This
+retains internal broadcast safety. There is no rank-local early entry or streaming.
+The older global publication policy is available as `global_retirement` for a
+controlled comparison. See [rank-local semantics and resource balance](RANK_LOCAL_BALANCE.md).
 
 The independent timing audit checks action identity/dependencies, every service,
 whole-operation completion, resource sharing and storage lifetime. Critical-chain
@@ -58,7 +58,8 @@ capacity, seed, network widths, collective algorithm and routing remain fixed.
 These are analytical local-resource assumptions and original unmatched-cost
 WoW designs, not calibrated hardware or a general topology ranking.
 
-Run on eex005 after a clean commit:
+Run on eex005 after a clean commit (add `--global-completion-control` to reproduce
+the historical publication policy used in the original twelve arms):
 
 ```bash
 export PYTHONPATH="$PWD/src"

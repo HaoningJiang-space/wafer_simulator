@@ -1,0 +1,823 @@
+{
+  "audited_arms": 28,
+  "balance_single_axis_verified": true,
+  "completion_comparison": [
+    {
+      "case": "tp4-row_major",
+      "global_cycles": 11026,
+      "historical_full_events_match": true,
+      "local_cycles": 11026,
+      "native_message_schedule_unchanged": true,
+      "placement": "baseline"
+    },
+    {
+      "case": "tp4-row_major",
+      "global_cycles": 11022,
+      "historical_full_events_match": true,
+      "local_cycles": 11022,
+      "native_message_schedule_unchanged": true,
+      "placement": "ours_rotated"
+    },
+    {
+      "case": "tp4-nearest_root",
+      "global_cycles": 10816,
+      "historical_full_events_match": true,
+      "local_cycles": 10816,
+      "native_message_schedule_unchanged": true,
+      "placement": "baseline"
+    },
+    {
+      "case": "tp4-nearest_root",
+      "global_cycles": 10834,
+      "historical_full_events_match": true,
+      "local_cycles": 10834,
+      "native_message_schedule_unchanged": true,
+      "placement": "ours_rotated"
+    },
+    {
+      "case": "tp8-row_major",
+      "global_cycles": 12534,
+      "historical_full_events_match": true,
+      "local_cycles": 12534,
+      "native_message_schedule_unchanged": true,
+      "placement": "baseline"
+    },
+    {
+      "case": "tp8-row_major",
+      "global_cycles": 12452,
+      "historical_full_events_match": true,
+      "local_cycles": 12452,
+      "native_message_schedule_unchanged": true,
+      "placement": "ours_rotated"
+    },
+    {
+      "case": "tp8-nearest_root",
+      "global_cycles": 12538,
+      "historical_full_events_match": true,
+      "local_cycles": 12538,
+      "native_message_schedule_unchanged": true,
+      "placement": "baseline"
+    },
+    {
+      "case": "tp8-nearest_root",
+      "global_cycles": 12572,
+      "historical_full_events_match": true,
+      "local_cycles": 12572,
+      "native_message_schedule_unchanged": true,
+      "placement": "ours_rotated"
+    }
+  ],
+  "historical_controls_match": true,
+  "rows": [
+    {
+      "application_cycles": 11026,
+      "attention_consumers_started_early": 0,
+      "attention_output_span": 0,
+      "attention_tail_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "case": "tp4-row_major",
+      "coarse_cycles": 11098,
+      "critical_compute": 3718,
+      "critical_memory": 6784,
+      "critical_network": 524,
+      "ffn_tail_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "first_flit_router_excess": 0,
+      "first_injection_wait": 0,
+      "group": "global",
+      "mean_message_cycles": 134,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 3,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 11022,
+      "attention_consumers_started_early": 0,
+      "attention_output_span": 0,
+      "attention_tail_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "case": "tp4-row_major",
+      "coarse_cycles": 11076,
+      "critical_compute": 3718,
+      "critical_memory": 6784,
+      "critical_network": 520,
+      "ffn_tail_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "first_flit_router_excess": 2,
+      "first_injection_wait": 0,
+      "group": "global",
+      "mean_message_cycles": 142,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 3,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 10816,
+      "attention_consumers_started_early": 0,
+      "attention_output_span": 0,
+      "attention_tail_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "case": "tp4-nearest_root",
+      "coarse_cycles": 10844,
+      "critical_compute": 3718,
+      "critical_memory": 6784,
+      "critical_network": 314,
+      "ffn_tail_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "first_flit_router_excess": 6,
+      "first_injection_wait": 0,
+      "group": "global",
+      "mean_message_cycles": 77.5,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 3,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 10834,
+      "attention_consumers_started_early": 0,
+      "attention_output_span": 0,
+      "attention_tail_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "case": "tp4-nearest_root",
+      "coarse_cycles": 10864,
+      "critical_compute": 3718,
+      "critical_memory": 6784,
+      "critical_network": 332,
+      "ffn_tail_ranks": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "first_flit_router_excess": 0,
+      "first_injection_wait": 0,
+      "group": "global",
+      "mean_message_cycles": 86,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 3,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 12534,
+      "attention_consumers_started_early": 0,
+      "attention_output_span": 0,
+      "attention_tail_ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "case": "tp8-row_major",
+      "coarse_cycles": 12580,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 414,
+      "ffn_tail_ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "first_flit_router_excess": 6,
+      "first_injection_wait": 0,
+      "group": "global",
+      "mean_message_cycles": 133.35714285714286,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 12452,
+      "attention_consumers_started_early": 0,
+      "attention_output_span": 0,
+      "attention_tail_ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "case": "tp8-row_major",
+      "coarse_cycles": 12482,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 332,
+      "ffn_tail_ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "first_flit_router_excess": 14,
+      "first_injection_wait": 0,
+      "group": "global",
+      "mean_message_cycles": 123.5,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 12538,
+      "attention_consumers_started_early": 0,
+      "attention_output_span": 0,
+      "attention_tail_ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "case": "tp8-nearest_root",
+      "coarse_cycles": 12584,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 418,
+      "ffn_tail_ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "first_flit_router_excess": 18,
+      "first_injection_wait": 0,
+      "group": "global",
+      "mean_message_cycles": 109.92857142857143,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 12572,
+      "attention_consumers_started_early": 0,
+      "attention_output_span": 0,
+      "attention_tail_ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "case": "tp8-nearest_root",
+      "coarse_cycles": 12614,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 452,
+      "ffn_tail_ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "first_flit_router_excess": 16,
+      "first_injection_wait": 0,
+      "group": "global",
+      "mean_message_cycles": 110.78571428571429,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 11026,
+      "attention_consumers_started_early": 3,
+      "attention_output_span": 702,
+      "attention_tail_ranks": [
+        3
+      ],
+      "case": "tp4-row_major",
+      "coarse_cycles": 11098,
+      "critical_compute": 3718,
+      "critical_memory": 6784,
+      "critical_network": 524,
+      "ffn_tail_ranks": [
+        3
+      ],
+      "first_flit_router_excess": 0,
+      "first_injection_wait": 0,
+      "group": "local",
+      "mean_message_cycles": 134,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 3,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 11022,
+      "attention_consumers_started_early": 3,
+      "attention_output_span": 684,
+      "attention_tail_ranks": [
+        3
+      ],
+      "case": "tp4-row_major",
+      "coarse_cycles": 11076,
+      "critical_compute": 3718,
+      "critical_memory": 6784,
+      "critical_network": 520,
+      "ffn_tail_ranks": [
+        3
+      ],
+      "first_flit_router_excess": 2,
+      "first_injection_wait": 0,
+      "group": "local",
+      "mean_message_cycles": 142,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 3,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 10816,
+      "attention_consumers_started_early": 3,
+      "attention_output_span": 593,
+      "attention_tail_ranks": [
+        3
+      ],
+      "case": "tp4-nearest_root",
+      "coarse_cycles": 10844,
+      "critical_compute": 3718,
+      "critical_memory": 6784,
+      "critical_network": 314,
+      "ffn_tail_ranks": [
+        3
+      ],
+      "first_flit_router_excess": 6,
+      "first_injection_wait": 0,
+      "group": "local",
+      "mean_message_cycles": 77.5,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 3,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 10834,
+      "attention_consumers_started_early": 3,
+      "attention_output_span": 602,
+      "attention_tail_ranks": [
+        3
+      ],
+      "case": "tp4-nearest_root",
+      "coarse_cycles": 10864,
+      "critical_compute": 3718,
+      "critical_memory": 6784,
+      "critical_network": 332,
+      "ffn_tail_ranks": [
+        3
+      ],
+      "first_flit_router_excess": 0,
+      "first_injection_wait": 0,
+      "group": "local",
+      "mean_message_cycles": 86,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 3,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 12534,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 1155,
+      "attention_tail_ranks": [
+        7
+      ],
+      "case": "tp8-row_major",
+      "coarse_cycles": 12580,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 414,
+      "ffn_tail_ranks": [
+        7
+      ],
+      "first_flit_router_excess": 6,
+      "first_injection_wait": 0,
+      "group": "local",
+      "mean_message_cycles": 133.35714285714286,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 12452,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 1114,
+      "attention_tail_ranks": [
+        7
+      ],
+      "case": "tp8-row_major",
+      "coarse_cycles": 12482,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 332,
+      "ffn_tail_ranks": [
+        7
+      ],
+      "first_flit_router_excess": 14,
+      "first_injection_wait": 0,
+      "group": "local",
+      "mean_message_cycles": 123.5,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 12538,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 1157,
+      "attention_tail_ranks": [
+        7
+      ],
+      "case": "tp8-nearest_root",
+      "coarse_cycles": 12584,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 418,
+      "ffn_tail_ranks": [
+        7
+      ],
+      "first_flit_router_excess": 18,
+      "first_injection_wait": 0,
+      "group": "local",
+      "mean_message_cycles": 109.92857142857143,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 12572,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 1174,
+      "attention_tail_ranks": [
+        7
+      ],
+      "case": "tp8-nearest_root",
+      "coarse_cycles": 12614,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 452,
+      "ffn_tail_ranks": [
+        7
+      ],
+      "first_flit_router_excess": 16,
+      "first_injection_wait": 0,
+      "group": "local",
+      "mean_message_cycles": 110.78571428571429,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 12534,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 1155,
+      "attention_tail_ranks": [
+        7
+      ],
+      "case": "memory-32",
+      "coarse_cycles": 12580,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 414,
+      "ffn_tail_ranks": [
+        7
+      ],
+      "first_flit_router_excess": 6,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 133.35714285714286,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 12452,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 1114,
+      "attention_tail_ranks": [
+        7
+      ],
+      "case": "memory-32",
+      "coarse_cycles": 12482,
+      "critical_compute": 3080,
+      "critical_memory": 9040,
+      "critical_network": 332,
+      "ffn_tail_ranks": [
+        7
+      ],
+      "first_flit_router_excess": 14,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 123.5,
+      "memory_bytes_per_cycle": 32,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 8078,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 643,
+      "attention_tail_ranks": [
+        7
+      ],
+      "case": "memory-64",
+      "coarse_cycles": 8124,
+      "critical_compute": 3336,
+      "critical_memory": 4328,
+      "critical_network": 414,
+      "ffn_tail_ranks": [
+        7
+      ],
+      "first_flit_router_excess": 6,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 133.35714285714286,
+      "memory_bytes_per_cycle": 64,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 8012,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 610,
+      "attention_tail_ranks": [
+        6
+      ],
+      "case": "memory-64",
+      "coarse_cycles": 8060,
+      "critical_compute": 3336,
+      "critical_memory": 4200,
+      "critical_network": 476,
+      "ffn_tail_ranks": [
+        6
+      ],
+      "first_flit_router_excess": 14,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 123.5,
+      "memory_bytes_per_cycle": 64,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 5940,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 400,
+      "attention_tail_ranks": [
+        4
+      ],
+      "case": "memory-128",
+      "coarse_cycles": 6022,
+      "critical_compute": 3336,
+      "critical_memory": 1972,
+      "critical_network": 632,
+      "ffn_tail_ranks": [
+        4
+      ],
+      "first_flit_router_excess": 6,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 132.07142857142858,
+      "memory_bytes_per_cycle": 128,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 5920,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 390,
+      "attention_tail_ranks": [
+        6
+      ],
+      "case": "memory-128",
+      "coarse_cycles": 5960,
+      "critical_compute": 3336,
+      "critical_memory": 2100,
+      "critical_network": 484,
+      "ffn_tail_ranks": [
+        6
+      ],
+      "first_flit_router_excess": 14,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 123.35714285714286,
+      "memory_bytes_per_cycle": 128,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 4954,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 320,
+      "attention_tail_ranks": [
+        4
+      ],
+      "case": "memory-256",
+      "coarse_cycles": 5042,
+      "critical_compute": 3336,
+      "critical_memory": 986,
+      "critical_network": 632,
+      "ffn_tail_ranks": [
+        4
+      ],
+      "first_flit_router_excess": 6,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 132.07142857142858,
+      "memory_bytes_per_cycle": 256,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 4862,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 274,
+      "attention_tail_ranks": [
+        6
+      ],
+      "case": "memory-256",
+      "coarse_cycles": 4910,
+      "critical_compute": 3336,
+      "critical_memory": 1018,
+      "critical_network": 508,
+      "ffn_tail_ranks": [
+        6
+      ],
+      "first_flit_router_excess": 14,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 123.14285714285714,
+      "memory_bytes_per_cycle": 256,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 4597,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 280,
+      "attention_tail_ranks": [
+        4
+      ],
+      "case": "memory-512",
+      "coarse_cycles": 4741,
+      "critical_compute": 3336,
+      "critical_memory": 301,
+      "critical_network": 960,
+      "ffn_tail_ranks": [
+        4
+      ],
+      "first_flit_router_excess": 6,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 133.07142857142858,
+      "memory_bytes_per_cycle": 512,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 4401,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 221,
+      "attention_tail_ranks": [
+        6
+      ],
+      "case": "memory-512",
+      "coarse_cycles": 4453,
+      "critical_compute": 3336,
+      "critical_memory": 397,
+      "critical_network": 668,
+      "ffn_tail_ranks": [
+        6
+      ],
+      "first_flit_router_excess": 14,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 123.28571428571429,
+      "memory_bytes_per_cycle": 512,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    },
+    {
+      "application_cycles": 4461,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 266,
+      "attention_tail_ranks": [
+        4
+      ],
+      "case": "memory-1024",
+      "coarse_cycles": 4593,
+      "critical_compute": 3336,
+      "critical_memory": 153,
+      "critical_network": 972,
+      "ffn_tail_ranks": [
+        4
+      ],
+      "first_flit_router_excess": 90,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 136.35714285714286,
+      "memory_bytes_per_cycle": 1024,
+      "peak_messages": 7,
+      "placement": "baseline"
+    },
+    {
+      "application_cycles": 4225,
+      "attention_consumers_started_early": 7,
+      "attention_output_span": 203,
+      "attention_tail_ranks": [
+        6
+      ],
+      "case": "memory-1024",
+      "coarse_cycles": 4257,
+      "critical_compute": 3336,
+      "critical_memory": 193,
+      "critical_network": 696,
+      "ffn_tail_ranks": [
+        6
+      ],
+      "first_flit_router_excess": 98,
+      "first_injection_wait": 0,
+      "group": "balance",
+      "mean_message_cycles": 126.28571428571429,
+      "memory_bytes_per_cycle": 1024,
+      "peak_messages": 7,
+      "placement": "ours_rotated"
+    }
+  ],
+  "runs": [
+    {
+      "complete_sha256": "34e7d3dce4bd8234266e995b675f7218218684c2c955ca781901b73ccf538ca6",
+      "hashes_checked": 187,
+      "path": "/home/wangziheng/wafer_simulator/runs/transformer-collective-study-001",
+      "source_commit": "916a9827e4fa316ed5911c3892b6efa5e9b16dcb"
+    },
+    {
+      "complete_sha256": "602a38e8e5a05ed69aa636e70a2f2084b9aa4e3376773ed5f0b1febacaf2c9d4",
+      "hashes_checked": 187,
+      "path": "/home/wangziheng/wafer_simulator/runs/collective-global-control-001",
+      "source_commit": "c526aec28780f498624f3139564a448a4ff0dbbb"
+    },
+    {
+      "complete_sha256": "e1d679a38b6e9479e11fb75b1999d11a7ea938683d1bd4ed9e75ab49626ca9d6",
+      "hashes_checked": 187,
+      "path": "/home/wangziheng/wafer_simulator/runs/collective-rank-local-001",
+      "source_commit": "c526aec28780f498624f3139564a448a4ff0dbbb"
+    },
+    {
+      "complete_sha256": "14023c90f5daa0f759006a4597d5c7846877692ee22cebac79f6e1b85dbd52c1",
+      "hashes_checked": 279,
+      "path": "/home/wangziheng/wafer_simulator/runs/collective-memory-balance-001",
+      "source_commit": "c526aec28780f498624f3139564a448a4ff0dbbb"
+    }
+  ]
+}

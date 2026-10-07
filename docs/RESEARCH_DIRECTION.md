@@ -220,10 +220,11 @@ wiring, power and cooling can deliver those assumed resources. Thermal, PDN,
 new schedulers and new simulator acceleration are outside the current work.
 Original-design and equal-budget comparisons remain distinct.
 
-The immediate research milestone is to answer, for one supported complete Llama
-workload, **how long Baseline and Rotated take under the target compute–memory–
-network model, and why**. It is complete only after the execution model passes
-the validation stage and both full placement arms pass completion checks.
-Mapping and topology expansion follows that paired case. The first paper can
-stop at the validated joint architecture study; it need not include detailed
-wiring closure, PDN or thermal to justify its scope.
+The current milestone separates rank-local output readiness from collective
+retirement, reruns the existing TP4/TP8 controls, and varies only common memory
+bandwidth at fixed TP8, row-major mapping and direct-root algorithm. The question
+is how compute/memory/network balance changes placement benefit. See the
+[registered protocol](RANK_LOCAL_BALANCE.md). Next, consider one contrasting
+collective algorithm under the same logical work and resource controls. Larger
+workloads and broader mapping studies follow that comparison. A fully supported
+Llama capture, thermal, PDN and runtime optimization do not block this work.
