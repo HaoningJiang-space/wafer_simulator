@@ -56,7 +56,11 @@ Admitted operations follow ordered, whole-object phases:
 
 This is a serialized staging policy within an operation. The extra staging
 reads/writes are intentional traffic, not a claim that every wafer implements
-this data path. No direct network-to-ALU streaming, overlapping these phases,
+this data path. The local compute boundary reads each whole input once and
+writes each whole output once. Scratch currently charges capacity only; hidden
+scratch accesses, repeated kernel reads and cache behavior are not inferred.
+These service demands must not be called calibrated kernel memory traffic.
+No direct network-to-ALU streaming, overlapping these phases,
 cross-operation cache reuse or storage aliasing is implied. The first version
 requires one memory region per endpoint; several memory domains behind one
 endpoint require a distinct local-DMA model and are rejected.
@@ -107,6 +111,14 @@ destination/write demands; physical disconnection; local overflow despite free
 global capacity; atomic blocking/recovery; fanout lifetimes; output availability;
 scratch/retention accounting; invalid identities, work and completion ordering.
 They are software tests, not smoke experiments or a new workload benchmark.
+
+All **20 tests passed on eex005**, at code commit `06a05ed`. The same code
+imported both accepted WoW network graphs (124/232 and 100/226 routers/links)
+and inspected all 39,248 grouped source events and all four SQLite schemas.
+The [validation receipt](results/spatial-contract-001/VALIDATION.json) includes
+code and test-log hashes; [source support](results/spatial-contract-001/SOURCE_SUPPORT.json)
+records the actual fields and unresolved inputs. None of these checks invokes
+BookSim or provides a new application result.
 
 Build/test execution stays on eex005. Existing complete events and native
 binaries are unchanged. The next decision is to provide a complete, supported

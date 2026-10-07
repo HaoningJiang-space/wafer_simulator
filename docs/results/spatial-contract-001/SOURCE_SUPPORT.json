@@ -1,0 +1,81 @@
+{
+  "event_type_counts": {
+    "AllGather": 19216,
+    "AllReduce": 1200,
+    "Broadcast": 16,
+    "ReduceScatter": 18816
+  },
+  "extraction_counts": {
+    "gpus": 16,
+    "groups": 39248,
+    "hosts": 4,
+    "streams": 16
+  },
+  "extraction_manifest_sha256": "4277b0c32d4670441d9ae500d2629b3490a926524a246e9b2b2544b9feaf7129",
+  "full_capture_spatial_execution_ready": false,
+  "grouped_source_sha256": "b3c0b13936a4a5a6a47f1e437750647a92bc6a4c4c65a029863ae14ee0af355c",
+  "networkx": "3.7",
+  "new_simulations_launched": 0,
+  "observed_semantic_field_counts": {
+    "data_size": 39248,
+    "recvbuff": 302672,
+    "sendbuff": 302672,
+    "type_size": 39248,
+    "workCount": 302672,
+    "workOffset": 302672
+  },
+  "python": "3.13.13",
+  "reused_wow_exports": {
+    "baseline": {
+      "endpoints": 20,
+      "export_sha256": "e4e4ed4bad834efe1fedeb9d4c7f85720d06b9532a9a21031ea906e1f50b737f",
+      "links": 232,
+      "memory_capacities_inferred": false,
+      "physically_connected": true,
+      "resource_graph_provenance": "WoW export object SHA-256 4a57679a63441658e4a5f15b1dfd4d8b718566456fb53cafde938434396d9c0c",
+      "routers": 124,
+      "timing_evaluated": false
+    },
+    "ours_rotated": {
+      "endpoints": 20,
+      "export_sha256": "b8a1d6fa12167ccd9520f2f79510cba6f2ffb246a12b1d6f22a55aff6362da89",
+      "links": 226,
+      "memory_capacities_inferred": false,
+      "physically_connected": true,
+      "resource_graph_provenance": "WoW export object SHA-256 ff8fc867c479bd8b69d92136821c5ec36428ad62d1f192ff63702e733df91c8c",
+      "routers": 100,
+      "timing_evaluated": false
+    }
+  },
+  "scope": "Presence of source fields and compatibility of resource graph import; not absence proof for every raw event",
+  "source_commit": "06a05ed43391c510d237f2393b7bfc3bec3484f2",
+  "source_dirty": false,
+  "sqlite_schema_checks": {
+    "nsys_report_nid005785_107285.sqlite": {
+      "memory_tensor_allocation_tables": [],
+      "sha256": "f026724ac73c02bf6af2721325c4e57102f6c1eaa0fd44e697295e31dd99651b",
+      "table_count": 56
+    },
+    "nsys_report_nid005786_109975.sqlite": {
+      "memory_tensor_allocation_tables": [],
+      "sha256": "1906a217d207c321241f7745e869cce7acc75508e3c6a808994ee1688a6f386d",
+      "table_count": 56
+    },
+    "nsys_report_nid005789_106910.sqlite": {
+      "memory_tensor_allocation_tables": [],
+      "sha256": "cc5b94142e887939b203b4a1f46de29c9f75bffbeaef2108196612634d361c1b",
+      "table_count": 56
+    },
+    "nsys_report_nid005800_104761.sqlite": {
+      "memory_tensor_allocation_tables": [],
+      "sha256": "61735be2dbabdda8f1c310289befcf45db0af941051e112ea74ddd92e819f1eb",
+      "table_count": 56
+    }
+  },
+  "unresolved_inputs": [
+    "Versioned tensor/storage identity and alias/lifetime semantics",
+    "Complete producer/consumer semantics outside captured communication",
+    "Compute work amounts and target service calibration",
+    "Target local-memory capacity and port service calibration"
+  ]
+}

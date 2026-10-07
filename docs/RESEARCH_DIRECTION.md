@@ -157,6 +157,7 @@ wiring, power and cooling can deliver those assumed resources. Thermal, PDN,
 new schedulers and new simulator acceleration are outside the current work.
 Original-design and equal-budget comparisons remain distinct.
 
-The current delivery closes the source table, target-resource description and
-M0/M1 protocol. It records the previously authorized completed run and launches
-no new placement scan or model implementation.
+The source table, target-resource description and M0/M1 protocol are delivered.
+The subsequent v1 implementation adds logical work/resource binding and storage
+lifetime semantics, verified with analytical software checks. It launches no
+new placement scan and makes no new application-performance claim.

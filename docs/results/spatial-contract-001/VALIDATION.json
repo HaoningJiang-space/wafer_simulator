@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-10-07T04:11:16.661765+00:00",
+  "existing_native_patches_configs_and_author_sources_unchanged": true,
+  "full_capture_spatial_execution_ready": false,
+  "host": "eex005",
+  "local_document_links_checked": 12,
+  "new_simulations_launched": 0,
+  "python": "3.13.13",
+  "semantic_contract_checks_passed": true,
+  "source_commit": "06a05ed43391c510d237f2393b7bfc3bec3484f2",
+  "source_sha256": {
+    "scripts/inspect_spatial_support_remote.py": "72f2357aa83e0cc572e0f26f1139eab06cab25b6da8a74d09300f5915bb225e2",
+    "src/wafer_sim/adapters/spatial.py": "25fbdd053e1350c2d96e5efea18d4d3b2ed95ea187388de82699a60f56e108fc",
+    "src/wafer_sim/architecture/__init__.py": "e3fb37b55de4a174633354453e2c88f34e1b0fb1c5eb347efebca2f787d9ff37",
+    "src/wafer_sim/architecture/spatial.py": "1d0125eb046be9569909a186b9ec12341552a544d86f11f7df628e5b84a894fe",
+    "src/wafer_sim/execution/__init__.py": "9347bc26e805270c1b80d3351fed2872f20071fb0b4c1fcb492c74632d93ff82",
+    "src/wafer_sim/execution/plan.py": "6cc6bf3fac248d0831424f0cf5e7fb0f75b7f30adbbd8c744d781dc4deb9f193",
+    "src/wafer_sim/execution/storage.py": "67fec3035fe68a4fcf4e11392298b38638a7f487d97610c2baa491e4b9133298",
+    "src/wafer_sim/workloads/dag.py": "6212ca8aef01875c1dfce98dddab2072f0531655797297ef5d17edadd92942e0",
+    "src/wafer_sim/workloads/spatial.py": "a3240d3e57fc5d3dbc707b43d8122bc8883490daf1d130ead1aec26c8a56bf0b",
+    "tests/test_spatial.py": "8361e440310dd052868e1e301e74a509b8edc897018bf6157e67dcdb23c4e0be"
+  },
+  "source_support_sha256": "e81bf233bb9984cda10110ea96a86e23c61975f76954d228048295736efcd3e3",
+  "test_command": "PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p test_spatial.py -v",
+  "tests": 20,
+  "tests_log_sha256": "f318780a4bbc5dd7f230809c218a027c2a7fae265ab29218f0c28adff4f75d76",
+  "timing_evaluated": false
+}
