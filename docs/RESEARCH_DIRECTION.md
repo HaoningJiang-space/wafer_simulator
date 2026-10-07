@@ -79,6 +79,14 @@ a complete semantic Llama input remains separate. M0/M1 results are
 unchanged. Old Chakra recovery is frozen at the accepted source boundary and
 does not gate this implementation.
 
+The [first fixed-rule WoW block pair](results/transformer-wow-001/REVIEW.md)
+now connects the Transformer to the accepted BookSim kernel online. Baseline
+and Rotated finish in 13,062 and 13,430 cycles with common analytical local
+resources. The selected endpoint pairs have different path costs; four
+serialized critical transfers explain the difference. This validates one
+complete declared block, not a complete native Llama execution or a general
+placement ranking.
+
 | Object | Required information | Event or constraint |
 | --- | --- | --- |
 | Compute operation | Operation/work description, inputs, outputs, scratch demand, target service model | Inputs available, output/scratch storage reserved, required service resources available |
@@ -156,8 +164,8 @@ later topics while this execution layer is being established.
 3. **Target execution.** Bind task and data placement separately, reserve local
    storage, serve compute/memory/network demands with explicit sharing, and
    advance dependencies only on the required completions. Completion time follows
-   from this execution. The v1 binding/lifetime code is a foundation; it currently
-   has no timed service backend. Policy and initial residency remain explicit.
+   from this execution. The v1 binding/lifetime code now has a timed service
+   backend and a live BookSim adapter. Policy and initial residency remain explicit.
 4. **Validation before architectural interpretation.** Use analytical DAGs for
    execution timing and overlap; shared-resource examples for arbitration;
    local/remote accesses for memory service; and per-region capacity, output
@@ -170,13 +178,15 @@ later topics while this execution layer is being established.
    implementation does; characterization establishes the physical accuracy
    claimed. Neither a plausible speedup nor disagreement with replay is an
    accuracy reference.
-5. **First architecture case: fixed mapping, same full Llama work.** Compare
+5. **First architecture case: fixed mapping rule, same complete declared work.** Compare
    Baseline and Rotated with the same logical input, mapping rule, compute/memory
    parameters and execution policy. Report application completion time,
    compute/memory/network/dependency waits, capacity use, actual critical work
    and physical data movement. Explain the placement difference through that
    work. No particular speedup or ranking reversal is required. The old 14.75%
    packet mean is not held constant when the workload/execution model changes.
+   The complete Transformer block is the first accepted case; a fully supported
+   Llama input is a later extension, not a prerequisite for this case.
 6. **Joint Topology × Mapping × Workload study.** Mapping is not a prerequisite
    study that can be finished independently of topology. Vary task/data placement
    jointly with topology and workload structure, extending one controlled axis

@@ -47,6 +47,14 @@ consolidation. Full-run event-hash checks remain active.
 | Correctness verification | `scripts/test_remote.sh NEW_TEST_DIRECTORY [SAVED_REFERENCE]` |
 | Full execution | `scripts/run_full_remote.sh NEW_RUN_DIRECTORY` |
 | Full-event comparison | `scripts/verify_full_replay.py` |
+| Live target-execution adapter | `scripts/build_online_remote.sh` → `build/booksim-online/` |
+| Live block pair | `scripts/run_transformer_wow_remote.py NEW_RUN_DIRECTORY TEST_RECEIPT` |
+
+The live adapter subclasses this same patched TrafficManager and links the
+unchanged native objects. It exposes submit/advance/receive operations to the
+target compute/memory executor. It is an additional interface, not a competing
+network implementation or optimization variant. The standalone binary remains
+unchanged and checks observed message timestamps after each live execution.
 
 The combined patch contains the exact native source changes previously obtained
 by applying completion, topology-reference, dense-state, node-reuse and CSR

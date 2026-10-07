@@ -93,3 +93,26 @@ so, conclusions concern path/service cost propagation through the forward block;
 they do not establish a congestion advantage or general topology ranking.
 No mapping sweep, new collective algorithm, Llama training, thermal or PDN is
 part of this experiment.
+
+## Reproduce on eex005
+
+Start from a clean committed source checkout under the existing remote root.
+Restore the bundled upstream sources and build the selected native backend
+with the existing setup scripts if they are not present. Then:
+
+```bash
+bash scripts/build_online_remote.sh
+export PYTHONPATH="$PWD/src"
+ROOT=/home/wangziheng/wafer_simulator
+"$ROOT/.venv/bin/python" scripts/test_wow_target_remote.py "$ROOT/runs/wow-semantics-NEW"
+"$ROOT/.venv/bin/python" scripts/run_transformer_wow_remote.py \
+  "$ROOT/runs/transformer-wow-NEW" "$ROOT/runs/wow-semantics-NEW/SEMANTICS.json"
+"$ROOT/.venv/bin/python" scripts/analyze_transformer_wow_remote.py \
+  "$ROOT/runs/transformer-wow-NEW" "$ROOT/runs/transformer-wow-attribution-NEW"
+```
+
+All output directories must be fresh. The last command is read-only analysis:
+it verifies the complete run's artifact hashes, joins actual per-flit routes
+to exported link costs, and pairs operation times. It launches no simulator.
+The [first accepted result](results/transformer-wow-001/REVIEW.md) retains
+the original execution commit separately from subsequent reporting code.

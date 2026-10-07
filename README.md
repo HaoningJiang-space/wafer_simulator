@@ -17,18 +17,28 @@ rate interventions. This target execution capability is distinct from the
 accepted full Llama path, which remains a conditional WoW replay with partial
 communication retargeting.
 
-The next [complete Transformer forward block](docs/TRANSFORMER_EXECUTION.md)
+The [complete Transformer forward block](docs/TRANSFORMER_EXECUTION.md)
 now executes on the same backend: 30 operations, two SUM AllReduces and 557,056
 MACs. Its [checked result](docs/results/transformer-execution-001/REVIEW.md) is
 15,862 cycles under the declared model, with separate compute/memory/network
 rate controls. Dense numerical equivalence and 93 semantic checks pass. These
 parameters are analytical, not calibrated WoW compute or SRAM specifications.
 
+The block is now connected to **live author WoW networks**. The
+[first checked placement pair](docs/results/transformer-wow-001/REVIEW.md)
+finishes in **13,062 cycles on Baseline and 13,430 on Rotated**, at 1 GHz.
+The same row-major mapping rule selects different physical endpoint pairs;
+four critical transfers each take 92 more cycles on Rotated, explaining the
+368-cycle application difference. All 102 semantic/interface tests pass, and
+both arms match the standalone BookSim's message timestamps exactly. No two
+messages overlap in this case. It establishes path-cost propagation, not a
+general ranking or a congestion result. See the [controls and live interface](docs/TRANSFORMER_WOW_PROTOCOL.md).
+
 The research question is whether a WoW Logic-on-Interconnect placement with
 better network metrics also completes the same AI workload sooner, and which
 execution costs must be modeled to make that judgment. The current study
 compares Baseline and Rotated under fixed operating conditions. It tests one
-specific boundary: original GPU-cluster-local transfers represented as fixed
+specific boundary in the earlier full-capture experiment: original GPU-cluster-local transfers represented as fixed
 `calc` costs versus those same transfers competing for target wafer resources.
 Remaining measured intervals and reduction/copy costs stay fixed. This is a
 controlled workload-model comparison, not calibrated native wafer training
@@ -42,8 +52,10 @@ configs in the working tree. See [selection and verification](docs/IMPLEMENTATIO
 
 Code layers separate `workloads`, `architecture`, target-binding `adapters`,
 `execution` and `analysis`; `experiments` orchestrates these layers. Full-capture
-replay uses native BookSim; the target resource calendar currently uses an
-explicit coarse store-and-forward network model. `configs/` contains fixed controls;
+replay uses native BookSim; the target resource calendar can submit live
+transfers to that same kernel or use the retained coarse store-and-forward
+model. The native adapter changes the driver interface, not the network kernel.
+`configs/` contains fixed controls;
 `patches/` contains isolated upstream changes. All reused external source is
 included as [pinned ordinary files](docs/EXTERNAL_SOURCES.md) under `third_party/`.
 A normal clone of this repository obtains all project source. The maintained
@@ -56,10 +68,10 @@ geometry/connectivity/capacity belongs in the first machine model; detailed
 physical closure and power/thermal remain later work.
 
 Current development has progressed from the complete A/fanout-B/AllReduce/C
-unit to a separately defined Transformer forward block. Old Chakra recovery
+unit to a separately defined Transformer forward block on both WoW placements. Old Chakra recovery
 is frozen and is not a prerequisite. A supported full application remains a
-later input. Mstatic remains a separate pending M0/M1 model comparison; this
-milestone launches no new full-capture or placement run.
+later input. Mstatic remains a separate pending M0/M1 model comparison; the
+block study does not rerun or replace the full-capture experiment.
 
 Build, tests and experiments run on `wangziheng@eex005`. Local work is editing,
 source review, and Git. The remote root is `/home/wangziheng/wafer_simulator`.

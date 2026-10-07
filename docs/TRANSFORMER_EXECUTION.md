@@ -98,3 +98,10 @@ PYTHONPATH=src /home/wangziheng/wafer_simulator/.venv/bin/python \
 The runner writes the complete DAG, shape/operator ledger, hardware, placement,
 event records, resource queues, lifecycle, independent audit and hashes. The
 full capture and accepted M0/M1 data remain separate evidence.
+
+The subsequent [WoW placement pair](TRANSFORMER_WOW_PROTOCOL.md) reuses this
+entire logical block and common compute/memory parameters. It replaces the
+hand-declared network and endpoint map with each author's actual resource graph
+and the same row-major mapping rule. Live BookSim receives only currently ready
+transfers. The [accepted pair](results/transformer-wow-001/REVIEW.md) reports
+13,062/13,430 cycles and traces their difference through both AllReduces.

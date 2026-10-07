@@ -22,7 +22,7 @@ are requested when the previous service completes, not reserved across a
 whole future path. Completion ties use event submission order, and operation
 admission uses stable topological order. These are explicit scheduling choices.
 
-Network transfers use injection, directed link and ejection byte servers on
+By default, network transfers use injection, directed link and ejection byte servers on
 the target's actual router graph. Routing selects a minimum-hop path with
 lowest router ID on ties. The initial backend uses whole-message
 store-and-forward: each hop receives the complete message before the next hop
@@ -32,10 +32,14 @@ service IDs explicitly coincide. Memory reads/writes stay separate from network
 service. Internal router queues are abstract queues; there is no flit, VC,
 credit/backpressure or router-buffer-capacity model here.
 
-This is a declared coarse network backend, not an emulation of the existing
-BookSim backend, adaptive WoW routing, or a calibrated wafer. BookSim remains
-the accepted full-capture network reference. A later integration can supply
-finer transfer completion without changing the work/placement/lifetime contract.
+This default is a declared coarse network backend. The optional
+`execute(binding, timing, network=client)` interface now uses a persistent
+BookSim process for native flit, VC, credit and adaptive-routing behavior.
+Compute/memory scheduling and storage semantics stay in the same executor;
+message completion resumes destination memory writes. Neither backend
+calibrates compute/SRAM parameters. See the [online contract and checked
+placement experiment](TRANSFORMER_WOW_PROTOCOL.md), including the explicit
+native-cycle to external-boundary conversion and equal-boundary event order.
 
 Admission still atomically reserves output, staging and scratch storage across
 regions. An admission blocked by capacity retries after a service completion;
@@ -52,6 +56,8 @@ writes. Last-consumer release and retained outputs use the existing state.
 | Binding | `adapters/timing.py` | Validate physical coverage, routes and phase demand services |
 | Execution | `execution/timing.py` | Resource calendar, event completion, admission and lifecycle callbacks |
 | Independent readback | `analysis/timing.py` | Rates, non-overlap, work/byte conservation, dependencies and capacity |
+| Live network bridge | `adapters/online_booksim.py`, `adapters/native/online_booksim.cpp` | Persistent accepted native kernel; dynamic request and receive completion |
+| Native readback | `analysis/online_network.py` | Actual paths, all-flit conservation and completion boundaries |
 | Logical example | `workloads/timed_example.py` | Complete declared A/fanout-B/AllReduce/C work |
 | Transformer block | `workloads/transformer.py` | Complete shape-defined tensor-parallel forward work |
 | Orchestration | `experiments/timed_example.py` and remote runner | Fixed input and separate rate interventions |
