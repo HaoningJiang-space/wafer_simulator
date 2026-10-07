@@ -1,0 +1,44 @@
+{
+  "repositories": [
+    {
+      "path": "third_party/nw-design-for-wsi",
+      "runtime_path": "upstream/nw-design-for-wsi",
+      "upstream": "https://github.com/spcl/nw-design-for-wsi.git",
+      "mirror": "https://github.com/HaoningJiang-space/nw-design-for-wsi.git",
+      "commit": "9470042fb2d8b5368556e46cc75ac818dbf31522",
+      "purpose": "Author WoW geometry, RapidChiplet and BookSim; patches applied in isolated builds"
+    },
+    {
+      "path": "third_party/atlahs",
+      "runtime_path": "upstream/atlahs",
+      "upstream": "https://github.com/spcl/atlahs.git",
+      "mirror": "https://github.com/HaoningJiang-space/atlahs.git",
+      "commit": "fb51a99f908e550318056ebb3e084f3d2fff55bd",
+      "purpose": "Inspected current author pipeline and source comparison"
+    },
+    {
+      "path": "third_party/atlahs-20250324",
+      "runtime_path": "upstream/atlahs-20250324",
+      "upstream": "https://github.com/spcl/atlahs.git",
+      "mirror": "https://github.com/HaoningJiang-space/atlahs.git",
+      "commit": "e436c1de79619e7bcd9977e2a713f8e4a1f7e8f9",
+      "purpose": "Historical generator used for complete source correspondence and transfer recovery"
+    },
+    {
+      "path": "third_party/chakra",
+      "runtime_path": "upstream/chakra",
+      "upstream": "https://github.com/mlcommons/chakra.git",
+      "mirror": "https://github.com/HaoningJiang-space/chakra.git",
+      "commit": "9ff3e3e2f276b4c0554a83f8747bf00b2786fa85",
+      "purpose": "Official ET protobuf schema, reference reader and inspected converter semantics"
+    },
+    {
+      "path": "third_party/json",
+      "runtime_path": "deps/json-source",
+      "upstream": "https://github.com/nlohmann/json.git",
+      "mirror": "https://github.com/HaoningJiang-space/json.git",
+      "commit": "9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03",
+      "purpose": "Exact nlohmann JSON 3.11.3 header dependency of frozen BookSim builds"
+    }
+  ]
+}
