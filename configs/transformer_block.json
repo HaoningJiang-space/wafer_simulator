@@ -1,0 +1,15 @@
+{
+  "name": "declared_preln_transformer_forward_tp2_v1",
+  "scope": "Analytical target and complete float32 block; no calibrated WoW or source timings",
+  "block": {"batch": 1, "sequence": 16, "hidden": 64, "heads": 4, "ffn_hidden": 128, "shards": 2},
+  "worker_endpoints": [0, 1],
+  "region_capacity_bytes": 262144,
+  "compute_rates": {"mac": 64, "scalar_add": 16, "scalar_mul": 16, "scalar_rsqrt": 4, "scalar_max": 16, "scalar_exp": 4, "scalar_div": 4, "scalar_erf": 4},
+  "memory_bytes_per_cycle": 32,
+  "link_bytes_per_cycle": 16,
+  "endpoint_bytes_per_cycle": 32,
+  "link_latency_cycles": 2,
+  "endpoint_routers": [[0, 10], [1, 20]],
+  "router_links": [[10, 11], [11, 20]],
+  "controlled_cases": ["declared", "double_compute_rate", "double_memory_rate", "double_network_rate"]
+}

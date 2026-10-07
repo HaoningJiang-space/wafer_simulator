@@ -5,7 +5,8 @@ import platform
 import subprocess
 import sys
 
-from wafer_sim.experiments.timed_example import run_case
+from wafer_sim.experiments.timed_example import run_case as analytical_case
+from wafer_sim.experiments.transformer import run_case as transformer_case
 from wafer_sim.io import digest,object_digest,read_json,write_json
 
 
@@ -15,6 +16,7 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("output",type=Path)
     parser.add_argument("tests",type=Path)
+    parser.add_argument("--workload", choices=("analytical", "transformer"), default="analytical")
     args=parser.parse_args()
     repo=Path(__file__).resolve().parents[1]
     commit=subprocess.check_output(["git","-C",str(repo),"rev-parse","HEAD"],text=True).strip()
@@ -26,7 +28,9 @@ def main():
             not Path(tests["tests_log"]).read_text().rstrip().endswith("OK")):
         raise ValueError("Passing semantic validation for this revision required")
     if not args.output.is_absolute(): raise ValueError("Fresh absolute output required")
-    config_path=repo/"configs/timed_execution_example.json"
+    config_path=repo/"configs"/("transformer_block.json" if args.workload == "transformer"
+                               else "timed_execution_example.json")
+    run_case = transformer_case if args.workload == "transformer" else analytical_case
     config=read_json(config_path)
     args.output.mkdir(parents=True,exist_ok=False)
     write_json(args.output/"CONFIG.json",config)
@@ -34,7 +38,7 @@ def main():
         python=sys.version,executable=sys.executable,executable_sha256=digest(Path(sys.executable).resolve()),
         config_sha256=digest(config_path),tests_receipt_sha256=digest(args.tests),
         packages=subprocess.check_output([sys.executable,"-m","pip","freeze"],text=True).splitlines(),
-        scope="Declared analytical execution unit, not measured wafer or Llama timing"))
+        workload=args.workload,scope=config["scope"]))
     summary=[]; identity=None
     for case in config["controlled_cases"]:
         record=run_case(config,case)
@@ -46,6 +50,10 @@ def main():
         row=dict(case=case,application_cycles=record["result"]["application_cycles"],
                  operation_finishes={op:values["finish"] for op,values in record["result"]["operations"].items()},
                  peak_bytes=record["result"]["peak_bytes"],audit=record["audit"])
+        if "logical_summary" in record:
+            row["logical_summary"] = record["logical_summary"]
+        row["transfer_bytes"] = sum(p.get("transfer_bytes",0) for p in record["result"]["phases"])
+        row["resource_totals"] = record["result"]["resources"]
         summary.append(row); print(row,flush=True)
     write_json(args.output/"SUMMARY.json",dict(source_commit=commit,cases=summary,
         logical_work_and_placement_sha256=identity,source_time_replayed=False,

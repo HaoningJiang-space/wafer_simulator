@@ -155,6 +155,13 @@ class TimedExecutionTests(unittest.TestCase):
         self.assertGreater(result["resources"]["link-10-11"]["queue_wait_cycles"],0)
         self.assertEqual(result["storage"]["used_bytes"],{"0":0,"1":16,"2":16})
 
+    def test_accepted_example_events_are_unchanged(self):
+        root=Path(__file__).resolve().parents[1]
+        config=read_json(root/"configs/timed_execution_example.json")
+        accepted=read_json(root/"docs/results/timed-execution-001/declared.json")
+        current=run_case(config,"declared")
+        self.assertEqual(current["result"],accepted["result"])
+
     def test_audit_checks_terminal_state_and_capacity_wait(self):
         b=local_binding(); original=execute(b,timing())
         changes = [(["operations","f","capacity_wait_cycles"],99),
