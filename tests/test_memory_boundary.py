@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 import unittest
 
-from test_online_booksim import OnlineBookSimTests
+import test_online_booksim
 from test_collective_timing import case
 from wafer_sim.adapters import wow
 from wafer_sim.adapters.boundary_booksim import BoundaryBookSim
@@ -26,7 +26,7 @@ class MemoryBoundaryTests(unittest.TestCase):
         cls.binary=cls.root/'build/booksim-boundary/endpoint_booksim'
         cls.reference=cls.root/'build/booksim/rapidchiplet/booksim2/src/booksim'
         wow.load_upstream(cls.root/'upstream/nw-design-for-wsi')
-    prepare=OnlineBookSimTests.prepare
+    prepare=test_online_booksim.OnlineBookSimTests.prepare
 
     def test_transparent_hooks_restore_original_native_timestamps(self):
         directory,inputs,config=self.prepare('transparent')

@@ -74,7 +74,7 @@ public:
             if (slots<=0) throw std::runtime_error("Invalid receive slots");
             BookSimConfig sink(original);sink.Assign("vc_buf_size",slots);sink.Assign("buf_size",-1);
             for (auto *ch:_net[0]->GetEject()) {
-                auto *router=dynamic_cast<IQRouter*>(ch->GetSource());
+                auto *router=dynamic_cast<IQRouter*>(const_cast<Router*>(ch->GetSource()));
                 if (!router) throw std::runtime_error("Endpoint requires IQRouter");
                 router->ConfigureEndpointSink(sink,ch->GetSourcePort());
             }
