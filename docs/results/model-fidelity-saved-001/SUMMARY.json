@@ -1,0 +1,229 @@
+{
+  "application_mape_percent": 1.4701930683350035,
+  "cases": 12,
+  "maximum_application_ape_percent": 3.2767232767232812,
+  "new_simulations": 0,
+  "pairs": [
+    {
+      "algorithm": "direct",
+      "coarse_gap_cycles": 98,
+      "gap_absolute_relative_error_percent": 19.51219512195122,
+      "gap_error_cycles": 16,
+      "gap_error_percent_reference_baseline": 0.1276527844263603,
+      "memory_bytes_per_cycle": 32,
+      "ordering_agrees": true,
+      "reference_gap_cycles": 82
+    },
+    {
+      "algorithm": "direct",
+      "coarse_gap_cycles": 132,
+      "gap_absolute_relative_error_percent": 43.47826086956522,
+      "gap_error_cycles": 40,
+      "gap_error_percent_reference_baseline": 0.8074283407347598,
+      "memory_bytes_per_cycle": 256,
+      "ordering_agrees": true,
+      "reference_gap_cycles": 92
+    },
+    {
+      "algorithm": "direct",
+      "coarse_gap_cycles": 336,
+      "gap_absolute_relative_error_percent": 42.3728813559322,
+      "gap_error_cycles": 100,
+      "gap_error_percent_reference_baseline": 2.2416498542927594,
+      "memory_bytes_per_cycle": 1024,
+      "ordering_agrees": true,
+      "reference_gap_cycles": 236
+    },
+    {
+      "algorithm": "tree",
+      "coarse_gap_cycles": -548,
+      "gap_absolute_relative_error_percent": 3.787878787878788,
+      "gap_error_cycles": -20,
+      "gap_error_percent_reference_baseline": -0.17391304347826086,
+      "memory_bytes_per_cycle": 32,
+      "ordering_agrees": true,
+      "reference_gap_cycles": -528
+    },
+    {
+      "algorithm": "tree",
+      "coarse_gap_cycles": -548,
+      "gap_absolute_relative_error_percent": 39.795918367346935,
+      "gap_error_cycles": -156,
+      "gap_error_percent_reference_baseline": -2.955665024630542,
+      "memory_bytes_per_cycle": 256,
+      "ordering_agrees": true,
+      "reference_gap_cycles": -392
+    },
+    {
+      "algorithm": "tree",
+      "coarse_gap_cycles": -548,
+      "gap_absolute_relative_error_percent": 77.92207792207792,
+      "gap_error_cycles": -240,
+      "gap_error_percent_reference_baseline": -5.109644453906749,
+      "memory_bytes_per_cycle": 1024,
+      "ordering_agrees": true,
+      "reference_gap_cycles": -308
+    }
+  ],
+  "placement_ordering_agreements": 6,
+  "rows": [
+    {
+      "absolute_percentage_error": 2.958977807666452,
+      "algorithm": "direct",
+      "coarse_cycles": 4593,
+      "coarse_network_queue_cycles": 2,
+      "error_cycles": 132,
+      "flits_on_different_path": 22,
+      "memory_bytes_per_cycle": 1024,
+      "message_service_mape_percent": 9.396775326409125,
+      "placement": "baseline",
+      "reference_cycles": 4461
+    },
+    {
+      "absolute_percentage_error": 0.7573964497041397,
+      "algorithm": "direct",
+      "coarse_cycles": 4257,
+      "coarse_network_queue_cycles": 4,
+      "error_cycles": 32,
+      "flits_on_different_path": 36,
+      "memory_bytes_per_cycle": 1024,
+      "message_service_mape_percent": 5.9021622995289444,
+      "placement": "ours_rotated",
+      "reference_cycles": 4225
+    },
+    {
+      "absolute_percentage_error": 1.7763423496164776,
+      "algorithm": "direct",
+      "coarse_cycles": 5042,
+      "coarse_network_queue_cycles": 2,
+      "error_cycles": 88,
+      "flits_on_different_path": 22,
+      "memory_bytes_per_cycle": 256,
+      "message_service_mape_percent": 13.246763836959056,
+      "placement": "baseline",
+      "reference_cycles": 4954
+    },
+    {
+      "absolute_percentage_error": 0.987248046071576,
+      "algorithm": "direct",
+      "coarse_cycles": 4910,
+      "coarse_network_queue_cycles": 4,
+      "error_cycles": 48,
+      "flits_on_different_path": 24,
+      "memory_bytes_per_cycle": 256,
+      "message_service_mape_percent": 8.713815794503644,
+      "placement": "ours_rotated",
+      "reference_cycles": 4862
+    },
+    {
+      "absolute_percentage_error": 0.36700175522579315,
+      "algorithm": "direct",
+      "coarse_cycles": 12580,
+      "coarse_network_queue_cycles": 2,
+      "error_cycles": 46,
+      "flits_on_different_path": 0,
+      "memory_bytes_per_cycle": 32,
+      "message_service_mape_percent": 12.057402846661297,
+      "placement": "baseline",
+      "reference_cycles": 12534
+    },
+    {
+      "absolute_percentage_error": 0.24092515258593572,
+      "algorithm": "direct",
+      "coarse_cycles": 12482,
+      "coarse_network_queue_cycles": 4,
+      "error_cycles": 30,
+      "flits_on_different_path": 24,
+      "memory_bytes_per_cycle": 32,
+      "message_service_mape_percent": 8.17108572990553,
+      "placement": "ours_rotated",
+      "reference_cycles": 12452
+    },
+    {
+      "absolute_percentage_error": 1.6180540770704743,
+      "algorithm": "tree",
+      "coarse_cycles": 4621,
+      "coarse_network_queue_cycles": 0,
+      "error_cycles": -76,
+      "flits_on_different_path": 12,
+      "memory_bytes_per_cycle": 1024,
+      "message_service_mape_percent": 16.011339090572058,
+      "placement": "baseline",
+      "reference_cycles": 4697
+    },
+    {
+      "absolute_percentage_error": 3.2767232767232812,
+      "algorithm": "tree",
+      "coarse_cycles": 5169,
+      "coarse_network_queue_cycles": 6,
+      "error_cycles": 164,
+      "flits_on_different_path": 36,
+      "memory_bytes_per_cycle": 1024,
+      "message_service_mape_percent": 8.60970989400633,
+      "placement": "ours_rotated",
+      "reference_cycles": 5005
+    },
+    {
+      "absolute_percentage_error": 0.1515725653656652,
+      "algorithm": "tree",
+      "coarse_cycles": 5286,
+      "coarse_network_queue_cycles": 0,
+      "error_cycles": 8,
+      "flits_on_different_path": 24,
+      "memory_bytes_per_cycle": 256,
+      "message_service_mape_percent": 18.712185002964063,
+      "placement": "baseline",
+      "reference_cycles": 5278
+    },
+    {
+      "absolute_percentage_error": 2.892416225749561,
+      "algorithm": "tree",
+      "coarse_cycles": 5834,
+      "coarse_network_queue_cycles": 6,
+      "error_cycles": 164,
+      "flits_on_different_path": 36,
+      "memory_bytes_per_cycle": 256,
+      "message_service_mape_percent": 9.114920047896609,
+      "placement": "ours_rotated",
+      "reference_cycles": 5670
+    },
+    {
+      "absolute_percentage_error": 1.2521739130434861,
+      "algorithm": "tree",
+      "coarse_cycles": 11644,
+      "coarse_network_queue_cycles": 0,
+      "error_cycles": 144,
+      "flits_on_different_path": 12,
+      "memory_bytes_per_cycle": 32,
+      "message_service_mape_percent": 16.40109668893979,
+      "placement": "baseline",
+      "reference_cycles": 11500
+    },
+    {
+      "absolute_percentage_error": 1.363485201197201,
+      "algorithm": "tree",
+      "coarse_cycles": 12192,
+      "coarse_network_queue_cycles": 6,
+      "error_cycles": 164,
+      "flits_on_different_path": 36,
+      "memory_bytes_per_cycle": 32,
+      "message_service_mape_percent": 9.114920047896609,
+      "placement": "ours_rotated",
+      "reference_cycles": 12028
+    }
+  ],
+  "source_runs": [
+    {
+      "complete_sha256": "14023c90f5daa0f759006a4597d5c7846877692ee22cebac79f6e1b85dbd52c1",
+      "hashes_checked": 279,
+      "path": "/home/wangziheng/wafer_simulator/runs/collective-memory-balance-001",
+      "source_commit": "c526aec28780f498624f3139564a448a4ff0dbbb"
+    },
+    {
+      "complete_sha256": "e5c179b209f31f13e4c6429321f8a04f8e7f3649bb34ebe0d4d87ddd070fe9a6",
+      "hashes_checked": 141,
+      "path": "/home/wangziheng/wafer_simulator/runs/collective-tree-spatial-001",
+      "source_commit": "7cff8aded0775a424213d4bb1bebf66c4707323f"
+    }
+  ]
+}

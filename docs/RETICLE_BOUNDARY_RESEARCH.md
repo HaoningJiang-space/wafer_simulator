@@ -2,6 +2,8 @@
 
 状态：2026-10-07 原文和 pinned source 核对完成；尚未实现显式 local NoC，
 没有新的模型误差、性能或饱和结果。原有 collective / placement 案例冻结。
+已归档：[12 点只读模型误差](results/model-fidelity-saved-001/REVIEW.md)、
+[端点与外部连接复核](results/reticle-boundary-audit-001/REVIEW.md)。
 
 当前问题收紧为：**在同一份工作、同一局部资源预算和同一 WoW 外部网络下，
 compute reticle 的聚合边界模型何时足够；何时必须保留局部共享资源和有限队列的
