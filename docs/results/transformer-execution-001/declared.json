@@ -1,0 +1,5658 @@
+{
+  "audit": {
+    "application_cycles": 15862,
+    "operations": 30,
+    "passed": true,
+    "phases": 102,
+    "services": 134,
+    "source_duration_used": false
+  },
+  "case": "declared",
+  "collective": [
+    {
+      "algorithm": "root gather, sum, broadcast",
+      "completion": "all output homes written before any dependent operation",
+      "element_bytes": 4,
+      "elements": 1024,
+      "input_objects": [
+        "r0/attention_out:out",
+        "r1/attention_out:out"
+      ],
+      "operation": "attention_sum",
+      "output_objects": [
+        "r0/attention_sum:out",
+        "r1/attention_sum:out"
+      ],
+      "participants": [
+        0,
+        1
+      ],
+      "reduction": "sum",
+      "root": 0
+    },
+    {
+      "algorithm": "root gather, sum, broadcast",
+      "completion": "all output homes written before any dependent operation",
+      "element_bytes": 4,
+      "elements": 1024,
+      "input_objects": [
+        "r0/ffn_down:out",
+        "r1/ffn_down:out"
+      ],
+      "operation": "ffn_sum",
+      "output_objects": [
+        "r0/ffn_sum:out",
+        "r1/ffn_sum:out"
+      ],
+      "participants": [
+        0,
+        1
+      ],
+      "reduction": "sum",
+      "root": 0
+    }
+  ],
+  "dimensions": {
+    "batch": 1,
+    "ffn_hidden": 128,
+    "heads": 4,
+    "hidden": 64,
+    "sequence": 16,
+    "shards": 2
+  },
+  "logical_summary": {
+    "data_objects": 54,
+    "operations": 30,
+    "parameter_bytes": 133120,
+    "retained_output_bytes": 8192,
+    "work": {
+      "mac": 557056,
+      "scalar_add": 26496,
+      "scalar_div": 1024,
+      "scalar_erf": 2048,
+      "scalar_exp": 1024,
+      "scalar_max": 960,
+      "scalar_mul": 19584,
+      "scalar_rsqrt": 64
+    }
+  },
+  "operators": {
+    "attention_sum": {
+      "kind": "sum_allreduce"
+    },
+    "ffn_sum": {
+      "kind": "sum_allreduce"
+    },
+    "r0/attention_out": {
+      "kind": "linear"
+    },
+    "r0/attention_residual": {
+      "kind": "add"
+    },
+    "r0/context": {
+      "head_dim": 16,
+      "heads": 2,
+      "kind": "attention_values"
+    },
+    "r0/ffn_down": {
+      "kind": "linear"
+    },
+    "r0/ffn_up": {
+      "kind": "linear"
+    },
+    "r0/gelu": {
+      "kind": "gelu_erf"
+    },
+    "r0/k": {
+      "kind": "linear"
+    },
+    "r0/ln1": {
+      "epsilon": 1e-05,
+      "kind": "layer_norm"
+    },
+    "r0/ln2": {
+      "epsilon": 1e-05,
+      "kind": "layer_norm"
+    },
+    "r0/output": {
+      "kind": "add"
+    },
+    "r0/q": {
+      "kind": "linear"
+    },
+    "r0/scores": {
+      "head_dim": 16,
+      "heads": 2,
+      "kind": "attention_scores"
+    },
+    "r0/softmax": {
+      "head_dim": 16,
+      "kind": "scaled_softmax"
+    },
+    "r0/v": {
+      "kind": "linear"
+    },
+    "r1/attention_out": {
+      "kind": "linear"
+    },
+    "r1/attention_residual": {
+      "kind": "add"
+    },
+    "r1/context": {
+      "head_dim": 16,
+      "heads": 2,
+      "kind": "attention_values"
+    },
+    "r1/ffn_down": {
+      "kind": "linear"
+    },
+    "r1/ffn_up": {
+      "kind": "linear"
+    },
+    "r1/gelu": {
+      "kind": "gelu_erf"
+    },
+    "r1/k": {
+      "kind": "linear"
+    },
+    "r1/ln1": {
+      "epsilon": 1e-05,
+      "kind": "layer_norm"
+    },
+    "r1/ln2": {
+      "epsilon": 1e-05,
+      "kind": "layer_norm"
+    },
+    "r1/output": {
+      "kind": "add"
+    },
+    "r1/q": {
+      "kind": "linear"
+    },
+    "r1/scores": {
+      "head_dim": 16,
+      "heads": 2,
+      "kind": "attention_scores"
+    },
+    "r1/softmax": {
+      "head_dim": 16,
+      "kind": "scaled_softmax"
+    },
+    "r1/v": {
+      "kind": "linear"
+    }
+  },
+  "placement": {
+    "compute": {
+      "attention_sum": "compute-0",
+      "ffn_sum": "compute-0",
+      "r0/attention_out": "compute-0",
+      "r0/attention_residual": "compute-0",
+      "r0/context": "compute-0",
+      "r0/ffn_down": "compute-0",
+      "r0/ffn_up": "compute-0",
+      "r0/gelu": "compute-0",
+      "r0/k": "compute-0",
+      "r0/ln1": "compute-0",
+      "r0/ln2": "compute-0",
+      "r0/output": "compute-0",
+      "r0/q": "compute-0",
+      "r0/scores": "compute-0",
+      "r0/softmax": "compute-0",
+      "r0/v": "compute-0",
+      "r1/attention_out": "compute-1",
+      "r1/attention_residual": "compute-1",
+      "r1/context": "compute-1",
+      "r1/ffn_down": "compute-1",
+      "r1/ffn_up": "compute-1",
+      "r1/gelu": "compute-1",
+      "r1/k": "compute-1",
+      "r1/ln1": "compute-1",
+      "r1/ln2": "compute-1",
+      "r1/output": "compute-1",
+      "r1/q": "compute-1",
+      "r1/scores": "compute-1",
+      "r1/softmax": "compute-1",
+      "r1/v": "compute-1"
+    },
+    "data": {
+      "r0/attention_out:out": "0",
+      "r0/attention_residual:out": "0",
+      "r0/attention_sum:out": "0",
+      "r0/context:out": "0",
+      "r0/ffn_down:out": "0",
+      "r0/ffn_sum:out": "0",
+      "r0/ffn_up:out": "0",
+      "r0/gelu:out": "0",
+      "r0/input": "0",
+      "r0/k:out": "0",
+      "r0/ln1:beta": "0",
+      "r0/ln1:gamma": "0",
+      "r0/ln1:out": "0",
+      "r0/ln2:beta": "0",
+      "r0/ln2:gamma": "0",
+      "r0/ln2:out": "0",
+      "r0/output:out": "0",
+      "r0/q:out": "0",
+      "r0/scores:out": "0",
+      "r0/softmax:out": "0",
+      "r0/v:out": "0",
+      "r0/wdown": "0",
+      "r0/wk": "0",
+      "r0/wo": "0",
+      "r0/wq": "0",
+      "r0/wup": "0",
+      "r0/wv": "0",
+      "r1/attention_out:out": "1",
+      "r1/attention_residual:out": "1",
+      "r1/attention_sum:out": "1",
+      "r1/context:out": "1",
+      "r1/ffn_down:out": "1",
+      "r1/ffn_sum:out": "1",
+      "r1/ffn_up:out": "1",
+      "r1/gelu:out": "1",
+      "r1/input": "1",
+      "r1/k:out": "1",
+      "r1/ln1:beta": "1",
+      "r1/ln1:gamma": "1",
+      "r1/ln1:out": "1",
+      "r1/ln2:beta": "1",
+      "r1/ln2:gamma": "1",
+      "r1/ln2:out": "1",
+      "r1/output:out": "1",
+      "r1/q:out": "1",
+      "r1/scores:out": "1",
+      "r1/softmax:out": "1",
+      "r1/v:out": "1",
+      "r1/wdown": "1",
+      "r1/wk": "1",
+      "r1/wo": "1",
+      "r1/wq": "1",
+      "r1/wup": "1",
+      "r1/wv": "1"
+    }
+  },
+  "result": {
+    "application_cycles": 15862,
+    "blocked": {},
+    "complete": true,
+    "lifecycle": [
+      {
+        "cycle": 0,
+        "event": "admit",
+        "operation": "r0/ln1",
+        "used_bytes": {
+          "0": 74880,
+          "1": 70656
+        }
+      },
+      {
+        "cycle": 0,
+        "event": "admit",
+        "operation": "r1/ln1",
+        "used_bytes": {
+          "0": 74880,
+          "1": 74880
+        }
+      },
+      {
+        "cycle": 725,
+        "event": "complete",
+        "operation": "r0/ln1",
+        "used_bytes": {
+          "0": 74752,
+          "1": 74880
+        }
+      },
+      {
+        "cycle": 725,
+        "event": "admit",
+        "operation": "r0/q",
+        "used_bytes": {
+          "0": 76800,
+          "1": 74880
+        }
+      },
+      {
+        "cycle": 725,
+        "event": "admit",
+        "operation": "r0/k",
+        "used_bytes": {
+          "0": 78848,
+          "1": 74880
+        }
+      },
+      {
+        "cycle": 725,
+        "event": "admit",
+        "operation": "r0/v",
+        "used_bytes": {
+          "0": 80896,
+          "1": 74880
+        }
+      },
+      {
+        "cycle": 725,
+        "event": "complete",
+        "operation": "r1/ln1",
+        "used_bytes": {
+          "0": 80896,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 725,
+        "event": "admit",
+        "operation": "r1/q",
+        "used_bytes": {
+          "0": 80896,
+          "1": 76800
+        }
+      },
+      {
+        "cycle": 725,
+        "event": "admit",
+        "operation": "r1/k",
+        "used_bytes": {
+          "0": 80896,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 725,
+        "event": "admit",
+        "operation": "r1/v",
+        "used_bytes": {
+          "0": 80896,
+          "1": 80896
+        }
+      },
+      {
+        "cycle": 1941,
+        "event": "complete",
+        "operation": "r0/q",
+        "used_bytes": {
+          "0": 80896,
+          "1": 80896
+        }
+      },
+      {
+        "cycle": 1941,
+        "event": "complete",
+        "operation": "r1/q",
+        "used_bytes": {
+          "0": 80896,
+          "1": 80896
+        }
+      },
+      {
+        "cycle": 2197,
+        "event": "complete",
+        "operation": "r0/k",
+        "used_bytes": {
+          "0": 80896,
+          "1": 80896
+        }
+      },
+      {
+        "cycle": 2197,
+        "event": "admit",
+        "operation": "r0/scores",
+        "used_bytes": {
+          "0": 82944,
+          "1": 80896
+        }
+      },
+      {
+        "cycle": 2197,
+        "event": "complete",
+        "operation": "r1/k",
+        "used_bytes": {
+          "0": 82944,
+          "1": 80896
+        }
+      },
+      {
+        "cycle": 2197,
+        "event": "admit",
+        "operation": "r1/scores",
+        "used_bytes": {
+          "0": 82944,
+          "1": 82944
+        }
+      },
+      {
+        "cycle": 2709,
+        "event": "complete",
+        "operation": "r0/v",
+        "used_bytes": {
+          "0": 78848,
+          "1": 82944
+        }
+      },
+      {
+        "cycle": 2709,
+        "event": "complete",
+        "operation": "r1/v",
+        "used_bytes": {
+          "0": 78848,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 2837,
+        "event": "complete",
+        "operation": "r0/scores",
+        "used_bytes": {
+          "0": 74752,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 2837,
+        "event": "admit",
+        "operation": "r0/softmax",
+        "used_bytes": {
+          "0": 77056,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 2837,
+        "event": "complete",
+        "operation": "r1/scores",
+        "used_bytes": {
+          "0": 77056,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 2837,
+        "event": "admit",
+        "operation": "r1/softmax",
+        "used_bytes": {
+          "0": 77056,
+          "1": 77056
+        }
+      },
+      {
+        "cycle": 3345,
+        "event": "complete",
+        "operation": "r0/softmax",
+        "used_bytes": {
+          "0": 74752,
+          "1": 77056
+        }
+      },
+      {
+        "cycle": 3345,
+        "event": "admit",
+        "operation": "r0/context",
+        "used_bytes": {
+          "0": 76800,
+          "1": 77056
+        }
+      },
+      {
+        "cycle": 3345,
+        "event": "complete",
+        "operation": "r1/softmax",
+        "used_bytes": {
+          "0": 76800,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 3345,
+        "event": "admit",
+        "operation": "r1/context",
+        "used_bytes": {
+          "0": 76800,
+          "1": 76800
+        }
+      },
+      {
+        "cycle": 3665,
+        "event": "complete",
+        "operation": "r0/context",
+        "used_bytes": {
+          "0": 72704,
+          "1": 76800
+        }
+      },
+      {
+        "cycle": 3665,
+        "event": "admit",
+        "operation": "r0/attention_out",
+        "used_bytes": {
+          "0": 76800,
+          "1": 76800
+        }
+      },
+      {
+        "cycle": 3665,
+        "event": "complete",
+        "operation": "r1/context",
+        "used_bytes": {
+          "0": 76800,
+          "1": 72704
+        }
+      },
+      {
+        "cycle": 3665,
+        "event": "admit",
+        "operation": "r1/attention_out",
+        "used_bytes": {
+          "0": 76800,
+          "1": 76800
+        }
+      },
+      {
+        "cycle": 4625,
+        "event": "complete",
+        "operation": "r0/attention_out",
+        "used_bytes": {
+          "0": 74752,
+          "1": 76800
+        }
+      },
+      {
+        "cycle": 4625,
+        "event": "complete",
+        "operation": "r1/attention_out",
+        "used_bytes": {
+          "0": 74752,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 4625,
+        "event": "admit",
+        "operation": "attention_sum",
+        "used_bytes": {
+          "0": 87040,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 7257,
+        "event": "complete",
+        "operation": "attention_sum",
+        "used_bytes": {
+          "0": 74752,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 7257,
+        "event": "admit",
+        "operation": "r0/attention_residual",
+        "used_bytes": {
+          "0": 78848,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 7257,
+        "event": "admit",
+        "operation": "r1/attention_residual",
+        "used_bytes": {
+          "0": 78848,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 7705,
+        "event": "complete",
+        "operation": "r0/attention_residual",
+        "used_bytes": {
+          "0": 70656,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 7705,
+        "event": "admit",
+        "operation": "r0/ln2",
+        "used_bytes": {
+          "0": 74880,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 7705,
+        "event": "complete",
+        "operation": "r1/attention_residual",
+        "used_bytes": {
+          "0": 74880,
+          "1": 70656
+        }
+      },
+      {
+        "cycle": 7705,
+        "event": "admit",
+        "operation": "r1/ln2",
+        "used_bytes": {
+          "0": 74880,
+          "1": 74880
+        }
+      },
+      {
+        "cycle": 8430,
+        "event": "complete",
+        "operation": "r0/ln2",
+        "used_bytes": {
+          "0": 74752,
+          "1": 74880
+        }
+      },
+      {
+        "cycle": 8430,
+        "event": "admit",
+        "operation": "r0/ffn_up",
+        "used_bytes": {
+          "0": 78848,
+          "1": 74880
+        }
+      },
+      {
+        "cycle": 8430,
+        "event": "complete",
+        "operation": "r1/ln2",
+        "used_bytes": {
+          "0": 78848,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 8430,
+        "event": "admit",
+        "operation": "r1/ffn_up",
+        "used_bytes": {
+          "0": 78848,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 10222,
+        "event": "complete",
+        "operation": "r0/ffn_up",
+        "used_bytes": {
+          "0": 74752,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 10222,
+        "event": "admit",
+        "operation": "r0/gelu",
+        "used_bytes": {
+          "0": 78848,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 10222,
+        "event": "complete",
+        "operation": "r1/ffn_up",
+        "used_bytes": {
+          "0": 78848,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 10222,
+        "event": "admit",
+        "operation": "r1/gelu",
+        "used_bytes": {
+          "0": 78848,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 10990,
+        "event": "complete",
+        "operation": "r0/gelu",
+        "used_bytes": {
+          "0": 74752,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 10990,
+        "event": "admit",
+        "operation": "r0/ffn_down",
+        "used_bytes": {
+          "0": 78848,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 10990,
+        "event": "complete",
+        "operation": "r1/gelu",
+        "used_bytes": {
+          "0": 78848,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 10990,
+        "event": "admit",
+        "operation": "r1/ffn_down",
+        "used_bytes": {
+          "0": 78848,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 12782,
+        "event": "complete",
+        "operation": "r0/ffn_down",
+        "used_bytes": {
+          "0": 74752,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 12782,
+        "event": "complete",
+        "operation": "r1/ffn_down",
+        "used_bytes": {
+          "0": 74752,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 12782,
+        "event": "admit",
+        "operation": "ffn_sum",
+        "used_bytes": {
+          "0": 87040,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 15414,
+        "event": "complete",
+        "operation": "ffn_sum",
+        "used_bytes": {
+          "0": 74752,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 15414,
+        "event": "admit",
+        "operation": "r0/output",
+        "used_bytes": {
+          "0": 78848,
+          "1": 74752
+        }
+      },
+      {
+        "cycle": 15414,
+        "event": "admit",
+        "operation": "r1/output",
+        "used_bytes": {
+          "0": 78848,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 15862,
+        "event": "complete",
+        "operation": "r0/output",
+        "used_bytes": {
+          "0": 70656,
+          "1": 78848
+        }
+      },
+      {
+        "cycle": 15862,
+        "event": "complete",
+        "operation": "r1/output",
+        "used_bytes": {
+          "0": 70656,
+          "1": 70656
+        }
+      }
+    ],
+    "operations": {
+      "attention_sum": {
+        "admitted": 4625,
+        "capacity_wait_cycles": 0,
+        "finish": 7257,
+        "ready": 4625
+      },
+      "ffn_sum": {
+        "admitted": 12782,
+        "capacity_wait_cycles": 0,
+        "finish": 15414,
+        "ready": 12782
+      },
+      "r0/attention_out": {
+        "admitted": 3665,
+        "capacity_wait_cycles": 0,
+        "finish": 4625,
+        "ready": 3665
+      },
+      "r0/attention_residual": {
+        "admitted": 7257,
+        "capacity_wait_cycles": 0,
+        "finish": 7705,
+        "ready": 7257
+      },
+      "r0/context": {
+        "admitted": 3345,
+        "capacity_wait_cycles": 0,
+        "finish": 3665,
+        "ready": 3345
+      },
+      "r0/ffn_down": {
+        "admitted": 10990,
+        "capacity_wait_cycles": 0,
+        "finish": 12782,
+        "ready": 10990
+      },
+      "r0/ffn_up": {
+        "admitted": 8430,
+        "capacity_wait_cycles": 0,
+        "finish": 10222,
+        "ready": 8430
+      },
+      "r0/gelu": {
+        "admitted": 10222,
+        "capacity_wait_cycles": 0,
+        "finish": 10990,
+        "ready": 10222
+      },
+      "r0/k": {
+        "admitted": 725,
+        "capacity_wait_cycles": 0,
+        "finish": 2197,
+        "ready": 725
+      },
+      "r0/ln1": {
+        "admitted": 0,
+        "capacity_wait_cycles": 0,
+        "finish": 725,
+        "ready": 0
+      },
+      "r0/ln2": {
+        "admitted": 7705,
+        "capacity_wait_cycles": 0,
+        "finish": 8430,
+        "ready": 7705
+      },
+      "r0/output": {
+        "admitted": 15414,
+        "capacity_wait_cycles": 0,
+        "finish": 15862,
+        "ready": 15414
+      },
+      "r0/q": {
+        "admitted": 725,
+        "capacity_wait_cycles": 0,
+        "finish": 1941,
+        "ready": 725
+      },
+      "r0/scores": {
+        "admitted": 2197,
+        "capacity_wait_cycles": 0,
+        "finish": 2837,
+        "ready": 2197
+      },
+      "r0/softmax": {
+        "admitted": 2837,
+        "capacity_wait_cycles": 0,
+        "finish": 3345,
+        "ready": 2837
+      },
+      "r0/v": {
+        "admitted": 725,
+        "capacity_wait_cycles": 0,
+        "finish": 2709,
+        "ready": 725
+      },
+      "r1/attention_out": {
+        "admitted": 3665,
+        "capacity_wait_cycles": 0,
+        "finish": 4625,
+        "ready": 3665
+      },
+      "r1/attention_residual": {
+        "admitted": 7257,
+        "capacity_wait_cycles": 0,
+        "finish": 7705,
+        "ready": 7257
+      },
+      "r1/context": {
+        "admitted": 3345,
+        "capacity_wait_cycles": 0,
+        "finish": 3665,
+        "ready": 3345
+      },
+      "r1/ffn_down": {
+        "admitted": 10990,
+        "capacity_wait_cycles": 0,
+        "finish": 12782,
+        "ready": 10990
+      },
+      "r1/ffn_up": {
+        "admitted": 8430,
+        "capacity_wait_cycles": 0,
+        "finish": 10222,
+        "ready": 8430
+      },
+      "r1/gelu": {
+        "admitted": 10222,
+        "capacity_wait_cycles": 0,
+        "finish": 10990,
+        "ready": 10222
+      },
+      "r1/k": {
+        "admitted": 725,
+        "capacity_wait_cycles": 0,
+        "finish": 2197,
+        "ready": 725
+      },
+      "r1/ln1": {
+        "admitted": 0,
+        "capacity_wait_cycles": 0,
+        "finish": 725,
+        "ready": 0
+      },
+      "r1/ln2": {
+        "admitted": 7705,
+        "capacity_wait_cycles": 0,
+        "finish": 8430,
+        "ready": 7705
+      },
+      "r1/output": {
+        "admitted": 15414,
+        "capacity_wait_cycles": 0,
+        "finish": 15862,
+        "ready": 15414
+      },
+      "r1/q": {
+        "admitted": 725,
+        "capacity_wait_cycles": 0,
+        "finish": 1941,
+        "ready": 725
+      },
+      "r1/scores": {
+        "admitted": 2197,
+        "capacity_wait_cycles": 0,
+        "finish": 2837,
+        "ready": 2197
+      },
+      "r1/softmax": {
+        "admitted": 2837,
+        "capacity_wait_cycles": 0,
+        "finish": 3345,
+        "ready": 2837
+      },
+      "r1/v": {
+        "admitted": 725,
+        "capacity_wait_cycles": 0,
+        "finish": 2709,
+        "ready": 725
+      }
+    },
+    "peak_bytes": {
+      "0": 87040,
+      "1": 82944
+    },
+    "phases": [
+      {
+        "finish": 144,
+        "kind": "memory_read",
+        "operation": "r0/ln1",
+        "phase": 0,
+        "ready": 0
+      },
+      {
+        "finish": 144,
+        "kind": "memory_read",
+        "operation": "r1/ln1",
+        "phase": 0,
+        "ready": 0
+      },
+      {
+        "finish": 597,
+        "kind": "compute",
+        "operation": "r0/ln1",
+        "phase": 1,
+        "ready": 144
+      },
+      {
+        "finish": 597,
+        "kind": "compute",
+        "operation": "r1/ln1",
+        "phase": 1,
+        "ready": 144
+      },
+      {
+        "finish": 725,
+        "kind": "memory_write",
+        "operation": "r0/ln1",
+        "phase": 2,
+        "ready": 597
+      },
+      {
+        "finish": 725,
+        "kind": "memory_write",
+        "operation": "r1/ln1",
+        "phase": 2,
+        "ready": 597
+      },
+      {
+        "finish": 1109,
+        "kind": "memory_read",
+        "operation": "r0/q",
+        "phase": 0,
+        "ready": 725
+      },
+      {
+        "finish": 1493,
+        "kind": "memory_read",
+        "operation": "r0/k",
+        "phase": 0,
+        "ready": 725
+      },
+      {
+        "finish": 1877,
+        "kind": "memory_read",
+        "operation": "r0/v",
+        "phase": 0,
+        "ready": 725
+      },
+      {
+        "finish": 1109,
+        "kind": "memory_read",
+        "operation": "r1/q",
+        "phase": 0,
+        "ready": 725
+      },
+      {
+        "finish": 1493,
+        "kind": "memory_read",
+        "operation": "r1/k",
+        "phase": 0,
+        "ready": 725
+      },
+      {
+        "finish": 1877,
+        "kind": "memory_read",
+        "operation": "r1/v",
+        "phase": 0,
+        "ready": 725
+      },
+      {
+        "finish": 1621,
+        "kind": "compute",
+        "operation": "r0/q",
+        "phase": 1,
+        "ready": 1109
+      },
+      {
+        "finish": 1621,
+        "kind": "compute",
+        "operation": "r1/q",
+        "phase": 1,
+        "ready": 1109
+      },
+      {
+        "finish": 2133,
+        "kind": "compute",
+        "operation": "r0/k",
+        "phase": 1,
+        "ready": 1493
+      },
+      {
+        "finish": 2133,
+        "kind": "compute",
+        "operation": "r1/k",
+        "phase": 1,
+        "ready": 1493
+      },
+      {
+        "finish": 1941,
+        "kind": "memory_write",
+        "operation": "r0/q",
+        "phase": 2,
+        "ready": 1621
+      },
+      {
+        "finish": 1941,
+        "kind": "memory_write",
+        "operation": "r1/q",
+        "phase": 2,
+        "ready": 1621
+      },
+      {
+        "finish": 2645,
+        "kind": "compute",
+        "operation": "r0/v",
+        "phase": 1,
+        "ready": 1877
+      },
+      {
+        "finish": 2645,
+        "kind": "compute",
+        "operation": "r1/v",
+        "phase": 1,
+        "ready": 1877
+      },
+      {
+        "finish": 2197,
+        "kind": "memory_write",
+        "operation": "r0/k",
+        "phase": 2,
+        "ready": 2133
+      },
+      {
+        "finish": 2197,
+        "kind": "memory_write",
+        "operation": "r1/k",
+        "phase": 2,
+        "ready": 2133
+      },
+      {
+        "finish": 2325,
+        "kind": "memory_read",
+        "operation": "r0/scores",
+        "phase": 0,
+        "ready": 2197
+      },
+      {
+        "finish": 2325,
+        "kind": "memory_read",
+        "operation": "r1/scores",
+        "phase": 0,
+        "ready": 2197
+      },
+      {
+        "finish": 2773,
+        "kind": "compute",
+        "operation": "r0/scores",
+        "phase": 1,
+        "ready": 2325
+      },
+      {
+        "finish": 2773,
+        "kind": "compute",
+        "operation": "r1/scores",
+        "phase": 1,
+        "ready": 2325
+      },
+      {
+        "finish": 2709,
+        "kind": "memory_write",
+        "operation": "r0/v",
+        "phase": 2,
+        "ready": 2645
+      },
+      {
+        "finish": 2709,
+        "kind": "memory_write",
+        "operation": "r1/v",
+        "phase": 2,
+        "ready": 2645
+      },
+      {
+        "finish": 2837,
+        "kind": "memory_write",
+        "operation": "r0/scores",
+        "phase": 2,
+        "ready": 2773
+      },
+      {
+        "finish": 2837,
+        "kind": "memory_write",
+        "operation": "r1/scores",
+        "phase": 2,
+        "ready": 2773
+      },
+      {
+        "finish": 2901,
+        "kind": "memory_read",
+        "operation": "r0/softmax",
+        "phase": 0,
+        "ready": 2837
+      },
+      {
+        "finish": 2901,
+        "kind": "memory_read",
+        "operation": "r1/softmax",
+        "phase": 0,
+        "ready": 2837
+      },
+      {
+        "finish": 3281,
+        "kind": "compute",
+        "operation": "r0/softmax",
+        "phase": 1,
+        "ready": 2901
+      },
+      {
+        "finish": 3281,
+        "kind": "compute",
+        "operation": "r1/softmax",
+        "phase": 1,
+        "ready": 2901
+      },
+      {
+        "finish": 3345,
+        "kind": "memory_write",
+        "operation": "r0/softmax",
+        "phase": 2,
+        "ready": 3281
+      },
+      {
+        "finish": 3345,
+        "kind": "memory_write",
+        "operation": "r1/softmax",
+        "phase": 2,
+        "ready": 3281
+      },
+      {
+        "finish": 3473,
+        "kind": "memory_read",
+        "operation": "r0/context",
+        "phase": 0,
+        "ready": 3345
+      },
+      {
+        "finish": 3473,
+        "kind": "memory_read",
+        "operation": "r1/context",
+        "phase": 0,
+        "ready": 3345
+      },
+      {
+        "finish": 3601,
+        "kind": "compute",
+        "operation": "r0/context",
+        "phase": 1,
+        "ready": 3473
+      },
+      {
+        "finish": 3601,
+        "kind": "compute",
+        "operation": "r1/context",
+        "phase": 1,
+        "ready": 3473
+      },
+      {
+        "finish": 3665,
+        "kind": "memory_write",
+        "operation": "r0/context",
+        "phase": 2,
+        "ready": 3601
+      },
+      {
+        "finish": 3665,
+        "kind": "memory_write",
+        "operation": "r1/context",
+        "phase": 2,
+        "ready": 3601
+      },
+      {
+        "finish": 3985,
+        "kind": "memory_read",
+        "operation": "r0/attention_out",
+        "phase": 0,
+        "ready": 3665
+      },
+      {
+        "finish": 3985,
+        "kind": "memory_read",
+        "operation": "r1/attention_out",
+        "phase": 0,
+        "ready": 3665
+      },
+      {
+        "finish": 4497,
+        "kind": "compute",
+        "operation": "r0/attention_out",
+        "phase": 1,
+        "ready": 3985
+      },
+      {
+        "finish": 4497,
+        "kind": "compute",
+        "operation": "r1/attention_out",
+        "phase": 1,
+        "ready": 3985
+      },
+      {
+        "finish": 4625,
+        "kind": "memory_write",
+        "operation": "r0/attention_out",
+        "phase": 2,
+        "ready": 4497
+      },
+      {
+        "finish": 4625,
+        "kind": "memory_write",
+        "operation": "r1/attention_out",
+        "phase": 2,
+        "ready": 4497
+      },
+      {
+        "finish": 4753,
+        "kind": "memory_read",
+        "operation": "attention_sum",
+        "phase": 0,
+        "ready": 4625
+      },
+      {
+        "finish": 5525,
+        "kind": "transfer",
+        "operation": "attention_sum",
+        "path": [
+          20,
+          11,
+          10
+        ],
+        "phase": 1,
+        "ready": 4753,
+        "transfer_bytes": 4096
+      },
+      {
+        "finish": 5653,
+        "kind": "memory_write",
+        "operation": "attention_sum",
+        "phase": 2,
+        "ready": 5525
+      },
+      {
+        "finish": 5909,
+        "kind": "memory_read",
+        "operation": "attention_sum",
+        "phase": 3,
+        "ready": 5653
+      },
+      {
+        "finish": 5973,
+        "kind": "compute",
+        "operation": "attention_sum",
+        "phase": 4,
+        "ready": 5909
+      },
+      {
+        "finish": 6229,
+        "kind": "memory_write",
+        "operation": "attention_sum",
+        "phase": 5,
+        "ready": 5973
+      },
+      {
+        "finish": 6357,
+        "kind": "memory_read",
+        "operation": "attention_sum",
+        "phase": 6,
+        "ready": 6229
+      },
+      {
+        "finish": 7129,
+        "kind": "transfer",
+        "operation": "attention_sum",
+        "path": [
+          10,
+          11,
+          20
+        ],
+        "phase": 7,
+        "ready": 6357,
+        "transfer_bytes": 4096
+      },
+      {
+        "finish": 7257,
+        "kind": "memory_write",
+        "operation": "attention_sum",
+        "phase": 8,
+        "ready": 7129
+      },
+      {
+        "finish": 7513,
+        "kind": "memory_read",
+        "operation": "r0/attention_residual",
+        "phase": 0,
+        "ready": 7257
+      },
+      {
+        "finish": 7513,
+        "kind": "memory_read",
+        "operation": "r1/attention_residual",
+        "phase": 0,
+        "ready": 7257
+      },
+      {
+        "finish": 7577,
+        "kind": "compute",
+        "operation": "r0/attention_residual",
+        "phase": 1,
+        "ready": 7513
+      },
+      {
+        "finish": 7577,
+        "kind": "compute",
+        "operation": "r1/attention_residual",
+        "phase": 1,
+        "ready": 7513
+      },
+      {
+        "finish": 7705,
+        "kind": "memory_write",
+        "operation": "r0/attention_residual",
+        "phase": 2,
+        "ready": 7577
+      },
+      {
+        "finish": 7705,
+        "kind": "memory_write",
+        "operation": "r1/attention_residual",
+        "phase": 2,
+        "ready": 7577
+      },
+      {
+        "finish": 7849,
+        "kind": "memory_read",
+        "operation": "r0/ln2",
+        "phase": 0,
+        "ready": 7705
+      },
+      {
+        "finish": 7849,
+        "kind": "memory_read",
+        "operation": "r1/ln2",
+        "phase": 0,
+        "ready": 7705
+      },
+      {
+        "finish": 8302,
+        "kind": "compute",
+        "operation": "r0/ln2",
+        "phase": 1,
+        "ready": 7849
+      },
+      {
+        "finish": 8302,
+        "kind": "compute",
+        "operation": "r1/ln2",
+        "phase": 1,
+        "ready": 7849
+      },
+      {
+        "finish": 8430,
+        "kind": "memory_write",
+        "operation": "r0/ln2",
+        "phase": 2,
+        "ready": 8302
+      },
+      {
+        "finish": 8430,
+        "kind": "memory_write",
+        "operation": "r1/ln2",
+        "phase": 2,
+        "ready": 8302
+      },
+      {
+        "finish": 9070,
+        "kind": "memory_read",
+        "operation": "r0/ffn_up",
+        "phase": 0,
+        "ready": 8430
+      },
+      {
+        "finish": 9070,
+        "kind": "memory_read",
+        "operation": "r1/ffn_up",
+        "phase": 0,
+        "ready": 8430
+      },
+      {
+        "finish": 10094,
+        "kind": "compute",
+        "operation": "r0/ffn_up",
+        "phase": 1,
+        "ready": 9070
+      },
+      {
+        "finish": 10094,
+        "kind": "compute",
+        "operation": "r1/ffn_up",
+        "phase": 1,
+        "ready": 9070
+      },
+      {
+        "finish": 10222,
+        "kind": "memory_write",
+        "operation": "r0/ffn_up",
+        "phase": 2,
+        "ready": 10094
+      },
+      {
+        "finish": 10222,
+        "kind": "memory_write",
+        "operation": "r1/ffn_up",
+        "phase": 2,
+        "ready": 10094
+      },
+      {
+        "finish": 10350,
+        "kind": "memory_read",
+        "operation": "r0/gelu",
+        "phase": 0,
+        "ready": 10222
+      },
+      {
+        "finish": 10350,
+        "kind": "memory_read",
+        "operation": "r1/gelu",
+        "phase": 0,
+        "ready": 10222
+      },
+      {
+        "finish": 10862,
+        "kind": "compute",
+        "operation": "r0/gelu",
+        "phase": 1,
+        "ready": 10350
+      },
+      {
+        "finish": 10862,
+        "kind": "compute",
+        "operation": "r1/gelu",
+        "phase": 1,
+        "ready": 10350
+      },
+      {
+        "finish": 10990,
+        "kind": "memory_write",
+        "operation": "r0/gelu",
+        "phase": 2,
+        "ready": 10862
+      },
+      {
+        "finish": 10990,
+        "kind": "memory_write",
+        "operation": "r1/gelu",
+        "phase": 2,
+        "ready": 10862
+      },
+      {
+        "finish": 11630,
+        "kind": "memory_read",
+        "operation": "r0/ffn_down",
+        "phase": 0,
+        "ready": 10990
+      },
+      {
+        "finish": 11630,
+        "kind": "memory_read",
+        "operation": "r1/ffn_down",
+        "phase": 0,
+        "ready": 10990
+      },
+      {
+        "finish": 12654,
+        "kind": "compute",
+        "operation": "r0/ffn_down",
+        "phase": 1,
+        "ready": 11630
+      },
+      {
+        "finish": 12654,
+        "kind": "compute",
+        "operation": "r1/ffn_down",
+        "phase": 1,
+        "ready": 11630
+      },
+      {
+        "finish": 12782,
+        "kind": "memory_write",
+        "operation": "r0/ffn_down",
+        "phase": 2,
+        "ready": 12654
+      },
+      {
+        "finish": 12782,
+        "kind": "memory_write",
+        "operation": "r1/ffn_down",
+        "phase": 2,
+        "ready": 12654
+      },
+      {
+        "finish": 12910,
+        "kind": "memory_read",
+        "operation": "ffn_sum",
+        "phase": 0,
+        "ready": 12782
+      },
+      {
+        "finish": 13682,
+        "kind": "transfer",
+        "operation": "ffn_sum",
+        "path": [
+          20,
+          11,
+          10
+        ],
+        "phase": 1,
+        "ready": 12910,
+        "transfer_bytes": 4096
+      },
+      {
+        "finish": 13810,
+        "kind": "memory_write",
+        "operation": "ffn_sum",
+        "phase": 2,
+        "ready": 13682
+      },
+      {
+        "finish": 14066,
+        "kind": "memory_read",
+        "operation": "ffn_sum",
+        "phase": 3,
+        "ready": 13810
+      },
+      {
+        "finish": 14130,
+        "kind": "compute",
+        "operation": "ffn_sum",
+        "phase": 4,
+        "ready": 14066
+      },
+      {
+        "finish": 14386,
+        "kind": "memory_write",
+        "operation": "ffn_sum",
+        "phase": 5,
+        "ready": 14130
+      },
+      {
+        "finish": 14514,
+        "kind": "memory_read",
+        "operation": "ffn_sum",
+        "phase": 6,
+        "ready": 14386
+      },
+      {
+        "finish": 15286,
+        "kind": "transfer",
+        "operation": "ffn_sum",
+        "path": [
+          10,
+          11,
+          20
+        ],
+        "phase": 7,
+        "ready": 14514,
+        "transfer_bytes": 4096
+      },
+      {
+        "finish": 15414,
+        "kind": "memory_write",
+        "operation": "ffn_sum",
+        "phase": 8,
+        "ready": 15286
+      },
+      {
+        "finish": 15670,
+        "kind": "memory_read",
+        "operation": "r0/output",
+        "phase": 0,
+        "ready": 15414
+      },
+      {
+        "finish": 15670,
+        "kind": "memory_read",
+        "operation": "r1/output",
+        "phase": 0,
+        "ready": 15414
+      },
+      {
+        "finish": 15734,
+        "kind": "compute",
+        "operation": "r0/output",
+        "phase": 1,
+        "ready": 15670
+      },
+      {
+        "finish": 15734,
+        "kind": "compute",
+        "operation": "r1/output",
+        "phase": 1,
+        "ready": 15670
+      },
+      {
+        "finish": 15862,
+        "kind": "memory_write",
+        "operation": "r0/output",
+        "phase": 2,
+        "ready": 15734
+      },
+      {
+        "finish": 15862,
+        "kind": "memory_write",
+        "operation": "r1/output",
+        "phase": 2,
+        "ready": 15734
+      }
+    ],
+    "policy": {
+      "admission": "stable topological order; atomic whole-operation capacity",
+      "arbitration": "nonpreemptive FCFS at each resource; latency follows serialization",
+      "network": "minimum-hop lexicographic route; whole-message store-and-forward",
+      "time": "integer cycles; rational rates rounded up",
+      "within_phase": "demands in declared order"
+    },
+    "resources": {
+      "compute-0": {
+        "busy_cycles": 6406,
+        "queue_wait_cycles": 704,
+        "requests": 26,
+        "work": {
+          "mac": 278528,
+          "scalar_add": 14272,
+          "scalar_div": 512,
+          "scalar_erf": 1024,
+          "scalar_exp": 512,
+          "scalar_max": 480,
+          "scalar_mul": 9792,
+          "scalar_rsqrt": 32
+        }
+      },
+      "compute-1": {
+        "busy_cycles": 6278,
+        "queue_wait_cycles": 704,
+        "requests": 24,
+        "work": {
+          "mac": 278528,
+          "scalar_add": 12224,
+          "scalar_div": 512,
+          "scalar_erf": 1024,
+          "scalar_exp": 512,
+          "scalar_max": 480,
+          "scalar_mul": 9792,
+          "scalar_rsqrt": 32
+        }
+      },
+      "eject-0": {
+        "busy_cycles": 256,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 8192
+        }
+      },
+      "eject-1": {
+        "busy_cycles": 256,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 8192
+        }
+      },
+      "inject-0": {
+        "busy_cycles": 256,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 8192
+        }
+      },
+      "inject-1": {
+        "busy_cycles": 256,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 8192
+        }
+      },
+      "link-10-11": {
+        "busy_cycles": 512,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 8192
+        }
+      },
+      "link-11-10": {
+        "busy_cycles": 512,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 8192
+        }
+      },
+      "link-11-20": {
+        "busy_cycles": 512,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 8192
+        }
+      },
+      "link-20-11": {
+        "busy_cycles": 512,
+        "queue_wait_cycles": 0,
+        "requests": 2,
+        "work": {
+          "bytes": 8192
+        }
+      },
+      "memory-0": {
+        "busy_cycles": 6944,
+        "queue_wait_cycles": 1408,
+        "requests": 36,
+        "work": {
+          "bytes": 222208
+        }
+      },
+      "memory-1": {
+        "busy_cycles": 5920,
+        "queue_wait_cycles": 1408,
+        "requests": 32,
+        "work": {
+          "bytes": 189440
+        }
+      }
+    },
+    "services": [
+      {
+        "amount": 4608,
+        "category": "memory",
+        "finish": 144,
+        "id": 0,
+        "ready": 0,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 144,
+        "start": 0,
+        "step": 0,
+        "token": "r0/ln1/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4608,
+        "category": "memory",
+        "finish": 144,
+        "id": 1,
+        "ready": 0,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 144,
+        "start": 0,
+        "step": 0,
+        "token": "r1/ln1/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4080,
+        "category": "compute",
+        "finish": 399,
+        "id": 2,
+        "ready": 144,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 399,
+        "start": 144,
+        "step": 0,
+        "token": "r0/ln1/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 4080,
+        "category": "compute",
+        "finish": 399,
+        "id": 3,
+        "ready": 144,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 399,
+        "start": 144,
+        "step": 0,
+        "token": "r1/ln1/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 3104,
+        "category": "compute",
+        "finish": 593,
+        "id": 4,
+        "ready": 399,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 593,
+        "start": 399,
+        "step": 1,
+        "token": "r0/ln1/phase/1",
+        "unit": "scalar_mul"
+      },
+      {
+        "amount": 3104,
+        "category": "compute",
+        "finish": 593,
+        "id": 5,
+        "ready": 399,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 593,
+        "start": 399,
+        "step": 1,
+        "token": "r1/ln1/phase/1",
+        "unit": "scalar_mul"
+      },
+      {
+        "amount": 16,
+        "category": "compute",
+        "finish": 597,
+        "id": 6,
+        "ready": 593,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 597,
+        "start": 593,
+        "step": 2,
+        "token": "r0/ln1/phase/1",
+        "unit": "scalar_rsqrt"
+      },
+      {
+        "amount": 16,
+        "category": "compute",
+        "finish": 597,
+        "id": 7,
+        "ready": 593,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 597,
+        "start": 593,
+        "step": 2,
+        "token": "r1/ln1/phase/1",
+        "unit": "scalar_rsqrt"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 725,
+        "id": 8,
+        "ready": 597,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 725,
+        "start": 597,
+        "step": 0,
+        "token": "r0/ln1/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 725,
+        "id": 9,
+        "ready": 597,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 725,
+        "start": 597,
+        "step": 0,
+        "token": "r1/ln1/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 12288,
+        "category": "memory",
+        "finish": 1109,
+        "id": 10,
+        "ready": 725,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 1109,
+        "start": 725,
+        "step": 0,
+        "token": "r0/q/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 12288,
+        "category": "memory",
+        "finish": 1493,
+        "id": 11,
+        "ready": 725,
+        "resource": "memory-0",
+        "resource_predecessor": 10,
+        "resource_released": 1493,
+        "start": 1109,
+        "step": 0,
+        "token": "r0/k/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 12288,
+        "category": "memory",
+        "finish": 1877,
+        "id": 12,
+        "ready": 725,
+        "resource": "memory-0",
+        "resource_predecessor": 11,
+        "resource_released": 1877,
+        "start": 1493,
+        "step": 0,
+        "token": "r0/v/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 12288,
+        "category": "memory",
+        "finish": 1109,
+        "id": 13,
+        "ready": 725,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 1109,
+        "start": 725,
+        "step": 0,
+        "token": "r1/q/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 12288,
+        "category": "memory",
+        "finish": 1493,
+        "id": 14,
+        "ready": 725,
+        "resource": "memory-1",
+        "resource_predecessor": 13,
+        "resource_released": 1493,
+        "start": 1109,
+        "step": 0,
+        "token": "r1/k/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 12288,
+        "category": "memory",
+        "finish": 1877,
+        "id": 15,
+        "ready": 725,
+        "resource": "memory-1",
+        "resource_predecessor": 14,
+        "resource_released": 1877,
+        "start": 1493,
+        "step": 0,
+        "token": "r1/v/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 32768,
+        "category": "compute",
+        "finish": 1621,
+        "id": 16,
+        "ready": 1109,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 1621,
+        "start": 1109,
+        "step": 0,
+        "token": "r0/q/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 32768,
+        "category": "compute",
+        "finish": 1621,
+        "id": 17,
+        "ready": 1109,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 1621,
+        "start": 1109,
+        "step": 0,
+        "token": "r1/q/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 32768,
+        "category": "compute",
+        "finish": 2133,
+        "id": 18,
+        "ready": 1493,
+        "resource": "compute-0",
+        "resource_predecessor": 16,
+        "resource_released": 2133,
+        "start": 1621,
+        "step": 0,
+        "token": "r0/k/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 32768,
+        "category": "compute",
+        "finish": 2133,
+        "id": 19,
+        "ready": 1493,
+        "resource": "compute-1",
+        "resource_predecessor": 17,
+        "resource_released": 2133,
+        "start": 1621,
+        "step": 0,
+        "token": "r1/k/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 1941,
+        "id": 20,
+        "ready": 1621,
+        "resource": "memory-0",
+        "resource_predecessor": 12,
+        "resource_released": 1941,
+        "start": 1877,
+        "step": 0,
+        "token": "r0/q/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 1941,
+        "id": 21,
+        "ready": 1621,
+        "resource": "memory-1",
+        "resource_predecessor": 15,
+        "resource_released": 1941,
+        "start": 1877,
+        "step": 0,
+        "token": "r1/q/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 32768,
+        "category": "compute",
+        "finish": 2645,
+        "id": 22,
+        "ready": 1877,
+        "resource": "compute-0",
+        "resource_predecessor": 18,
+        "resource_released": 2645,
+        "start": 2133,
+        "step": 0,
+        "token": "r0/v/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 32768,
+        "category": "compute",
+        "finish": 2645,
+        "id": 23,
+        "ready": 1877,
+        "resource": "compute-1",
+        "resource_predecessor": 19,
+        "resource_released": 2645,
+        "start": 2133,
+        "step": 0,
+        "token": "r1/v/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 2197,
+        "id": 24,
+        "ready": 2133,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 2197,
+        "start": 2133,
+        "step": 0,
+        "token": "r0/k/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 2197,
+        "id": 25,
+        "ready": 2133,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 2197,
+        "start": 2133,
+        "step": 0,
+        "token": "r1/k/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 2325,
+        "id": 26,
+        "ready": 2197,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 2325,
+        "start": 2197,
+        "step": 0,
+        "token": "r0/scores/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 2325,
+        "id": 27,
+        "ready": 2197,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 2325,
+        "start": 2197,
+        "step": 0,
+        "token": "r1/scores/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 8192,
+        "category": "compute",
+        "finish": 2773,
+        "id": 28,
+        "ready": 2325,
+        "resource": "compute-0",
+        "resource_predecessor": 22,
+        "resource_released": 2773,
+        "start": 2645,
+        "step": 0,
+        "token": "r0/scores/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 8192,
+        "category": "compute",
+        "finish": 2773,
+        "id": 29,
+        "ready": 2325,
+        "resource": "compute-1",
+        "resource_predecessor": 23,
+        "resource_released": 2773,
+        "start": 2645,
+        "step": 0,
+        "token": "r1/scores/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 2709,
+        "id": 30,
+        "ready": 2645,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 2709,
+        "start": 2645,
+        "step": 0,
+        "token": "r0/v/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 2709,
+        "id": 31,
+        "ready": 2645,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 2709,
+        "start": 2645,
+        "step": 0,
+        "token": "r1/v/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 2837,
+        "id": 32,
+        "ready": 2773,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 2837,
+        "start": 2773,
+        "step": 0,
+        "token": "r0/scores/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 2837,
+        "id": 33,
+        "ready": 2773,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 2837,
+        "start": 2773,
+        "step": 0,
+        "token": "r1/scores/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 2901,
+        "id": 34,
+        "ready": 2837,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 2901,
+        "start": 2837,
+        "step": 0,
+        "token": "r0/softmax/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 2901,
+        "id": 35,
+        "ready": 2837,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 2901,
+        "start": 2837,
+        "step": 0,
+        "token": "r1/softmax/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 512,
+        "category": "compute",
+        "finish": 2933,
+        "id": 36,
+        "ready": 2901,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 2933,
+        "start": 2901,
+        "step": 0,
+        "token": "r0/softmax/phase/1",
+        "unit": "scalar_mul"
+      },
+      {
+        "amount": 512,
+        "category": "compute",
+        "finish": 2933,
+        "id": 37,
+        "ready": 2901,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 2933,
+        "start": 2901,
+        "step": 0,
+        "token": "r1/softmax/phase/1",
+        "unit": "scalar_mul"
+      },
+      {
+        "amount": 480,
+        "category": "compute",
+        "finish": 2963,
+        "id": 38,
+        "ready": 2933,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 2963,
+        "start": 2933,
+        "step": 1,
+        "token": "r0/softmax/phase/1",
+        "unit": "scalar_max"
+      },
+      {
+        "amount": 480,
+        "category": "compute",
+        "finish": 2963,
+        "id": 39,
+        "ready": 2933,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 2963,
+        "start": 2933,
+        "step": 1,
+        "token": "r1/softmax/phase/1",
+        "unit": "scalar_max"
+      },
+      {
+        "amount": 992,
+        "category": "compute",
+        "finish": 3025,
+        "id": 40,
+        "ready": 2963,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 3025,
+        "start": 2963,
+        "step": 2,
+        "token": "r0/softmax/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 992,
+        "category": "compute",
+        "finish": 3025,
+        "id": 41,
+        "ready": 2963,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 3025,
+        "start": 2963,
+        "step": 2,
+        "token": "r1/softmax/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 512,
+        "category": "compute",
+        "finish": 3153,
+        "id": 42,
+        "ready": 3025,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 3153,
+        "start": 3025,
+        "step": 3,
+        "token": "r0/softmax/phase/1",
+        "unit": "scalar_exp"
+      },
+      {
+        "amount": 512,
+        "category": "compute",
+        "finish": 3153,
+        "id": 43,
+        "ready": 3025,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 3153,
+        "start": 3025,
+        "step": 3,
+        "token": "r1/softmax/phase/1",
+        "unit": "scalar_exp"
+      },
+      {
+        "amount": 512,
+        "category": "compute",
+        "finish": 3281,
+        "id": 44,
+        "ready": 3153,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 3281,
+        "start": 3153,
+        "step": 4,
+        "token": "r0/softmax/phase/1",
+        "unit": "scalar_div"
+      },
+      {
+        "amount": 512,
+        "category": "compute",
+        "finish": 3281,
+        "id": 45,
+        "ready": 3153,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 3281,
+        "start": 3153,
+        "step": 4,
+        "token": "r1/softmax/phase/1",
+        "unit": "scalar_div"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 3345,
+        "id": 46,
+        "ready": 3281,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 3345,
+        "start": 3281,
+        "step": 0,
+        "token": "r0/softmax/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 3345,
+        "id": 47,
+        "ready": 3281,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 3345,
+        "start": 3281,
+        "step": 0,
+        "token": "r1/softmax/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 3473,
+        "id": 48,
+        "ready": 3345,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 3473,
+        "start": 3345,
+        "step": 0,
+        "token": "r0/context/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 3473,
+        "id": 49,
+        "ready": 3345,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 3473,
+        "start": 3345,
+        "step": 0,
+        "token": "r1/context/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 8192,
+        "category": "compute",
+        "finish": 3601,
+        "id": 50,
+        "ready": 3473,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 3601,
+        "start": 3473,
+        "step": 0,
+        "token": "r0/context/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 8192,
+        "category": "compute",
+        "finish": 3601,
+        "id": 51,
+        "ready": 3473,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 3601,
+        "start": 3473,
+        "step": 0,
+        "token": "r1/context/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 3665,
+        "id": 52,
+        "ready": 3601,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 3665,
+        "start": 3601,
+        "step": 0,
+        "token": "r0/context/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 2048,
+        "category": "memory",
+        "finish": 3665,
+        "id": 53,
+        "ready": 3601,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 3665,
+        "start": 3601,
+        "step": 0,
+        "token": "r1/context/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 10240,
+        "category": "memory",
+        "finish": 3985,
+        "id": 54,
+        "ready": 3665,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 3985,
+        "start": 3665,
+        "step": 0,
+        "token": "r0/attention_out/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 10240,
+        "category": "memory",
+        "finish": 3985,
+        "id": 55,
+        "ready": 3665,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 3985,
+        "start": 3665,
+        "step": 0,
+        "token": "r1/attention_out/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 32768,
+        "category": "compute",
+        "finish": 4497,
+        "id": 56,
+        "ready": 3985,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 4497,
+        "start": 3985,
+        "step": 0,
+        "token": "r0/attention_out/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 32768,
+        "category": "compute",
+        "finish": 4497,
+        "id": 57,
+        "ready": 3985,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 4497,
+        "start": 3985,
+        "step": 0,
+        "token": "r1/attention_out/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 4625,
+        "id": 58,
+        "ready": 4497,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 4625,
+        "start": 4497,
+        "step": 0,
+        "token": "r0/attention_out/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 4625,
+        "id": 59,
+        "ready": 4497,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 4625,
+        "start": 4497,
+        "step": 0,
+        "token": "r1/attention_out/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 4753,
+        "id": 60,
+        "ready": 4625,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 4753,
+        "start": 4625,
+        "step": 0,
+        "token": "attention_sum/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 4881,
+        "id": 61,
+        "ready": 4753,
+        "resource": "inject-1",
+        "resource_predecessor": null,
+        "resource_released": 4881,
+        "start": 4753,
+        "step": 0,
+        "token": "attention_sum/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 5139,
+        "id": 62,
+        "ready": 4881,
+        "resource": "link-20-11",
+        "resource_predecessor": null,
+        "resource_released": 5137,
+        "start": 4881,
+        "step": 1,
+        "token": "attention_sum/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 5397,
+        "id": 63,
+        "ready": 5139,
+        "resource": "link-11-10",
+        "resource_predecessor": null,
+        "resource_released": 5395,
+        "start": 5139,
+        "step": 2,
+        "token": "attention_sum/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 5525,
+        "id": 64,
+        "ready": 5397,
+        "resource": "eject-0",
+        "resource_predecessor": null,
+        "resource_released": 5525,
+        "start": 5397,
+        "step": 3,
+        "token": "attention_sum/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 5653,
+        "id": 65,
+        "ready": 5525,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 5653,
+        "start": 5525,
+        "step": 0,
+        "token": "attention_sum/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 8192,
+        "category": "memory",
+        "finish": 5909,
+        "id": 66,
+        "ready": 5653,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 5909,
+        "start": 5653,
+        "step": 0,
+        "token": "attention_sum/phase/3",
+        "unit": "bytes"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 5973,
+        "id": 67,
+        "ready": 5909,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 5973,
+        "start": 5909,
+        "step": 0,
+        "token": "attention_sum/phase/4",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 8192,
+        "category": "memory",
+        "finish": 6229,
+        "id": 68,
+        "ready": 5973,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 6229,
+        "start": 5973,
+        "step": 0,
+        "token": "attention_sum/phase/5",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 6357,
+        "id": 69,
+        "ready": 6229,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 6357,
+        "start": 6229,
+        "step": 0,
+        "token": "attention_sum/phase/6",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 6485,
+        "id": 70,
+        "ready": 6357,
+        "resource": "inject-0",
+        "resource_predecessor": null,
+        "resource_released": 6485,
+        "start": 6357,
+        "step": 0,
+        "token": "attention_sum/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 6743,
+        "id": 71,
+        "ready": 6485,
+        "resource": "link-10-11",
+        "resource_predecessor": null,
+        "resource_released": 6741,
+        "start": 6485,
+        "step": 1,
+        "token": "attention_sum/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 7001,
+        "id": 72,
+        "ready": 6743,
+        "resource": "link-11-20",
+        "resource_predecessor": null,
+        "resource_released": 6999,
+        "start": 6743,
+        "step": 2,
+        "token": "attention_sum/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 7129,
+        "id": 73,
+        "ready": 7001,
+        "resource": "eject-1",
+        "resource_predecessor": null,
+        "resource_released": 7129,
+        "start": 7001,
+        "step": 3,
+        "token": "attention_sum/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 7257,
+        "id": 74,
+        "ready": 7129,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 7257,
+        "start": 7129,
+        "step": 0,
+        "token": "attention_sum/phase/8",
+        "unit": "bytes"
+      },
+      {
+        "amount": 8192,
+        "category": "memory",
+        "finish": 7513,
+        "id": 75,
+        "ready": 7257,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 7513,
+        "start": 7257,
+        "step": 0,
+        "token": "r0/attention_residual/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 8192,
+        "category": "memory",
+        "finish": 7513,
+        "id": 76,
+        "ready": 7257,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 7513,
+        "start": 7257,
+        "step": 0,
+        "token": "r1/attention_residual/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 7577,
+        "id": 77,
+        "ready": 7513,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 7577,
+        "start": 7513,
+        "step": 0,
+        "token": "r0/attention_residual/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 7577,
+        "id": 78,
+        "ready": 7513,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 7577,
+        "start": 7513,
+        "step": 0,
+        "token": "r1/attention_residual/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 7705,
+        "id": 79,
+        "ready": 7577,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 7705,
+        "start": 7577,
+        "step": 0,
+        "token": "r0/attention_residual/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 7705,
+        "id": 80,
+        "ready": 7577,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 7705,
+        "start": 7577,
+        "step": 0,
+        "token": "r1/attention_residual/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4608,
+        "category": "memory",
+        "finish": 7849,
+        "id": 81,
+        "ready": 7705,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 7849,
+        "start": 7705,
+        "step": 0,
+        "token": "r0/ln2/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4608,
+        "category": "memory",
+        "finish": 7849,
+        "id": 82,
+        "ready": 7705,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 7849,
+        "start": 7705,
+        "step": 0,
+        "token": "r1/ln2/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4080,
+        "category": "compute",
+        "finish": 8104,
+        "id": 83,
+        "ready": 7849,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 8104,
+        "start": 7849,
+        "step": 0,
+        "token": "r0/ln2/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 4080,
+        "category": "compute",
+        "finish": 8104,
+        "id": 84,
+        "ready": 7849,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 8104,
+        "start": 7849,
+        "step": 0,
+        "token": "r1/ln2/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 3104,
+        "category": "compute",
+        "finish": 8298,
+        "id": 85,
+        "ready": 8104,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 8298,
+        "start": 8104,
+        "step": 1,
+        "token": "r0/ln2/phase/1",
+        "unit": "scalar_mul"
+      },
+      {
+        "amount": 3104,
+        "category": "compute",
+        "finish": 8298,
+        "id": 86,
+        "ready": 8104,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 8298,
+        "start": 8104,
+        "step": 1,
+        "token": "r1/ln2/phase/1",
+        "unit": "scalar_mul"
+      },
+      {
+        "amount": 16,
+        "category": "compute",
+        "finish": 8302,
+        "id": 87,
+        "ready": 8298,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 8302,
+        "start": 8298,
+        "step": 2,
+        "token": "r0/ln2/phase/1",
+        "unit": "scalar_rsqrt"
+      },
+      {
+        "amount": 16,
+        "category": "compute",
+        "finish": 8302,
+        "id": 88,
+        "ready": 8298,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 8302,
+        "start": 8298,
+        "step": 2,
+        "token": "r1/ln2/phase/1",
+        "unit": "scalar_rsqrt"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 8430,
+        "id": 89,
+        "ready": 8302,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 8430,
+        "start": 8302,
+        "step": 0,
+        "token": "r0/ln2/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 8430,
+        "id": 90,
+        "ready": 8302,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 8430,
+        "start": 8302,
+        "step": 0,
+        "token": "r1/ln2/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 20480,
+        "category": "memory",
+        "finish": 9070,
+        "id": 91,
+        "ready": 8430,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 9070,
+        "start": 8430,
+        "step": 0,
+        "token": "r0/ffn_up/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 20480,
+        "category": "memory",
+        "finish": 9070,
+        "id": 92,
+        "ready": 8430,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 9070,
+        "start": 8430,
+        "step": 0,
+        "token": "r1/ffn_up/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 65536,
+        "category": "compute",
+        "finish": 10094,
+        "id": 93,
+        "ready": 9070,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 10094,
+        "start": 9070,
+        "step": 0,
+        "token": "r0/ffn_up/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 65536,
+        "category": "compute",
+        "finish": 10094,
+        "id": 94,
+        "ready": 9070,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 10094,
+        "start": 9070,
+        "step": 0,
+        "token": "r1/ffn_up/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 10222,
+        "id": 95,
+        "ready": 10094,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 10222,
+        "start": 10094,
+        "step": 0,
+        "token": "r0/ffn_up/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 10222,
+        "id": 96,
+        "ready": 10094,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 10222,
+        "start": 10094,
+        "step": 0,
+        "token": "r1/ffn_up/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 10350,
+        "id": 97,
+        "ready": 10222,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 10350,
+        "start": 10222,
+        "step": 0,
+        "token": "r0/gelu/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 10350,
+        "id": 98,
+        "ready": 10222,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 10350,
+        "start": 10222,
+        "step": 0,
+        "token": "r1/gelu/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 3072,
+        "category": "compute",
+        "finish": 10542,
+        "id": 99,
+        "ready": 10350,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 10542,
+        "start": 10350,
+        "step": 0,
+        "token": "r0/gelu/phase/1",
+        "unit": "scalar_mul"
+      },
+      {
+        "amount": 3072,
+        "category": "compute",
+        "finish": 10542,
+        "id": 100,
+        "ready": 10350,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 10542,
+        "start": 10350,
+        "step": 0,
+        "token": "r1/gelu/phase/1",
+        "unit": "scalar_mul"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 10606,
+        "id": 101,
+        "ready": 10542,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 10606,
+        "start": 10542,
+        "step": 1,
+        "token": "r0/gelu/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 10606,
+        "id": 102,
+        "ready": 10542,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 10606,
+        "start": 10542,
+        "step": 1,
+        "token": "r1/gelu/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 10862,
+        "id": 103,
+        "ready": 10606,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 10862,
+        "start": 10606,
+        "step": 2,
+        "token": "r0/gelu/phase/1",
+        "unit": "scalar_erf"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 10862,
+        "id": 104,
+        "ready": 10606,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 10862,
+        "start": 10606,
+        "step": 2,
+        "token": "r1/gelu/phase/1",
+        "unit": "scalar_erf"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 10990,
+        "id": 105,
+        "ready": 10862,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 10990,
+        "start": 10862,
+        "step": 0,
+        "token": "r0/gelu/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 10990,
+        "id": 106,
+        "ready": 10862,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 10990,
+        "start": 10862,
+        "step": 0,
+        "token": "r1/gelu/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 20480,
+        "category": "memory",
+        "finish": 11630,
+        "id": 107,
+        "ready": 10990,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 11630,
+        "start": 10990,
+        "step": 0,
+        "token": "r0/ffn_down/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 20480,
+        "category": "memory",
+        "finish": 11630,
+        "id": 108,
+        "ready": 10990,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 11630,
+        "start": 10990,
+        "step": 0,
+        "token": "r1/ffn_down/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 65536,
+        "category": "compute",
+        "finish": 12654,
+        "id": 109,
+        "ready": 11630,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 12654,
+        "start": 11630,
+        "step": 0,
+        "token": "r0/ffn_down/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 65536,
+        "category": "compute",
+        "finish": 12654,
+        "id": 110,
+        "ready": 11630,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 12654,
+        "start": 11630,
+        "step": 0,
+        "token": "r1/ffn_down/phase/1",
+        "unit": "mac"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 12782,
+        "id": 111,
+        "ready": 12654,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 12782,
+        "start": 12654,
+        "step": 0,
+        "token": "r0/ffn_down/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 12782,
+        "id": 112,
+        "ready": 12654,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 12782,
+        "start": 12654,
+        "step": 0,
+        "token": "r1/ffn_down/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 12910,
+        "id": 113,
+        "ready": 12782,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 12910,
+        "start": 12782,
+        "step": 0,
+        "token": "ffn_sum/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 13038,
+        "id": 114,
+        "ready": 12910,
+        "resource": "inject-1",
+        "resource_predecessor": null,
+        "resource_released": 13038,
+        "start": 12910,
+        "step": 0,
+        "token": "ffn_sum/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 13296,
+        "id": 115,
+        "ready": 13038,
+        "resource": "link-20-11",
+        "resource_predecessor": null,
+        "resource_released": 13294,
+        "start": 13038,
+        "step": 1,
+        "token": "ffn_sum/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 13554,
+        "id": 116,
+        "ready": 13296,
+        "resource": "link-11-10",
+        "resource_predecessor": null,
+        "resource_released": 13552,
+        "start": 13296,
+        "step": 2,
+        "token": "ffn_sum/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 13682,
+        "id": 117,
+        "ready": 13554,
+        "resource": "eject-0",
+        "resource_predecessor": null,
+        "resource_released": 13682,
+        "start": 13554,
+        "step": 3,
+        "token": "ffn_sum/phase/1",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 13810,
+        "id": 118,
+        "ready": 13682,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 13810,
+        "start": 13682,
+        "step": 0,
+        "token": "ffn_sum/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 8192,
+        "category": "memory",
+        "finish": 14066,
+        "id": 119,
+        "ready": 13810,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 14066,
+        "start": 13810,
+        "step": 0,
+        "token": "ffn_sum/phase/3",
+        "unit": "bytes"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 14130,
+        "id": 120,
+        "ready": 14066,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 14130,
+        "start": 14066,
+        "step": 0,
+        "token": "ffn_sum/phase/4",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 8192,
+        "category": "memory",
+        "finish": 14386,
+        "id": 121,
+        "ready": 14130,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 14386,
+        "start": 14130,
+        "step": 0,
+        "token": "ffn_sum/phase/5",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 14514,
+        "id": 122,
+        "ready": 14386,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 14514,
+        "start": 14386,
+        "step": 0,
+        "token": "ffn_sum/phase/6",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 14642,
+        "id": 123,
+        "ready": 14514,
+        "resource": "inject-0",
+        "resource_predecessor": null,
+        "resource_released": 14642,
+        "start": 14514,
+        "step": 0,
+        "token": "ffn_sum/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 14900,
+        "id": 124,
+        "ready": 14642,
+        "resource": "link-10-11",
+        "resource_predecessor": null,
+        "resource_released": 14898,
+        "start": 14642,
+        "step": 1,
+        "token": "ffn_sum/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 15158,
+        "id": 125,
+        "ready": 14900,
+        "resource": "link-11-20",
+        "resource_predecessor": null,
+        "resource_released": 15156,
+        "start": 14900,
+        "step": 2,
+        "token": "ffn_sum/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "network",
+        "finish": 15286,
+        "id": 126,
+        "ready": 15158,
+        "resource": "eject-1",
+        "resource_predecessor": null,
+        "resource_released": 15286,
+        "start": 15158,
+        "step": 3,
+        "token": "ffn_sum/phase/7",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 15414,
+        "id": 127,
+        "ready": 15286,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 15414,
+        "start": 15286,
+        "step": 0,
+        "token": "ffn_sum/phase/8",
+        "unit": "bytes"
+      },
+      {
+        "amount": 8192,
+        "category": "memory",
+        "finish": 15670,
+        "id": 128,
+        "ready": 15414,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 15670,
+        "start": 15414,
+        "step": 0,
+        "token": "r0/output/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 8192,
+        "category": "memory",
+        "finish": 15670,
+        "id": 129,
+        "ready": 15414,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 15670,
+        "start": 15414,
+        "step": 0,
+        "token": "r1/output/phase/0",
+        "unit": "bytes"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 15734,
+        "id": 130,
+        "ready": 15670,
+        "resource": "compute-0",
+        "resource_predecessor": null,
+        "resource_released": 15734,
+        "start": 15670,
+        "step": 0,
+        "token": "r0/output/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 1024,
+        "category": "compute",
+        "finish": 15734,
+        "id": 131,
+        "ready": 15670,
+        "resource": "compute-1",
+        "resource_predecessor": null,
+        "resource_released": 15734,
+        "start": 15670,
+        "step": 0,
+        "token": "r1/output/phase/1",
+        "unit": "scalar_add"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 15862,
+        "id": 132,
+        "ready": 15734,
+        "resource": "memory-0",
+        "resource_predecessor": null,
+        "resource_released": 15862,
+        "start": 15734,
+        "step": 0,
+        "token": "r0/output/phase/2",
+        "unit": "bytes"
+      },
+      {
+        "amount": 4096,
+        "category": "memory",
+        "finish": 15862,
+        "id": 133,
+        "ready": 15734,
+        "resource": "memory-1",
+        "resource_predecessor": null,
+        "resource_released": 15862,
+        "start": 15734,
+        "step": 0,
+        "token": "r1/output/phase/2",
+        "unit": "bytes"
+      }
+    ],
+    "stopped_cycle": 15862,
+    "storage": {
+      "active_phases": {},
+      "all_operations_completed": true,
+      "available_data": [
+        "r0/ln1:beta",
+        "r0/ln1:gamma",
+        "r0/ln2:beta",
+        "r0/ln2:gamma",
+        "r0/output:out",
+        "r0/wdown",
+        "r0/wk",
+        "r0/wo",
+        "r0/wq",
+        "r0/wup",
+        "r0/wv",
+        "r1/ln1:beta",
+        "r1/ln1:gamma",
+        "r1/ln2:beta",
+        "r1/ln2:gamma",
+        "r1/output:out",
+        "r1/wdown",
+        "r1/wk",
+        "r1/wo",
+        "r1/wq",
+        "r1/wup",
+        "r1/wv"
+      ],
+      "completed": [
+        "attention_sum",
+        "ffn_sum",
+        "r0/attention_out",
+        "r0/attention_residual",
+        "r0/context",
+        "r0/ffn_down",
+        "r0/ffn_up",
+        "r0/gelu",
+        "r0/k",
+        "r0/ln1",
+        "r0/ln2",
+        "r0/output",
+        "r0/q",
+        "r0/scores",
+        "r0/softmax",
+        "r0/v",
+        "r1/attention_out",
+        "r1/attention_residual",
+        "r1/context",
+        "r1/ffn_down",
+        "r1/ffn_up",
+        "r1/gelu",
+        "r1/k",
+        "r1/ln1",
+        "r1/ln2",
+        "r1/output",
+        "r1/q",
+        "r1/scores",
+        "r1/softmax",
+        "r1/v"
+      ],
+      "peak_bytes": {
+        "0": 87040,
+        "1": 82944
+      },
+      "used_bytes": {
+        "0": 70656,
+        "1": 70656
+      }
+    },
+    "timing_evaluated": true
+  },
+  "scope": "Complete analytical Transformer block forward, not Llama or training",
+  "target": {
+    "compute": [
+      {
+        "id": "compute-0",
+        "memory": "0",
+        "provenance": "Analytical target and complete float32 block; no calibrated WoW or source timings",
+        "work_units": [
+          "mac",
+          "scalar_add",
+          "scalar_mul",
+          "scalar_rsqrt",
+          "scalar_max",
+          "scalar_exp",
+          "scalar_div",
+          "scalar_erf"
+        ]
+      },
+      {
+        "id": "compute-1",
+        "memory": "1",
+        "provenance": "Analytical target and complete float32 block; no calibrated WoW or source timings",
+        "work_units": [
+          "mac",
+          "scalar_add",
+          "scalar_mul",
+          "scalar_rsqrt",
+          "scalar_max",
+          "scalar_exp",
+          "scalar_div",
+          "scalar_erf"
+        ]
+      }
+    ],
+    "memory": [
+      {
+        "capacity_bytes": 262144,
+        "endpoint": 0,
+        "id": "0",
+        "provenance": "Analytical target and complete float32 block; no calibrated WoW or source timings",
+        "read_port": "memory-0",
+        "write_port": "memory-0"
+      },
+      {
+        "capacity_bytes": 262144,
+        "endpoint": 1,
+        "id": "1",
+        "provenance": "Analytical target and complete float32 block; no calibrated WoW or source timings",
+        "read_port": "memory-1",
+        "write_port": "memory-1"
+      }
+    ],
+    "network": {
+      "endpoint_routers": [
+        [
+          0,
+          10
+        ],
+        [
+          1,
+          20
+        ]
+      ],
+      "provenance": "Analytical target and complete float32 block; no calibrated WoW or source timings",
+      "router_links": [
+        [
+          10,
+          11
+        ],
+        [
+          11,
+          20
+        ]
+      ]
+    }
+  },
+  "tensors": {
+    "r0/attention_out:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/attention_residual:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/attention_sum:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/context:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        32
+      ]
+    },
+    "r0/ffn_down:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/ffn_sum:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/ffn_up:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/gelu:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/input": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "replicated_input",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/k:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        32
+      ]
+    },
+    "r0/ln1:beta": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64
+      ]
+    },
+    "r0/ln1:gamma": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64
+      ]
+    },
+    "r0/ln1:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/ln2:beta": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64
+      ]
+    },
+    "r0/ln2:gamma": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64
+      ]
+    },
+    "r0/ln2:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/output:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r0/q:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        32
+      ]
+    },
+    "r0/scores:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        2,
+        16,
+        16
+      ]
+    },
+    "r0/softmax:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        2,
+        16,
+        16
+      ]
+    },
+    "r0/v:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        32
+      ]
+    },
+    "r0/wdown": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        64
+      ]
+    },
+    "r0/wk": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        32
+      ]
+    },
+    "r0/wo": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        32,
+        64
+      ]
+    },
+    "r0/wq": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        32
+      ]
+    },
+    "r0/wup": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        64
+      ]
+    },
+    "r0/wv": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        32
+      ]
+    },
+    "r1/attention_out:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/attention_residual:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/attention_sum:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/context:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        32
+      ]
+    },
+    "r1/ffn_down:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/ffn_sum:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/ffn_up:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/gelu:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/input": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "replicated_input",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/k:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        32
+      ]
+    },
+    "r1/ln1:beta": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64
+      ]
+    },
+    "r1/ln1:gamma": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64
+      ]
+    },
+    "r1/ln1:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/ln2:beta": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64
+      ]
+    },
+    "r1/ln2:gamma": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64
+      ]
+    },
+    "r1/ln2:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/output:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        64
+      ]
+    },
+    "r1/q:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        32
+      ]
+    },
+    "r1/scores:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        2,
+        16,
+        16
+      ]
+    },
+    "r1/softmax:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        2,
+        16,
+        16
+      ]
+    },
+    "r1/v:out": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "activation",
+      "shape": [
+        1,
+        16,
+        32
+      ]
+    },
+    "r1/wdown": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        64
+      ]
+    },
+    "r1/wk": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        32
+      ]
+    },
+    "r1/wo": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        32,
+        64
+      ]
+    },
+    "r1/wq": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        32
+      ]
+    },
+    "r1/wup": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        64
+      ]
+    },
+    "r1/wv": {
+      "dtype": "float32",
+      "element_bytes": 4,
+      "role": "parameter",
+      "shape": [
+        64,
+        32
+      ]
+    }
+  },
+  "timing": {
+    "endpoints": [
+      {
+        "ejection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "eject-0",
+          "unit": "bytes"
+        },
+        "endpoint": 0,
+        "injection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "inject-0",
+          "unit": "bytes"
+        }
+      },
+      {
+        "ejection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "eject-1",
+          "unit": "bytes"
+        },
+        "endpoint": 1,
+        "injection": {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "inject-1",
+          "unit": "bytes"
+        }
+      }
+    ],
+    "links": [
+      {
+        "destination": 11,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 16,
+          "resource": "link-10-11",
+          "unit": "bytes"
+        },
+        "source": 10
+      },
+      {
+        "destination": 10,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 16,
+          "resource": "link-11-10",
+          "unit": "bytes"
+        },
+        "source": 11
+      },
+      {
+        "destination": 20,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 16,
+          "resource": "link-11-20",
+          "unit": "bytes"
+        },
+        "source": 11
+      },
+      {
+        "destination": 11,
+        "service": {
+          "latency_cycles": 2,
+          "rate_denominator": 1,
+          "rate_numerator": 16,
+          "resource": "link-20-11",
+          "unit": "bytes"
+        },
+        "source": 20
+      }
+    ],
+    "provenance": "Analytical target and complete float32 block; no calibrated WoW or source timings",
+    "services": [
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 64,
+        "resource": "compute-0",
+        "unit": "mac"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 16,
+        "resource": "compute-0",
+        "unit": "scalar_add"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 16,
+        "resource": "compute-0",
+        "unit": "scalar_mul"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-0",
+        "unit": "scalar_rsqrt"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 16,
+        "resource": "compute-0",
+        "unit": "scalar_max"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-0",
+        "unit": "scalar_exp"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-0",
+        "unit": "scalar_div"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-0",
+        "unit": "scalar_erf"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 32,
+        "resource": "memory-0",
+        "unit": "bytes"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 64,
+        "resource": "compute-1",
+        "unit": "mac"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 16,
+        "resource": "compute-1",
+        "unit": "scalar_add"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 16,
+        "resource": "compute-1",
+        "unit": "scalar_mul"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-1",
+        "unit": "scalar_rsqrt"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 16,
+        "resource": "compute-1",
+        "unit": "scalar_max"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-1",
+        "unit": "scalar_exp"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-1",
+        "unit": "scalar_div"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 4,
+        "resource": "compute-1",
+        "unit": "scalar_erf"
+      },
+      {
+        "latency_cycles": 0,
+        "rate_denominator": 1,
+        "rate_numerator": 32,
+        "resource": "memory-1",
+        "unit": "bytes"
+      }
+    ]
+  },
+  "workload": {
+    "data": [
+      {
+        "id": "r0/input",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/ln1:gamma",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 256
+      },
+      {
+        "id": "r0/ln1:beta",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 256
+      },
+      {
+        "id": "r0/ln1:out",
+        "producer": "r0/ln1",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/wq",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 8192
+      },
+      {
+        "id": "r0/q:out",
+        "producer": "r0/q",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r0/wk",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 8192
+      },
+      {
+        "id": "r0/k:out",
+        "producer": "r0/k",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r0/wv",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 8192
+      },
+      {
+        "id": "r0/v:out",
+        "producer": "r0/v",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r0/scores:out",
+        "producer": "r0/scores",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r0/softmax:out",
+        "producer": "r0/softmax",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r0/context:out",
+        "producer": "r0/context",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r0/wo",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 8192
+      },
+      {
+        "id": "r0/attention_out:out",
+        "producer": "r0/attention_out",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/input",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/ln1:gamma",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 256
+      },
+      {
+        "id": "r1/ln1:beta",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 256
+      },
+      {
+        "id": "r1/ln1:out",
+        "producer": "r1/ln1",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/wq",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 8192
+      },
+      {
+        "id": "r1/q:out",
+        "producer": "r1/q",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r1/wk",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 8192
+      },
+      {
+        "id": "r1/k:out",
+        "producer": "r1/k",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r1/wv",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 8192
+      },
+      {
+        "id": "r1/v:out",
+        "producer": "r1/v",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r1/scores:out",
+        "producer": "r1/scores",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r1/softmax:out",
+        "producer": "r1/softmax",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r1/context:out",
+        "producer": "r1/context",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 2048
+      },
+      {
+        "id": "r1/wo",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 8192
+      },
+      {
+        "id": "r1/attention_out:out",
+        "producer": "r1/attention_out",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/attention_sum:out",
+        "producer": "attention_sum",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/attention_sum:out",
+        "producer": "attention_sum",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/attention_residual:out",
+        "producer": "r0/attention_residual",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/ln2:gamma",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 256
+      },
+      {
+        "id": "r0/ln2:beta",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 256
+      },
+      {
+        "id": "r0/ln2:out",
+        "producer": "r0/ln2",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/wup",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "r0/ffn_up:out",
+        "producer": "r0/ffn_up",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/gelu:out",
+        "producer": "r0/gelu",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/wdown",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "r0/ffn_down:out",
+        "producer": "r0/ffn_down",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/attention_residual:out",
+        "producer": "r1/attention_residual",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/ln2:gamma",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 256
+      },
+      {
+        "id": "r1/ln2:beta",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 256
+      },
+      {
+        "id": "r1/ln2:out",
+        "producer": "r1/ln2",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/wup",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "r1/ffn_up:out",
+        "producer": "r1/ffn_up",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/gelu:out",
+        "producer": "r1/gelu",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/wdown",
+        "producer": null,
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "r1/ffn_down:out",
+        "producer": "r1/ffn_down",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/ffn_sum:out",
+        "producer": "ffn_sum",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/ffn_sum:out",
+        "producer": "ffn_sum",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": false,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r0/output:out",
+        "producer": "r0/output",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 4096
+      },
+      {
+        "id": "r1/output:out",
+        "producer": "r1/output",
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "retain": true,
+        "size_bytes": 4096
+      }
+    ],
+    "operations": [
+      {
+        "control_deps": [],
+        "id": "r0/ln1",
+        "inputs": [
+          "r0/input",
+          "r0/ln1:gamma",
+          "r0/ln1:beta"
+        ],
+        "outputs": [
+          "r0/ln1:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 128,
+        "work": [
+          [
+            "scalar_add",
+            4080
+          ],
+          [
+            "scalar_mul",
+            3104
+          ],
+          [
+            "scalar_rsqrt",
+            16
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/q",
+        "inputs": [
+          "r0/ln1:out",
+          "r0/wq"
+        ],
+        "outputs": [
+          "r0/q:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32768
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/k",
+        "inputs": [
+          "r0/ln1:out",
+          "r0/wk"
+        ],
+        "outputs": [
+          "r0/k:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32768
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/v",
+        "inputs": [
+          "r0/ln1:out",
+          "r0/wv"
+        ],
+        "outputs": [
+          "r0/v:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32768
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/scores",
+        "inputs": [
+          "r0/q:out",
+          "r0/k:out"
+        ],
+        "outputs": [
+          "r0/scores:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            8192
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/softmax",
+        "inputs": [
+          "r0/scores:out"
+        ],
+        "outputs": [
+          "r0/softmax:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 256,
+        "work": [
+          [
+            "scalar_mul",
+            512
+          ],
+          [
+            "scalar_max",
+            480
+          ],
+          [
+            "scalar_add",
+            992
+          ],
+          [
+            "scalar_exp",
+            512
+          ],
+          [
+            "scalar_div",
+            512
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/context",
+        "inputs": [
+          "r0/softmax:out",
+          "r0/v:out"
+        ],
+        "outputs": [
+          "r0/context:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            8192
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/attention_out",
+        "inputs": [
+          "r0/context:out",
+          "r0/wo"
+        ],
+        "outputs": [
+          "r0/attention_out:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32768
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/ln1",
+        "inputs": [
+          "r1/input",
+          "r1/ln1:gamma",
+          "r1/ln1:beta"
+        ],
+        "outputs": [
+          "r1/ln1:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 128,
+        "work": [
+          [
+            "scalar_add",
+            4080
+          ],
+          [
+            "scalar_mul",
+            3104
+          ],
+          [
+            "scalar_rsqrt",
+            16
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/q",
+        "inputs": [
+          "r1/ln1:out",
+          "r1/wq"
+        ],
+        "outputs": [
+          "r1/q:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32768
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/k",
+        "inputs": [
+          "r1/ln1:out",
+          "r1/wk"
+        ],
+        "outputs": [
+          "r1/k:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32768
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/v",
+        "inputs": [
+          "r1/ln1:out",
+          "r1/wv"
+        ],
+        "outputs": [
+          "r1/v:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32768
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/scores",
+        "inputs": [
+          "r1/q:out",
+          "r1/k:out"
+        ],
+        "outputs": [
+          "r1/scores:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            8192
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/softmax",
+        "inputs": [
+          "r1/scores:out"
+        ],
+        "outputs": [
+          "r1/softmax:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 256,
+        "work": [
+          [
+            "scalar_mul",
+            512
+          ],
+          [
+            "scalar_max",
+            480
+          ],
+          [
+            "scalar_add",
+            992
+          ],
+          [
+            "scalar_exp",
+            512
+          ],
+          [
+            "scalar_div",
+            512
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/context",
+        "inputs": [
+          "r1/softmax:out",
+          "r1/v:out"
+        ],
+        "outputs": [
+          "r1/context:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            8192
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/attention_out",
+        "inputs": [
+          "r1/context:out",
+          "r1/wo"
+        ],
+        "outputs": [
+          "r1/attention_out:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            32768
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "attention_sum",
+        "inputs": [
+          "r0/attention_out:out",
+          "r1/attention_out:out"
+        ],
+        "outputs": [
+          "r0/attention_sum:out",
+          "r1/attention_sum:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "scalar_add",
+            1024
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/attention_residual",
+        "inputs": [
+          "r0/input",
+          "r0/attention_sum:out"
+        ],
+        "outputs": [
+          "r0/attention_residual:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "scalar_add",
+            1024
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/ln2",
+        "inputs": [
+          "r0/attention_residual:out",
+          "r0/ln2:gamma",
+          "r0/ln2:beta"
+        ],
+        "outputs": [
+          "r0/ln2:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 128,
+        "work": [
+          [
+            "scalar_add",
+            4080
+          ],
+          [
+            "scalar_mul",
+            3104
+          ],
+          [
+            "scalar_rsqrt",
+            16
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/ffn_up",
+        "inputs": [
+          "r0/ln2:out",
+          "r0/wup"
+        ],
+        "outputs": [
+          "r0/ffn_up:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            65536
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/gelu",
+        "inputs": [
+          "r0/ffn_up:out"
+        ],
+        "outputs": [
+          "r0/gelu:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "scalar_mul",
+            3072
+          ],
+          [
+            "scalar_add",
+            1024
+          ],
+          [
+            "scalar_erf",
+            1024
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/ffn_down",
+        "inputs": [
+          "r0/gelu:out",
+          "r0/wdown"
+        ],
+        "outputs": [
+          "r0/ffn_down:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            65536
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/attention_residual",
+        "inputs": [
+          "r1/input",
+          "r1/attention_sum:out"
+        ],
+        "outputs": [
+          "r1/attention_residual:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "scalar_add",
+            1024
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/ln2",
+        "inputs": [
+          "r1/attention_residual:out",
+          "r1/ln2:gamma",
+          "r1/ln2:beta"
+        ],
+        "outputs": [
+          "r1/ln2:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 128,
+        "work": [
+          [
+            "scalar_add",
+            4080
+          ],
+          [
+            "scalar_mul",
+            3104
+          ],
+          [
+            "scalar_rsqrt",
+            16
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/ffn_up",
+        "inputs": [
+          "r1/ln2:out",
+          "r1/wup"
+        ],
+        "outputs": [
+          "r1/ffn_up:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            65536
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/gelu",
+        "inputs": [
+          "r1/ffn_up:out"
+        ],
+        "outputs": [
+          "r1/gelu:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "scalar_mul",
+            3072
+          ],
+          [
+            "scalar_add",
+            1024
+          ],
+          [
+            "scalar_erf",
+            1024
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/ffn_down",
+        "inputs": [
+          "r1/gelu:out",
+          "r1/wdown"
+        ],
+        "outputs": [
+          "r1/ffn_down:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            65536
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "ffn_sum",
+        "inputs": [
+          "r0/ffn_down:out",
+          "r1/ffn_down:out"
+        ],
+        "outputs": [
+          "r0/ffn_sum:out",
+          "r1/ffn_sum:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "scalar_add",
+            1024
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r0/output",
+        "inputs": [
+          "r0/attention_residual:out",
+          "r0/ffn_sum:out"
+        ],
+        "outputs": [
+          "r0/output:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "scalar_add",
+            1024
+          ]
+        ]
+      },
+      {
+        "control_deps": [],
+        "id": "r1/output",
+        "inputs": [
+          "r1/attention_residual:out",
+          "r1/ffn_sum:out"
+        ],
+        "outputs": [
+          "r1/output:out"
+        ],
+        "provenance": "Declared float32 pre-LN Transformer block forward v1",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "scalar_add",
+            1024
+          ]
+        ]
+      }
+    ]
+  }
+}

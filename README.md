@@ -17,6 +17,13 @@ rate interventions. This target execution capability is distinct from the
 accepted full Llama path, which remains a conditional WoW replay with partial
 communication retargeting.
 
+The next [complete Transformer forward block](docs/TRANSFORMER_EXECUTION.md)
+now executes on the same backend: 30 operations, two SUM AllReduces and 557,056
+MACs. Its [checked result](docs/results/transformer-execution-001/REVIEW.md) is
+15,862 cycles under the declared model, with separate compute/memory/network
+rate controls. Dense numerical equivalence and 93 semantic checks pass. These
+parameters are analytical, not calibrated WoW compute or SRAM specifications.
+
 The research question is whether a WoW Logic-on-Interconnect placement with
 better network metrics also completes the same AI workload sooner, and which
 execution costs must be modeled to make that judgment. The current study
@@ -48,10 +55,10 @@ case. Subsequent studies jointly vary topology, mapping and workload. Basic
 geometry/connectivity/capacity belongs in the first machine model; detailed
 physical closure and power/thermal remain later work.
 
-Current development starts with a complete, declared A/fanout-B/SUM-AllReduce/C
-execution unit. Old Chakra recovery is frozen and is not a prerequisite. The
-next scale is a separately defined Transformer unit, then a supported full
-application. Mstatic remains a separate pending M0/M1 model comparison; this
+Current development has progressed from the complete A/fanout-B/AllReduce/C
+unit to a separately defined Transformer forward block. Old Chakra recovery
+is frozen and is not a prerequisite. A supported full application remains a
+later input. Mstatic remains a separate pending M0/M1 model comparison; this
 milestone launches no new full-capture or placement run.
 
 Build, tests and experiments run on `wangziheng@eex005`. Local work is editing,
@@ -79,12 +86,14 @@ configuration, raw stdout/stderr, binary/input hashes, per-event completion
 report, independent audit, and paired comparison. Result directories must be
 new. Wall-clock timeout is never treated as application completion.
 
-The formal input is the complete public ATLAHS Llama 7B 16-GPU GOAL capture,
+The formal GOAL comparison uses the complete public ATLAHS Llama 7B 16-GPU capture,
 downloaded **only on eex005**. It is not the missing WoW paper capture. See
 [the registered controls and input limits](docs/LLAMA16_PROTOCOL.md).
-Generated workloads remain unit-test fixtures only; no smoke/prefix experiment
-is part of the formal campaign. `COMPLETE.json` is written only after both
-full placement arms pass the independent all-operation audit.
+For that campaign, generated workloads remain unit-test fixtures; no smoke or
+prefix experiment substitutes for the full capture. Its `COMPLETE.json` requires
+both full placement arms to pass the independent all-operation audit. The
+separately named analytical target-execution units have their own contracts,
+completion records and evidence limits, and do not replace this input.
 
 Historical optimization notes and existing remote runs remain evidence. Their
 old build scripts and incremental patches are recoverable at Git commit

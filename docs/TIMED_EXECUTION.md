@@ -53,6 +53,7 @@ writes. Last-consumer release and retained outputs use the existing state.
 | Execution | `execution/timing.py` | Resource calendar, event completion, admission and lifecycle callbacks |
 | Independent readback | `analysis/timing.py` | Rates, non-overlap, work/byte conservation, dependencies and capacity |
 | Logical example | `workloads/timed_example.py` | Complete declared A/fanout-B/AllReduce/C work |
+| Transformer block | `workloads/transformer.py` | Complete shape-defined tensor-parallel forward work |
 | Orchestration | `experiments/timed_example.py` and remote runner | Fixed input and separate rate interventions |
 
 The runner reports operation ready/admission/finish times; every phase and
@@ -60,6 +61,12 @@ resource request; exact paths and bytes; resource queue waits; capacity waits;
 and regional peak occupancy. Busy time and wait totals overlap across resources
 and are not an additive application-time decomposition or a unique causal
 bottleneck attribution. Controlled single-rate changes test their effect.
+
+The review preceding the Transformer extension tightened the independent audit
+to check FCFS service order, chronological request submission, minimum-hop
+lexicographic route selection, capacity-wait accounting and terminal-state
+consistency. The previously accepted 113-cycle unit's full event record remains
+identical. See the [review and extension evidence](results/transformer-execution-001/REVIEW.md).
 
 ## First complete execution unit
 
@@ -84,3 +91,8 @@ Run builds and tests only on eex005. After semantic tests at the committed
 revision, `scripts/run_timed_example_remote.py OUTPUT TEST_RECEIPT` emits the
 complete execution and independent audit for all registered cases. Full Llama,
 mapping sweeps, thermal, PDN and new capture recovery are outside this delivery.
+
+The subsequent [Transformer extension](TRANSFORMER_EXECUTION.md) reuses the same
+calendar, storage model and audit, selected by `--workload transformer` in this
+runner. Its separate configuration includes all arithmetic service rates and
+explicit worker/data placement.

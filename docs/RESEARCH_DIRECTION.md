@@ -73,8 +73,9 @@ identity, liveness or mathematical semantics.
 The [v1 contract implementation](SPATIAL_CONTRACT.md) now covers logical objects,
 resource binding and finite storage state. The [timed backend](TIMED_EXECUTION.md)
 now adds target service rates, shared-resource arbitration and event-driven
-completion. A complete analytical A/B/AllReduce/C unit is its first validated
-input; a complete semantic Llama input remains separate. M0/M1 results are
+completion. Complete analytical A/B/AllReduce/C and
+[Transformer forward](TRANSFORMER_EXECUTION.md) units are validated inputs;
+a complete semantic Llama input remains separate. M0/M1 results are
 unchanged. Old Chakra recovery is frozen at the accepted source boundary and
 does not gate this implementation.
 
