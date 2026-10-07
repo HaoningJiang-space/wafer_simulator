@@ -53,7 +53,7 @@ def client(descriptor,exported,directory):
                            flit_bytes=descriptor['boundary']['flit_bytes'])
 
 
-def worker(descriptor_path,mode,directory,cpus):
+def worker(descriptor_path,mode,directory,cpus,*,profile_execution=False):
     os.sched_setaffinity(0,cpus);directory=Path(directory);directory.mkdir(exist_ok=False)
     meter=Meter();d=read_json(descriptor_path);cfg=d['boundary']
     with meter.phase('input_graph_binding'):
@@ -67,15 +67,26 @@ def worker(descriptor_path,mode,directory,cpus):
         if mode=='serial':native.configure(rx_slots=cfg['rx_slots'],bounded=False,streaming=False)
         else:backend=MemoryBoundary(native,tx_slots=cfg['tx_slots'],rx_slots=cfg['rx_slots'],bounded=mode=='bounded')
     try:
+        profiler=None
+        if profile_execution:
+            import cProfile
+            profiler=cProfile.Profile()
         with meter.phase('execution'):
-            result=execute(binding,timing,network=backend,cycle_limit=d['experiment']['cycle_limit'],
-                           memory_quantum_bytes=d.get('memory_quantum_bytes'))
+            if profiler is not None:profiler.enable()
+            try:
+                result=execute(binding,timing,network=backend,cycle_limit=d['experiment']['cycle_limit'],
+                               memory_quantum_bytes=d.get('memory_quantum_bytes'))
+            finally:
+                if profiler is not None:profiler.disable()
         if not result['complete']:raise ValueError('Incomplete work under unchanged capacity')
         peaks=dict(python_lifetime_peak_rss_kib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
                    native_peak_rss_kib=native_peak(native))
         with meter.phase('close_and_network_serialization'):backend.close()
     finally:backend.abort()
     child_cpu=usage(resource.RUSAGE_CHILDREN)-child_start
+    if profiler is not None:
+        with meter.phase('profile_serialization'):
+            profiler.dump_stats(str(directory/'execution.prof'))
     with meter.phase('result_serialization'):write_json(directory/'execution.json',result)
     with meter.phase('independent_audit'):
         check=audit(binding,timing,result)
