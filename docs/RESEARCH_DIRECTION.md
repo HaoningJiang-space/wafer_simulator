@@ -226,12 +226,17 @@ communication structures with identical logical network volume and total adds,
 while accounting for tree partial-result memory work. Spatial projection and
 the critical dependency chain, together, explain placement benefits. These are
 architecture-mechanism cases, not proof that detailed simulation is necessary.
-Freeze both algorithms and mapping comparisons. The immediate milestone is
-[accuracy versus cost of network abstractions](MODEL_FIDELITY_PROTOCOL.md):
-make the existing coarse backend a formal comparator to live BookSim, audit
-application errors and design-gap errors, then measure isolated execution costs
-and a bounded set of legal larger/overlapping demands. Only change a model
-after isolating a consequential omitted mechanism. The broader architecture
+Freeze both algorithms and mapping comparisons. The immediate question is
+[whether a reticle's aggregated supply/receive boundary is sufficient](RETICLE_BOUNDARY_RESEARCH.md).
+The author central-router model has finite ports and credits; our trace-mode
+endpoint count is one, while the author synthetic mode has eight. Current
+memory phases do not control native ejection credit. These are precise scope
+boundaries to examine, not proof that the author's topology results are wrong.
+Use [accuracy versus cost](MODEL_FIDELITY_PROTOCOL.md) to compare a simple local
+resource aggregate and an explicit coupled reference for the same declared
+machine. The saved 12-case coarse/native analysis is complete; the generic new
+cost sweep is deferred. Only add detailed local NoC state if the simpler finite
+boundary cannot preserve the required behavior. The broader architecture
 sequence above is a future use case, not the current development queue.
 No new algorithm, mapping sweep, full capture recovery, thermal, PDN or runtime
 optimization is a prerequisite. Correctness tests and ranking reversals alone

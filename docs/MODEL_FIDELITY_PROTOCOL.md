@@ -1,5 +1,11 @@
 # WoW application simulation: accuracy and cost of network abstractions
 
+Status update: the read-only 12-cell analysis has completed. The generic six-case
+cost sweep below is **deferred and has not been launched**. The immediate model
+question is now the [reticle supply/receive boundary](RETICLE_BOUNDARY_RESEARCH.md).
+Keep the measurement and error definitions as its evaluation protocol; do not
+interpret this document as authorization to launch the superseded sweep.
+
 Registered before new runs. The research variable is the **simulation method**.
 Direct-root/tree are frozen validation inputs; no new algorithms, mapping search,
 thermal, PDN, capture recovery or runtime optimization are part of this milestone.
