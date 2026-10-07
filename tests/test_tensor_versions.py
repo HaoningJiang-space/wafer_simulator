@@ -152,7 +152,8 @@ class TensorVersionsTests(unittest.TestCase):
         dest = state.allocate(0, "cuda:0", 2, 32, initial="old destination")
         a, b = tensor(1, 2), tensor(3, 4)
         copy = effects("aten::copy_", "aten::copy_(Tensor(a!) self, Tensor src) -> Tensor(a!)", io(a, b), io(a))
-        bind = {"i:1": AccessBinding(src, ((0, 32),)), "o:0": AccessBinding(dest, ((0, 32),))}
+        bind = {"i:0": AccessBinding(dest, ((0, 32),)), "i:1": AccessBinding(src, ((0, 32),)),
+                "o:0": AccessBinding(dest, ((0, 32),))}
         with self.assertRaisesRegex(ValueError, "uninitialized"):
             apply_effect(state, copy, bind, "copy", "fixture")
         self.assertEqual(state.read(dest, ((0, 32),))[0].version.provenance, "old destination")
@@ -167,9 +168,23 @@ class TensorVersionsTests(unittest.TestCase):
         dest = state.allocate(0, "cuda:0", 2, 32)
         a, b = tensor(1, 2), tensor(3, 4)
         copy = effects("aten::copy_", "aten::copy_(Tensor(a!) self, Tensor src) -> Tensor(a!)", io(a, b), io(a))
-        bind = {"i:1": AccessBinding(src, ((0, 32),)), "o:0": AccessBinding(dest, ((0, 32),))}
+        bind = {"i:0": AccessBinding(dest, ((0, 32),)), "i:1": AccessBinding(src, ((0, 32),)),
+                "o:0": AccessBinding(dest, ((0, 32),))}
         with self.assertRaisesRegex(ValueError, "rank"):
             apply_effect(state, copy, bind, "copy", "fixture")
+
+    def test_overwrite_cannot_replace_destination_binding(self):
+        state = ByteVersions()
+        src = state.allocate(0, "cuda:0", 4, 32, initial="source input")
+        dest = state.allocate(0, "cuda:0", 2, 32)
+        a, b = tensor(1, 2), tensor(3, 4)
+        copy = effects("aten::copy_", "aten::copy_(Tensor(a!) self, Tensor src) -> Tensor(a!)", io(a, b), io(a))
+        bind = {"i:0": AccessBinding(dest, ((0, 32),)), "i:1": AccessBinding(src, ((0, 32),)),
+                "o:0": AccessBinding(dest, ((0, 16),))}
+        with self.assertRaisesRegex(ValueError, "binding changed"):
+            apply_effect(state, copy, bind, "copy", "fixture")
+        with self.assertRaisesRegex(ValueError, "uninitialized"):
+            state.read(dest, ((0, 16),))
 
 
 if __name__ == "__main__":

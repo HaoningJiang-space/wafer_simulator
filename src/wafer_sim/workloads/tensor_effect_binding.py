@@ -28,6 +28,9 @@ def apply_effect(state, effect, bindings, operation, provenance):
         raise ValueError("Only existing-storage single-destination writes supported")
     refs = {r["path"]: r for r in effect["inputs"] + effect["outputs"]}
     paths = set(effect["reads"] + effect["writes"])
+    destination = effect.get("destination_input")
+    if destination is not None:
+        paths.add(destination)
     for alias in effect["aliases"]:
         paths.update([alias["output"], *alias["inputs"]])
     for path in paths:
@@ -41,6 +44,15 @@ def apply_effect(state, effect, bindings, operation, provenance):
         state.check_access(bound.storage, bound.spans)
     if len({bindings[p].storage.rank for p in paths}) > 1:
         raise ValueError("One source call cannot cross rank namespaces")
+    if destination is not None:
+        out, = effect["writes"]
+        fields = ("tensor_id", "storage_id", "source_offset", "num_elements", "element_bytes", "source_device", "shape", "dtype")
+        if any(refs[destination][k] != refs[out][k] for k in fields):
+            raise ValueError("In-place destination descriptor changed")
+        before, after = bindings[destination], bindings[out]
+        if (before.storage != after.storage or state.check_access(before.storage, before.spans) !=
+                state.check_access(after.storage, after.spans)):
+            raise ValueError("In-place destination binding changed")
     for alias in effect["aliases"]:
         if any(bindings[p].storage != bindings[alias["output"]].storage for p in alias["inputs"]):
             raise ValueError("Alias points to another allocation generation")
