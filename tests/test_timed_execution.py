@@ -160,7 +160,15 @@ class TimedExecutionTests(unittest.TestCase):
         config=read_json(root/"configs/timed_execution_example.json")
         accepted=read_json(root/"docs/results/timed-execution-001/declared.json")
         current=run_case(config,"declared")
-        self.assertEqual(current["result"],accepted["result"])
+        # Project only the newly added readiness/retirement annotations away;
+        # every historical service, phase, admission and release stays exact.
+        legacy=copy.deepcopy(current["result"])
+        legacy.pop("output_ready")
+        for row in legacy["operations"].values():
+            self.assertEqual(row.pop("retired"),row["finish"])
+        legacy["lifecycle"]=[dict(e,event="complete") if e["event"]=="retire" else e
+                             for e in legacy["lifecycle"] if e["event"]!="output_ready"]
+        self.assertEqual(legacy,accepted["result"])
 
     def test_audit_checks_terminal_state_and_capacity_wait(self):
         b=local_binding(); original=execute(b,timing())
