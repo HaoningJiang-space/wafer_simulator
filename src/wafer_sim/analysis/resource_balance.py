@@ -42,7 +42,12 @@ def check_current(arm):
     record, config = arm["record"], arm["config"]
     block = build_block(**config["workload"]["block"])
     assert_same(object_digest(asdict(block.workload)), object_digest(record["logical_workload"]), "logical work")
-    cm = record["resource_contract"]["compute_memory_parameters"]
+    cm = dict(record["resource_contract"]["compute_memory_parameters"])
+    # JSON sorts object keys, whereas target tuples retain the original declared
+    # service order. Recover that order from the recorded target, not a new sort.
+    units = record["target"]["compute"][0]["work_units"]
+    assert_same(set(units), set(cm["compute_rates"]), "compute work units")
+    cm["compute_rates"] = {unit: cm["compute_rates"][unit] for unit in units}
     for key in ("compute_rates", "region_capacity_bytes", "memory_bytes_per_cycle"):
         assert_same(cm[key], config["workload"][key], key)
     target, timing, contract = build_wow_target(arm["exported"], cm, config["experiment"]["flit_bytes"])
