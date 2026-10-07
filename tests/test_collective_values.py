@@ -146,6 +146,43 @@ class CollectiveLifetimeTests(unittest.TestCase):
             life.finish(a.key,"next-compute")
         self.assertEqual(sum(life.pool.used.values()),0)
 
+    def test_two_collectives_reuse_same_resident_version_without_double_charge(self):
+        source,match,calls,accesses=source_fixture()
+        first=bind_values(source,match,calls,accesses,provenance=EVIDENCE)
+        reports=[report(3,0,11),report(7,1,11)]; next_access={}
+        for r in reports:
+            rank=r["rank"]; slot=r["calls"][0]["intent"]["slots"][0]
+            previous=calls[(rank,1)]["intent"]["slots"][0]["destination"]
+            slot["source"]=dict(previous,path="i:1.0")
+            slot["destination"]=dict(previous,tensor_id=50,storage_id=200,num_elements=16,shape=[16],path="i:0.0")
+            slot.update(input_elements=8,output_elements=16,input_bytes=32,output_bytes=64)
+            storage=source.allocate(rank,"cuda:0",200,64)
+            next_access[(rank,1,"i:1.0")]=accesses[(rank,1,"i:0.0")]
+            next_access[(rank,1,"i:0.0")]=AccessBinding(storage,((0,64),))
+        next_match=match_collectives(reports)["collectives"][0]
+        second=bind_values(source,next_match,{(r["rank"],1):r["calls"][0] for r in reports},next_access,provenance=EVIDENCE)
+        a,b=[bind_collective(v.collective,machine(),{3:"compute-3",7:"compute-7"},policy=POLICY,values=v) for v in (first,second)]
+        life=ValueLifetime(ReservationPool(a.memory))
+        for key,allocation in a.inputs.items():
+            life.declare(allocation,first.inputs[key].producers,[input_consumer(a,key[0])])
+            life.pool.reserve((allocation,)); life.publish(allocation.key,set())
+        for key,allocation in a.outputs.items():
+            self.assertEqual(allocation,b.inputs[key])
+            life.declare(allocation,first.outputs[key].producers,[output_hold(a),input_consumer(b,key[0])])
+        for key,allocation in b.outputs.items():
+            life.declare(allocation,second.outputs[key].producers,[output_hold(b)])
+        x,y=CollectiveState(a,lifetime=life),CollectiveState(b,lifetime=life)
+        self.assertFalse(y.enter(3))
+        for rank in (3,7): x.enter(rank)
+        self.drain(x)
+        self.assertEqual(life.pool.used["3"],32)
+        for rank in (3,7): y.enter(rank)
+        self.assertEqual(life.pool.used["3"],32+64)
+        self.drain(y)
+        self.assertEqual(sum(life.pool.used.values()),0)
+        moved={action.phase.transfer.data for action in b.actions.values() if action.phase.transfer}
+        self.assertEqual(moved,{"/".join(v.key) for v in second.inputs.values()})
+
     def test_another_consumer_keeps_old_input_version_resident(self):
         b,life=value_fixture(extra_reader=True)
         state=CollectiveState(b,lifetime=life)

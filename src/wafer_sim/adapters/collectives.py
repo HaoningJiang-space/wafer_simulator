@@ -50,6 +50,12 @@ def bind_collective(collective, target, placement, *, policy, values=None):
     def allocation(role, rank, slot, size, suffix=""):
         return Allocation((role, collective.id, str(rank), str(slot), suffix), homes[rank].id, size)
 
+    def data_identity(rank, slot, *, output=False):
+        if values is not None:
+            table = values.outputs if output else values.inputs
+            return "/".join(table[(rank, slot)].key)
+        return f"{collective.id}/{'result' if output else 'input'}/{rank}/{slot}"
+
     def action(label, phase, deps=(), participants=(), completion_ranks=None):
         if label in actions:
             raise ValueError("Repeated collective action")
@@ -95,7 +101,7 @@ def bind_collective(collective, target, placement, *, policy, values=None):
                 read = port(f"{slot_index}/read/{src}", src, False, size)
                 for dst in ranks:
                     written[dst].append(deliver(f"{slot_index}/{src}->{dst}", src, dst, size, read,
-                                               f"{collective.id}/input/{src}/{slot_index}"))
+                                               data_identity(src, slot_index)))
             for rank in ranks:
                 requirements[(rank, slot_index)] = frozenset(written[rank])
         elif collective.kind in {"allreduce", "reduce_scatter"}:
@@ -113,7 +119,10 @@ def bind_collective(collective, target, placement, *, policy, values=None):
                         received.append(read)
                     else:
                         reserves[dst].append(allocation("collective_stage", dst, slot_index, size, str(src)))
-                        written = deliver(label, src, dst, size, read, f"{collective.id}/chunk/{src}/{dst}/{slot_index}")
+                        data = data_identity(src, slot_index)
+                        if collective.kind == "reduce_scatter":
+                            data += f"/chunk/{ranks.index(dst)}"
+                        written = deliver(label, src, dst, size, read, data)
                         received.append(port(label + "/reduce-read", dst, False, size, (written,), (src,)))
                 deps = tuple(received)
                 if len(ranks) > 1:
@@ -132,7 +141,7 @@ def bind_collective(collective, target, placement, *, policy, values=None):
                             continue
                         read = port(f"{slot_index}/result-read/{rank}", dst, False, size, (final,), ranks)
                         written = deliver(f"{slot_index}/broadcast/{rank}", dst, rank, size, read,
-                                          f"{collective.id}/result/{slot_index}")
+                                          data_identity(dst, slot_index, output=True))
                         requirements[(rank, slot_index)] = frozenset({written})
     return CollectiveBinding(collective, MappingProxyType(memory), MappingProxyType(actions),
         MappingProxyType(inputs), MappingProxyType({r: tuple(a) for r, a in reserves.items()}),
