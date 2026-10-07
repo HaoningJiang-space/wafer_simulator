@@ -227,16 +227,20 @@ while accounting for tree partial-result memory work. Spatial projection and
 the critical dependency chain, together, explain placement benefits. These are
 architecture-mechanism cases, not proof that detailed simulation is necessary.
 Freeze both algorithms and mapping comparisons. The immediate question is
-[whether a reticle's aggregated supply/receive boundary is sufficient](RETICLE_BOUNDARY_RESEARCH.md).
+[whether aggregate compute/memory/endpoint resources are sufficient](RETICLE_BOUNDARY_RESEARCH.md).
 The author central-router model has finite ports and credits; our trace-mode
 endpoint count is one, while the author synthetic mode has eight. Current
 memory phases do not control native ejection credit. These are precise scope
 boundaries to examine, not proof that the author's topology results are wrong.
-Use [accuracy versus cost](MODEL_FIDELITY_PROTOCOL.md) to compare a simple local
-resource aggregate and an explicit coupled reference for the same declared
-machine. The saved 12-case coarse/native analysis is complete; the generic new
-cost sweep is deferred. Only add detailed local NoC state if the simpler finite
-boundary cannot preserve the required behavior. The broader architecture
+Missing mechanisms are candidates, not a prescribed implementation queue.
+Separate parameter uncertainty, abstraction error and changes in the machine.
+Use [accuracy versus cost](MODEL_FIDELITY_PROTOCOL.md) only against a justified
+reference for the same declared machine and workload. The existing two network
+backends share the local abstraction and cannot validate it against each other.
+The next deliverable is one reference-supported error-localization comparison,
+not a full 8-GPC NoC or a mandatory finite-FIFO implementation. The saved 12-case
+coarse/native analysis is complete; the generic new cost sweep is deferred.
+Keep aggregation when it meets the declared prediction objective. The broader architecture
 sequence above is a future use case, not the current development queue.
 No new algorithm, mapping sweep, full capture recovery, thermal, PDN or runtime
 optimization is a prerequisite. Correctness tests and ranking reversals alone

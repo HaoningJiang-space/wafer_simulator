@@ -4,10 +4,11 @@ Pinned author geometry and BookSim, complete same-workload execution, independen
 completion checks, and placement comparison. Read [the source audit](docs/UPSTREAM_AUDIT.md)
 for what is reused, repaired, and not claimed.
 
-**Current research focus:** [reticle supply/receive abstraction](docs/RETICLE_BOUNDARY_RESEARCH.md).
-Freeze collective and mapping expansion. Check when aggregate local resources
-preserve memory–boundary–WoW coupling, and measure accuracy/cost against the
-same declared machine. Existing architecture rankings are validation cases,
+**Current research focus:** [aggregate reticle resource validity](docs/RETICLE_BOUNDARY_RESEARCH.md).
+Freeze collective and mapping expansion. Distinguish parameter uncertainty,
+abstraction error and changed hardware; compare accuracy/cost against a justified
+reference for the same declared machine. Local NoC and boundary feedback remain
+candidate mechanisms, not mandatory next modules. Existing rankings are validation cases,
 not evidence that a detailed simulator is necessary. The generic new cost sweep
 is deferred; only saved-result and source-boundary audits were run at this step.
 
