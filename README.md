@@ -32,12 +32,10 @@ configs in the working tree. See [selection and verification](docs/IMPLEMENTATIO
 
 Code layers: `workloads` → `adapters` → native BookSim → `analysis`;
 `experiments` orchestrates these layers. `configs/` contains fixed controls;
-`patches/` contains isolated upstream changes. Reused external source repositories
-are pinned Git submodules backed by [owned GitHub forks](docs/EXTERNAL_SOURCES.md).
-
-```bash
-git submodule update --init
-```
+`patches/` contains isolated upstream changes. All reused external source is
+included as [pinned ordinary files](docs/EXTERNAL_SOURCES.md) under `third_party/`.
+A normal clone of this repository obtains all project source. The maintained
+branch is `main`.
 
 The research sequence is workload abstraction, target compute–memory–network
 execution, layered validation, then a fixed-mapping Baseline–Rotated application
