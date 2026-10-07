@@ -77,7 +77,9 @@ def join_ports(report, effects_path, owners_path, output):
         if r["call"]!=ports[c["node_id"]] or r["identity"]!=c["identity"]:
             raise ValueError("Output source identity changed")
         for side,role in (("input","source"),("output","destination")):
-            if r[side+"_operands"]!=[s[role] for s in (c["intent"] or {}).get("slots",[])]:
+            actual=[(v["path"],tensor_identity(v)) for v in r[side+"_operands"]]
+            expected=[(s[role]["path"],tensor_identity(s[role])) for s in (c["intent"] or {}).get("slots",[])]
+            if actual!=expected:
                 raise ValueError("Output tensor role changed")
         for key in ("source_ctrl_deps","source_data_deps"):
             if r[key]!=c[key]: raise ValueError("Output source dependency lost")
