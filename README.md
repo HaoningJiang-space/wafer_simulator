@@ -119,3 +119,10 @@ tensor versions, remaining operators and target service timing are still needed
 before full spatial execution. All raw files and the detailed ledger stay on
 eex005. The [offline source restoration check](docs/results/source-bundle-001/VALIDATION.json)
 also verifies all six bundled author trees and the frozen native patch.
+
+The subsequent [tensor-value milestone](docs/results/tensor-effects-001/REVIEW.md)
+adds explicit allocation generations, exact byte-region versions and call-effect
+binding. All 53 semantic tests pass; complete effect ledgers preserve every
+node and dependency in the 16-rank source. Full workload lowering still needs
+call-subtree selection, layout/allocation recovery and the remaining compiled
+operator/collective semantics. This milestone adds no application timing.

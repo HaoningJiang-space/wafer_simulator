@@ -1,0 +1,1121 @@
+{
+  "complete_target_workload": false,
+  "counts": {
+    "calls_containing_meta_tensors": 32624,
+    "calls_with_only_meta_tensors": 32336,
+    "category:alias": 1991776,
+    "category:allocate_uninitialized": 668137,
+    "category:declared_mutation": 3696,
+    "category:device_implementation": 104172,
+    "category:schema_functional": 226759,
+    "category:source_metadata": 16,
+    "category:storage_rebind": 27472,
+    "category:unresolved": 1023790,
+    "category:unsupported_descriptor_or_rule": 944,
+    "category:write": 484177,
+    "cpu_calls": 4426751,
+    "nodes": 4530939,
+    "nonzero_tensor_offsets": 2812472,
+    "tensor_occurrences": 8428932
+  },
+  "new_simulations_launched": 0,
+  "rank_count": 16,
+  "ranks": [
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 129383,
+        "category:allocate_uninitialized": 42027,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6634,
+        "category:schema_functional": 14323,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 64570,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 31279,
+        "cpu_calls": 283589,
+        "nodes": 290224,
+        "nonzero_tensor_offsets": 186642,
+        "tensor_occurrences": 540527
+      },
+      "distinct_tensor_ids": 30531,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13900,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14314,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10688,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 108,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118821,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 140091305,
+      "input_sha256": "f6dbc4593110eaad646361dec9e431095981d07034378d1c4211de8865591a9f",
+      "ledger_bytes": 18739879,
+      "ledger_sha256": "05fe33e1fd81ea230c104e7dbcc68de857fdb8a23c74e179508c2352dca73157",
+      "rank": 0,
+      "tensor_ids_observed_at_multiple_locations": 14417
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 124109,
+        "category:allocate_uninitialized": 41758,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6500,
+        "category:schema_functional": 14182,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63930,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30214,
+        "cpu_calls": 276200,
+        "nodes": 282701,
+        "nonzero_tensor_offsets": 174840,
+        "tensor_occurrences": 525877
+      },
+      "distinct_tensor_ids": 29773,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13900,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14314,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10688,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 108,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118834,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136626693,
+      "input_sha256": "bfa8efe37b69aa7606ce518269045b190e0da400315f048bd87ff8706e47b7be",
+      "ledger_bytes": 18417986,
+      "ledger_sha256": "63f59047a5b5aa30e383e030b7a5a3a5b07ae51254dda7e53ed0dffa320f0cca",
+      "rank": 1,
+      "tensor_ids_observed_at_multiple_locations": 14462
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 123949,
+        "category:allocate_uninitialized": 41715,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14141,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30289,
+        "cpu_calls": 276021,
+        "nodes": 282520,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 525521
+      },
+      "distinct_tensor_ids": 29499,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13900,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14314,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10688,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 108,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118845,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136531838,
+      "input_sha256": "48e8296cd6b2627f297748a8d521b43298765840580a67e41eeb21229c800da4",
+      "ledger_bytes": 18413825,
+      "ledger_sha256": "c81b6e1f96ada40db6da045aa4393f51999ed8c5e099202d1877538b60e85e02",
+      "rank": 2,
+      "tensor_ids_observed_at_multiple_locations": 14234
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 124073,
+        "category:allocate_uninitialized": 41777,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14203,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30473,
+        "cpu_calls": 276453,
+        "nodes": 282952,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 526385
+      },
+      "distinct_tensor_ids": 29611,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13900,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14314,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10688,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 108,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118845,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136729030,
+      "input_sha256": "84eb97f9993abeb05f54f395adc75c2a2a2ce67160677f4d41c332aa4f2bb87c",
+      "ledger_bytes": 18427647,
+      "ledger_sha256": "4510ef8ff108c6b4ad043b5a3bb16d584b8051eeaa95ee7e89cd39ae6f88ec44",
+      "rank": 3,
+      "tensor_ids_observed_at_multiple_locations": 14281
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 126517,
+        "category:allocate_uninitialized": 41852,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6560,
+        "category:schema_functional": 14216,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 64230,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30184,
+        "cpu_calls": 279006,
+        "nodes": 285567,
+        "nonzero_tensor_offsets": 180540,
+        "tensor_occurrences": 531429
+      },
+      "distinct_tensor_ids": 30200,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13902,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14316,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10690,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 110,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118849,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 138043589,
+      "input_sha256": "9390fdb3f40a74e05db5594324e34352880f3236ea40c33182e158cdf046f069",
+      "ledger_bytes": 18569521,
+      "ledger_sha256": "4761477a3f698331918613bd366173fe9cfa29a527bbedcb6d45b50d8bcad9ce",
+      "rank": 4,
+      "tensor_ids_observed_at_multiple_locations": 14453
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 123931,
+        "category:allocate_uninitialized": 41706,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14132,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30182,
+        "cpu_calls": 275878,
+        "nodes": 282377,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 525235
+      },
+      "distinct_tensor_ids": 29584,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13903,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14317,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10691,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 110,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118858,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136476595,
+      "input_sha256": "639cce43fc744e3c17124226845f120850170451211523b4bd6681703224b7ee",
+      "ledger_bytes": 18406014,
+      "ledger_sha256": "3701ef02ddc7f843b10266442ab1cfd77f70d755da9cb01c4e8ef9948ca5c1e7",
+      "rank": 5,
+      "tensor_ids_observed_at_multiple_locations": 14155
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 123931,
+        "category:allocate_uninitialized": 41706,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14132,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30074,
+        "cpu_calls": 275770,
+        "nodes": 282269,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 525019
+      },
+      "distinct_tensor_ids": 29512,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13903,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14317,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10691,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 110,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118848,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136440827,
+      "input_sha256": "81af90dbfd5d49a03af31e7b871dd06a920995c1ef12b0e3b67cb98f2a8c01d9",
+      "ledger_bytes": 18403285,
+      "ledger_sha256": "8f313711332c2651d55422cfb14e1e1f69c076a826a54ace6fd57639ff08d3a1",
+      "rank": 6,
+      "tensor_ids_observed_at_multiple_locations": 14347
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 123833,
+        "category:allocate_uninitialized": 41657,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14083,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30013,
+        "cpu_calls": 275513,
+        "nodes": 282012,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 524505
+      },
+      "distinct_tensor_ids": 29656,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13903,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14317,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10691,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 110,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118850,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136310023,
+      "input_sha256": "cce8776815cdcf7ac0b481f3c3f46a33e101cae857bd002ffc1559d02ad63e95",
+      "ledger_bytes": 18392286,
+      "ledger_sha256": "e174781e726db276f6436cb40b7f407dff82ddeb68baf57cb1c26bb97b212c7e",
+      "rank": 7,
+      "tensor_ids_observed_at_multiple_locations": 14442
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 124027,
+        "category:allocate_uninitialized": 41754,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14180,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30270,
+        "cpu_calls": 276158,
+        "nodes": 282657,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 525795
+      },
+      "distinct_tensor_ids": 29858,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13901,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14315,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10689,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 108,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118846,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136607386,
+      "input_sha256": "2989c544c98345b4e17fb8aaebf1b6ae06c107352715ab7de17e3c430e437280",
+      "ledger_bytes": 18402260,
+      "ledger_sha256": "b3b5a71a2872bea501900d8f6596077696d5488976f7b5f1e6ea2b11ede5a9ac",
+      "rank": 8,
+      "tensor_ids_observed_at_multiple_locations": 14581
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 123859,
+        "category:allocate_uninitialized": 41670,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14096,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30090,
+        "cpu_calls": 275642,
+        "nodes": 282141,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 524763
+      },
+      "distinct_tensor_ids": 29806,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13901,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14315,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10689,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 108,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118838,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136370766,
+      "input_sha256": "fa9d1ba6de1d8d663a9f41f9492dc1db2baab111a1fa698b949fe0f5767a8f96",
+      "ledger_bytes": 18405187,
+      "ledger_sha256": "df387e87d96d664336159690d34a84079cec1a81dad3c10fc782075470695551",
+      "rank": 9,
+      "tensor_ids_observed_at_multiple_locations": 14427
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 123995,
+        "category:allocate_uninitialized": 41738,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14164,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30134,
+        "cpu_calls": 275958,
+        "nodes": 282457,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 525395
+      },
+      "distinct_tensor_ids": 29645,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13912,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14326,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10700,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 108,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118855,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136531271,
+      "input_sha256": "a68f9be3c7736fb572801027ae4d3480685e8bcfc8023e81c068196d7645ee96",
+      "ledger_bytes": 18422176,
+      "ledger_sha256": "1bbb09532029b902e6ab3fdb62558d56fc46f142e82d03d708a7f9f03b27b0e5",
+      "rank": 10,
+      "tensor_ids_observed_at_multiple_locations": 14326
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 123831,
+        "category:allocate_uninitialized": 41656,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14082,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 29682,
+        "cpu_calls": 275178,
+        "nodes": 281677,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 523835
+      },
+      "distinct_tensor_ids": 29432,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13912,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14326,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10700,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 108,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118863,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136190092,
+      "input_sha256": "2da7c996fa31de6cb6e122b9c4966b714dd8133f819d0e1d8c1282501ec5539a",
+      "ledger_bytes": 18394399,
+      "ledger_sha256": "337ff406b8b4f0b768c24b4f53542f4f7f192e0c1787ac225995dde2cd4f2127",
+      "rank": 11,
+      "tensor_ids_observed_at_multiple_locations": 14135
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 124189,
+        "category:allocate_uninitialized": 41835,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14261,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30439,
+        "cpu_calls": 276651,
+        "nodes": 283150,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 526781
+      },
+      "distinct_tensor_ids": 29369,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13914,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14328,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10702,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 110,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118857,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136833461,
+      "input_sha256": "3d1870999dc3a89c414b2e453b9a5aeb30f35c72e3f0f7a5b3b97c042ee8fa88",
+      "ledger_bytes": 18437722,
+      "ledger_sha256": "921e63147e8bba9e7999cc0a4e1d6724dd36984da6f1916d0df8aae7d36ff07d",
+      "rank": 12,
+      "tensor_ids_observed_at_multiple_locations": 14127
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 124011,
+        "category:allocate_uninitialized": 41746,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14172,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30240,
+        "cpu_calls": 276096,
+        "nodes": 282595,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 525671
+      },
+      "distinct_tensor_ids": 29381,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13914,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14328,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10702,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 110,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118857,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136584259,
+      "input_sha256": "de15f8d4c86a1aeb50967cf0c34c990fb2b0ffc923f9e893f6a657b2c15c71d1",
+      "ledger_bytes": 18422429,
+      "ledger_sha256": "ac1067144f0a00add6109f16e1de0e18f0118e417127477a369340b729bfaf08",
+      "rank": 13,
+      "tensor_ids_observed_at_multiple_locations": 13941
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 124065,
+        "category:allocate_uninitialized": 41773,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6498,
+        "category:schema_functional": 14199,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 63920,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30265,
+        "cpu_calls": 276229,
+        "nodes": 282728,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 525937
+      },
+      "distinct_tensor_ids": 29512,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13914,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14328,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10702,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 110,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118857,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136649491,
+      "input_sha256": "95d9be06b24ce993797ff8bdcdfee4c57897dd9dd21527a8e8c7e547dbffd607",
+      "ledger_bytes": 18440067,
+      "ledger_sha256": "b6d2a9272a3e58e82c0caf5816aad3397e53da472cddae21afe4245e39e073d8",
+      "rank": 14,
+      "tensor_ids_observed_at_multiple_locations": 13970
+    },
+    {
+      "complete_source_read": true,
+      "complete_target_workload": false,
+      "counts": {
+        "calls_containing_meta_tensors": 2039,
+        "calls_with_only_meta_tensors": 2021,
+        "category:alias": 124073,
+        "category:allocate_uninitialized": 41767,
+        "category:declared_mutation": 231,
+        "category:device_implementation": 6502,
+        "category:schema_functional": 14193,
+        "category:source_metadata": 1,
+        "category:storage_rebind": 1717,
+        "category:unresolved": 64020,
+        "category:unsupported_descriptor_or_rule": 59,
+        "category:write": 30349,
+        "cpu_calls": 276409,
+        "nodes": 282912,
+        "nonzero_tensor_offsets": 174650,
+        "tensor_occurrences": 526257
+      },
+      "distinct_tensor_ids": 29386,
+      "examples": {
+        "declared_mutation": {
+          "byte_offset": 13915,
+          "name": "aten::arange",
+          "node_id": 29,
+          "reason": "Write extent and overwrite/read-modify-write semantics unresolved"
+        },
+        "storage_rebind": {
+          "byte_offset": 14329,
+          "name": "aten::resize_",
+          "node_id": 30,
+          "reason": "Storage extent/generation and possibly copied data require explicit lowering"
+        },
+        "tensor_identity_reused": {
+          "byte_offset": 10703,
+          "first_location": [
+            30,
+            "cpu"
+          ],
+          "node_id": 22,
+          "observed_location": [
+            34,
+            "cpu"
+          ],
+          "tensor_id": 29
+        },
+        "unresolved": {
+          "byte_offset": 110,
+          "name": "[pytorch|profiler|execution_trace|thread]",
+          "node_id": 1,
+          "reason": "No supported operator effect rule"
+        },
+        "unsupported_descriptor_or_rule": {
+          "byte_offset": 118858,
+          "name": "aten::empty_strided",
+          "node_id": 256,
+          "reason": "Unsupported tensor descriptor"
+        }
+      },
+      "input_bytes": 136705503,
+      "input_sha256": "72b36eec014efa1b4037e853219ff337ddb50fa206673bd5001f21ef0a11d993",
+      "ledger_bytes": 18452085,
+      "ledger_sha256": "d684d7690f51383673a2de761d5f874ca6fe416873dc30dd530caf565db1fc2b",
+      "rank": 15,
+      "tensor_ids_observed_at_multiple_locations": 13822
+    }
+  ],
+  "scope": "Full source IO effects and unresolved cases; not a lowered logical DAG or target timing",
+  "simulated_application_time": null,
+  "source_commit": "a67ce3de3b31a0423ad5f2dcd0eb4bed69d7467a",
+  "source_dirty": false,
+  "source_layers_preserved": true,
+  "source_order_is_target_order": false,
+  "source_support_sha256": "74b5292fbe9b7578afaa5e3513821cc7df175e656e275c52349c80b7374b976c",
+  "versions_applied_to_capture": false
+}

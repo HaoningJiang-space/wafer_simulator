@@ -1,0 +1,79 @@
+operator,category,occurrences
+AddBackward0,unresolved,16
+CloneBackward0,unresolved,10576
+CompiledFunction,unresolved,16368
+CompiledFunctionBackward,unresolved,20464
+MakeViewlessTensorBackward,unresolved,640
+Optimizer.step#FusedAdam.step,unresolved,144
+ProfilerStep#0,unresolved,16
+Scheduler.__init__ (dynamo_timed),unresolved,112
+Scheduler.codegen (dynamo_timed),unresolved,112
+Torch-Compiled Region,unresolved,17328
+TorchDynamo Cache Lookup,unresolved,42240
+WrapperCodeGen.generate (dynamo_timed),unresolved,112
+_CopyToModelParallelRegionBackward,unresolved,320
+_ReduceFromModelParallelRegionBackward,unresolved,320
+aten::_debug_has_internal_overlap,schema_functional,96
+aten::_has_compatible_shallow_copy_type,schema_functional,62080
+aten::_local_scalar_dense,schema_functional,13184
+aten::_reshape_alias,alias,10240
+aten::_unsafe_view,alias,640
+aten::add,unresolved,816
+aten::add_,write,41920
+aten::as_strided,alias,769078
+aten::cat,schema_functional,12176
+aten::copy_,write,60095
+aten::detach,alias,9152
+aten::detach,unsupported_descriptor_or_rule,160
+aten::div,unresolved,800
+aten::div_,write,688
+aten::dropout,unresolved,320
+aten::empty,allocate_uninitialized,444928
+aten::empty_strided,allocate_uninitialized,114647
+aten::empty_strided,unsupported_descriptor_or_rule,160
+aten::eq,schema_functional,960
+aten::eq,unresolved,10240
+aten::fill_,write,125921
+aten::gt,schema_functional,7680
+aten::index_put_,declared_mutation,96
+aten::is_pinned,schema_functional,1600
+aten::lift_fresh,unresolved,4592
+aten::masked_fill_,declared_mutation,960
+aten::mm,schema_functional,640
+aten::mul,unresolved,1616
+aten::mul_,write,16048
+aten::resize_,storage_rebind,8368
+aten::resolve_conj,unresolved,84
+aten::resolve_neg,unresolved,84
+aten::result_type,schema_functional,160
+aten::set_,storage_rebind,11424
+aten::set_,unsupported_descriptor_or_rule,128
+aten::sub_,declared_mutation,96
+aten::to,alias,23440
+aten::tril,schema_functional,16
+aten::view,alias,325860
+aten::zero_,write,976
+autograd::engine::evaluate_function: torch::autograd::Error,unresolved,32
+compile_fx_inner (dynamo_timed),unresolved,16
+detach,unresolved,85538
+detach,unsupported_descriptor_or_rule,128
+detach_,unresolved,3216
+nccl:_all_gather_base,unresolved,320
+nccl:all_gather_into_tensor_coalesced,unresolved,14112
+nccl:all_reduce,unresolved,1920
+nccl:broadcast,unresolved,1600
+nccl:reduce_scatter_tensor_coalesced,unresolved,15680
+record_param_comms,unresolved,33696
+tex_ts::te_gemm_ts,write,122880
+triton_poi_fused__to_copy_index_index_put_rsub_sub_0,unresolved,64
+triton_poi_fused__to_copy_index_index_put_rsub_sub_1,unresolved,64
+triton_poi_fused__to_copy_mul_2,unresolved,64
+triton_poi_fused_add_0,unresolved,4096
+triton_poi_fused_bitwise_or_clone_ge_index_index_put_lift_fresh_lt_sub_0,unresolved,64
+triton_poi_fused_cat_0,unresolved,2048
+triton_poi_fused_cat_index_put_lift_fresh_1,unresolved,64
+triton_poi_fused_div_1,unresolved,64
+triton_poi_fused_log_sub_0,unresolved,64
+triton_poi_fused_mul_silu_0,unresolved,2048
+triton_red_fused__to_copy_max_0,unresolved,64
+triton_red_fused_exp_sub_sum_2,unresolved,64

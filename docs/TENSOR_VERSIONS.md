@@ -63,3 +63,7 @@ Python environment and `scripts/inspect_tensor_effects_remote.py OUTPUT`, where
 OUTPUT is a fresh absolute directory. The entire 16-rank identity from the
 accepted source inventory is required. `EXTRACTED.json` means complete source
 extraction only; it does not mean a complete target execution or application.
+
+The [full-source result and validation](results/tensor-effects-001/REVIEW.md)
+record all 4,530,939 nodes and 53 semantic tests. Full ledgers stay on eex005;
+the repository contains compact checked results and artifact hashes.

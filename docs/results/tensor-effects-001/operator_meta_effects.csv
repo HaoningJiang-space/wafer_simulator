@@ -1,0 +1,282 @@
+operator,category,contains_meta_tensors,occurrences
+AddBackward0,unresolved,False,16
+CachingAutotuner.benchmark_all_configs (dynamo_timed),unresolved,False,160
+CatBackward0,unresolved,False,320
+CloneBackward0,unresolved,False,10576
+CompiledFunction,unresolved,False,20480
+CompiledFunctionBackward,unresolved,False,20480
+DivBackward0,unresolved,False,640
+EmbeddingBackward0,unresolved,False,320
+FusedAttnFunc,unresolved,False,10240
+FusedAttnFuncBackward,unresolved,False,10240
+FusedRoPEFunc,unresolved,False,20480
+FusedRoPEFuncBackward,unresolved,False,20480
+GraphLowering.compile_to_module (dynamo_timed),unresolved,False,112
+GraphLowering.run (dynamo_timed),unresolved,False,112
+LinearWithGradAccumulationAndAsyncCommunication,unresolved,False,320
+LinearWithGradAccumulationAndAsyncCommunicationBackward,unresolved,False,320
+MakeViewlessTensor,unresolved,False,640
+MakeViewlessTensorBackward,unresolved,False,640
+MulBackward0,unresolved,False,960
+Optimizer.step#FusedAdam.step,unresolved,False,160
+OutputGraph.call_user_compiler (dynamo_timed),unresolved,False,112
+ProfilerStep#0,unresolved,False,16
+ProfilerStep#1,unresolved,False,16
+ProfilerStep#10,unresolved,False,16
+ProfilerStep#2,unresolved,False,16
+ProfilerStep#3,unresolved,False,16
+ProfilerStep#4,unresolved,False,16
+ProfilerStep#5,unresolved,False,16
+ProfilerStep#6,unresolved,False,16
+ProfilerStep#7,unresolved,False,16
+ProfilerStep#8,unresolved,False,16
+ProfilerStep#9,unresolved,False,16
+ReshapeAliasBackward0,unresolved,False,10240
+Scheduler.__init__ (dynamo_timed),unresolved,False,112
+Scheduler.codegen (dynamo_timed),unresolved,False,112
+SelectBackward0,unresolved,False,320
+SumBackward0,unresolved,False,320
+SwiGLUFunction,unresolved,False,10240
+SwiGLUFunctionBackward,unresolved,False,10240
+Torch-Compiled Region,unresolved,False,42240
+TorchDynamo Cache Lookup,unresolved,False,42240
+TransposeBackward0,unresolved,False,41600
+ViewBackward0,unresolved,False,41600
+WrapperCodeGen.generate (dynamo_timed),unresolved,False,112
+[pytorch|profiler|execution_trace|thread],unresolved,False,32
+_CopyToModelParallelRegion,unresolved,False,320
+_CopyToModelParallelRegionBackward,unresolved,False,320
+_LayerNormLinear,unresolved,False,20480
+_LayerNormLinearBackward,unresolved,False,20480
+_Linear,unresolved,False,20480
+_LinearBackward,unresolved,False,20480
+_RMSNorm,unresolved,False,320
+_RMSNormBackward,unresolved,False,320
+_ReduceFromModelParallelRegion,unresolved,False,320
+_ReduceFromModelParallelRegionBackward,unresolved,False,320
+_SplitAlongDim,unresolved,False,10240
+_SplitAlongDimBackward,unresolved,False,10240
+_VocabParallelCrossEntropy,unresolved,False,320
+_VocabParallelCrossEntropyBackward,unresolved,False,320
+_compile.compile_inner (dynamo_timed),unresolved,False,112
+aten::__or__,unresolved,False,48
+aten::_debug_has_internal_overlap,schema_functional,True,96
+aten::_has_compatible_shallow_copy_type,schema_functional,False,62080
+aten::_index_put_impl_,declared_mutation,False,960
+aten::_local_scalar_dense,schema_functional,False,13184
+aten::_pin_memory,schema_functional,False,1600
+aten::_reshape_alias,alias,False,10240
+aten::_to_copy,schema_functional,False,3076
+aten::_to_copy,unresolved,False,336
+aten::_to_copy,unresolved,True,272
+aten::_unsafe_view,alias,False,640
+aten::add,unresolved,False,928
+aten::add,unresolved,True,16
+aten::add_,write,False,41920
+aten::alias,unresolved,True,160
+aten::all,schema_functional,False,10240
+aten::arange,declared_mutation,False,368
+aten::arange,schema_functional,False,576
+aten::arange,schema_functional,True,16
+aten::as_strided,alias,False,768358
+aten::as_strided,alias,True,1104
+aten::bitwise_or,unresolved,False,112
+aten::bitwise_or,unresolved,True,16
+aten::cat,schema_functional,False,12176
+aten::cat,unresolved,False,224
+aten::cat,unresolved,True,32
+aten::chunk,unresolved,False,96
+aten::clone,schema_functional,False,36929
+aten::clone,unresolved,False,1760
+aten::clone,unresolved,True,80
+aten::contiguous,unresolved,False,10240
+aten::copy_,write,False,60223
+aten::copy_,write,True,96
+aten::detach,alias,False,81474
+aten::detach,alias,True,13664
+aten::detach_,alias,False,3216
+aten::div,unresolved,False,864
+aten::div,unresolved,True,16
+aten::div_,write,False,688
+aten::div_,write,True,48
+aten::dropout,unresolved,False,368
+aten::embedding,schema_functional,False,320
+aten::embedding_backward,schema_functional,False,320
+aten::embedding_dense_backward,schema_functional,False,320
+aten::empty,allocate_uninitialized,False,444080
+aten::empty,allocate_uninitialized,True,864
+aten::empty_like,allocate_uninitialized,False,108050
+aten::empty_like,allocate_uninitialized,True,112
+aten::empty_permuted,schema_functional,True,576
+aten::empty_strided,allocate_uninitialized,False,108679
+aten::empty_strided,allocate_uninitialized,True,6080
+aten::eq,schema_functional,False,960
+aten::eq,unresolved,False,10240
+aten::exp,declared_mutation,False,48
+aten::exp,declared_mutation,True,16
+aten::exp,unresolved,False,64
+aten::exp,unresolved,True,16
+aten::expand,alias,False,320
+aten::expand,alias,True,48
+aten::fill_,write,False,125921
+aten::flatten,unresolved,False,32
+aten::full,schema_functional,False,32
+aten::full,schema_functional,True,32
+aten::ge,unresolved,False,112
+aten::ge,unresolved,True,16
+aten::gt,schema_functional,False,7680
+aten::index,unresolved,False,7904
+aten::index_put,unresolved,False,192
+aten::index_put,unresolved,True,112
+aten::index_put_,declared_mutation,False,1056
+aten::index_put_,declared_mutation,True,96
+aten::index_select,schema_functional,False,320
+aten::is_pinned,schema_functional,False,1600
+aten::item,schema_functional,False,13184
+aten::lift_fresh,unresolved,False,6176
+aten::lift_fresh_copy,schema_functional,False,96
+aten::log,unresolved,False,112
+aten::log,unresolved,True,16
+aten::lt,schema_functional,False,16
+aten::lt,unresolved,False,112
+aten::lt,unresolved,True,16
+aten::masked_fill_,declared_mutation,False,960
+aten::matmul,schema_functional,False,640
+aten::max,unresolved,False,112
+aten::max,unresolved,True,64
+aten::median,schema_functional,False,320
+aten::mm,schema_functional,False,640
+aten::mul,unresolved,False,2464
+aten::mul,unresolved,True,80
+aten::mul_,write,False,16048
+aten::mul_,write,True,48
+aten::narrow,alias,False,1024
+aten::new_empty,allocate_uninitialized,False,128
+aten::new_empty,allocate_uninitialized,True,144
+aten::nonzero,schema_functional,False,7680
+aten::ones,schema_functional,False,32
+aten::ones_like,schema_functional,False,320
+aten::outer,schema_functional,False,16
+aten::pin_memory,unresolved,False,1600
+aten::pow,schema_functional,False,160
+aten::reshape,alias,False,70896
+aten::resize_,storage_rebind,False,8368
+aten::resolve_conj,unresolved,False,84
+aten::resolve_neg,unresolved,False,84
+aten::result_type,schema_functional,False,160
+aten::rsub,unresolved,False,160
+aten::rsub,unresolved,True,32
+aten::select,alias,False,17312
+aten::select_backward,schema_functional,False,320
+aten::set_,storage_rebind,False,16960
+aten::set_,storage_rebind,True,2144
+aten::sigmoid,unresolved,False,336
+aten::sigmoid,unresolved,True,32
+aten::silu,unresolved,False,160
+aten::slice,alias,False,519668
+aten::split,alias,False,336
+aten::split_with_sizes,alias,False,10432
+aten::stack,schema_functional,False,1600
+aten::sub,unresolved,False,448
+aten::sub,unresolved,True,128
+aten::sub_,declared_mutation,False,96
+aten::sub_,declared_mutation,True,96
+aten::sum,schema_functional,False,1920
+aten::sum,unresolved,False,112
+aten::sum,unresolved,True,16
+aten::t,alias,False,8000
+aten::to,alias,False,23584
+aten::to,alias,True,368
+aten::to,unresolved,False,3076
+aten::transpose,alias,False,132480
+aten::tril,schema_functional,False,16
+aten::unsqueeze,alias,False,384
+aten::unsqueeze,alias,True,48
+aten::view,alias,False,326884
+aten::view,alias,True,288
+aten::view_as,alias,False,1008
+aten::zero_,write,False,116305
+aten::zeros,schema_functional,False,44176
+aten::zeros_like,schema_functional,False,3330
+autograd::engine::evaluate_function: AddBackward0,unresolved,False,16
+autograd::engine::evaluate_function: CatBackward0,unresolved,False,320
+autograd::engine::evaluate_function: CloneBackward0,unresolved,False,10576
+autograd::engine::evaluate_function: CompiledFunctionBackward,unresolved,False,20480
+autograd::engine::evaluate_function: DivBackward0,unresolved,False,640
+autograd::engine::evaluate_function: EmbeddingBackward0,unresolved,False,320
+autograd::engine::evaluate_function: FusedAttnFuncBackward,unresolved,False,10240
+autograd::engine::evaluate_function: FusedRoPEFuncBackward,unresolved,False,20480
+autograd::engine::evaluate_function: LinearWithGradAccumulationAndAsyncCommunicationBackward,unresolved,False,320
+autograd::engine::evaluate_function: MakeViewlessTensorBackward,unresolved,False,640
+autograd::engine::evaluate_function: MulBackward0,unresolved,False,960
+autograd::engine::evaluate_function: ReshapeAliasBackward0,unresolved,False,10240
+autograd::engine::evaluate_function: SelectBackward0,unresolved,False,320
+autograd::engine::evaluate_function: SumBackward0,unresolved,False,320
+autograd::engine::evaluate_function: SwiGLUFunctionBackward,unresolved,False,10240
+autograd::engine::evaluate_function: TransposeBackward0,unresolved,False,41600
+autograd::engine::evaluate_function: ViewBackward0,unresolved,False,41600
+autograd::engine::evaluate_function: _CopyToModelParallelRegionBackward,unresolved,False,320
+autograd::engine::evaluate_function: _LayerNormLinearBackward,unresolved,False,20480
+autograd::engine::evaluate_function: _LinearBackward,unresolved,False,20480
+autograd::engine::evaluate_function: _RMSNormBackward,unresolved,False,320
+autograd::engine::evaluate_function: _ReduceFromModelParallelRegionBackward,unresolved,False,320
+autograd::engine::evaluate_function: _SplitAlongDimBackward,unresolved,False,10240
+autograd::engine::evaluate_function: _VocabParallelCrossEntropyBackward,unresolved,False,320
+autograd::engine::evaluate_function: torch::autograd::AccumulateGrad,unresolved,False,62400
+autograd::engine::evaluate_function: torch::autograd::Error,unresolved,False,32
+c10d::_allgather_base_,unresolved,False,320
+c10d::allgather_into_tensor_coalesced_,unresolved,False,14112
+c10d::allreduce_,unresolved,False,1600
+c10d::barrier,unresolved,False,320
+c10d::broadcast_,unresolved,False,1600
+c10d::reduce_scatter_tensor_coalesced_,unresolved,False,15680
+compile_fx.<locals>.bw_compiler (dynamo_timed),unresolved,False,16
+compile_fx.<locals>.fw_compiler_base (dynamo_timed),unresolved,False,112
+compile_fx_inner (dynamo_timed),unresolved,False,128
+create_aot_dispatcher_function (dynamo_timed),unresolved,False,112
+detach,unresolved,False,81474
+detach,unresolved,True,4352
+detach_,unresolved,False,3216
+enumerate(DataLoader)#_SingleProcessDataLoaderIter.__next__,unresolved,False,320
+nccl:_all_gather_base,unresolved,False,320
+nccl:all_gather_into_tensor_coalesced,unresolved,False,14112
+nccl:all_reduce,unresolved,False,1920
+nccl:broadcast,unresolved,False,1600
+nccl:reduce_scatter_tensor_coalesced,unresolved,False,15680
+prims::add,unresolved,True,48
+prims::bitwise_or,unresolved,True,16
+prims::broadcast_in_dim,unresolved,True,96
+prims::cat,unresolved,True,32
+prims::clone,unresolved,True,80
+prims::collapse_view,unresolved,True,16
+prims::convert_element_type,unresolved,False,432
+prims::convert_element_type,unresolved,True,272
+prims::div,unresolved,True,48
+prims::exp,unresolved,True,64
+prims::ge,unresolved,True,16
+prims::iota,unresolved,False,96
+prims::iota,unresolved,True,16
+prims::log,unresolved,True,16
+prims::lt,unresolved,True,16
+prims::mul,unresolved,True,80
+prims::neg,unresolved,True,32
+prims::split_dim,unresolved,True,16
+prims::sub,unresolved,True,128
+prims::sum,unresolved,True,16
+prims::view_of,unresolved,True,160
+record_param_comms,unresolved,False,37536
+tex_ts::te_gemm_ts,write,False,122880
+torch::autograd::AccumulateGrad,unresolved,False,62400
+torch::autograd::DelayedError,unresolved,False,32
+triton_poi_fused__to_copy_index_index_put_rsub_sub_0,unresolved,False,64
+triton_poi_fused__to_copy_index_index_put_rsub_sub_1,unresolved,False,64
+triton_poi_fused__to_copy_mul_2,unresolved,False,64
+triton_poi_fused_add_0,unresolved,False,4096
+triton_poi_fused_bitwise_or_clone_ge_index_index_put_lift_fresh_lt_sub_0,unresolved,False,64
+triton_poi_fused_cat_0,unresolved,False,2048
+triton_poi_fused_cat_index_put_lift_fresh_1,unresolved,False,64
+triton_poi_fused_div_1,unresolved,False,64
+triton_poi_fused_log_sub_0,unresolved,False,64
+triton_poi_fused_mul_silu_0,unresolved,False,2048
+triton_red_fused__to_copy_max_0,unresolved,False,64
+triton_red_fused_exp_sub_sum_2,unresolved,False,64
