@@ -65,6 +65,12 @@ def main():
             descriptor=read_json(prior/'s16/INPUT_CONFIG.json')
             descriptor.update(boundary=reg,flows=fixture['flows'],memory_overrides=fixture.get('memory_overrides',{}))
             run_case(fixture['name'],descriptor,1)
+            if fixture.get('requires_shared_directed_link'):
+                observed=read_json(a.output/fixture['name']/'bounded-0/execution.json')['network_messages']
+                edges=[{(h['source'],h['destination']) for f in m['flits'] for h in f['link_arrivals']} for m in observed]
+                common=edges[0]&edges[1]
+                if not common:raise ValueError('Shared-path diagnostic has no actual shared directed link')
+                write_json(a.output/fixture['name']/'SHARED_PATH.json',dict(passed=True,shared_links=sorted(common)))
         write_json(a.output/'MECHANISMS_COMPLETE.json',dict(passed=True,cases=[r['name'] for r in mechanisms]))
         for case in reg['cases']:
             descriptor=read_json(prior/case['name']/'INPUT_CONFIG.json');descriptor['boundary']=reg

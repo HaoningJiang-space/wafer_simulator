@@ -72,3 +72,12 @@ execution, serialization and independent audit wall/CPU cost; lifetime RSS is
 labelled, native and Python separately. Report conditional scope if target
 service assumptions determine the outcome. Stop at the least detailed model
 meeting these declared goals; do not add router microarchitecture to erase tails.
+
+## Diagnostic correction before accepting the study
+
+The first pair (7->0, 6->1) had no observed shared directed link; its two-sink
+result cannot certify the fourth mechanism. The accepted study instead fixes
+(0->2, 1->3), with endpoint 2 at 8 B/cycle. This is one geometry diagnostic, not
+a mapping search. A shared-link assertion must pass on the actual bounded
+BookSim paths before proceeding to application runs. The earlier complete run
+remains traceable but does not meet this mechanism-coverage gate.
