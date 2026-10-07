@@ -95,6 +95,16 @@ class TimedTarget:
         return self.paths[key]
 
     def steps(self, phase):
+        if phase.kind == "memory_network":
+            if phase.transfer is None or len(phase.demands)!=2:
+                raise ValueError("Boundary move requires a transfer and two memory demands")
+            t=phase.transfer
+            if [(d.resource,d.unit,d.amount) for d in phase.demands] != [
+                (self.binding.memory[t.source_memory].read_port,'bytes',t.size_bytes),
+                (self.binding.memory[t.destination_memory].write_port,'bytes',t.size_bytes)]:
+                raise ValueError("Boundary work must match source read and destination write")
+            self.route(t.source_endpoint,t.destination_endpoint)
+            return tuple(Step(d.resource,d.unit,d.amount,'memory') for d in phase.demands)
         if phase.transfer is not None:
             if phase.demands or phase.kind != "transfer":
                 raise ValueError("Transfer cannot hide compute/memory demands")

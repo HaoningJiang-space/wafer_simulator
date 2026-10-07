@@ -20,7 +20,7 @@
 +void TrafficManager::_EndpointCredit(Flit const *f, int subnet, int node)
 +{
 +    Credit *c = Credit::New();
-+    c->vc.insert(f->vc);
++    c->AddVC(f->vc);
 +    _net[subnet]->WriteCredit(c, node);
 +}
 +
@@ -49,7 +49,7 @@
                                 << "." << endl;
                  }
 -                Credit * const c = Credit::New();
--                c->vc.insert(f->vc);
+-                c->AddVC(f->vc);
 -                _net[subnet]->WriteCredit(c, n);
 +                _EndpointCredit(f, subnet, n);
  	

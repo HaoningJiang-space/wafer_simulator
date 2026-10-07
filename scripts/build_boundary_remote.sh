@@ -9,6 +9,10 @@ build="$root/build/booksim-boundary"
 if [[ ! -d "$build" ]]; then
     git -C "$root/upstream/nw-design-for-wsi" worktree add --detach "$build" "$commit"
     git -C "$build" apply "$repo/patches/booksim-wafer.patch"
+fi
+if [[ ! -f "$build/.boundary-patches" ]]; then
+    git -C "$build" apply --reverse --check "$repo/patches/booksim-wafer.patch"
+    git -C "$build" apply --check "$repo/patches/booksim-endpoint-hooks.patch"
     git -C "$build" apply "$repo/patches/booksim-endpoint-hooks.patch"
     sha256sum "$repo/patches/booksim-wafer.patch" "$repo/patches/booksim-endpoint-hooks.patch" > "$build/.boundary-patches"
 else

@@ -5,7 +5,7 @@
 
 class BoundaryTrafficManager : public OnlineTrafficManager {
     BookSimConfig original;
-    bool enabled=false, bounded=false;
+    bool enabled=false, bounded=false, streaming=false;
     int slots=0;
     std::vector<int> supplied, sent;
     std::map<int,int> ordinals;
@@ -14,10 +14,10 @@ class BoundaryTrafficManager : public OnlineTrafficManager {
     std::vector<json> progress;
 
     bool _EndpointCanInject(Flit const *f) override {
-        return !enabled || sent.at(f->mid) < supplied.at(f->mid);
+        return !streaming || sent.at(f->mid) < supplied.at(f->mid);
     }
     void _EndpointInjected(Flit const *f) override {
-        if (!enabled) return;
+        if (!streaming) return;
         int ordinal=sent.at(f->mid)++;
         ordinals[f->id]=ordinal;
         progress.push_back({{"event","inject"},{"id",f->mid},{"flit",f->id},
@@ -34,7 +34,7 @@ class BoundaryTrafficManager : public OnlineTrafficManager {
     void _RetireFlit(Flit *f,int node) override {
         int mid=f->mid, fid=f->id;
         OnlineTrafficManager::_RetireFlit(f,node);
-        if (!enabled) return;
+        if (!streaming) return;
         auto event=message_flits.at(mid).back();
         event["ordinal"]=ordinals.at(fid);
         progress.push_back({{"event","receive"},{"id",mid},{"flit",fid},
@@ -43,7 +43,7 @@ class BoundaryTrafficManager : public OnlineTrafficManager {
     }
     void ReturnCredits() {
         for (int node=0;node<_nodes;++node) if (!returns[node].empty()) {
-            Credit *c=Credit::New(); c->vc.insert(returns[node].front());
+            Credit *c=Credit::New(); c->AddVC(returns[node].front());
             returns[node].pop_front(); _net[0]->WriteCredit(c,node);
         }
     }
@@ -58,7 +58,7 @@ public:
     }
     json Submit(const json &r) override {
         auto reply=OnlineTrafficManager::Submit(r);
-        supplied.push_back(enabled?0:r.at("flits").get<int>()); sent.push_back(0);
+        supplied.push_back(streaming?0:r.at("flits").get<int>()); sent.push_back(0);
         return reply;
     }
     json BoundaryCommand(const json &r) {
@@ -69,6 +69,8 @@ public:
                 original.GetStr("buffer_policy")!="private")
                 throw std::runtime_error("Boundary mode requires empty one-VC private-buffer trace");
             slots=r.at("rx_slots"); bounded=r.at("bounded");
+            streaming=r.at("streaming");
+            if (bounded && !streaming) throw std::runtime_error("Bounded endpoint needs progress callbacks");
             if (slots<=0) throw std::runtime_error("Invalid receive slots");
             BookSimConfig sink(original);sink.Assign("vc_buf_size",slots);sink.Assign("buf_size",-1);
             for (auto *ch:_net[0]->GetEject()) {

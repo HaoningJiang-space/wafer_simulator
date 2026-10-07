@@ -108,7 +108,12 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
                 lifecycle.append(dict(event="retire",operation=op,cycle=clock.now,used_bytes=state.used.copy()))
             else:
                 submit_ready(op)
-        if network is not None and phase.transfer:
+        if phase.kind == "memory_network":
+            if network is None or not hasattr(network, 'submit_movement'):
+                raise ValueError("Boundary movement requires a memory-network controller")
+            network.submit_movement(token,phase,clock)
+            network_callbacks[token] = complete
+        elif network is not None and phase.transfer:
             network.submit(token,phase.transfer,clock.now)
             network_callbacks[token] = complete
         else:
@@ -138,7 +143,8 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
             break
         # Inclusive deadline: drain every completion at the limit, then accept
         # only if the entire work retired. Never execute a later local event.
-        if clock.now >= cycle_limit and (not clock.events or clock.events[0][0] > cycle_limit):
+        if (clock.now >= cycle_limit and not getattr(network, 'done', ())
+                and (not clock.events or clock.events[0][0] > cycle_limit)):
             raise TimeoutError("Target execution reached its declared cycle limit")
         if network is None:
             if clock.events[0][0] > cycle_limit:
@@ -173,7 +179,7 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
         result["network_messages"] = sorted(network.messages,key=lambda m:m["id"])
         result["policy"]["network"] = getattr(network,"policy_description","live BookSim; all-flit reception at end-of-cycle boundary")
         result["policy"]["ties"] = "network completions before local completions at the same boundary"
-        if result["network_backend"] == "packet_pipeline": result.update(network.evidence())
+        if hasattr(network, 'evidence'): result.update(network.evidence())
     if any(p.dependencies is not None for p in binding.plans.values()):
         result["policy"]["collectives"] = "explicit action DAG and output requirements; atomic admission; all actions precede retirement; producer outputs and staging pinned until retirement"
     return result

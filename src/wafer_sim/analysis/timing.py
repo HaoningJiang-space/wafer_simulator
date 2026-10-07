@@ -14,7 +14,7 @@ def audit(binding, timing, result):
         *(s for e in timing.endpoints for s in (e.injection,e.ejection)))}
     records,by_resource,by_token = result["services"],defaultdict(list),defaultdict(list)
     native_messages = None
-    if result.get("network_backend") in {"booksim","packet_pipeline"}:
+    if result.get("network_backend") in {"booksim","packet_pipeline","booksim_boundary"}:
         from wafer_sim.analysis.online_network import audit_messages
         audit_messages(binding.network, result["network_messages"])
         if result['network_backend']=='packet_pipeline':
@@ -82,6 +82,12 @@ def audit(binding, timing, result):
                     tuple(row.get("predecessors", ())) != plan.dependencies[index]):
                 raise ValueError("Collective action identity or dependencies disagree")
             token = f"{op}/phase/{index}"
+            if phase.kind == 'memory_network':
+                from wafer_sim.analysis.memory_boundary import audit_move
+                network_tokens.add(token)
+                move=next(m for m in result['boundary']['moves'] if m['token']==token)
+                expected_tokens.update(audit_move(phase,row,move,native_messages[token],by_token,previous))
+                continue
             if phase.transfer is not None and native_messages is not None:
                 network_tokens.add(token)
                 t = phase.transfer
@@ -142,6 +148,9 @@ def audit(binding, timing, result):
         raise ValueError("Extra or missing phase/service")
     if native_messages is not None and network_tokens != set(native_messages):
         raise ValueError("Extra or missing native transmission")
+    if result.get('network_backend')=='booksim_boundary':
+        from wafer_sim.analysis.memory_boundary import audit_occupancy
+        audit_occupancy(result['boundary'])
     expected_ready = {d.id: 0 for d in binding.graph.data.values() if d.producer is None}
     for op, plan in binding.plans.items():
         if result["operations"][op].get("retired") != result["operations"][op]["finish"]:
