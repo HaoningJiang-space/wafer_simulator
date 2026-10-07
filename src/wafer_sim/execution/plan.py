@@ -47,6 +47,13 @@ class Phase:
 class OperationPlan:
     reservations: tuple[Allocation, ...]
     phases: tuple[Phase, ...]
+    # None retains sequential phases. Collective actions have an explicit DAG.
+    dependencies: tuple[tuple[int, ...], ...] | None = None
+    action_ids: tuple[str, ...] = ()
+    policy: str = ""
+
+    def predecessors(self, index):
+        return self.dependencies[index] if self.dependencies is not None else ((index-1,) if index else ())
 
 
 @dataclass(frozen=True)

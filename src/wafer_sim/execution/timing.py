@@ -72,10 +72,18 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
     pending = list(binding.graph.order)
     network_callbacks = {}
 
-    def submit_phase(op):
-        index,phase = state.active[op],state.next_phase(op)
+    def submit_ready(op):
+        for index in state.ready_phases(op):
+            state.begin_phase(op,index)
+            submit_phase(op,index)
+
+    def submit_phase(op,index):
+        plan = binding.plans[op]
+        phase = plan.phases[index]
         token = f"{op}/phase/{index}"
         row = dict(operation=op,phase=index,kind=phase.kind,ready=clock.now,finish=None)
+        if plan.dependencies is not None:
+            row.update(action=plan.action_ids[index], predecessors=plan.dependencies[index])
         if phase.transfer:
             row["transfer_bytes"] = phase.transfer.size_bytes
             if network is None:
@@ -90,7 +98,7 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
                 operations[op]["finish"] = clock.now
                 lifecycle.append(dict(event="complete",operation=op,cycle=clock.now,used_bytes=state.used.copy()))
             else:
-                submit_phase(op)
+                submit_ready(op)
         if network is not None and phase.transfer:
             network.submit(token,phase.transfer,clock.now)
             network_callbacks[token] = complete
@@ -112,7 +120,7 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
             operations[op] = dict(ready=dependency_ready[op],admitted=clock.now,finish=None,
                 capacity_wait_cycles=clock.now-dependency_ready[op])
             lifecycle.append(dict(event="admit",operation=op,cycle=clock.now,used_bytes=state.used.copy()))
-            submit_phase(op)
+            submit_ready(op)
         if len(state.completed) == len(binding.plans):
             complete = True
             break
@@ -152,4 +160,6 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
         result["network_messages"] = sorted(network.messages,key=lambda m:m["id"])
         result["policy"]["network"] = "live BookSim; all-flit reception at end-of-cycle boundary"
         result["policy"]["ties"] = "network completions before local completions at the same boundary"
+    if any(p.dependencies is not None for p in binding.plans.values()):
+        result["policy"]["collectives"] = "explicit action DAG; all participants admitted atomically; all output writes precede operation completion"
     return result

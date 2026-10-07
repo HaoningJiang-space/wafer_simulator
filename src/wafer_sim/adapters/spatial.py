@@ -100,6 +100,10 @@ def bind(workload, target, placement):
         local = memory[c.memory]
         if any(unit not in c.work_units for unit, _ in op.work):
             raise ValueError("Target compute resource cannot serve the declared work unit")
+        if op.collective is not None:
+            from wafer_sim.adapters.collective_operation import bind_operation
+            plans[op.id] = bind_operation(op, graph, target, homes, c.id)
+            continue
         allocations, phases = [], []
 
         def service(kind, port, amount):

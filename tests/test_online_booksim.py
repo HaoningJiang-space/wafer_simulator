@@ -8,6 +8,7 @@ import unittest
 from test_semantics import tiny_inputs
 from test_spatial import data,op,target
 from test_timed_execution import timing
+from test_collective_timing import case as collective_case
 from wafer_sim.adapters import wow
 from wafer_sim.adapters.online_booksim import OnlineBookSim,prepare_online_config
 from wafer_sim.adapters.spatial import bind
@@ -100,6 +101,23 @@ class OnlineBookSimTests(unittest.TestCase):
             client.submit("x",Transfer("x","0","2",0,2,128),0)
             with self.assertRaisesRegex(ValueError,"incomplete"): client.close()
         finally: client.abort()
+
+    def test_collective_actions_share_live_network_and_wait_for_all_writes(self):
+        directory,inputs,config=self.prepare("collective",nodes=4)
+        binding,rates=collective_case(4)
+        client=OnlineBookSim(self.binary,config,directory,flit_bytes=4)
+        try:
+            result=execute(binding,rates,network=client)
+            record=client.close()
+        finally:client.abort()
+        self.assertTrue(audit(binding,rates,result)["passed"])
+        gathers=[m for m in record["messages"] if m["destination"]==0]
+        self.assertEqual(len(gathers),3)
+        self.assertEqual({m["ready"] for m in gathers},{2})
+        self.assertLess(max(m["first_inject"] for m in gathers),min(m["finish"] for m in gathers))
+        self.assertEqual(result["storage"]["available_data"],["y0","y1","y2","y3"])
+        self.assertGreater(result["application_cycles"],max(m["finish"] for m in record["messages"]))
+        compare_reference(inputs,directory,directory/"reference",self.reference,record["messages"],1)
 
     def test_timing_memory_write_and_lifetime_follow_native_arrival(self):
         directory,inputs,config=self.prepare("lifetime",nodes=2)

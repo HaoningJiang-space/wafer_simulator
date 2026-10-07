@@ -18,10 +18,12 @@ def critical_chain(binding, result):
         node(f"op:{op}:ready",row["ready"],parents)
         node(f"op:{op}:admit",row["admitted"],[f"op:{op}:ready"],
              row["capacity_wait_cycles"],"capacity",operation=op)
-        previous = f"op:{op}:admit"
         for index,phase in enumerate(plan.phases):
+            incoming = [f"phase:{op}:{i}:finish" for i in plan.predecessors(index)] or [f"op:{op}:admit"]
+            previous = f"phase:{op}:{index}:ready"
             token = f"{op}/phase/{index}"
             p = phases[op,index]
+            node(previous,p["ready"],incoming)
             if phase.transfer is not None and result.get("network_backend") == "booksim":
                 point = f"network:{token}"
                 node(point,p["finish"],[previous],p["finish"]-p["ready"],"network",
@@ -41,7 +43,9 @@ def critical_chain(binding, result):
                          event["finish"]-event["resource_released"],event["category"],
                          operation=op,phase=index,resource=event["resource"],token=token)
                     previous = f"service:{identity}:finish"
-        node(f"op:{op}:finish",row["finish"],[previous])
+            node(f"phase:{op}:{index}:finish",p["finish"],[previous])
+        node(f"op:{op}:finish",row["finish"],
+             [f"phase:{op}:{i}:finish" for i in range(len(plan.phases))])
     for key,row in nodes.items():
         if key == "root": continue
         if row["time"] != max(nodes[p]["time"] for p in row["parents"])+row["duration"]:

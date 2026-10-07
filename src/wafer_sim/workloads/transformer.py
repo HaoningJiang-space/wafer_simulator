@@ -4,10 +4,11 @@ Bias-free pre-LayerNorm, dense unmasked attention, exact-erf GELU, no dropout.
 This is an analytical model, not recovered Llama work or a training step.
 Logical worker ownership is independent of physical reticle placement.
 """
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import prod
 
 from wafer_sim.workloads.spatial import DataObject, Operation, Workload, natural, validate
+from wafer_sim.workloads.collectives import Collective, Slot
 
 PROVENANCE = "Declared float32 pre-LN Transformer block forward v1"
 
@@ -70,6 +71,8 @@ def build_block(*, batch, sequence, hidden, heads, ffn_hidden, shards):
         outputs = tuple(tensor(f"r{r}/{name}:out", (b,s,h), r, name) for r in range(p))
         operation(name, 0, "sum_allreduce", inputs, outputs,
                   dict(scalar_add=elements*(p-1)))
+        operations[-1] = replace(operations[-1], collective=Collective(name, "allreduce", tuple(range(p)),
+            (Slot(elements,elements,4,"float32"),), "sum", None, PROVENANCE))
         collectives.append(dict(operation=name, participants=list(range(p)), root=0,
             input_objects=list(inputs), output_objects=list(outputs), elements=elements,
             element_bytes=4, reduction="sum", algorithm="root gather, sum, broadcast",

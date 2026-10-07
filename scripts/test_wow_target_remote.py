@@ -25,7 +25,7 @@ def main():
     sys.path.insert(0, str(repo / "tests"))
     os.environ["WAFER_ONLINE_TEST_OUTPUT"] = str(args.output / "native")
     modules = ["test_spatial", "test_collectives", "test_collective_values", "test_timed_execution",
-               "test_transformer", "test_online_booksim", "test_wow_target"]
+               "test_transformer", "test_collective_timing", "test_online_booksim", "test_wow_target"]
     suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
     log = args.output / "tests.log"
     with log.open("w") as stream:

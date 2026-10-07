@@ -71,9 +71,13 @@ def audit(binding, timing, result):
     if len(phases) != len(result["phases"]): raise ValueError("Duplicate phase")
     expected_tokens = set()
     for op,plan in binding.plans.items():
-        previous = result["operations"][op]["admitted"]
         for index,phase in enumerate(plan.phases):
+            previous = max((phases[op,p]["finish"] for p in plan.predecessors(index)),
+                           default=result["operations"][op]["admitted"])
             row = phases[op,index]
+            if plan.dependencies is not None and (row.get("action") != plan.action_ids[index] or
+                    tuple(row.get("predecessors", ())) != plan.dependencies[index]):
+                raise ValueError("Collective action identity or dependencies disagree")
             token = f"{op}/phase/{index}"
             if phase.transfer is not None and native_messages is not None:
                 network_tokens.add(token)
@@ -129,7 +133,7 @@ def audit(binding, timing, result):
             if any(e["category"] != category for e in events):
                 raise ValueError("Incorrect resource attribution category")
             previous = row["finish"]
-        if previous != result["operations"][op]["finish"]:
+        if max(phases[op,i]["finish"] for i in range(len(plan.phases))) != result["operations"][op]["finish"]:
             raise ValueError("Operation finished before its last phase")
     if expected_tokens != set(by_token) or len(phases) != sum(len(p.phases) for p in binding.plans.values()):
         raise ValueError("Extra or missing phase/service")

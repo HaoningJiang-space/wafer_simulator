@@ -57,6 +57,13 @@ class TimedTarget:
         self.paths = {}
         # Validate all demands before starting execution, including late phases.
         for plan in binding.plans.values():
+            if plan.dependencies is not None:
+                if (len(plan.dependencies) != len(plan.phases) or
+                        len(plan.action_ids) != len(plan.phases) or
+                        len(set(plan.action_ids)) != len(plan.phases) or
+                        any(len(set(deps)) != len(deps) or any(type(p) is not int or not 0 <= p < i for p in deps)
+                            for i, deps in enumerate(plan.dependencies))):
+                    raise ValueError("Action DAG must be unique and topologically ordered")
             for phase in plan.phases: self.steps(phase)
 
     def route(self, source, destination):

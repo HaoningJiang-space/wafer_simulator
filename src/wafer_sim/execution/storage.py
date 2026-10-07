@@ -26,6 +26,7 @@ class StorageState:
         self.available = set()
         self.completed = set()
         self.active = {}
+        self.phase_started, self.phase_finished = {}, {}
         self.remaining = {d: set(cs) for d, cs in binding.graph.consumers.items()}
         initial = []
         for d in binding.graph.data.values():
@@ -63,21 +64,45 @@ class StorageState:
             raise ValueError("Prerequisites complete but required data unavailable")
         self._reserve(self.binding.plans[op].reservations)
         self.active[op] = 0
+        self.phase_started[op], self.phase_finished[op] = set(), set()
         return decision
+
+    def ready_phases(self, op):
+        if op not in self.active:
+            raise ValueError("Operation has not been admitted")
+        plan = self.binding.plans[op]
+        return tuple(i for i in range(len(plan.phases))
+                     if i not in self.phase_started[op] | self.phase_finished[op]
+                     and set(plan.predecessors(i)) <= self.phase_finished[op])
+
+    def begin_phase(self, op, index):
+        if index not in self.ready_phases(op):
+            raise ValueError("Phase lacks completed action prerequisites")
+        self.phase_started[op].add(index)
 
     def next_phase(self, op):
         if op not in self.active:
             raise ValueError("Operation has not been admitted")
+        if self.binding.plans[op].dependencies is not None:
+            raise ValueError("Concurrent actions require ready_phases")
         return self.binding.plans[op].phases[self.active[op]]
 
     def complete_phase(self, op, index):
-        if op not in self.active or type(index) is not int or index != self.active[op]:
+        if op not in self.active or type(index) is not int:
             raise ValueError("Out-of-order, duplicate or unadmitted phase completion")
+        plan = self.binding.plans[op]
+        if ((plan.dependencies is None and index != self.active[op]) or
+                (plan.dependencies is not None and index not in self.phase_started[op]) or
+                index in self.phase_finished[op]):
+            raise ValueError("Out-of-order, duplicate or unadmitted phase completion")
+        self.phase_finished[op].add(index)
+        self.phase_started[op].discard(index)
         self.active[op] += 1
         if self.active[op] != len(self.binding.plans[op].phases):
             return
         operation = self.binding.graph.operations[op]
         del self.active[op]
+        del self.phase_started[op], self.phase_finished[op]
         self.completed.add(op)
         self.available.update(operation.outputs)
         for d in operation.inputs:

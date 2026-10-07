@@ -38,6 +38,7 @@ class Operation:
     scratch_bytes: int
     control_deps: tuple[str, ...]
     provenance: str
+    collective: object | None = None
 
 
 @dataclass(frozen=True)
@@ -88,6 +89,18 @@ def validate(workload):
             raise ValueError("Missing control dependency")
         if set(op.outputs) != produced[op.id]:
             raise ValueError("Outputs and declared producer disagree")
+        if op.collective is not None:
+            from wafer_sim.workloads.collectives import validate as validate_collective
+            collective = validate_collective(op.collective)
+            if (collective.id != op.id or collective.kind != "allreduce" or len(collective.slots) != 1 or
+                    len(collective.members) < 2 or len(op.inputs) != len(collective.members) or
+                    len(op.outputs) != len(collective.members) or op.scratch_bytes):
+                raise ValueError("Spatial collective operation requires one-slot multi-rank AllReduce")
+            slot = collective.slots[0]
+            if (any(data[d].size_bytes != slot.input_elements*slot.element_bytes for d in op.inputs) or
+                    any(data[d].size_bytes != slot.output_elements*slot.element_bytes for d in op.outputs) or
+                    dict(op.work) != {"scalar_add": (len(collective.members)-1)*slot.output_elements}):
+                raise ValueError("Collective ports, bytes or mathematical work disagree")
         if type(op.work) is not tuple or not op.work:
             raise ValueError("Explicit operation work is required; durations are not work")
         units = set()
