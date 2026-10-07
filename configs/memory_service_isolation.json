@@ -1,0 +1,12 @@
+{
+  "name": "memory_service_isolation_v1",
+  "accepted_run": "/home/wangziheng/wafer_simulator/runs/memory-boundary-004",
+  "cases": ["s16", "s64"],
+  "contracts": [
+    {"name": "request_atomic", "memory_quantum_bytes": null},
+    {"name": "burst_256", "memory_quantum_bytes": 256}
+  ],
+  "modes": ["serial", "pipeline", "bounded"],
+  "repetitions": 3,
+  "scope": "Conditional target-policy interaction; not an isolated overlap effect or calibrated WoW hardware"
+}
