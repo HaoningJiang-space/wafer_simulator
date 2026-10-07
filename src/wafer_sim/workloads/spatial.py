@@ -5,6 +5,7 @@ collectives. Provenance labels describe evidence, not an accuracy certificate.
 """
 from dataclasses import dataclass
 from types import MappingProxyType
+from collections.abc import Mapping
 
 from wafer_sim.workloads.dag import validate as validate_dag
 
@@ -47,10 +48,10 @@ class Workload:
 
 @dataclass(frozen=True)
 class LogicalGraph:
-    data: object
-    operations: object
-    predecessors: object
-    consumers: object
+    data: Mapping[str, DataObject]
+    operations: Mapping[str, Operation]
+    predecessors: Mapping[str, frozenset[str]]
+    consumers: Mapping[str, frozenset[str]]
     order: tuple[str, ...]
 
 

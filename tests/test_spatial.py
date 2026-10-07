@@ -3,7 +3,9 @@ import unittest
 from dataclasses import replace
 
 from wafer_sim.workloads.spatial import DataObject, Operation, Workload, validate
-from wafer_sim.adapters.spatial import MemoryRegion, ComputeResource, Network, Target, Placement, bind, network_from_wow
+from wafer_sim.architecture.spatial import MemoryRegion, ComputeResource, Network, Target
+from wafer_sim.adapters.spatial import bind, network_from_wow
+from wafer_sim.execution.plan import Placement
 from wafer_sim.execution.storage import StorageState
 
 

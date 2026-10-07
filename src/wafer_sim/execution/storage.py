@@ -7,7 +7,7 @@ No eviction, spill, address-alias inference or hidden infinite storage.
 """
 from dataclasses import dataclass
 
-from wafer_sim.adapters.spatial import Allocation
+from wafer_sim.execution.plan import Allocation
 
 
 @dataclass(frozen=True)

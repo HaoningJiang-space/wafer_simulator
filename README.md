@@ -7,6 +7,9 @@ for what is reused, repaired, and not claimed.
 The [research direction](docs/RESEARCH_DIRECTION.md) derives a compute–memory–network
 execution contract from spatial locality and finite resources. It separates
 logical work, compute/data mapping, execution policy and target resources.
+The [spatial contract v1](docs/SPATIAL_CONTRACT.md) implements separate work/data
+identities, target binding and finite-region storage lifetimes. It declares
+service demands but does not yet predict time or retarget the full Llama capture.
 The current implementation is a
 conditional WoW replay with partial communication retargeting; it does not yet
 implement a source-machine-independent workload model.

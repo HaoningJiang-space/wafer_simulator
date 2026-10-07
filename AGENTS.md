@@ -8,6 +8,7 @@ Keep responsibilities separate:
 - `third_party/`: pinned author implementation, no in-place edits.
 - `patches/`: reviewed changes applied to isolated upstream build worktrees.
 - `src/wafer_sim/workloads/`: complete workload DAGs and input validation.
+- `src/wafer_sim/architecture/`: explicit target resource definitions, without workload or scheduling policy.
 - `src/wafer_sim/adapters/`: upstream geometry and BookSim integration.
 - `src/wafer_sim/execution/`: resource admission and data lifetime state, separate from timing backends.
 - `src/wafer_sim/analysis/`: independent completion audit and paired comparison.

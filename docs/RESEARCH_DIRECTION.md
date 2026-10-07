@@ -70,6 +70,10 @@ identity, liveness or mathematical semantics.
 
 ## Minimum spatial execution contract to specify next
 
+The [v1 contract implementation](SPATIAL_CONTRACT.md) now covers logical objects,
+resource binding and finite storage state. Timing arbitration and a complete
+semantic Llama input remain separate work; M0/M1 results are unchanged.
+
 | Object | Required information | Event or constraint |
 | --- | --- | --- |
 | Compute operation | Operation/work description, inputs, outputs, scratch demand, target service model | Inputs available, output/scratch storage reserved, required service resources available |

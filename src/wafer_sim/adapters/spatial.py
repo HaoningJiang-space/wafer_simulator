@@ -5,36 +5,12 @@ Staging is whole-object, serialized within each operation and uncached between
 operations. A service backend must arbitrate equal resource IDs, including
 ports shared across regions, and complete each phase before advancing it.
 """
-from dataclasses import dataclass
 from types import MappingProxyType
 
 from wafer_sim.workloads.spatial import identifier, natural, validate
 from wafer_sim.io import object_digest
-
-
-@dataclass(frozen=True)
-class MemoryRegion:
-    id: str
-    endpoint: int
-    capacity_bytes: int
-    read_port: str
-    write_port: str
-    provenance: str
-
-
-@dataclass(frozen=True)
-class ComputeResource:
-    id: str
-    memory: str
-    work_units: tuple[str, ...]
-    provenance: str
-
-
-@dataclass(frozen=True)
-class Network:
-    endpoint_routers: tuple[tuple[int, int], ...]
-    router_links: tuple[tuple[int, int], ...]  # bidirectional physical connectivity
-    provenance: str
+from wafer_sim.architecture.spatial import Network
+from wafer_sim.execution.plan import Allocation, Demand, Transfer, Phase, OperationPlan, Binding
 
 
 def network_from_wow(export):
@@ -49,65 +25,6 @@ def network_from_wow(export):
     return Network(tuple((e["node"], e["router"]) for e in export["endpoints"]),
                    tuple((link["src"], link["dst"]) for link in links),
                    "WoW export object SHA-256 " + object_digest(export))
-
-
-@dataclass(frozen=True)
-class Target:
-    memory: tuple[MemoryRegion, ...]
-    compute: tuple[ComputeResource, ...]
-    network: Network
-
-
-@dataclass(frozen=True)
-class Placement:
-    compute: object  # operation ID -> compute resource ID
-    data: object  # data ID -> home memory region ID
-
-
-@dataclass(frozen=True)
-class Allocation:
-    key: tuple[str, ...]
-    memory: str
-    size_bytes: int
-
-
-@dataclass(frozen=True)
-class Demand:
-    resource: str
-    unit: str
-    amount: int
-
-
-@dataclass(frozen=True)
-class Transfer:
-    data: str
-    source_memory: str
-    destination_memory: str
-    source_endpoint: int
-    destination_endpoint: int
-    size_bytes: int
-
-
-@dataclass(frozen=True)
-class Phase:
-    kind: str
-    demands: tuple[Demand, ...] = ()
-    transfer: Transfer | None = None
-
-
-@dataclass(frozen=True)
-class OperationPlan:
-    reservations: tuple[Allocation, ...]
-    phases: tuple[Phase, ...]
-
-
-@dataclass(frozen=True)
-class Binding:
-    graph: object
-    memory: object
-    homes: object
-    plans: object
-    network: Network
 
 
 def bind(workload, target, placement):
