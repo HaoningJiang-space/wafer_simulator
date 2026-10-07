@@ -10,7 +10,9 @@ materializes one root result and writes replicas only at their destinations.
 work against the logical operation. `adapters/collective_operation.py` reuses
 `bind_collective` from `adapters/collectives.py`, maps its input/output identities
 to immutable spatial objects, and exposes its action dependencies as an
-`OperationPlan`. No second collective algorithm is implemented.
+`OperationPlan`. `ExecutionPolicy` now also supports the fixed heap-style
+`binary_tree_sum`; see [tree projection and controls](TREE_SPATIAL_PROTOCOL.md).
+Logical SUM, participants and operands are unchanged by algorithm selection.
 
 The target executor submits every ready action to the same compute/memory
 calendar or persistent BookSim client. Each source read precedes its transfer;

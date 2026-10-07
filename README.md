@@ -51,6 +51,18 @@ The high-bandwidth range is compute dominated with greater network sensitivity,
 not a demonstrated network-bandwidth bottleneck. See the
 [completion policy and experiment protocol](docs/RANK_LOCAL_BALANCE.md).
 
+The [fixed binary-tree study](docs/results/tree-spatial-001/REVIEW.md) adds a
+second spatial communication structure at three existing memory regimes. Both
+algorithms move 114,688 logical bytes and perform 14,336 collective adds per
+block. Tree spreads endpoint and memory pressure, but adds partial-result
+memory service and communication depth. Direct-root favors Rotated; this fixed
+tree favors Baseline at all three points. At 1024 B/cycle the pairs are
+4,461/4,225 (direct) and 4,697/5,005 (tree). Rotated's lower tree byte-hops and cut
+traffic coexist with a longer serialized critical branch. This is a conditional
+algorithm/topology interaction, not evidence of network saturation or a universal
+placement ranking. Six direct arms were reused and six tree arms added; 130 tests
+and all twelve current-code readbacks pass. See [protocol](docs/TREE_SPATIAL_PROTOCOL.md).
+
 The research question is whether a WoW Logic-on-Interconnect placement with
 better network metrics also completes the same AI workload sooner, and which
 execution costs must be modeled to make that judgment. The current block study

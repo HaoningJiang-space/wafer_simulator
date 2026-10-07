@@ -66,8 +66,13 @@ Run only on eex005 from clean committed source with `PYTHONPATH=src`:
 ```sh
 python scripts/test_wow_target_remote.py TESTS
 python scripts/run_transformer_wow_remote.py TREE TESTS/SEMANTICS.json --tree
+python scripts/analyze_tree_spatial_remote.py DIRECT TREE ANALYSIS
+python scripts/plot_tree_spatial_remote.py ANALYSIS FIGURES
 ```
 
 Outcome is open: tree may improve, hurt or leave the placement gap unchanged.
 Explain changes through depth, partial-result service, spatial traffic and
 critical work. Do not attribute the entire effect solely to congestion.
+
+The [accepted result](results/tree-spatial-001/REVIEW.md) contains the twelve-cell
+comparison, spatial metrics, critical branches and all concrete run identities.

@@ -220,11 +220,12 @@ wiring, power and cooling can deliver those assumed resources. Thermal, PDN,
 new schedulers and new simulator acceleration are outside the current work.
 Original-design and equal-budget comparisons remain distinct.
 
-The current milestone separates rank-local output readiness from collective
-retirement, reruns the existing TP4/TP8 controls, and varies only common memory
-bandwidth at fixed TP8, row-major mapping and direct-root algorithm. The question
-is how compute/memory/network balance changes placement benefit. See the
-[registered protocol](RANK_LOCAL_BALANCE.md). Next, consider one contrasting
-collective algorithm under the same logical work and resource controls. Larger
-workloads and broader mapping studies follow that comparison. A fully supported
-Llama capture, thermal, PDN and runtime optimization do not block this work.
+Rank-local completion and the [memory-balance study](RANK_LOCAL_BALANCE.md) are
+accepted. The [fixed-tree study](TREE_SPATIAL_PROTOCOL.md) now compares two
+communication structures with identical logical network volume and total adds,
+while accounting for tree partial-result memory work. Spatial projection and
+the critical dependency chain, together, explain placement benefits. The next
+research axis can be embedding these two logical communication structures:
+separate active-endpoint selection from rank assignment before a bounded mapping
+comparison. Larger workloads, a complete Llama capture, thermal, PDN and runtime
+optimization are not prerequisites.

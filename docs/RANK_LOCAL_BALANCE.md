@@ -3,7 +3,8 @@
 The logical AllReduce declares SUM, participants, operands and bytes. Target
 `ExecutionPolicy` selects the existing `direct_exchange_rank_order_sum`
 algorithm, separately from `rank_local` or diagnostic `global_retirement`
-publication. No second algorithm is implemented in this milestone.
+publication. This milestone used direct-root only; the subsequent
+[fixed-tree study](TREE_SPATIAL_PROTOCOL.md) adds a second algorithm separately.
 
 Each local immutable output becomes visible only after its declared destination
 write requirements complete. Data dependencies use these per-object events;
