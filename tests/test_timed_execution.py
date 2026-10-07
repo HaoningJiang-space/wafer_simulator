@@ -85,6 +85,14 @@ class CalendarTests(unittest.TestCase):
 
 
 class TimedExecutionTests(unittest.TestCase):
+    def test_compute_tasks_share_or_overlap_by_physical_resource(self):
+        w=Workload((),(op("a"),op("b")))
+        for second,expected in (("compute-A",8),("compute-B",4)):
+            b=bind(w,target(),Placement({"a":"compute-A","b":second},{}))
+            result=execute(b,timing())
+            self.assertEqual(result["application_cycles"],expected)
+            self.assertTrue(audit(b,timing(),result)["passed"])
+
     def test_read_compute_write_time_is_computed_by_target(self):
         b=local_binding(); result=execute(b,timing())
         # 8 B / 4 + 12 MAC / 3 + 4 B / 4 = 7 cycles.
@@ -131,6 +139,10 @@ class TimedExecutionTests(unittest.TestCase):
             with self.assertRaises(ValueError): audit(b,timing(),changed)
         changed=copy.deepcopy(original); changed["lifecycle"][0]["used_bytes"]["A"]=999
         with self.assertRaises(ValueError): audit(b,timing(),changed)
+        changed=copy.deepcopy(original); changed["services"][0]["category"]="compute"
+        with self.assertRaisesRegex(ValueError,"category"): audit(b,timing(),changed)
+        changed=copy.deepcopy(original); changed["resources"]["A-port"]["queue_wait_cycles"]=99
+        with self.assertRaisesRegex(ValueError,"summary"): audit(b,timing(),changed)
 
     def test_complete_example_has_hand_derived_113_cycle_schedule(self):
         config=read_json(Path(__file__).resolve().parents[1]/"configs/timed_execution_example.json")

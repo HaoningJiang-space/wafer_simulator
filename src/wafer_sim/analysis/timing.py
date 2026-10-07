@@ -11,6 +11,8 @@ def audit(binding, timing, result):
         *timing.services, *(l.service for l in timing.links),
         *(s for e in timing.endpoints for s in (e.injection,e.ejection)))}
     records,by_resource,by_token = result["services"],defaultdict(list),defaultdict(list)
+    if set(result["operations"]) != set(binding.plans):
+        raise ValueError("Extra or missing operation timing")
     for i,event in enumerate(records):
         if event["id"] != i: raise ValueError("Service identities not complete and ordered")
         service = services[event["resource"],event["unit"]]
@@ -30,6 +32,13 @@ def audit(binding, timing, result):
         ordered = sorted(events,key=lambda e:(e["start"],e["id"]))
         if any(a["resource_released"] > b["start"] for a,b in zip(ordered,ordered[1:])):
             raise ValueError("Overlapping service on a finite resource")
+    totals = {}
+    for resource,events in by_resource.items():
+        work = defaultdict(int)
+        for event in events: work[event["unit"]] += event["amount"]
+        totals[resource] = dict(busy_cycles=sum(e["resource_released"]-e["start"] for e in events),
+            queue_wait_cycles=sum(e["start"]-e["ready"] for e in events),requests=len(events),work=dict(work))
+    if totals != result["resources"]: raise ValueError("Resource summary differs from service records")
     phases = {(p["operation"],p["phase"]):p for p in result["phases"]}
     if len(phases) != len(result["phases"]): raise ValueError("Duplicate phase")
     expected_tokens = set()
@@ -48,7 +57,9 @@ def audit(binding, timing, result):
                 raise ValueError("Next service began before prior completion")
             if phase.transfer is None:
                 demands = [(d.resource,d.unit,d.amount) for d in phase.demands]
+                category = "compute" if phase.kind == "compute" else "memory"
             else:
+                category = "network"
                 t = phase.transfer
                 path = tuple(row["path"])
                 attachments = dict(binding.network.endpoint_routers)
@@ -63,6 +74,8 @@ def audit(binding, timing, result):
                 if row["transfer_bytes"] != t.size_bytes: raise ValueError("Transfer byte conservation failed")
             if demands != [(e["resource"],e["unit"],e["amount"]) for e in events]:
                 raise ValueError("Phase work conservation failed")
+            if any(e["category"] != category for e in events):
+                raise ValueError("Incorrect resource attribution category")
             previous = row["finish"]
         if previous != result["operations"][op]["finish"]:
             raise ValueError("Operation finished before its last phase")
@@ -84,8 +97,11 @@ def audit(binding, timing, result):
             reserve(("object",d.id),binding.homes[d.id],d.size_bytes)
     admitted,completed = set(),set()
     peak = used.copy()
+    last_cycle = 0
     for event in result["lifecycle"]:
         op,cycle = event["operation"],event["cycle"]
+        if cycle < last_cycle: raise ValueError("Lifecycle records are not chronological")
+        last_cycle = cycle
         if event["event"] == "admit":
             if op in admitted or not binding.graph.predecessors[op] <= completed:
                 raise ValueError("Premature or duplicate admission")
@@ -108,6 +124,8 @@ def audit(binding, timing, result):
         peak = {m:max(peak[m],used[m]) for m in used}
     if completed != set(binding.plans) or peak != result["peak_bytes"]:
         raise ValueError("Incomplete work or incorrect peak capacity")
+    if used != result["storage"]["used_bytes"]:
+        raise ValueError("Final resident capacity differs from lifecycle")
     for op,parents in binding.graph.predecessors.items():
         ready = max((result["operations"][p]["finish"] for p in parents),default=0)
         if ready != result["operations"][op]["ready"]: raise ValueError("Dependency-ready clock mismatch")
