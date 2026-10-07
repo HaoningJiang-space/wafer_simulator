@@ -22,6 +22,17 @@ are requested when the previous service completes, not reserved across a
 whole future path. Completion ties use event submission order, and operation
 admission uses stable topological order. These are explicit scheduling choices.
 
+`execute(..., memory_quantum_bytes=Q)` optionally divides every memory request,
+including ordinary operation accesses and DMA packet reads/writes, into bursts
+of at most Q valid bytes. Each subsequent burst rejoins FCFS at the prior burst's
+completion; it does not reserve future service. Per-burst rate rounding and
+configured latency apply, and the original callback fires only after all bursts.
+Compute and network service are unchanged. Q is independent of native flit size;
+packet injection and credit release still require complete payload read/write.
+The default `None` preserves request-atomic execution and accepted event records.
+This is an explicit target-service policy, not a hardware-calibrated bus width.
+See the [registered policy-isolation study](MEMORY_SERVICE_ISOLATION.md).
+
 Explicit collective operations use the existing [collective action DAG](COLLECTIVE_TIMING.md).
 All ready actions are submitted to this same calendar/network interface; phases
 are not serialized solely because they belong to one collective. Ordinary

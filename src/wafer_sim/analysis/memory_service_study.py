@@ -1,5 +1,5 @@
 """Readback of a factorial policy intervention, not overlap-only attribution."""
-from collections import defaultdict
+from collections import Counter
 from pathlib import Path
 
 from wafer_sim.analysis.boundary_study import analyze as analyze_boundary
@@ -8,9 +8,9 @@ from wafer_sim.io import read_json, object_digest
 
 def analyze(root):
     root=Path(root);result=analyze_boundary(root)
-    reg=result['acceptance']['registration']['isolation'];by_shape=defaultdict(list)
+    reg=result['acceptance']['registration']['isolation']
     contracts={c['name']:c['memory_quantum_bytes'] for c in reg['contracts']}
-    seen=set();reference_identity={}
+    seen=set();reference_identity={};service_counts={}
     for launch in read_json(root/'LAUNCHES.json'):
         case=launch['case'];shape=launch['shape'];contract=launch['contract'];mode=launch['mode']
         if case!=shape+'__'+contract or shape not in reg['cases'] or mode not in reg['modes']:
@@ -23,6 +23,13 @@ def analyze(root):
         if shape in reference_identity and reference_identity[shape]!=h:
             raise ValueError('Different work/hardware across memory contracts')
         reference_identity[shape]=h
+        if launch['repeat']==0:
+            compute=Counter()
+            for event in observed['services']:
+                if event['category']=='compute':compute[event['unit']]+=event['amount']
+            service_counts[case,mode]=dict(compute_work=dict(compute),
+                memory_requests=sum(s['category']=='memory' for s in observed['services']),
+                total_services=len(observed['services']))
         key=shape,contract,mode,launch['repeat']
         if key in seen:raise ValueError('Duplicate execution')
         seen.add(key)
@@ -34,11 +41,14 @@ def analyze(root):
     for group in ('rows','messages','costs','source_windows'):
         for row in result[group]:
             row['shape'],row['memory_contract']=row['case'].split('__')
+            if group=='rows':row.update(service_counts[row['case'],row['mode']])
     interactions=[]
     for shape in reg['cases']:
         rows={(r['memory_contract'],r['mode']):r for r in result['rows'] if r['shape']==shape}
         if len({(r['memory_bytes'],r['logical_network_bytes'],r['network_flits']) for r in rows.values()})!=1:
             raise ValueError('Logical work changed across policies')
+        if len({object_digest(r['compute_work']) for r in rows.values()})!=1:
+            raise ValueError('Compute work changed across policies')
         def t(c,m):return rows[c,m]['application_cycles']
         ga=t('request_atomic','pipeline')-t('request_atomic','serial')
         gb=t('burst_256','pipeline')-t('burst_256','serial')
