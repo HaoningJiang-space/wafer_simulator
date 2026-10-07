@@ -123,6 +123,12 @@ also verifies all six bundled author trees and the frozen native patch.
 The subsequent [tensor-value milestone](docs/results/tensor-effects-001/REVIEW.md)
 adds explicit allocation generations, exact byte-region versions and call-effect
 binding. All 53 semantic tests pass; complete effect ledgers preserve every
-node and dependency in the 16-rank source. Full workload lowering still needs
-call-subtree selection, layout/allocation recovery and the remaining compiled
-operator/collective semantics. This milestone adds no application timing.
+node and dependency in the 16-rank source. This milestone adds no application timing.
+
+The [call-ownership frontend](docs/results/call-regions-001/REVIEW.md) now assigns
+all 4,530,939 source records to 3,598,591 regions using explicit subtree recipes,
+retaining every original dependency port. All 73 semantic tests and the full
+16-rank independent readback pass. Supported parents own their implementation
+records once; unresolved scopes stay explicit. Full target lowering still needs
+collective completion, compiled-scope interpretation and layout/allocation
+recovery before these regions can define wafer resource activity or timing.

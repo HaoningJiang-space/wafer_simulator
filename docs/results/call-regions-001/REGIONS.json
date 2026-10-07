@@ -1,0 +1,401 @@
+{
+  "allocation_epochs_resolved": false,
+  "complete_target_workload": false,
+  "counts": {
+    "absorbed_records": 932348,
+    "ctrl_boundary": 3598591,
+    "ctrl_dependencies": 4530939,
+    "ctrl_internal": 932348,
+    "data_boundary": 4325743,
+    "data_dependencies": 5258091,
+    "data_internal": 932348,
+    "multi_record_regions": 902748,
+    "nodes": 4530939,
+    "records_owned_by_multi_record_regions": 1835096,
+    "regions": 3598591,
+    "rule:alias_metadata": 1117930,
+    "rule:matrix_with_device_implementation": 123520,
+    "rule:same_allocation": 559511,
+    "rule:unresolved": 1552078,
+    "rule:write_with_device_implementation": 245552
+  },
+  "exact_footprints_resolved": false,
+  "new_simulations_launched": 0,
+  "proposed_multi_record_regions": 902748,
+  "ranks": [
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-00-edges.jsonl.gz": "2cbfc6e4b70bff7e6caf0f3eda49d76314ade4e8e1ff1f361cd93f4d92220899",
+        "rank-00-owners.jsonl.gz": "2ba891ba5ad55ad93e9283584bacf105336a302a7447aa7ea418deec74507370",
+        "rank-00-regions.jsonl.gz": "54ed51b976224903f1d3b08258bf0e3e949dca476cf6caeeefeb4e5cec68e49d"
+      },
+      "complete_target_workload": false,
+      "nodes": 290224,
+      "proposed_multi_record_regions": 57836,
+      "rank": 0,
+      "refined_regions": 0,
+      "regions": 230538,
+      "rules": {
+        "alias_metadata": 73002,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 35120,
+        "unresolved": 98529,
+        "write_with_device_implementation": 16167
+      },
+      "simulated_application_time": null,
+      "source_sha256": "05fe33e1fd81ea230c104e7dbcc68de857fdb8a23c74e179508c2352dca73157"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-01-edges.jsonl.gz": "27c71707274e165501a83576721a3dc16cf73871475a0ec5890cc921a36c2b15",
+        "rank-01-owners.jsonl.gz": "a51c87e5d7e6025b00bab399a557f9ca00b3a6e56bf379267886349f1df6fce0",
+        "rank-01-regions.jsonl.gz": "ecffe7aa228dc1a6e43c7e21cbadfc95a8494239e6ffbe1f220aa7d4c6203219"
+      },
+      "complete_target_workload": false,
+      "nodes": 282701,
+      "proposed_multi_record_regions": 56300,
+      "rank": 1,
+      "refined_regions": 0,
+      "regions": 224551,
+      "rules": {
+        "alias_metadata": 69648,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34979,
+        "unresolved": 96896,
+        "write_with_device_implementation": 15308
+      },
+      "simulated_application_time": null,
+      "source_sha256": "63f59047a5b5aa30e383e030b7a5a3a5b07ae51254dda7e53ed0dffa320f0cca"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-02-edges.jsonl.gz": "3daa2d8f7bcd18287259581b6445a62bf8f18cda4e5074f2a4ae35242cafb5ac",
+        "rank-02-owners.jsonl.gz": "2a1203b5fcc8bd95c5962752586b71aabdd4008fb4bc0f2f2c7f958da70f6d8b",
+        "rank-02-regions.jsonl.gz": "f406be1f30f9b6614a1c71a386601e92023c306c0e00a3d9d1920b2685af407f"
+      },
+      "complete_target_workload": false,
+      "nodes": 282520,
+      "proposed_multi_record_regions": 56276,
+      "rank": 2,
+      "refined_regions": 0,
+      "regions": 224394,
+      "rules": {
+        "alias_metadata": 69518,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34938,
+        "unresolved": 96897,
+        "write_with_device_implementation": 15321
+      },
+      "simulated_application_time": null,
+      "source_sha256": "c81b6e1f96ada40db6da045aa4393f51999ed8c5e099202d1877538b60e85e02"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-03-edges.jsonl.gz": "ab830f9e787be19ad69ec5a050c3e72f6afb7f9123b75a7ed55a35d8fd9b7ef0",
+        "rank-03-owners.jsonl.gz": "4e9b655c044583914c265cd27fdc5f6e04b7cc55b6c70c65030f7859cd55966a",
+        "rank-03-regions.jsonl.gz": "0a5addbc2796742fdfd759c4c87c3e1107ab197b1589504fe37d06b9a8a7ff9f"
+      },
+      "complete_target_workload": false,
+      "nodes": 282952,
+      "proposed_multi_record_regions": 56276,
+      "rank": 3,
+      "refined_regions": 0,
+      "regions": 224826,
+      "rules": {
+        "alias_metadata": 69642,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 35000,
+        "unresolved": 97020,
+        "write_with_device_implementation": 15444
+      },
+      "simulated_application_time": null,
+      "source_sha256": "4510ef8ff108c6b4ad043b5a3bb16d584b8051eeaa95ee7e89cd39ae6f88ec44"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-04-edges.jsonl.gz": "06733aa596785bd9c14edc631b3c9ea959d73fb9d254bcec892e6132be3d80e5",
+        "rank-04-owners.jsonl.gz": "d1a857ff1db4d5e7618c10de1845bd006707cc392d4f51eb6af71289e81e42c4",
+        "rank-04-regions.jsonl.gz": "c22c44d2986161a885156640d439ec4f445a8bc4fc86a5369ef6ca15bd34fd44"
+      },
+      "complete_target_workload": false,
+      "nodes": 285567,
+      "proposed_multi_record_regions": 57020,
+      "rank": 4,
+      "refined_regions": 0,
+      "regions": 226697,
+      "rules": {
+        "alias_metadata": 71156,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 35013,
+        "unresolved": 97378,
+        "write_with_device_implementation": 15430
+      },
+      "simulated_application_time": null,
+      "source_sha256": "4761477a3f698331918613bd366173fe9cfa29a527bbedcb6d45b50d8bcad9ce"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-05-edges.jsonl.gz": "af179ef9b169855938d503a61e7430b84d5308d44a717dbc66d1524e35de9895",
+        "rank-05-owners.jsonl.gz": "3f48c6cbbbfc14d5ca3ac276b1afc8640e068f84b5b86ff7cf1815835d70035c",
+        "rank-05-regions.jsonl.gz": "27e1e67a9f2c3ed3ee0dbb2fd5a1457cf19e4a823aa5c033b0fdbdfce5360141"
+      },
+      "complete_target_workload": false,
+      "nodes": 282377,
+      "proposed_multi_record_regions": 56276,
+      "rank": 5,
+      "refined_regions": 0,
+      "regions": 224251,
+      "rules": {
+        "alias_metadata": 69500,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34929,
+        "unresolved": 96839,
+        "write_with_device_implementation": 15263
+      },
+      "simulated_application_time": null,
+      "source_sha256": "3701ef02ddc7f843b10266442ab1cfd77f70d755da9cb01c4e8ef9948ca5c1e7"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-06-edges.jsonl.gz": "4d20495c13c00ed1f5644b609c6e7efd40b632112d2125457b38510b8f4dfe4e",
+        "rank-06-owners.jsonl.gz": "1fadee54e5a3733c6cc05f7f514c31638bffbf47437224c0598d86f4c6f28eff",
+        "rank-06-regions.jsonl.gz": "0db4ed79b4c8e3407aeb2c54d4e5988017930b1f57b314b8ae8d4fb176fd67bf"
+      },
+      "complete_target_workload": false,
+      "nodes": 282269,
+      "proposed_multi_record_regions": 56276,
+      "rank": 6,
+      "refined_regions": 0,
+      "regions": 224143,
+      "rules": {
+        "alias_metadata": 69500,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34929,
+        "unresolved": 96785,
+        "write_with_device_implementation": 15209
+      },
+      "simulated_application_time": null,
+      "source_sha256": "8f313711332c2651d55422cfb14e1e1f69c076a826a54ace6fd57639ff08d3a1"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-07-edges.jsonl.gz": "aa12bf77e31082ba1acf0752045faf1fe0496546eda38040d78ae6161227dffc",
+        "rank-07-owners.jsonl.gz": "5a79ff07c76bf0b37c9b3d650df62b596a3a8e63cef1ed20fc2224dd3ac068b2",
+        "rank-07-regions.jsonl.gz": "edb6e1278fc31a94d0c8d9e0c163e5528b1646db032ce1d0a95b9b31bd206772"
+      },
+      "complete_target_workload": false,
+      "nodes": 282012,
+      "proposed_multi_record_regions": 56276,
+      "rank": 7,
+      "refined_regions": 0,
+      "regions": 223886,
+      "rules": {
+        "alias_metadata": 69402,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34880,
+        "unresolved": 96730,
+        "write_with_device_implementation": 15154
+      },
+      "simulated_application_time": null,
+      "source_sha256": "e174781e726db276f6436cb40b7f407dff82ddeb68baf57cb1c26bb97b212c7e"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-08-edges.jsonl.gz": "7df3a1608b5638bcb66f539f17f366db920db8c636f26653bae7e0a56c94731e",
+        "rank-08-owners.jsonl.gz": "8dd95ae6b3624a1db20a75ecaa3d8756d5114e60990bc75c3ed515e1c63383ce",
+        "rank-08-regions.jsonl.gz": "7c0a50eed9ea801991ac77f8ac7b4c11320bdfcd995685acda4dfd520e1d18c7"
+      },
+      "complete_target_workload": false,
+      "nodes": 282657,
+      "proposed_multi_record_regions": 56276,
+      "rank": 8,
+      "refined_regions": 0,
+      "regions": 224531,
+      "rules": {
+        "alias_metadata": 69596,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34977,
+        "unresolved": 96907,
+        "write_with_device_implementation": 15331
+      },
+      "simulated_application_time": null,
+      "source_sha256": "b3b5a71a2872bea501900d8f6596077696d5488976f7b5f1e6ea2b11ede5a9ac"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-09-edges.jsonl.gz": "0f192e9cc2302c0ac8d8c8dd8cc88175bb199d520b55f36ee888d4845e76835c",
+        "rank-09-owners.jsonl.gz": "2cf721d8b1d151ebfd049136547410d9b68fc9e4961ed374c1485fe7c106f70e",
+        "rank-09-regions.jsonl.gz": "de69a69f3d75ee9c5c04f2df7c9f87657954ea21dc584956f50c3cef7a3a4880"
+      },
+      "complete_target_workload": false,
+      "nodes": 282141,
+      "proposed_multi_record_regions": 56276,
+      "rank": 9,
+      "refined_regions": 0,
+      "regions": 224015,
+      "rules": {
+        "alias_metadata": 69428,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34893,
+        "unresolved": 96775,
+        "write_with_device_implementation": 15199
+      },
+      "simulated_application_time": null,
+      "source_sha256": "df387e87d96d664336159690d34a84079cec1a81dad3c10fc782075470695551"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-10-edges.jsonl.gz": "8c32245b5d3ba2c6dc8936b845b23ef887d0a9c29a0b101d40b53ddd3a029109",
+        "rank-10-owners.jsonl.gz": "53168a094788dc3ed2dd1d18aba511a31c55fdbe456aceff45e89f9eba22659c",
+        "rank-10-regions.jsonl.gz": "74637795e3cb1b78ce0994862f73fe8bb629e4969bc7467b98ff5d4e5c5b8947"
+      },
+      "complete_target_workload": false,
+      "nodes": 282457,
+      "proposed_multi_record_regions": 56276,
+      "rank": 10,
+      "refined_regions": 0,
+      "regions": 224331,
+      "rules": {
+        "alias_metadata": 69564,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34961,
+        "unresolved": 96831,
+        "write_with_device_implementation": 15255
+      },
+      "simulated_application_time": null,
+      "source_sha256": "1bbb09532029b902e6ab3fdb62558d56fc46f142e82d03d708a7f9f03b27b0e5"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-11-edges.jsonl.gz": "3d87efc15ca2c986a78bb85efb29ac65f66f1e9dd2072f0290a95ec3cc30c1e4",
+        "rank-11-owners.jsonl.gz": "e1478904d1fd8ad5d3d64ccaafbab0fe891050f8cc287c990b2c9253ec022543",
+        "rank-11-regions.jsonl.gz": "e612474c26332d7e4d3c6950e7e4251ac689a09a0ed371c5bcf311d9fc603174"
+      },
+      "complete_target_workload": false,
+      "nodes": 281677,
+      "proposed_multi_record_regions": 56276,
+      "rank": 11,
+      "refined_regions": 0,
+      "regions": 223551,
+      "rules": {
+        "alias_metadata": 69400,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34879,
+        "unresolved": 96564,
+        "write_with_device_implementation": 14988
+      },
+      "simulated_application_time": null,
+      "source_sha256": "337ff406b8b4f0b768c24b4f53542f4f7f192e0c1787ac225995dde2cd4f2127"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-12-edges.jsonl.gz": "f54c62788f4df00efb7f181604b8a5ca50ca929082bf6b1710c41d2129bb5d86",
+        "rank-12-owners.jsonl.gz": "966e1a7f7a0adad764beb16d8827069c7f400932767f9738f5d5fb19ad6c1612",
+        "rank-12-regions.jsonl.gz": "e0e1b70eab9d7cec96117866af977c1ca99cefb2578c6930f44fb2061e8de3f1"
+      },
+      "complete_target_workload": false,
+      "nodes": 283150,
+      "proposed_multi_record_regions": 56276,
+      "rank": 12,
+      "refined_regions": 0,
+      "regions": 225024,
+      "rules": {
+        "alias_metadata": 69758,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 35058,
+        "unresolved": 97032,
+        "write_with_device_implementation": 15456
+      },
+      "simulated_application_time": null,
+      "source_sha256": "921e63147e8bba9e7999cc0a4e1d6724dd36984da6f1916d0df8aae7d36ff07d"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-13-edges.jsonl.gz": "b02ba68778f7ba6ba0f55c16b0e763f1765c074cf94ef8baba65f6726b2610e9",
+        "rank-13-owners.jsonl.gz": "9372a97beae90cb9b19b6ee0b9ce7f3c5b04eea247698a76399fe3ed8e34232d",
+        "rank-13-regions.jsonl.gz": "4a7b2114895d405ed49d4574ad006857cbeca0ab357ded19eb784b51be0c766f"
+      },
+      "complete_target_workload": false,
+      "nodes": 282595,
+      "proposed_multi_record_regions": 56276,
+      "rank": 13,
+      "refined_regions": 0,
+      "regions": 224469,
+      "rules": {
+        "alias_metadata": 69580,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34969,
+        "unresolved": 96888,
+        "write_with_device_implementation": 15312
+      },
+      "simulated_application_time": null,
+      "source_sha256": "ac1067144f0a00add6109f16e1de0e18f0118e417127477a369340b729bfaf08"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-14-edges.jsonl.gz": "b6026babd3ff6dd4647097e1b87e78812fea7649ecb0956cbc2ce32a20255f06",
+        "rank-14-owners.jsonl.gz": "93936819300c5e718f430613244c4de9546cbfcc2066e64c7414b47b6f786792",
+        "rank-14-regions.jsonl.gz": "4759f5a010c09d8bc7bb0af85a29587e64ba455903fd181d4d4f1d1d03a4c9b8"
+      },
+      "complete_target_workload": false,
+      "nodes": 282728,
+      "proposed_multi_record_regions": 56276,
+      "rank": 14,
+      "refined_regions": 0,
+      "regions": 224602,
+      "rules": {
+        "alias_metadata": 69634,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34996,
+        "unresolved": 96914,
+        "write_with_device_implementation": 15338
+      },
+      "simulated_application_time": null,
+      "source_sha256": "b6d2a9272a3e58e82c0caf5816aad3397e53da472cddae21afe4245e39e073d8"
+    },
+    {
+      "all_source_nodes_owned_once": true,
+      "artifacts_sha256": {
+        "rank-15-edges.jsonl.gz": "8a6722bba587de30c2552887b953d2701579e10444f8991ca58c58eb540cf9d5",
+        "rank-15-owners.jsonl.gz": "2579849c31fb28a4551f9599711e65051d1b87ba68f81291b162f86f87209ed7",
+        "rank-15-regions.jsonl.gz": "01d8210badbce87648be1e1b9ce287cc1558bf3b52db43c4ca1a80a618cb30e6"
+      },
+      "complete_target_workload": false,
+      "nodes": 282912,
+      "proposed_multi_record_regions": 56280,
+      "rank": 15,
+      "refined_regions": 0,
+      "regions": 224782,
+      "rules": {
+        "alias_metadata": 69602,
+        "matrix_with_device_implementation": 7720,
+        "same_allocation": 34990,
+        "unresolved": 97093,
+        "write_with_device_implementation": 15377
+      },
+      "simulated_application_time": null,
+      "source_sha256": "d684d7690f51383673a2de761d5f874ca6fe416873dc30dd530caf565db1fc2b"
+    }
+  ],
+  "refined_regions": 0,
+  "scope": "Disjoint source-call ownership with original dependency ports; not target execution",
+  "simulated_application_time": null,
+  "source_commit": "89f66562e338c8480acfefc646ad08a02387a3e5",
+  "source_layers_preserved": true,
+  "source_order_is_target_order": false
+}
