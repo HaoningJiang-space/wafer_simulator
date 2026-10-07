@@ -8,6 +8,7 @@ from wafer_sim.adapters.declared_target import build_target
 from wafer_sim.adapters.spatial import bind
 from wafer_sim.analysis.timing import audit
 from wafer_sim.analysis.timed_attribution import critical_chain
+from wafer_sim.analysis.collective_contention import summarize
 from wafer_sim.execution.plan import Placement
 from wafer_sim.execution.storage import StorageState
 from wafer_sim.execution.timing import execute
@@ -33,6 +34,28 @@ def case(n=2, capacity=128):
 
 
 class CollectiveTimingTests(unittest.TestCase):
+    def test_router_residence_uses_actual_path_and_does_not_count_link_latency_as_wait(self):
+        export=dict(resources=dict(router_latency_cycles=4),inputs=dict(
+            links=[dict(src=0,dst=1,latency=5)],chiplets={"c":dict(unit_to_router_latency=6)},
+            placement=dict(chiplets=[dict(name="c"),dict(name="c")])) )
+        flit=dict(id=0,injected=0,ejected=26,injection_router_arrival=7,
+                  router_path=[0,1],link_arrivals=[dict(source=0,destination=1,cycle=16)])
+        message=dict(id=0,token="x",source=0,destination=1,ready=0,finish=27,first_inject=0,flits=[flit])
+        self.assertEqual(summarize(export,[message])["first_flit_router_excess_cycles"],0)
+        flit["link_arrivals"][0]["cycle"]+=2;flit["ejected"]+=2;message["finish"]+=2
+        observed=summarize(export,[message])
+        self.assertEqual(observed["first_flit_router_excess_cycles"],2)
+        self.assertEqual(observed["messages"][0]["router_residence"],
+                         [dict(router=0,excess_cycles=2),dict(router=1,excess_cycles=0)])
+
+    def test_collective_byte_and_reduction_contract_cannot_be_inferred_from_duration(self):
+        binding,_=case()
+        op=binding.graph.operations["sum"]
+        from wafer_sim.workloads.spatial import validate
+        bad=replace(op,work=(("scalar_add",1),))
+        with self.assertRaisesRegex(ValueError,"mathematical work"):
+            validate(Workload(tuple(binding.graph.data.values()),(bad,)))
+
     def test_root_materializes_one_result_and_retains_original_work(self):
         binding,timing = case()
         plan = binding.plans["sum"]
