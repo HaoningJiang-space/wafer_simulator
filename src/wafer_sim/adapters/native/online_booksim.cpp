@@ -21,6 +21,7 @@ extern TrafficManager *trafficManager;
 extern long global_current_cycle;
 
 class OnlineTrafficManager : public TrafficManager {
+protected:
     std::vector<json> finished;
     std::map<int, std::vector<int>> paths;
     std::map<int, json> hops;
@@ -69,7 +70,7 @@ class OnlineTrafficManager : public TrafficManager {
         TrafficManager::_RetireFlit(f, dest);
     }
 
-    void Step() {
+    virtual void Step() {
         global_current_cycle = _time;
         ObserveChannels();
         if (_Step() != 0) throw std::runtime_error("Native network failed/deadlocked");
@@ -94,14 +95,14 @@ public:
         }
     }
 
-    bool Idle() const {
+    virtual bool Idle() const {
         if (Credit::OutStanding() != 0) return false;
         for (const auto &rows : _total_in_flight_flits) if (!rows.empty()) return false;
         for (const auto &entry : ready_messages) if (!entry.second.empty()) return false;
         return true;
     }
 
-    json Submit(const json &request) {
+    virtual json Submit(const json &request) {
         int id = request.at("id"), src = request.at("source"), dst = request.at("destination");
         int count = request.at("flits");
         if (id != static_cast<int>(msg_source.size()) || request.at("cycle").get<int>() != _time ||
@@ -123,7 +124,7 @@ public:
         return {{"ok", true}, {"cycle", _time}, {"id", id}};
     }
 
-    json Advance(int limit) {
+    virtual json Advance(int limit) {
         if (limit < _time || limit > 1000000000) throw std::runtime_error("Invalid advance boundary");
         finished.clear();
         while (_time < limit) {
@@ -147,6 +148,13 @@ public:
     int Nodes() const { return _nodes; }
 };
 
+#ifdef WAFER_ENDPOINT_BOUNDARY
+#include "endpoint_manager.hpp"
+using SelectedTrafficManager = BoundaryTrafficManager;
+#else
+using SelectedTrafficManager = OnlineTrafficManager;
+#endif
+
 int main(int argc, char **argv) {
     if (argc != 3) { std::cerr << "Usage: online_booksim CONFIG RESPONSE_FD\n"; return 2; }
     std::ofstream replies(std::string("/proc/self/fd/")+argv[2]);
@@ -159,7 +167,7 @@ int main(int argc, char **argv) {
         std::vector<Network *> networks;
         for (int i=0; i<config.GetInt("subnets"); ++i)
             networks.push_back(Network::New(config, "network_"+std::to_string(i)));
-        auto *manager = new OnlineTrafficManager(config, networks);
+        auto *manager = new SelectedTrafficManager(config, networks);
         trafficManager = manager;
         replies << json({{"ok",true},{"ready",true},{"cycle",0},{"nodes",manager->Nodes()}}).dump() << std::endl;
         std::string line;
@@ -171,6 +179,10 @@ int main(int argc, char **argv) {
             if (command == "submit") reply=manager->Submit(request);
             else if (command == "advance") reply=manager->Advance(request.at("until"));
             else if (command == "close") { reply=manager->Close(); closed=true; }
+#ifdef WAFER_ENDPOINT_BOUNDARY
+            else if (command == "boundary" || command == "supply" || command == "commit")
+                reply=manager->BoundaryCommand(request);
+#endif
             else throw std::runtime_error("Unknown online command");
             replies << reply.dump() << std::endl;
             if (closed) break;

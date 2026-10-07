@@ -1,0 +1,86 @@
+--- a/rapidchiplet/booksim2/src/trafficmanager.hpp
++++ b/rapidchiplet/booksim2/src/trafficmanager.hpp
+@@ -290,6 +290,10 @@
+ 
+   virtual void _RetireFlit( Flit *f, int dest );
+ 
++  // Optional endpoint hooks. Defaults preserve the original network exactly.
++  virtual bool _EndpointCanInject(Flit const *f) { return true; }
++  virtual void _EndpointInjected(Flit const *f) {}
++  virtual void _EndpointCredit(Flit const *f, int subnet, int node);
+   void _Inject();
+   int _Step();
+ 
+--- a/rapidchiplet/booksim2/src/trafficmanager.cpp
++++ b/rapidchiplet/booksim2/src/trafficmanager.cpp
+@@ -1187,6 +1187,13 @@
+ 
+ // returns a pair of integers <return_code, 0>
+ // return_code : 0 for success, 1 for potential deadlock
++void TrafficManager::_EndpointCredit(Flit const *f, int subnet, int node)
++{
++    Credit *c = Credit::New();
++    c->vc.insert(f->vc);
++    _net[subnet]->WriteCredit(c, node);
++}
++
+ int TrafficManager::_Step()
+ {
+     bool flits_in_flight = false;
+@@ -1311,6 +1318,8 @@
+                 assert(cf);
+                 assert(cf->cl == c);
+ 	
++                if(!_EndpointCanInject(cf)) continue;
++
+                 if(cf->subnetwork != subnet) {
+                     continue;
+                 }
+@@ -1494,6 +1503,7 @@
+                 ++_injected_flits[c][n];
+ #endif
+ 	
++                _EndpointInjected(f);
+                 _net[subnet]->WriteFlit(f, n);
+ 	
+             }
+@@ -1514,9 +1524,7 @@
+                                << " into subnet " << subnet 
+                                << "." << endl;
+                 }
+-                Credit * const c = Credit::New();
+-                c->vc.insert(f->vc);
+-                _net[subnet]->WriteCredit(c, n);
++                _EndpointCredit(f, subnet, n);
+ 	
+ #ifdef TRACK_FLOWS
+                 ++_ejected_flits[f->cl][n];
+--- a/rapidchiplet/booksim2/src/routers/iq_router.hpp
++++ b/rapidchiplet/booksim2/src/routers/iq_router.hpp
+@@ -157,6 +157,7 @@
+   virtual ~IQRouter( );
+   
+   virtual void AddOutputChannel(FlitChannel * channel, CreditChannel * backchannel);
++  void ConfigureEndpointSink(const Configuration &config, int output);
+ 
+   virtual void ReadInputs( );
+   virtual void WriteOutputs( );
+--- a/rapidchiplet/booksim2/src/routers/iq_router.cpp
++++ b/rapidchiplet/booksim2/src/routers/iq_router.cpp
+@@ -214,6 +214,16 @@
+   int min_latency = 1 + _crossbar_delay + channel->GetLatency() + _routing_delay + alloc_delay + backchannel->GetLatency()  + _credit_delay;
+   _next_buf[_output_channels.size()]->SetMinLatency(min_latency);
+   Router::AddOutputChannel(channel, backchannel);
++}
++
++// Initialization only: sink-facing output credit account, not router inputs.
++void IQRouter::ConfigureEndpointSink(const Configuration &config, int output)
++{
++  assert(output >= 0 && output < _outputs);
++  assert(_output_channels[output]->GetSink() == nullptr);
++  assert(_next_buf[output]->Occupancy() == 0);
++  delete _next_buf[output];
++  _next_buf[output] = new BufferState(config, this, "endpoint_sink");
+ }
+ 
+ void IQRouter::ReadInputs( )
