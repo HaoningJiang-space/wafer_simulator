@@ -9,6 +9,7 @@ from wafer_sim.architecture.spatial import Target, MemoryRegion, ComputeResource
 from wafer_sim.execution.collectives import CollectiveState
 from wafer_sim.execution.plan import Allocation
 from wafer_sim.execution.reservations import ReservationPool
+from wafer_sim.analysis.collective_sources import check_tensor_reference
 
 
 EVIDENCE = "Analytical semantic fixture, not an application experiment"
@@ -68,6 +69,14 @@ def logical(kind="allgather", members=(3, 7), slots=None):
 
 
 class SourceCollectiveTests(unittest.TestCase):
+    def test_independent_tensor_check_accepts_serialized_and_immutable_shapes(self):
+        intent = operands(*coalesced())
+        ref = intent["slots"][0]["source"]
+        check_tensor_reference(tensor(2,4), [4], ref)
+        check_tensor_reference(tensor(2,4), [4], dict(ref, shape=list(ref["shape"])))
+        with self.assertRaises(ValueError):
+            check_tensor_reference(tensor(2,5), [5], ref)
+
     def test_roles_separate_send_and_receive_sizes(self):
         intent = operands(*coalesced(count=5, size=16))
         self.assertEqual((intent["logical_input_bytes"], intent["logical_output_bytes"]), (20, 320))

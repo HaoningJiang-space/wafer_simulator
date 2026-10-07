@@ -8,6 +8,12 @@ from wafer_sim.workloads.chakra import nodes, read_metadata, decode_io, attribut
 from wafer_sim.workloads.chakra_collectives import resolve_rank
 
 
+def check_tensor_reference(value, shape, ref):
+    if (value != [ref[k] for k in ("tensor_id", "storage_id", "source_offset", "num_elements", "element_bytes", "source_device")]
+            or shape != list(ref["shape"])):
+        raise ValueError("Tensor role no longer refers to the original operand")
+
+
 def extract(path, schema, output, rank):
     selected, counts = [], Counter()
     with path.open("rb") as stream, gzip.open(output, "wt", compresslevel=1) as ledger:
@@ -86,8 +92,7 @@ def validate(path, schema, ledger_path, report):
             for side, role in (("source", "input"), ("destination", "output")):
                 ref = slot[side]
                 value, shape = raw_tensor(row, ref["path"])
-                if value != [ref[k] for k in ("tensor_id", "storage_id", "source_offset", "num_elements", "element_bytes", "source_device")] or shape != ref["shape"]:
-                    raise ValueError("Tensor role no longer refers to the original operand")
+                check_tensor_reference(value, shape, ref)
                 if slot[role + "_bytes"] != value[3]*value[4] or slot[role + "_elements"] != value[3]:
                     raise ValueError("Wrong logical collective volume")
                 totals[role] += value[3]*value[4]
