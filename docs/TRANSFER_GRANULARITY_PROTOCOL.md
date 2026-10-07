@@ -37,7 +37,7 @@ APE≤5%。这是人为选择的精度目标，不是论文领域标准；同时
 不可判定。阈值只用于判断现有模型是否达到这次任务要求，不用于宣称通用准确率。
 
 **仿真成本。** 每后端每条件三个 fresh-process cold repeats，另一个进程执行
-三个 graph-reuse repeats。所有进程固定同一双 CPU affinity，顺序运行、交替
+三个 graph-reuse repeats。所有后端测量进程固定同一双 CPU affinity，顺序运行、交替
 后端顺序，记录系统负载。Native 每次仍新建进程；reuse 只指输入/图/binding，
 不是复用 native state。单独记录共同几何导出、构图、native 初始化、execute、
 close+网络文件写入、执行记录序列化、独立审计及 standalone replay。
@@ -47,6 +47,7 @@ CPU 使用 Python self 和退出后 native 子进程的真实 usage；没有细�
 审计/replay 在全部计时 repeats 后执行，避免其内存污染执行峰值。日志保持现有
 策略，报告事件和文件量；成本比包括 native IPC/日志差异，不宣称新算法加速。
 冷启动 wall 包括解释器/import；不清空 OS page cache，故不是磁盘冷缓存结果。
+共同几何导出在父进程中单独计量，不纳入两后端成本比，也未限制为测量进程的双核。
 
 **验收。** 完整工作/字节/依赖/容量审计，native reference match，repeats 完整
 模拟事件相同，两后端 input identity 相同，哈希包括 source/binary/environment。

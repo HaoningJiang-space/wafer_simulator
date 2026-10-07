@@ -8,6 +8,30 @@ from wafer_sim.analysis.transfer_study import analyze
 from wafer_sim.io import digest,write_json
 
 
+def plot(summary,path):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    fig,axes=plt.subplots(1,2,figsize=(9,3.6),layout='constrained')
+    colors={'s16':'#247BA0','s64':'#D35E32'}
+    for case in ('s16','s64'):
+        points=sorted({(r['physical_links'],r['error_cycles']) for r in summary['isolated_transfers']
+                       if r['case']==case and r['matched_path']})
+        axes[0].plot([p[0] for p in points],[p[1] for p in points],marker='o',color=colors[case],label=case)
+    axes[0].set(xlabel='Physical links on matched path',ylabel='Coarse minus native service (cycles)',
+                title='Isolated complete transfers')
+    axes[0].legend(frameon=False);axes[0].grid(alpha=.2)
+    rows=summary['rows'];x=list(range(len(rows)))
+    axes[1].bar([v-.18 for v in x],[r['application_ape_percent'] for r in rows],.36,
+                color='#247BA0',label='Application APE')
+    axes[1].bar([v+.18 for v in x],[r['isolated']['max_matched_ape_percent'] for r in rows],.36,
+                color='#D35E32',label='Max isolated service APE')
+    axes[1].set(xticks=x,xticklabels=[r['case'] for r in rows],ylabel='Absolute percentage error (%)',
+                title='Accuracy depends on the predicted quantity')
+    axes[1].legend(frameon=False);axes[1].grid(axis='y',alpha=.2)
+    fig.savefig(path,dpi=180);plt.close(fig)
+
+
 def main():
     if platform.node().split('.')[0]!='eex005': raise SystemExit('Run on eex005')
     parser=argparse.ArgumentParser();parser.add_argument('run',type=Path);parser.add_argument('output',type=Path)
@@ -35,6 +59,7 @@ def main():
         for row in summary['costs']:
             for metric,values in row['metrics'].items():
                 w.writerow(dict(case=row['case'],mode=row['mode'],backend=row['backend'],metric=metric,**values))
+    plot(summary,args.output/'accuracy.png')
     write_json(args.output/'ANALYZED.json',dict(passed=True,host=platform.node(),
         analysis_commit=subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip(),
         input_manifest_sha256=acceptance['complete_manifest_sha256'],
