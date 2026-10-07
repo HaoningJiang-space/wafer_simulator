@@ -22,6 +22,12 @@ are requested when the previous service completes, not reserved across a
 whole future path. Completion ties use event submission order, and operation
 admission uses stable topological order. These are explicit scheduling choices.
 
+Admission scans run initially and after publication or retirement can change
+input availability, control dependencies or free capacity. Internal memory
+bursts and packet progress do not change these admission inputs under the
+whole-object visibility and atomic-reservation contract. Their service/network
+events remain fully simulated. See the [exact cost comparison](results/memory-execution-cost-001/REVIEW.md).
+
 `execute(..., memory_quantum_bytes=Q)` optionally divides every memory request,
 including ordinary operation accesses and DMA packet reads/writes, into bursts
 of at most Q valid bytes. Each subsequent burst rejoins FCFS at the prior burst's

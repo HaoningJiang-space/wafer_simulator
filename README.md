@@ -50,6 +50,13 @@ This is policy interaction, not a measured pure-overlap penalty. All 36 complete
 executions pass readback; request-atomic controls reproduce the earlier full
 event records. The default remains unchanged; 256 bytes is a diagnostic assumption.
 
+The [fixed-contract cost probe](docs/results/memory-execution-cost-001/REVIEW.md)
+found repeated task-admission checks dominating Python work. Checking again only
+after output publication or retirement preserves every service event and native
+command/reply, while reducing measured s16/s64 execution cost by 3.09×/4.21×.
+158 tests and 16 complete runs pass; this is an implementation optimization,
+not a new hardware contract or network approximation.
+
 The [research direction](docs/RESEARCH_DIRECTION.md) derives a compute–memory–network
 execution contract from spatial locality and finite resources. It separates
 logical work, compute/data mapping, execution policy and target resources.

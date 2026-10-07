@@ -261,6 +261,12 @@ the same boundary contrast shrinks from 1,049/3,978 to 253/1,355 cycles when all
 memory clients use 256-byte bursts. Neither this quantum nor the original
 request-atomic policy is claimed as calibrated hardware. Retain explicit policy
 and message/capacity observables; do not attribute the whole gap to overlap.
+The [fixed-contract cost probe](results/memory-execution-cost-001/REVIEW.md)
+then found substantial repeated admission work. Eliminating checks whose state
+inputs have not changed preserves full events and native replies and lowers
+measured execution cost 3.09×/4.21×. This implementation result improves the
+reference cost, but does not establish a new abstraction or justify removing
+burst/receive-buffer state. The bounded optimization stops there.
 The saved 12-case coarse/native analysis is retained; the generic cost sweep is deferred.
 Keep aggregation when it meets the declared prediction objective. The broader architecture
 sequence above is a future use case, not the current development queue.
