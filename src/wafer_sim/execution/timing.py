@@ -91,6 +91,7 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000, memory_quantu
     dependency_ready = {}
     pending = list(binding.graph.order)
     network_callbacks = {}
+    admission_dirty = True
 
     def submit_ready(op):
         for index in state.ready_phases(op):
@@ -112,9 +113,15 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000, memory_quantu
                 row["network_token"] = token
         phases.append(row)
         def complete():
+            nonlocal admission_dirty
             row["finish"] = clock.now
             before = state.used.copy()
             published = state.complete_phase(op,index)
+            # Admission depends only on published inputs, retired controls and
+            # available capacity. Internal bursts/packet progress change none
+            # of them. Retirement may free capacity even without an output.
+            if published or op in state.completed:
+                admission_dirty = True
             for data in published:
                 output_ready[data] = clock.now
                 lifecycle.append(dict(event="output_ready",operation=op,data=data,
@@ -137,21 +144,23 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000, memory_quantu
             clock.submit(token,target.steps(phase),complete)
 
     while True:
-        # Stable topological input order within each admission opportunity.
-        # No busy waiting: unsuccessful capacity admission waits for an event.
-        for op in tuple(pending):
-            decision = state.admission(op)
-            if decision.missing_dependencies:
-                continue
-            dependency_ready.setdefault(op,clock.now)
-            if not decision.admitted:
-                continue
-            state.try_begin(op)
-            pending.remove(op)
-            operations[op] = dict(ready=dependency_ready[op],admitted=clock.now,finish=None,retired=None,
-                capacity_wait_cycles=clock.now-dependency_ready[op])
-            lifecycle.append(dict(event="admit",operation=op,cycle=clock.now,used_bytes=state.used.copy()))
-            submit_ready(op)
+        # Keep the same stable order and same-cycle opportunities. Admitting
+        # work consumes capacity; it cannot enable a previously blocked task.
+        if admission_dirty:
+            admission_dirty = False
+            for op in tuple(pending):
+                decision = state.admission(op)
+                if decision.missing_dependencies:
+                    continue
+                dependency_ready.setdefault(op,clock.now)
+                if not decision.admitted:
+                    continue
+                state.try_begin(op)
+                pending.remove(op)
+                operations[op] = dict(ready=dependency_ready[op],admitted=clock.now,finish=None,retired=None,
+                    capacity_wait_cycles=clock.now-dependency_ready[op])
+                lifecycle.append(dict(event="admit",operation=op,cycle=clock.now,used_bytes=state.used.copy()))
+                submit_ready(op)
         if len(state.completed) == len(binding.plans):
             complete = True
             break

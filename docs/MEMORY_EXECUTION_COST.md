@@ -69,6 +69,25 @@ Stop if no justified low-cost transformation is found. A cost diagnosis is not
 itself a new simulator model. No optimization or new result is claimed by this
 registration.
 
+## Candidate selected after profiling
+
+The accepted diagnostic run `memory-execution-cost-001` found repeated
+`StorageState.admission` / reservation checks dominating Python execution, not
+the calendar's burst arithmetic. The first candidate therefore only suppresses
+admission scans when their inputs have not changed. Initial admission remains
+mandatory; publication and retirement mark it dirty. Retirement matters even
+without output because it can free capacity or satisfy a control dependency.
+Partial memory/packet progress cannot change any of these admission inputs.
+
+Keep stable topological order, earliest dependency-ready timestamps, every
+service event, and every native command/reply. No batching or network clock
+shortcut is introduced. The same cost probe is repeated on the candidate,
+with all complete records required to equal the old accepted runs. Regression
+checks include retirement-only capacity release, independent completions during
+long burst sequences, same-cycle/deadline behavior and rank-local publication.
+This is an implementation optimization under the fixed model, not evidence of
+a new approximation or calibrated hardware accuracy.
+
 ## Run on eex005
 
 After a clean commit and same-source semantic tests:

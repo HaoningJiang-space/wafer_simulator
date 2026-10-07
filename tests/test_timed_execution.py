@@ -3,6 +3,7 @@ import copy
 from dataclasses import replace
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from test_spatial import data,op,target
 from wafer_sim.architecture.timing import Service, Link, Endpoint, Timing
@@ -114,6 +115,49 @@ class CalendarTests(unittest.TestCase):
 
 
 class TimedExecutionTests(unittest.TestCase):
+    def test_admission_work_does_not_scale_with_internal_bursts(self):
+        from wafer_sim.execution.storage import StorageState
+        class CountedStorage(StorageState):
+            calls=0
+            def admission(self, op):
+                type(self).calls+=1
+                return super().admission(op)
+        counts=[]
+        for size in (8,32):
+            w=Workload((data('x',size),),(
+                op('producer',('x',)),op('consumer',deps=('producer',))))
+            b=bind(w,target(),Placement(
+                {'producer':'compute-A','consumer':'compute-B'},{'x':'A'}))
+            CountedStorage.calls=0
+            with patch('wafer_sim.execution.timing.StorageState',CountedStorage):
+                result=execute(b,timing(),memory_quantum_bytes=1)
+            counts.append(CountedStorage.calls)
+            self.assertEqual(result['operations']['consumer']['admitted'],size+4)
+            self.assertEqual(result['application_cycles'],size+8)
+            self.assertTrue(audit(b,timing(),result)['passed'])
+        self.assertEqual(counts[0],counts[1])
+
+    def test_burst_progress_keeps_publication_and_capacity_admission_boundaries(self):
+        class TickNetwork:
+            now=0
+            messages=[]
+            def advance(self, until):
+                self.now=min(until,self.now+1)
+                return []
+        w=Workload((data('hold',32),data('out',48,'produce',True)),(
+            op('release',('hold',)),op('produce',outputs=('out',)),
+            op('independent'),op('after',deps=('independent',))))
+        b=bind(w,target(),Placement({'release':'compute-A','produce':'compute-A',
+            'independent':'compute-B','after':'compute-B'},{'hold':'A','out':'A'}))
+        for network in (None,TickNetwork()):
+            result=execute(b,timing(),network=network,memory_quantum_bytes=1)
+            self.assertEqual(result['operations']['after']['admitted'],4)
+            self.assertEqual(result['operations']['produce']['ready'],0)
+            self.assertEqual(result['operations']['produce']['admitted'],36)
+            self.assertEqual(result['operations']['produce']['capacity_wait_cycles'],36)
+            self.assertEqual(result['output_ready']['out'],88)
+            self.assertTrue(audit(b,timing(),result)['passed'])
+
     def test_independent_burst_readback_and_policy_tampering(self):
         b=local_binding();t=timing()
         result=execute(b,t,memory_quantum_bytes=3)
