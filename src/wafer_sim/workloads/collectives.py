@@ -41,7 +41,7 @@ def validate(collective):
     elif collective.root is not None:
         raise ValueError("Unexpected logical root")
     if collective.kind in {"allreduce", "reduce_scatter"}:
-        if len(members) > 1 and collective.reduction != "sum":
+        if collective.reduction != "sum":
             raise ValueError("Explicit supported reduction required")
     elif collective.reduction is not None:
         raise ValueError("Unexpected reduction")

@@ -7,6 +7,7 @@ from dataclasses import asdict, dataclass
 from types import MappingProxyType
 
 from wafer_sim.io import object_digest
+from wafer_sim.workloads.call_regions import tensor_identity
 from wafer_sim.workloads.collectives import from_match
 from wafer_sim.workloads.spatial import identifier
 from wafer_sim.workloads.tensor_versions import ReadSlice, StorageKey
@@ -38,6 +39,20 @@ class CollectiveValues:
     source_calls: tuple[tuple[int, int], ...]
 
 
+def forwards_input(collective, operands):
+    """Only a proved identity on the very same tensor argument can forward.
+
+    An opaque singleton ReduceOp is not enough: PREMUL_SUM may scale its input.
+    Equal storage IDs or equal byte counts do not establish identical views.
+    """
+    source, destination = operands["source"], operands["destination"]
+    return (len(collective.members) == 1
+            and (collective.kind == "broadcast" or
+                 collective.kind == "allreduce" and collective.reduction == "sum")
+            and source["path"] == destination["path"]
+            and tensor_identity(source) == tensor_identity(destination))
+
+
 def bind_values(state, match, calls, accesses, *, provenance):
     """Snapshot ALL input bytes before any collective output mutation.
 
@@ -47,7 +62,7 @@ destinations are rejected. No layout or generation is inferred from byte count.
 """
     identifier(provenance, "Collective value provenance")
     collective = from_match(match, calls)
-    refs, destinations, inputs = {}, {}, {}
+    refs, destinations, inputs, forwarded = {}, {}, {}, set()
     for entry in match["calls"]:
         rank, node = entry["rank"], entry["node_id"]
         call = calls[(rank, node)]
@@ -57,6 +72,8 @@ destinations are rejected. No layout or generation is inferred from byte count.
                 or call["rank"] != rank or call["node_id"] != node):
             raise ValueError("Collective source identity differs from matched instance")
         for slot, operands in enumerate(call["intent"]["slots"]):
+            if forwards_input(collective, operands):
+                forwarded.add((rank, slot))
             for role in ("source", "destination"):
                 ref = operands[role]
                 key = rank, node, ref["path"]
@@ -89,6 +106,9 @@ destinations are rejected. No layout or generation is inferred from byte count.
         previous.extend(spans)
     outputs = {}
     for (rank, slot), (storage, spans) in destinations.items():
+        if (rank, slot) in forwarded:
+            outputs[(rank, slot)] = inputs[(rank, slot)]
+            continue
         producer = f"{collective.id}/output/{rank}/{slot}"
         state.write(storage, spans, producer, provenance)
         outputs[(rank, slot)] = TensorValue(storage, state.read(storage, spans))

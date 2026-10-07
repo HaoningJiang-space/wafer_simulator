@@ -92,7 +92,15 @@ def bind_collective(collective, target, placement, *, policy, values=None):
                     if value.size_bytes != table[key].size_bytes:
                         raise ValueError("Version bytes differ from collective volume")
                     table[key] = Allocation(value.key, homes[rank].id, value.size_bytes)
-            reserves[rank].append(outputs[key])
+            if outputs[key] != inputs.get(key):
+                reserves[rank].append(outputs[key])
+        if (values is not None and len(ranks) == 1
+                and outputs[(ranks[0], slot_index)] == inputs.get((ranks[0], slot_index))):
+            if not (collective.kind == "broadcast" or
+                    collective.kind == "allreduce" and collective.reduction == "sum"):
+                raise ValueError("Only an explicit singleton identity may forward an input")
+            requirements[(ranks[0], slot_index)] = frozenset()
+            continue
         if collective.kind in {"allgather", "broadcast"}:
             sources = ranks if collective.kind == "allgather" else (collective.root,)
             written = {r: [] for r in ranks}

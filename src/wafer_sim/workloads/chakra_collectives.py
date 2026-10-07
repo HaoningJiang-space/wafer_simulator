@@ -21,7 +21,7 @@ KINDS = {
 PARAM_KINDS = {"broadcast": "broadcast", "allreduce": "allreduce", "_allgather_base": "allgather",
                "allgather_into_tensor_coalesced": "allgather",
                "reduce_scatter_tensor_coalesced": "reduce_scatter", "barrier": "barrier"}
-GPU_TYPES = {"allreduce": 0, "allgather": 2, "broadcast": 3, "reduce_scatter": 7}
+GPU_TYPES = {"allreduce": 0, "allgather": 2, "broadcast": 5, "reduce_scatter": 7}
 
 
 def descriptor(ref):
@@ -269,7 +269,7 @@ def match_collectives(rank_reports):
         reductions = {c["intent"]["reduction"] for c in calls if c["intent"]}
         kind = signatures[0][0] if signatures else None
         participant_match = not issues
-        if declaration["size"] > 1 and kind in {"allreduce", "reduce_scatter"} and reductions != {"sum"}:
+        if kind in {"allreduce", "reduce_scatter"} and reductions != {"sum"}:
             issues.append("reduction_operator_unresolved")
         matched = dict(group=group, sequence=sequence, members=members, kind=kind,
             calls=[dict(rank=c["rank"], node_id=c["node_id"]) for c in sorted(calls, key=lambda c:c["rank"])],

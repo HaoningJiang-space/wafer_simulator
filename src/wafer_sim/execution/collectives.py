@@ -88,7 +88,8 @@ class CollectiveState:
         for (rank, slot), allocation in self.binding.outputs.items():
             if allocation.key not in self.published_outputs and self.output_ready(rank, slot):
                 value = self.binding.values.outputs[(rank, slot)]
-                self.lifetime.publish(allocation.key, value.producers)
+                if allocation != self.binding.inputs.get((rank, slot)):
+                    self.lifetime.publish(allocation.key, value.producers)
                 self.lifetime.acquire(allocation.key, output_hold(self.binding))
                 self.published_outputs.add(allocation.key)
         for rank in self.entered - self.consumed_inputs:
@@ -97,8 +98,8 @@ class CollectiveState:
                     self.lifetime.finish(key, input_consumer(self.binding, rank))
                 self.consumed_inputs.add(rank)
         if self.all_complete() and not self.released_output_holds:
-            for allocation in self.binding.outputs.values():
-                self.lifetime.finish(allocation.key, output_hold(self.binding))
+            for key in {a.key for a in self.binding.outputs.values()}:
+                self.lifetime.finish(key, output_hold(self.binding))
             self.released_output_holds = True
 
     def output_ready(self, rank, slot):

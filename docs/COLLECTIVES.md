@@ -59,7 +59,9 @@ Chakra's GPU `comm_size` sums input descriptors, which can include both source
 and destination buffers. It is retained as source evidence, separately from
 logical input bytes and target transferred bytes. Reduction operators require
 evidence: compatible attached GPU kernel identity can establish SUM; an opaque
-ReduceOp argument alone cannot. A singleton reduction is an identity operation.
+ReduceOp argument alone cannot. This also applies to a singleton: PREMUL_SUM
+can scale its input even with one participant. The current target reduction
+model accepts only explicitly established SUM.
 
 All inspected PyTorch files and notices are pinned in this repository. The
 [source manifest](../third_party/references/pytorch/SOURCE.json) records their
@@ -97,7 +99,9 @@ complete declared consumer set. Staging is conservatively retained until global
 collective completion. The older unversioned analytical interface leaves input
 and output lifetime to its caller. There is no spill policy or capacity deadlock
 recovery. Source in-place writes can become distinct immutable target versions;
-target in-place buffer reuse is not implemented.
+target in-place buffer reuse for mutating operations is not implemented.
+An explicitly proved singleton identity on the same tensor argument instead
+forwards its existing immutable value, with no output allocation or copy.
 
 ## Completion is a resource event
 
@@ -137,6 +141,25 @@ after the source storage receives a new producer version. Partial prior writes
 retain all contributing producers. A broadcast's non-root destination is an
 overwrite, not a read of potentially uninitialized contents. Source storage
 sharing alone never merges versions or makes them ready.
+
+For a singleton broadcast or known SUM allreduce on the same tensor argument,
+`bind_values` forwards the input version rather than inventing an output writer.
+The target adapter emits no payload actions and reuses its resident allocation.
+The execution layer acquires an output hold before retiring the input consumer;
+it never republishes an already published value. Future consumers retain the
+same allocation until their last use. Data readiness alone still does not
+satisfy the collective's operation dependency before participant entry.
+
+`workloads/collective_recovery.py` recomputes matches across all ranks and makes
+per-call decisions. A matched barrier actually binds an empty tensor contract;
+it does not require a tensor allocation generation or layout. A singleton
+forwarding recipe still requires its upstream input value. All other calls
+retain specific identity, reduction, allocation, footprint and ordering gaps.
+`scripts/recover_collectives_remote.py` joins those decisions with every accepted
+source port and independently compares the entire saved source record. Neither
+recovery nor a semantic barrier binding implies a completed target workload or
+a calibrated barrier latency. Earlier result directories remain snapshots of
+their recorded source commits, including their former singleton assumption.
 
 `TensorValue.key` incorporates rank, device, storage generation, exact slices and
 immutable producers. `bind_collective(..., values=...)` uses these identities for
