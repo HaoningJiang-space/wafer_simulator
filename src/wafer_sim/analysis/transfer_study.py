@@ -44,6 +44,43 @@ def compare_messages(reference,candidate):
     return rows
 
 
+def residual_link_order(reference,candidate,comparisons):
+    """Locate the first link divergence of the worst same-path message.
+
+    A read-only diagnostic selected by error magnitude, not a tuned model rule.
+    Packet ordinals are ordered by injection, never joined by simulator flit ID.
+    """
+    eligible=[r for r in comparisons if r['matched_paths'] and r['error_cycles']]
+    if not eligible: return None
+    selected=max(eligible,key=lambda r:r['ape_percent']);token=selected['token']
+    a=next(m for m in reference if m['token']==token);b=next(m for m in candidate if m['token']==token)
+    differences=[]
+    for ordinal,(f,g) in enumerate(zip(sorted(a['flits'],key=lambda f:f['injected']),
+                                     sorted(b['flits'],key=lambda f:f['injected']))):
+        for x,y in zip(f['link_arrivals'],g['link_arrivals']):
+            if x['cycle']-a['ready']!=y['cycle']-b['ready']:
+                differences.append(dict(packet_ordinal=ordinal,source=x['source'],destination=x['destination'],
+                    reference_relative_cycle=x['cycle']-a['ready'],candidate_relative_cycle=y['cycle']-b['ready']))
+    if not differences: return dict(selected_message=token,first_link_divergence=None)
+    first=min(differences,key=lambda r:r['reference_relative_cycle'])
+    edge=first['source'],first['destination'];operation=token.rsplit('/phase/',1)[0]
+    events={}
+    for backend,messages,origin in [('booksim',reference,a['ready']),('packet_pipeline',candidate,b['ready'])]:
+        rows=[]
+        for m in messages:
+            if m['token'].rsplit('/phase/',1)[0]!=operation or m['destination']!=a['destination']: continue
+            for ordinal,f in enumerate(sorted(m['flits'],key=lambda f:f['injected'])):
+                for h in f['link_arrivals']:
+                    if (h['source'],h['destination'])==edge:
+                        rows.append(dict(backend=backend,token=m['token'],source_endpoint=m['source'],
+                            packet_ordinal=ordinal,cycle=h['cycle'],relative_cycle=h['cycle']-origin))
+        events[backend]=sorted(rows,key=lambda r:r['relative_cycle'])
+    return dict(selected_message=token,first_link_divergence=first,edge=edge,events=events,
+        identical_link_arrival_slots=[r['relative_cycle'] for r in events['booksim']]==[
+            r['relative_cycle'] for r in events['packet_pipeline']],
+        selection='largest same-path message service APE; first divergent link timestamp')
+
+
 def reconstruct(descriptor):
     config,wc=descriptor['experiment'],descriptor['workload']
     exported=read_json(descriptor['network_json'])
@@ -211,7 +248,8 @@ def analyze(root):
             comparisons=compare_messages(native['network_messages'],pipeline['network_messages'])
             isolated_matched=[r for r in pipe_isolated if r['matched_paths']]
             detail['pipeline']=dict(messages=comparisons,isolated_messages=pipe_isolated,
-                critical_chain=critical_chain(binding,pipeline))
+                critical_chain=critical_chain(binding,pipeline),
+                residual=residual_link_order(native['network_messages'],pipeline['network_messages'],comparisons))
             rows[-1].update(pipeline_cycles=pcycles,pipeline_application_ape_percent=100*abs(pcycles/fine-1),
                 pipeline_application_target_met=100*abs(pcycles/fine-1)<=registration['application_error_tolerance_percent'],
                 pipeline_isolated_max_ape_percent=max((r['ape_percent'] for r in isolated_matched),default=None),

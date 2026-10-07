@@ -67,6 +67,13 @@ def main():
             for context,rows in [('application',detail['pipeline']['messages']),('isolated',detail['pipeline']['isolated_messages'])] for row in rows]
         with (args.output/'pipeline_messages.csv').open('w') as f:
             w=csv.DictWriter(f,list(messages[0]));w.writeheader();w.writerows(messages)
+        residuals={case:detail['pipeline']['residual'] for case,detail in details.items()}
+        write_json(args.output/'RESIDUAL.json',residuals)
+        events=[dict(case=case,**row) for case,r in residuals.items() if r and r['first_link_divergence']
+                for rows in r['events'].values() for row in rows]
+        if events:
+            with (args.output/'shared_link_order.csv').open('w') as f:
+                w=csv.DictWriter(f,list(events[0]));w.writeheader();w.writerows(events)
     with (args.output/'application.csv').open('w') as f:
         w=csv.DictWriter(f,fields,extrasaction='ignore');w.writeheader();w.writerows(summary['rows'])
     fields=('case','source','destination','bytes','flits','physical_links','matched_path','reference_cycles',
