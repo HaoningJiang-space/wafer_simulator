@@ -135,7 +135,7 @@ records once; unresolved scopes stay explicit. Full target lowering still needs
 collective completion, compiled-scope interpretation and layout/allocation
 recovery before these regions can define wafer resource activity or timing.
 
-The [collective frontend](docs/results/collectives-001/REVIEW.md) now recovers
+The [collective frontend milestone](docs/results/collectives-001/REVIEW.md) recovers
 operand roles and bytes for all 33,632 CPU collective calls in the full source.
 Explicit identities match 3,840 calls into 2,790 instances; 29,792 coalesced calls
 remain unresolved rather than being matched by order or size. The
@@ -144,7 +144,7 @@ memory/network/reduction demands and rank-local completion. All 101 semantic
 tests and the full-source readback pass. This is a resource-demand and completion
 interface; tensor-version integration and calibrated application timing remain.
 
-The next [value/lifetime integration](docs/results/collective-values-001/REVIEW.md)
+The [value/lifetime integration milestone](docs/results/collective-values-001/REVIEW.md)
 connects matched collective ports to immutable tensor versions and shared finite
 storage. Existing versions pass between collectives without a second input
 allocation; consumers release them only after completion. All 119 semantic tests
@@ -152,3 +152,16 @@ pass. A complete join checks all 33,632 source calls and their implementation/wa
 ports against the 4,530,939-node ownership/effect ledgers. Exact allocation
 generations, layouts and access order remain explicit missing inputs for the
 capture; no guessed versions or new application timing are reported.
+
+The [current recovery result](docs/results/collective-recovery-001/REVIEW.md)
+replaces the blanket missing-evidence decision with per-call recovery. All
+33,632 calls and their original ports remain: 20 barrier instances bind without
+tensor payload, and 1,600 singleton broadcasts have input-version forwarding
+recipes. Unknown singleton reductions are now correctly unresolved, rather than
+assumed identities. The target lifetime path forwards proved identities without
+another write, allocation or copy. There are still 29,792 calls without explicit
+communicator/sequence; none are guessed. The
+[conversion repair](docs/SOURCE_RECOVERY.md) preserves optional original strides
+and binds exact footprints to explicit live allocations. All 137 semantic tests
+and four actual upstream conversion tests pass on eex005. This is not yet a
+fully bound or timed target Llama workload.
