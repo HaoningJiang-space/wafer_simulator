@@ -37,7 +37,7 @@ def main():
             old_event_sha256=object_digest(old),new_event_sha256=object_digest(new))
         if not unchanged[case]['exact_events']:raise ValueError('Serial compatibility changed accepted events')
     result['acceptance']['serial_compatibility']=unchanged
-    for key,name in (('rows','application.csv'),('messages','messages.csv'),('costs','cost.csv')):table(a.output/name,result[key])
+    for key,name in (('rows','application.csv'),('messages','messages.csv'),('costs','cost.csv'),('source_windows','source_windows.csv')):table(a.output/name,result[key])
     write_json(a.output/'SUMMARY.json',{k:v for k,v in result.items() if k not in ('messages','costs','acceptance')})
     write_json(a.output/'ACCEPTANCE.json',result['acceptance'])
     import matplotlib

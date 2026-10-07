@@ -75,13 +75,17 @@ def analyze(root):
             events[case,mode]=dict(result=r,moves=movement_rows(r,read_json(directory/'PHASE_MAP.json')),chain=chain)
             inputs[case,mode]=measured['input_identity']
     cases=list(dict.fromkeys(l['case'] for l in launches))
-    rows=[];messages=[];costs=[];mechanisms=[]
+    rows=[];messages=[];costs=[];mechanisms=[];windows=[]
     for case in cases:
         if len({inputs[case,m] for m in reg['modes']})!=1:raise ValueError('Model comparison changed input')
         reference=events[case,'bounded'];ref=reference['result'];rm=reference['moves']
         for mode in reg['modes']:
             entry=events[case,mode];r=entry['result'];moves=entry['moves']
             if set(moves)!=set(rm):raise ValueError('Changed logical movement set')
+            descriptor=read_json(root/case/'INPUT_CONFIG.json')
+            b,_,_,_=prepare(descriptor)
+            origins=read_json(root/case/(mode+'-0')/'PHASE_MAP.json')
+            windows.extend(dict(case=case,mode=mode,**w) for w in source_windows(b,r,origins))
             errors=[]
             for token,m in moves.items():
                 other=rm[token]
@@ -136,8 +140,36 @@ def analyze(root):
             detail.update(recurrence_passed=True,read_packet_cycles=read_duration,
                           fixed_native_packet_flight=flight,write_packet_cycles=write_duration,last_commit=last)
         mechanisms.append(detail)
-    return dict(rows=rows,messages=messages,costs=costs,mechanisms=mechanisms,
+    return dict(rows=rows,messages=messages,costs=costs,mechanisms=mechanisms,source_windows=windows,
         acceptance=dict(passed=True,checked_artifact_count=len(manifest['artifacts_sha256']),
             complete_manifest_sha256=digest(root/'COMPLETE.json'),checked=checked,binaries=started['binaries'],
             source_commit=started['source_commit'],registration=reg),
         scope='Conditional streaming DMA design; same analytical memory/compute, not measured WoW accuracy')
+
+
+def source_windows(binding,result,source_map):
+    """Account shared-port intervals; no counterfactual causal allocation."""
+    grouped=defaultdict(list)
+    for token,m in movement_rows(result,source_map).items():
+        grouped[token.rsplit('/phase/',1)[0],m['source']].append((token,m))
+    windows=[]
+    for (op,src),rows in grouped.items():
+        if len(rows)<2:continue
+        start=min(m['ready'] for _,m in rows);end=max(m['last_supply'] for _,m in rows)
+        memory=next(m for m in binding.memory.values() if m.endpoint==src)
+        if result.get('boundary'):
+            own={f"{m['token']}/read/{p['ordinal']}" for m in result['boundary']['moves']
+                 if m['source']==src and m['token'].rsplit('/phase/',1)[0]==op for p in m['packets']}
+        else:
+            own={f"{op}/phase/{int(token.rsplit('/phase/',1)[1])-1}" for token,_ in rows}
+        by_op=defaultdict(int);own_busy=0
+        for s in result['services']:
+            if s['resource']!=memory.read_port:continue
+            overlap=max(0,min(end,s['resource_released'])-max(start,s['start']))
+            if s['token'] in own:own_busy+=overlap
+            else:by_op[s['token'].split('/phase/',1)[0]]+=overlap
+        windows.append(dict(operation=op,source=src,start=start,last_supply=end,span=end-start,
+            own_read_service=own_busy,competing_memory_service=sum(by_op.values()),
+            idle_or_other_latency=end-start-own_busy-sum(by_op.values()),
+            competing_by_operation={k:v for k,v in by_op.items() if v}))
+    return windows
