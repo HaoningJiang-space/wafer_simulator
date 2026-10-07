@@ -11,6 +11,7 @@ import time
 
 from wafer_sim.adapters import wow
 from wafer_sim.adapters.online_booksim import OnlineBookSim, prepare_online_config
+from wafer_sim.adapters.packet_pipeline import contract as pipeline_contract
 from wafer_sim.adapters.spatial import bind
 from wafer_sim.adapters.timing import TimedTarget
 from wafer_sim.adapters.transformer import place_block
@@ -20,6 +21,7 @@ from wafer_sim.analysis.timing import audit
 from wafer_sim.analysis.transfer_granularity import isolated_comparison, summarize_isolated
 from wafer_sim.execution.plan import ExecutionPolicy
 from wafer_sim.execution.timing import execute
+from wafer_sim.execution.packet_pipeline import PacketPipeline
 from wafer_sim.experiments.network_reference import compare_reference
 from wafer_sim.io import read_json, write_json, object_digest
 from wafer_sim.workloads.transformer import build_block
@@ -103,15 +105,20 @@ def worker(descriptor_path,backend,output,repetitions,affinity):
         child_before=usage(resource.RUSAGE_CHILDREN)
         with meter.phase('backend_initialization'):
             if backend=='booksim': client=new_client(descriptor,exported,directory)
+            elif backend=='packet_pipeline':
+                client=PacketPipeline(TimedTarget(binding,timing),pipeline_contract(exported,descriptor['experiment']['flit_bytes']))
+            elif backend!='coarse': raise ValueError('Unknown backend')
         try:
             with meter.phase('timed_execution'):
                 result=execute(binding,timing,network=client,cycle_limit=descriptor['experiment']['cycle_limit'])
             # Snapshot before result serialization and before any audit/replay.
             peaks=dict(python_lifetime_peak_rss_kib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
-                       native_lifetime_peak_rss_kib=native_peak(client))
+                       native_lifetime_peak_rss_kib=native_peak(client if backend=='booksim' else None))
             with meter.phase('native_close_and_serialization'):
                 if client:
-                    if result['complete']: client.close()
+                    if result['complete']:
+                        closed=client.close()
+                        if backend=='packet_pipeline': write_json(directory/'pipeline_network.json',closed)
                     else: client.abort()
         finally:
             if client: client.abort()
@@ -168,6 +175,17 @@ def characterize(descriptor_path,output):
         finally: client.abort()
         audit_messages(binding.network,record['messages'])
         reference(descriptor,exported,directory,record['messages'])
+        if 'packet_pipeline' in descriptor.get('backends',[]):
+            pipe=PacketPipeline(target,pipeline_contract(exported,descriptor['experiment']['flit_bytes']))
+            pipe.submit('isolated',transfer,0)
+            while pipe.pending:
+                pipe.advance(descriptor['experiment']['cycle_limit'])
+                if pipe.pending and pipe.now>=descriptor['experiment']['cycle_limit']:
+                    raise TimeoutError('Isolated pipeline transfer incomplete')
+            candidate=pipe.close()
+            from wafer_sim.analysis.packet_pipeline import audit_pipeline
+            audit_pipeline(binding,timing,candidate['messages'],candidate['packet_services'],candidate['packet_contract'])
+            write_json(directory/'PIPELINE.json',candidate)
         row=isolated_comparison(target,record['messages'][0])
         row.update(index=index,logical_tokens=tokens)
         rows.append(row)

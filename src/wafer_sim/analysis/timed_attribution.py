@@ -27,7 +27,7 @@ def critical_chain(binding, result):
             token = f"{op}/phase/{index}"
             p = phases[op,index]
             node(previous,p["ready"],incoming)
-            if phase.transfer is not None and result.get("network_backend") == "booksim":
+            if phase.transfer is not None and result.get("network_backend") in {"booksim","packet_pipeline"}:
                 point = f"network:{token}"
                 node(point,p["finish"],[previous],p["finish"]-p["ready"],"network",
                      operation=op,phase=index,token=token)

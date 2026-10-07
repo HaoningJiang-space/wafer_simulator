@@ -1,0 +1,17 @@
+{
+  "name": "packet_pipeline_refinement_v1",
+  "protocol": "docs/PACKET_PIPELINE_PROTOCOL.md",
+  "accepted_reference_run": "/home/wangziheng/wafer_simulator/runs/transfer-granularity-001",
+  "backends": ["booksim", "coarse", "packet_pipeline"],
+  "placement": "baseline",
+  "mapping": "row_major",
+  "algorithm": "direct_exchange_rank_order_sum",
+  "cases": [{"name": "s16", "sequence": 16}, {"name": "s64", "sequence": 64}],
+  "block": {"batch": 1, "hidden": 64, "heads": 8, "ffn_hidden": 128, "shards": 8},
+  "memory_bytes_per_cycle": 32,
+  "cold_repetitions": 3,
+  "graph_reuse_repetitions": 3,
+  "application_error_tolerance_percent": 2,
+  "message_error_tolerance_percent": 5,
+  "scope": "Same complete inputs and hardware as transfer-granularity-001. Candidate changes network service granularity, not local resources. FCFS output queues, source-derived single-VC packet initiation, no input arbitration/finite-credit/adaptive-route model. No claims beyond the checked configuration."
+}

@@ -163,10 +163,11 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
             network="minimum-hop lexicographic route; whole-message store-and-forward",
             within_phase="demands in declared order",time="integer cycles; rational rates rounded up"))
     if network is not None:
-        result["network_backend"] = "booksim"
+        result["network_backend"] = getattr(network,"backend_name","booksim")
         result["network_messages"] = sorted(network.messages,key=lambda m:m["id"])
-        result["policy"]["network"] = "live BookSim; all-flit reception at end-of-cycle boundary"
+        result["policy"]["network"] = getattr(network,"policy_description","live BookSim; all-flit reception at end-of-cycle boundary")
         result["policy"]["ties"] = "network completions before local completions at the same boundary"
+        if result["network_backend"] == "packet_pipeline": result.update(network.evidence())
     if any(p.dependencies is not None for p in binding.plans.values()):
         result["policy"]["collectives"] = "explicit action DAG and output requirements; atomic admission; all actions precede retirement; producer outputs and staging pinned until retirement"
     return result

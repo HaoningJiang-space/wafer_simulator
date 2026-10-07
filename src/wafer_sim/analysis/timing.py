@@ -14,9 +14,12 @@ def audit(binding, timing, result):
         *(s for e in timing.endpoints for s in (e.injection,e.ejection)))}
     records,by_resource,by_token = result["services"],defaultdict(list),defaultdict(list)
     native_messages = None
-    if result.get("network_backend") == "booksim":
+    if result.get("network_backend") in {"booksim","packet_pipeline"}:
         from wafer_sim.analysis.online_network import audit_messages
         audit_messages(binding.network, result["network_messages"])
+        if result['network_backend']=='packet_pipeline':
+            from wafer_sim.analysis.packet_pipeline import audit_pipeline
+            audit_pipeline(binding,timing,result['network_messages'],result['packet_services'],result['packet_contract'])
         native_messages = {m["token"]:m for m in result["network_messages"]}
     network_tokens = set()
     physical = nx.Graph()

@@ -15,7 +15,8 @@ def main():
     parser.add_argument('output',type=Path)
     parser.add_argument('--tests',type=Path)
     parser.add_argument('--worker',type=Path)
-    parser.add_argument('--backend',choices=('booksim','coarse'))
+    parser.add_argument('--backend',choices=('booksim','coarse','packet_pipeline'))
+    parser.add_argument('--registration',default='configs/transfer_granularity.json')
     parser.add_argument('--repetitions',type=int,default=1)
     parser.add_argument('--cpus')
     args=parser.parse_args()
@@ -31,7 +32,10 @@ def main():
         digest(tests['tests_log'])!=tests['tests_log_sha256']): raise ValueError('Same-revision tests required')
     if not args.output.is_absolute(): raise ValueError('Fresh absolute output required')
     args.output.mkdir(exist_ok=False)
-    registration=read_json(repo/'configs/transfer_granularity.json')
+    registration=read_json(repo/args.registration)
+    backends=registration.get('backends',['booksim','coarse'])
+    if set(backends) not in ({'booksim','coarse'},{'booksim','coarse','packet_pipeline'}) or len(backends)!=len(set(backends)):
+        raise ValueError('Invalid registered backend comparison')
     experiment=read_json(repo/'configs/transformer_wow_pair.json')
     wc=read_json(repo/experiment['workload_config'])
     cpus=sorted(os.sched_getaffinity(0))[-2:] if not args.cpus else [int(x) for x in args.cpus.split(',')]
@@ -47,7 +51,7 @@ def main():
         binary_sha256={name:digest(runtime/path) for name,path in {
             'online':'build/booksim-online/online_booksim','standalone':'build/booksim/rapidchiplet/booksim2/src/booksim'}.items()},
         source_manifest={str(p.relative_to(repo)):digest(p) for p in sorted((repo/'src').rglob('*.py'))},
-        protocol_sha256=digest(repo/'docs/TRANSFER_GRANULARITY_PROTOCOL.md')))
+        protocol_sha256=digest(repo/registration.get('protocol','docs/TRANSFER_GRANULARITY_PROTOCOL.md'))))
     meter=Meter()
     with meter.phase('common_geometry_export'):
         export_placement(runtime/'upstream/nw-design-for-wsi',args.output/'geometry',registration['placement'],
@@ -62,11 +66,12 @@ def main():
                 memory_bytes_per_cycle=registration['memory_bytes_per_cycle']),
                 network_json=str(args.output/'geometry/network.json'),
                 geometry_directory=str(args.output/'geometry'),runtime=str(runtime),
-                service_tolerance_percent=registration['message_error_tolerance_percent'])
+                service_tolerance_percent=registration['message_error_tolerance_percent'],backends=backends)
             write_json(directory/'INPUT_CONFIG.json',descriptor)
             for mode in ('cold','reuse_graph'):
                 for repeat in range(registration['cold_repetitions'] if mode=='cold' else 1):
-                    order=('booksim','coarse') if (ci+repeat+(mode=='reuse_graph'))%2==0 else ('coarse','booksim')
+                    offset=(ci+repeat+(mode=='reuse_graph'))%len(backends)
+                    order=backends[offset:]+backends[:offset]
                     for backend in order:
                         output=directory/f'{mode}-{repeat}-{backend}'
                         command=[sys.executable,str(Path(__file__).resolve()),str(output),
@@ -84,7 +89,7 @@ def main():
                         print(case['name'],mode,backend,[r['application_cycles'] for r in result['trials']],flush=True)
             results=[read_json(Path(r['worker'])/'MEASURED.json') for r in launches if r['case']==case['name']]
             if len({r['input_identity'] for r in results})!=1: raise ValueError('Different backend input identity')
-            for backend in ('booksim','coarse'):
+            for backend in backends:
                 if len({t['execution_identity'] for r in results if r['backend']==backend for t in r['trials']})!=1:
                     raise ValueError('Cold/reuse simulated events differ')
             if all(t['complete'] for r in results for t in r['trials']):
