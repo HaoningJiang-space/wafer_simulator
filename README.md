@@ -30,8 +30,9 @@ node-reuse changes. The combined `patches/booksim-wafer.patch` applies directly
 to the pinned author revision. There are no alternative optimization builds or
 configs in the working tree. See [selection and verification](docs/IMPLEMENTATION.md).
 
-Code layers: `workloads` → `adapters` → native BookSim → `analysis`;
-`experiments` orchestrates these layers. `configs/` contains fixed controls;
+Code layers separate `workloads`, `architecture`, target-binding `adapters`,
+`execution` and `analysis`; `experiments` orchestrates these layers. The current
+timed replay uses native BookSim. `configs/` contains fixed controls;
 `patches/` contains isolated upstream changes. All reused external source is
 included as [pinned ordinary files](docs/EXTERNAL_SOURCES.md) under `third_party/`.
 A normal clone of this repository obtains all project source. The maintained
@@ -48,6 +49,7 @@ source review, and Git. The remote root is `/home/wangziheng/wafer_simulator`.
 
 ```bash
 # On eex005, in the source checkout:
+/home/wangziheng/wafer_simulator/.venv/bin/python scripts/restore_upstreams_remote.py
 bash scripts/build_remote.sh
 bash scripts/test_remote.sh /home/wangziheng/wafer_simulator/runs/semantics-NEW
 
@@ -108,3 +110,12 @@ Earlier deliverables are the source table above, the
 [M0/M1 protocol](docs/MODEL_BOUNDARY_PROTOCOL.md). No new experiment is launched
 by this documentation stage. Current development is complete-source workload
 normalization; static versus shared costs remains a later abstraction comparison.
+
+The [complete Chakra source check](docs/results/chakra-normalization-001/REVIEW.md)
+has read all 16 published ranks and recovered 123,520 matrix primitives with
+shape-derived work and operand bytes. The official reader agrees on all
+4,530,939 nodes. Capture identity with the accepted GOAL input is not established;
+tensor versions, remaining operators and target service timing are still needed
+before full spatial execution. All raw files and the detailed ledger stay on
+eex005. The [offline source restoration check](docs/results/source-bundle-001/VALIDATION.json)
+also verifies all six bundled author trees and the frozen native patch.

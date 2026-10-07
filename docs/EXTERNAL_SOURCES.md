@@ -47,6 +47,13 @@ error. `--check` makes the command read-only. `--root` allows an isolated
 restoration under the remote project root. Untracked Python bytecode is counted
 separately. The native build still applies our patch in an isolated worktree.
 
+The [eex005 restoration receipt](results/source-bundle-001/VALIDATION.json)
+checks all six source trees: 3,317 files and 332,722,614 bytes, restored without
+fetching upstream repositories. Original commits and trees match, the project
+has no remaining gitlinks, and the unchanged native patch passes `git apply
+--check` in a fresh restored-author worktree. This is source/build-interface
+validation; it does not rerun the accepted workload or rebuild its binary.
+
 `configs/chakra_schema_requirements.txt` and `scripts/setup_chakra_remote.sh`
 reproduce the separate protobuf environment. No TransformerEngine kernels are
 installed or run to derive mathematical work counts.

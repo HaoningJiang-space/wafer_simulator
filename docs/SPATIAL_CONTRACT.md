@@ -99,9 +99,13 @@ validator and BookSim are retained. This is an internal typed interface, not
 a newly proposed serialized trace standard. We inspected the
 [Chakra schema at 9ff3e3e](https://github.com/mlcommons/chakra/blob/9ff3e3e2f276b4c0554a83f8747bf00b2786fa85/schema/protobuf/et_def.proto):
 it provides operation kinds, control/data dependencies, IO descriptions and
-tensor/storage identity fields. A future importer should use that information
-when present and validate version/alias semantics, rather than invent another
-interchange format. No Chakra converter or code is claimed as implemented here.
+tensor/storage identity fields. The subsequent
+[Chakra normalization milestone](results/chakra-normalization-001/REVIEW.md)
+now reads the complete published rank set through that schema and recovers
+shape-derived matrix work. It does not yet supply a complete logical input to
+this contract: storage versions/aliasing, remaining operators and execution
+scope still need resolution. The published Chakra files are not established
+as the same capture as the accepted GOAL input.
 
 ## Verification and the next decision
 

@@ -1,0 +1,43 @@
+{
+  "full_rank_count": 16,
+  "matrix_counts": {
+    "extra_scalar_adds": 1968705634304,
+    "matrix_mac": 25808286682972160,
+    "matrix_primitives": 123520,
+    "with_direct_gpu_child": 24704
+  },
+  "matrix_ledger_sha256": "1f91f955350f40970d218c0bfe8112fc9badcbc6a99d75505738d1f1aaf07de3",
+  "matrix_operator_counts": {
+    "aten::mm": 640,
+    "tex_ts::te_gemm_ts": 122880
+  },
+  "matrix_source_scopes": {
+    "None": 82240,
+    "ProfilerStep#1": 4128,
+    "ProfilerStep#10": 4128,
+    "ProfilerStep#2": 4128,
+    "ProfilerStep#3": 4128,
+    "ProfilerStep#4": 4128,
+    "ProfilerStep#5": 4128,
+    "ProfilerStep#6": 4128,
+    "ProfilerStep#7": 4128,
+    "ProfilerStep#8": 4128,
+    "ProfilerStep#9": 4128
+  },
+  "new_simulations_launched": 0,
+  "normalization_commit": "9781d2bd88067ac7cd73c67b593c2f596b91ef4d",
+  "passed": true,
+  "scope": "Full-file decoding and partial matrix-work conservation, not complete spatial execution or target timing",
+  "semantic_tests_log": {
+    "path": "/home/wangziheng/wafer_simulator/runs/chakra-source-unit-003/tests.log",
+    "sha256": "eb038739c28eabd21f92a866dd9a292b4613d6282a1ffbb89d06f6f178a52124"
+  },
+  "simulated_application_time": null,
+  "source_commit": "69c0cd615a0d31e5c8f9d7e13aa3d2d4b20b3682",
+  "source_receipt_sha256": "ef0f6c092596c958cd9ebe105ab1233e50cba780bb408b77586bbc0e4a8eac90",
+  "source_support_sha256": "74b5292fbe9b7578afaa5e3513821cc7df175e656e275c52349c80b7374b976c",
+  "strict_and_official_reader_match_all_ranks": true,
+  "total_input_bytes": 2189722129,
+  "total_nodes": 4530939,
+  "upstream_decoder_sha256": "6faf95be0af8e66866147e3a3daee28c11b42e2099ae146da246eb896a60e162"
+}

@@ -1,0 +1,1923 @@
+{
+  "all_data_graphs_closed_acyclic": true,
+  "all_files_fully_decoded": true,
+  "chakra_commit": "9ff3e3e2f276b4c0554a83f8747bf00b2786fa85",
+  "counts": {
+    "attribute_present:comm_size": 6496,
+    "attribute_present:comm_type": 6496,
+    "matrix_source_scope:None": 82240,
+    "matrix_source_scope:ProfilerStep#1": 4128,
+    "matrix_source_scope:ProfilerStep#10": 4128,
+    "matrix_source_scope:ProfilerStep#2": 4128,
+    "matrix_source_scope:ProfilerStep#3": 4128,
+    "matrix_source_scope:ProfilerStep#4": 4128,
+    "matrix_source_scope:ProfilerStep#5": 4128,
+    "matrix_source_scope:ProfilerStep#6": 4128,
+    "matrix_source_scope:ProfilerStep#7": 4128,
+    "matrix_source_scope:ProfilerStep#8": 4128,
+    "matrix_source_scope:ProfilerStep#9": 4128,
+    "nodes:COMM_COLL_NODE:GPU": 6496,
+    "nodes:COMP_NODE:CPU": 4426751,
+    "nodes:COMP_NODE:GPU": 97676,
+    "nodes:METADATA_NODE:CPU": 16,
+    "nodes_with_unknown_wire_fields": 0,
+    "nonempty_io:inputs:CPU": 4056063,
+    "nonempty_io:inputs:GPU": 103496,
+    "nonempty_io:outputs:CPU": 3491277,
+    "nonempty_io:outputs:GPU": 63014,
+    "nonzero_source_duration:CPU": 832480,
+    "nonzero_source_duration:GPU": 103665,
+    "normalized_extra_scalar_adds": 1968705634304,
+    "normalized_matrix_mac": 25808286682972160,
+    "normalized_matrix_operator:aten::mm": 640,
+    "normalized_matrix_operator:tex_ts::te_gemm_ts": 122880,
+    "normalized_matrix_primitives": 123520,
+    "normalized_matrix_with_direct_gpu_child": 24704
+  },
+  "environment": {
+    "grpcio-tools": "1.84.0",
+    "protobuf": "7.36.2"
+  },
+  "full_spatial_execution_ready": false,
+  "generated_schema_sha256": {
+    "et_def_pb2.py": "0929bed42990eada949404c02ec6e8d9482019cbeae7ff6bd6a0c841b58ef834",
+    "storage_pb2.py": "2124f6567cd9508340b558d9d1404def2ed3c2f61b2b658848ec42196c293f28"
+  },
+  "input_bytes": 2189722129,
+  "input_sha256": {
+    "chakra.0.et": "f6dbc4593110eaad646361dec9e431095981d07034378d1c4211de8865591a9f",
+    "chakra.1.et": "bfa8efe37b69aa7606ce518269045b190e0da400315f048bd87ff8706e47b7be",
+    "chakra.10.et": "a68f9be3c7736fb572801027ae4d3480685e8bcfc8023e81c068196d7645ee96",
+    "chakra.11.et": "2da7c996fa31de6cb6e122b9c4966b714dd8133f819d0e1d8c1282501ec5539a",
+    "chakra.12.et": "3d1870999dc3a89c414b2e453b9a5aeb30f35c72e3f0f7a5b3b97c042ee8fa88",
+    "chakra.13.et": "de15f8d4c86a1aeb50967cf0c34c990fb2b0ffc923f9e893f6a657b2c15c71d1",
+    "chakra.14.et": "95d9be06b24ce993797ff8bdcdfee4c57897dd9dd21527a8e8c7e547dbffd607",
+    "chakra.15.et": "72b36eec014efa1b4037e853219ff337ddb50fa206673bd5001f21ef0a11d993",
+    "chakra.2.et": "48e8296cd6b2627f297748a8d521b43298765840580a67e41eeb21229c800da4",
+    "chakra.3.et": "84eb97f9993abeb05f54f395adc75c2a2a2ce67160677f4d41c332aa4f2bb87c",
+    "chakra.4.et": "9390fdb3f40a74e05db5594324e34352880f3236ea40c33182e158cdf046f069",
+    "chakra.5.et": "639cce43fc744e3c17124226845f120850170451211523b4bd6681703224b7ee",
+    "chakra.6.et": "81af90dbfd5d49a03af31e7b871dd06a920995c1ef12b0e3b67cb98f2a8c01d9",
+    "chakra.7.et": "cce8776815cdcf7ac0b481f3c3f46a33e101cae857bd002ffc1559d02ad63e95",
+    "chakra.8.et": "2989c544c98345b4e17fb8aaebf1b6ae06c107352715ab7de17e3c430e437280",
+    "chakra.9.et": "fa9d1ba6de1d8d663a9f41f9492dc1db2baab111a1fa698b949fe0f5767a8f96"
+  },
+  "interpretation": "Complete source inventory, not logical-model acceptance. Control parents are not silently converted to execution predecessors.",
+  "new_simulations_launched": 0,
+  "python": "3.13.13",
+  "rank_count": 16,
+  "ranks": [
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 290224,
+        "fw_tid": 290224,
+        "is_cpu_op": 290224,
+        "op_schema": 290224,
+        "pg_name": 14,
+        "rf_id": 290224,
+        "scope": 290224,
+        "seq_id": 290224,
+        "stream": 290224,
+        "tid": 290224
+      },
+      "bytes_read": 140091305,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 290224,
+        "unique_edges": 496462
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 290224,
+        "unique_edges": 290224
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 283589,
+        "nodes:COMP_NODE:GPU": 6228,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 260421,
+        "nonempty_io:inputs:GPU": 6588,
+        "nonempty_io:outputs:CPU": 224535,
+        "nonempty_io:outputs:GPU": 4056,
+        "nonzero_source_duration:CPU": 53206,
+        "nonzero_source_duration:GPU": 6602,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 290224,
+        "unique_edges": 336847
+      },
+      "input_bytes": 140091305,
+      "input_sha256": "f6dbc4593110eaad646361dec9e431095981d07034378d1c4211de8865591a9f",
+      "metadata_attributes": {
+        "finish_ts": 87778207,
+        "pid": 159842,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 87745331,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 290224,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 0,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "46064": "ProfilerStep#2",
+        "72395": "ProfilerStep#3",
+        "98726": "ProfilerStep#4",
+        "125057": "ProfilerStep#5",
+        "151388": "ProfilerStep#6",
+        "177719": "ProfilerStep#7",
+        "204050": "ProfilerStep#8",
+        "233972": "ProfilerStep#9",
+        "263894": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.0.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282701,
+        "fw_tid": 282701,
+        "is_cpu_op": 282701,
+        "op_schema": 282701,
+        "pg_name": 14,
+        "rf_id": 282701,
+        "scope": 282701,
+        "seq_id": 282701,
+        "stream": 282701,
+        "tid": 282701
+      },
+      "bytes_read": 136626693,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282701,
+        "unique_edges": 482665
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282701,
+        "unique_edges": 282701
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 276200,
+        "nodes:COMP_NODE:GPU": 6094,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 253032,
+        "nonempty_io:inputs:GPU": 6458,
+        "nonempty_io:outputs:CPU": 217786,
+        "nonempty_io:outputs:GPU": 3928,
+        "nonzero_source_duration:CPU": 51926,
+        "nonzero_source_duration:GPU": 6475,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282701,
+        "unique_edges": 328044
+      },
+      "input_bytes": 136626693,
+      "input_sha256": "bfa8efe37b69aa7606ce518269045b190e0da400315f048bd87ff8706e47b7be",
+      "metadata_attributes": {
+        "finish_ts": 87778308,
+        "pid": 159843,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 87745325,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282701,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 1,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44435": "ProfilerStep#2",
+        "70126": "ProfilerStep#3",
+        "95817": "ProfilerStep#4",
+        "121508": "ProfilerStep#5",
+        "147199": "ProfilerStep#6",
+        "172890": "ProfilerStep#7",
+        "198581": "ProfilerStep#8",
+        "227796": "ProfilerStep#9",
+        "257011": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.1.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282520,
+        "fw_tid": 282520,
+        "is_cpu_op": 282520,
+        "op_schema": 282520,
+        "pg_name": 14,
+        "rf_id": 282520,
+        "scope": 282520,
+        "seq_id": 282520,
+        "stream": 282520,
+        "tid": 282520
+      },
+      "bytes_read": 136531838,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282520,
+        "unique_edges": 482296
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282520,
+        "unique_edges": 282520
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 276021,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 252853,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 217617,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6475,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282520,
+        "unique_edges": 327843
+      },
+      "input_bytes": 136531838,
+      "input_sha256": "48e8296cd6b2627f297748a8d521b43298765840580a67e41eeb21229c800da4",
+      "metadata_attributes": {
+        "finish_ts": 87778269,
+        "pid": 159844,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 87745317,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282520,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 2,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44346": "ProfilerStep#2",
+        "70027": "ProfilerStep#3",
+        "95708": "ProfilerStep#4",
+        "121389": "ProfilerStep#5",
+        "147070": "ProfilerStep#6",
+        "172751": "ProfilerStep#7",
+        "198432": "ProfilerStep#8",
+        "227636": "ProfilerStep#9",
+        "256840": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.2.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282952,
+        "fw_tid": 282952,
+        "is_cpu_op": 282952,
+        "op_schema": 282952,
+        "pg_name": 14,
+        "rf_id": 282952,
+        "scope": 282952,
+        "seq_id": 282952,
+        "stream": 282952,
+        "tid": 282952
+      },
+      "bytes_read": 136729030,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282952,
+        "unique_edges": 483037
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282952,
+        "unique_edges": 282952
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 276453,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 253285,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 218049,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6455,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282952,
+        "unique_edges": 328275
+      },
+      "input_bytes": 136729030,
+      "input_sha256": "84eb97f9993abeb05f54f395adc75c2a2a2ce67160677f4d41c332aa4f2bb87c",
+      "metadata_attributes": {
+        "finish_ts": 87778255,
+        "pid": 159845,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 87745325,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282952,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 3,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44778": "ProfilerStep#2",
+        "70459": "ProfilerStep#3",
+        "96140": "ProfilerStep#4",
+        "121821": "ProfilerStep#5",
+        "147502": "ProfilerStep#6",
+        "173183": "ProfilerStep#7",
+        "198864": "ProfilerStep#8",
+        "228068": "ProfilerStep#9",
+        "257272": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.3.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 285567,
+        "fw_tid": 285567,
+        "is_cpu_op": 285567,
+        "op_schema": 285567,
+        "pg_name": 14,
+        "rf_id": 285567,
+        "scope": 285567,
+        "seq_id": 285567,
+        "stream": 285567,
+        "tid": 285567
+      },
+      "bytes_read": 138043589,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 285567,
+        "unique_edges": 488095
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 285567,
+        "unique_edges": 285567
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 279006,
+        "nodes:COMP_NODE:GPU": 6154,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 255838,
+        "nonempty_io:inputs:GPU": 6518,
+        "nonempty_io:outputs:CPU": 220292,
+        "nonempty_io:outputs:GPU": 3988,
+        "nonzero_source_duration:CPU": 52526,
+        "nonzero_source_duration:GPU": 6528,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 285567,
+        "unique_edges": 331510
+      },
+      "input_bytes": 138043589,
+      "input_sha256": "9390fdb3f40a74e05db5594324e34352880f3236ea40c33182e158cdf046f069",
+      "metadata_attributes": {
+        "finish_ts": 513945466,
+        "pid": 174970,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 513912498,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 285567,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 4,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44541": "ProfilerStep#2",
+        "70532": "ProfilerStep#3",
+        "96523": "ProfilerStep#4",
+        "122514": "ProfilerStep#5",
+        "148505": "ProfilerStep#6",
+        "174496": "ProfilerStep#7",
+        "200487": "ProfilerStep#8",
+        "230032": "ProfilerStep#9",
+        "259577": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.4.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282377,
+        "fw_tid": 282377,
+        "is_cpu_op": 282377,
+        "op_schema": 282377,
+        "pg_name": 14,
+        "rf_id": 282377,
+        "scope": 282377,
+        "seq_id": 282377,
+        "stream": 282377,
+        "tid": 282377
+      },
+      "bytes_read": 136476595,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282377,
+        "unique_edges": 482068
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282377,
+        "unique_edges": 282377
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 275878,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 252710,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 217474,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6466,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282377,
+        "unique_edges": 327700
+      },
+      "input_bytes": 136476595,
+      "input_sha256": "639cce43fc744e3c17124226845f120850170451211523b4bd6681703224b7ee",
+      "metadata_attributes": {
+        "finish_ts": 513945526,
+        "pid": 174971,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 513912506,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282377,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 5,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44203": "ProfilerStep#2",
+        "69884": "ProfilerStep#3",
+        "95565": "ProfilerStep#4",
+        "121246": "ProfilerStep#5",
+        "146927": "ProfilerStep#6",
+        "172608": "ProfilerStep#7",
+        "198289": "ProfilerStep#8",
+        "227493": "ProfilerStep#9",
+        "256697": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.5.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282269,
+        "fw_tid": 282269,
+        "is_cpu_op": 282269,
+        "op_schema": 282269,
+        "pg_name": 14,
+        "rf_id": 282269,
+        "scope": 282269,
+        "seq_id": 282269,
+        "stream": 282269,
+        "tid": 282269
+      },
+      "bytes_read": 136440827,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282269,
+        "unique_edges": 481906
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282269,
+        "unique_edges": 282269
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 275770,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 252602,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 217366,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6475,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282269,
+        "unique_edges": 327592
+      },
+      "input_bytes": 136440827,
+      "input_sha256": "81af90dbfd5d49a03af31e7b871dd06a920995c1ef12b0e3b67cb98f2a8c01d9",
+      "metadata_attributes": {
+        "finish_ts": 513945465,
+        "pid": 174972,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 513912504,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282269,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 6,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44095": "ProfilerStep#2",
+        "69776": "ProfilerStep#3",
+        "95457": "ProfilerStep#4",
+        "121138": "ProfilerStep#5",
+        "146819": "ProfilerStep#6",
+        "172500": "ProfilerStep#7",
+        "198181": "ProfilerStep#8",
+        "227385": "ProfilerStep#9",
+        "256589": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.6.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282012,
+        "fw_tid": 282012,
+        "is_cpu_op": 282012,
+        "op_schema": 282012,
+        "pg_name": 14,
+        "rf_id": 282012,
+        "scope": 282012,
+        "seq_id": 282012,
+        "stream": 282012,
+        "tid": 282012
+      },
+      "bytes_read": 136310023,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282012,
+        "unique_edges": 481447
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282012,
+        "unique_edges": 282012
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 275513,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 252345,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 217109,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6465,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282012,
+        "unique_edges": 327335
+      },
+      "input_bytes": 136310023,
+      "input_sha256": "cce8776815cdcf7ac0b481f3c3f46a33e101cae857bd002ffc1559d02ad63e95",
+      "metadata_attributes": {
+        "finish_ts": 513945470,
+        "pid": 174973,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 513912505,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282012,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 7,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "43838": "ProfilerStep#2",
+        "69519": "ProfilerStep#3",
+        "95200": "ProfilerStep#4",
+        "120881": "ProfilerStep#5",
+        "146562": "ProfilerStep#6",
+        "172243": "ProfilerStep#7",
+        "197924": "ProfilerStep#8",
+        "227128": "ProfilerStep#9",
+        "256332": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.7.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282657,
+        "fw_tid": 282657,
+        "is_cpu_op": 282657,
+        "op_schema": 282657,
+        "pg_name": 14,
+        "rf_id": 282657,
+        "scope": 282657,
+        "seq_id": 282657,
+        "stream": 282657,
+        "tid": 282657
+      },
+      "bytes_read": 136607386,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282657,
+        "unique_edges": 482560
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282657,
+        "unique_edges": 282657
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 276158,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 252990,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 217754,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6477,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282657,
+        "unique_edges": 327980
+      },
+      "input_bytes": 136607386,
+      "input_sha256": "2989c544c98345b4e17fb8aaebf1b6ae06c107352715ab7de17e3c430e437280",
+      "metadata_attributes": {
+        "finish_ts": 87790406,
+        "pid": 111390,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 87757458,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282657,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 8,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44483": "ProfilerStep#2",
+        "70164": "ProfilerStep#3",
+        "95845": "ProfilerStep#4",
+        "121526": "ProfilerStep#5",
+        "147207": "ProfilerStep#6",
+        "172888": "ProfilerStep#7",
+        "198569": "ProfilerStep#8",
+        "227773": "ProfilerStep#9",
+        "256977": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.8.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282141,
+        "fw_tid": 282141,
+        "is_cpu_op": 282141,
+        "op_schema": 282141,
+        "pg_name": 14,
+        "rf_id": 282141,
+        "scope": 282141,
+        "seq_id": 282141,
+        "stream": 282141,
+        "tid": 282141
+      },
+      "bytes_read": 136370766,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282141,
+        "unique_edges": 481660
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282141,
+        "unique_edges": 282141
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 275642,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 252474,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 217238,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6450,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282141,
+        "unique_edges": 327464
+      },
+      "input_bytes": 136370766,
+      "input_sha256": "fa9d1ba6de1d8d663a9f41f9492dc1db2baab111a1fa698b949fe0f5767a8f96",
+      "metadata_attributes": {
+        "finish_ts": 87790459,
+        "pid": 111391,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 87757467,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282141,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 9,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "43967": "ProfilerStep#2",
+        "69648": "ProfilerStep#3",
+        "95329": "ProfilerStep#4",
+        "121010": "ProfilerStep#5",
+        "146691": "ProfilerStep#6",
+        "172372": "ProfilerStep#7",
+        "198053": "ProfilerStep#8",
+        "227257": "ProfilerStep#9",
+        "256461": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.9.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282457,
+        "fw_tid": 282457,
+        "is_cpu_op": 282457,
+        "op_schema": 282457,
+        "pg_name": 14,
+        "rf_id": 282457,
+        "scope": 282457,
+        "seq_id": 282457,
+        "stream": 282457,
+        "tid": 282457
+      },
+      "bytes_read": 136531271,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282457,
+        "unique_edges": 482236
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282457,
+        "unique_edges": 282457
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 275958,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 252790,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 217554,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6473,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282457,
+        "unique_edges": 327780
+      },
+      "input_bytes": 136531271,
+      "input_sha256": "a68f9be3c7736fb572801027ae4d3480685e8bcfc8023e81c068196d7645ee96",
+      "metadata_attributes": {
+        "finish_ts": 87790452,
+        "pid": 111392,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 87757458,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282457,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 10,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44283": "ProfilerStep#2",
+        "69964": "ProfilerStep#3",
+        "95645": "ProfilerStep#4",
+        "121326": "ProfilerStep#5",
+        "147007": "ProfilerStep#6",
+        "172688": "ProfilerStep#7",
+        "198369": "ProfilerStep#8",
+        "227573": "ProfilerStep#9",
+        "256777": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.10.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 281677,
+        "fw_tid": 281677,
+        "is_cpu_op": 281677,
+        "op_schema": 281677,
+        "pg_name": 14,
+        "rf_id": 281677,
+        "scope": 281677,
+        "seq_id": 281677,
+        "stream": 281677,
+        "tid": 281677
+      },
+      "bytes_read": 136190092,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 281677,
+        "unique_edges": 480943
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 281677,
+        "unique_edges": 281677
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 275178,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 252010,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 216774,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6474,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 281677,
+        "unique_edges": 327000
+      },
+      "input_bytes": 136190092,
+      "input_sha256": "2da7c996fa31de6cb6e122b9c4966b714dd8133f819d0e1d8c1282501ec5539a",
+      "metadata_attributes": {
+        "finish_ts": 87790395,
+        "pid": 111393,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 87757455,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 281677,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 11,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "43503": "ProfilerStep#2",
+        "69184": "ProfilerStep#3",
+        "94865": "ProfilerStep#4",
+        "120546": "ProfilerStep#5",
+        "146227": "ProfilerStep#6",
+        "171908": "ProfilerStep#7",
+        "197589": "ProfilerStep#8",
+        "226793": "ProfilerStep#9",
+        "255997": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.11.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 283150,
+        "fw_tid": 283150,
+        "is_cpu_op": 283150,
+        "op_schema": 283150,
+        "pg_name": 14,
+        "rf_id": 283150,
+        "scope": 283150,
+        "seq_id": 283150,
+        "stream": 283150,
+        "tid": 283150
+      },
+      "bytes_read": 136833461,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 283150,
+        "unique_edges": 483421
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 283150,
+        "unique_edges": 283150
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 276651,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 253483,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 218247,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6467,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 283150,
+        "unique_edges": 328473
+      },
+      "input_bytes": 136833461,
+      "input_sha256": "3d1870999dc3a89c414b2e453b9a5aeb30f35c72e3f0f7a5b3b97c042ee8fa88",
+      "metadata_attributes": {
+        "finish_ts": 511898411,
+        "pid": 278688,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 511865445,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 283150,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 12,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44976": "ProfilerStep#2",
+        "70657": "ProfilerStep#3",
+        "96338": "ProfilerStep#4",
+        "122019": "ProfilerStep#5",
+        "147700": "ProfilerStep#6",
+        "173381": "ProfilerStep#7",
+        "199062": "ProfilerStep#8",
+        "228266": "ProfilerStep#9",
+        "257470": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.12.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282595,
+        "fw_tid": 282595,
+        "is_cpu_op": 282595,
+        "op_schema": 282595,
+        "pg_name": 14,
+        "rf_id": 282595,
+        "scope": 282595,
+        "seq_id": 282595,
+        "stream": 282595,
+        "tid": 282595
+      },
+      "bytes_read": 136584259,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282595,
+        "unique_edges": 482455
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282595,
+        "unique_edges": 282595
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 276096,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 252928,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 217692,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6473,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282595,
+        "unique_edges": 327918
+      },
+      "input_bytes": 136584259,
+      "input_sha256": "de15f8d4c86a1aeb50967cf0c34c990fb2b0ffc923f9e893f6a657b2c15c71d1",
+      "metadata_attributes": {
+        "finish_ts": 511898423,
+        "pid": 278689,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 511865435,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282595,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 13,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44421": "ProfilerStep#2",
+        "70102": "ProfilerStep#3",
+        "95783": "ProfilerStep#4",
+        "121464": "ProfilerStep#5",
+        "147145": "ProfilerStep#6",
+        "172826": "ProfilerStep#7",
+        "198507": "ProfilerStep#8",
+        "227711": "ProfilerStep#9",
+        "256915": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.13.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282728,
+        "fw_tid": 282728,
+        "is_cpu_op": 282728,
+        "op_schema": 282728,
+        "pg_name": 14,
+        "rf_id": 282728,
+        "scope": 282728,
+        "seq_id": 282728,
+        "stream": 282728,
+        "tid": 282728
+      },
+      "bytes_read": 136649491,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282728,
+        "unique_edges": 482695
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282728,
+        "unique_edges": 282728
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 276229,
+        "nodes:COMP_NODE:GPU": 6092,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 253061,
+        "nonempty_io:inputs:GPU": 6456,
+        "nonempty_io:outputs:CPU": 217825,
+        "nonempty_io:outputs:GPU": 3926,
+        "nonzero_source_duration:CPU": 51906,
+        "nonzero_source_duration:GPU": 6447,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282728,
+        "unique_edges": 328051
+      },
+      "input_bytes": 136649491,
+      "input_sha256": "95d9be06b24ce993797ff8bdcdfee4c57897dd9dd21527a8e8c7e547dbffd607",
+      "metadata_attributes": {
+        "finish_ts": 511898389,
+        "pid": 278690,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 511865444,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282728,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 14,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44554": "ProfilerStep#2",
+        "70235": "ProfilerStep#3",
+        "95916": "ProfilerStep#4",
+        "121597": "ProfilerStep#5",
+        "147278": "ProfilerStep#6",
+        "172959": "ProfilerStep#7",
+        "198640": "ProfilerStep#8",
+        "227844": "ProfilerStep#9",
+        "257048": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.14.et",
+      "tensor_versions_inferred": false
+    },
+    {
+      "attributes": {
+        "comm_size": 406,
+        "comm_type": 406,
+        "fw_parent": 282912,
+        "fw_tid": 282912,
+        "is_cpu_op": 282912,
+        "op_schema": 282912,
+        "pg_name": 14,
+        "rf_id": 282912,
+        "scope": 282912,
+        "seq_id": 282912,
+        "stream": 282912,
+        "tid": 282912
+      },
+      "bytes_read": 136705503,
+      "collective_attribute_counts": {
+        "0": 10,
+        "2": 200,
+        "7": 196
+      },
+      "combined_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282912,
+        "unique_edges": 483004
+      },
+      "control_reference_graph": {
+        "closed_acyclic": false,
+        "cycle_example": null,
+        "missing_count": 1,
+        "missing_examples": [
+          0
+        ],
+        "nodes": 282912,
+        "unique_edges": 282912
+      },
+      "counts": {
+        "attribute_present:comm_size": 406,
+        "attribute_present:comm_type": 406,
+        "matrix_source_scope:None": 5140,
+        "matrix_source_scope:ProfilerStep#1": 258,
+        "matrix_source_scope:ProfilerStep#10": 258,
+        "matrix_source_scope:ProfilerStep#2": 258,
+        "matrix_source_scope:ProfilerStep#3": 258,
+        "matrix_source_scope:ProfilerStep#4": 258,
+        "matrix_source_scope:ProfilerStep#5": 258,
+        "matrix_source_scope:ProfilerStep#6": 258,
+        "matrix_source_scope:ProfilerStep#7": 258,
+        "matrix_source_scope:ProfilerStep#8": 258,
+        "matrix_source_scope:ProfilerStep#9": 258,
+        "nodes:COMM_COLL_NODE:GPU": 406,
+        "nodes:COMP_NODE:CPU": 276409,
+        "nodes:COMP_NODE:GPU": 6096,
+        "nodes:METADATA_NODE:CPU": 1,
+        "nodes_with_unknown_wire_fields": 0,
+        "nonempty_io:inputs:CPU": 253241,
+        "nonempty_io:inputs:GPU": 6460,
+        "nonempty_io:outputs:CPU": 217965,
+        "nonempty_io:outputs:GPU": 3930,
+        "nonzero_source_duration:CPU": 51950,
+        "nonzero_source_duration:GPU": 6463,
+        "normalized_extra_scalar_adds": 123044102144,
+        "normalized_matrix_mac": 1613017917685760,
+        "normalized_matrix_operator:aten::mm": 40,
+        "normalized_matrix_operator:tex_ts::te_gemm_ts": 7680,
+        "normalized_matrix_primitives": 7720,
+        "normalized_matrix_with_direct_gpu_child": 1544
+      },
+      "data_dependency_graph": {
+        "closed_acyclic": true,
+        "cycle_example": null,
+        "missing_count": 0,
+        "missing_examples": [],
+        "nodes": 282912,
+        "unique_edges": 328279
+      },
+      "input_bytes": 136705503,
+      "input_sha256": "72b36eec014efa1b4037e853219ff337ddb50fa206673bd5001f21ef0a11d993",
+      "metadata_attributes": {
+        "finish_ts": 511898393,
+        "pid": 278691,
+        "schema": "1.1.1-chakra.0.0.4",
+        "start_ts": 511865450,
+        "time": "2025-03-18 10:32:00"
+      },
+      "metadata_version": "",
+      "nodes": 282912,
+      "nonzero_start_time_range_micros": [
+        null,
+        0
+      ],
+      "rank": 15,
+      "source_duration_is_target_work": false,
+      "source_scope_markers": {
+        "3": "ProfilerStep#0",
+        "4": "ProfilerStep#1",
+        "44536": "ProfilerStep#2",
+        "70239": "ProfilerStep#3",
+        "95942": "ProfilerStep#4",
+        "121645": "ProfilerStep#5",
+        "147348": "ProfilerStep#6",
+        "173051": "ProfilerStep#7",
+        "198754": "ProfilerStep#8",
+        "227982": "ProfilerStep#9",
+        "257210": "ProfilerStep#10"
+      },
+      "source_url": "http://storage2.spcl.ethz.ch/traces/astra-sim-traces/Llama7B_N4_GPU16_TP1_PP1_DP16_BS32/chakra.15.et",
+      "tensor_versions_inferred": false
+    }
+  ],
+  "schema_sha256": {
+    "et_def.proto": "3e7f44c2e184df5410674d08a27f3d2ddd9053eba3b1fa32a20573b16e6d383c",
+    "storage.proto": "9282ad99d9cff6f1fa9863e8ed29f588d38bf7f09bdab638afc4dfefaf617b92"
+  },
+  "source_commit": "9781d2bd88067ac7cd73c67b593c2f596b91ef4d",
+  "source_dirty": false,
+  "source_goals_comparison": {
+    "atlahs_collective_event_counts": {
+      "AllGather": 19216,
+      "AllReduce": 1200,
+      "Broadcast": 16,
+      "ReduceScatter": 18816
+    },
+    "atlahs_source_support_sha256": "e81bf233bb9984cda10110ea96a86e23c61975f76954d228048295736efcd3e3",
+    "same_capture_established": false,
+    "same_configuration_label": true
+  },
+  "te_semantic_reference": {
+    "capture_build_version_established": false,
+    "commit": "e5edd6cc3d5a868bb3fe4e81088d22aab505a30d",
+    "kernel_execution": false,
+    "source_sha256": {
+      "transformer_engine/common/gemm/cublaslt_gemm.cu": "4b2f70ed33276b7b9f21fb887c8f133aa0fcf2099be5dbacd9531bf00a95dc8b",
+      "transformer_engine/common/include/transformer_engine/transformer_engine.h": "74521e534a1da6f0a2697c64cc4d014c40db011930025ff324418d129924dd52",
+      "transformer_engine/pytorch/csrc/ts_fp8_op.cpp": "f6f03fd6f529ef3528b9b837f0bcb4016f5e064fe4e3be61f39826ea1049accf"
+    }
+  },
+  "total_nodes": 4530939
+}

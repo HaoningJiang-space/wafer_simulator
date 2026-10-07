@@ -4,6 +4,12 @@ This directory is an independent project. Local work is source inspection,
 editing, and Git. Run builds, tests, and experiments on `wangziheng@eex005`
 under `/home/wangziheng/wafer_simulator`.
 
+Maintain one project branch, `main`. Commit coherent milestones and push them
+to the project's GitHub repository. Deliver all reused Git source as pinned
+ordinary files in this repository, with upstream identity and original notices;
+external forks and submodules are not the source delivery. Preserve accepted
+run evidence and keep large captures, build products and event tables on eex005.
+
 Keep responsibilities separate:
 - `third_party/`: pinned author implementation, no in-place edits.
 - `patches/`: reviewed changes applied to isolated upstream build worktrees.
