@@ -1,0 +1,800 @@
+{
+  "complete": true,
+  "final": {
+    "cycle": 13430,
+    "drained": true,
+    "flits": 12,
+    "idle_skipped_cycles": 12718,
+    "messages": 4,
+    "ok": true,
+    "steps": 712
+  },
+  "identity": {
+    "binary_sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+    "clock": "submit before cycle t; receive at end boundary c+1",
+    "config_sha256": "88491ad8607f9bf4b7ba2477ae0277bf0219d059e67bb60bd6d1585fb36ec530",
+    "flit_bytes": 2000
+  },
+  "messages": [
+    {
+      "bytes": 4096,
+      "data": "r1/attention_out:out",
+      "destination": 0,
+      "destination_memory": "0",
+      "expected_flits": 3,
+      "finish": 4917,
+      "first_eject": 4912,
+      "first_inject": 4753,
+      "flit_bytes": 2000,
+      "flits": [
+        {
+          "destination": 0,
+          "ejected": 4912,
+          "generated": 4753,
+          "hops": 7,
+          "id": 0,
+          "injected": 4753,
+          "injection_router_arrival": 4760,
+          "link_arrivals": [
+            {
+              "cycle": 4788,
+              "destination": 30,
+              "source": 3,
+              "vc": 0
+            },
+            {
+              "cycle": 4810,
+              "destination": 29,
+              "source": 30,
+              "vc": 0
+            },
+            {
+              "cycle": 4836,
+              "destination": 1,
+              "source": 29,
+              "vc": 0
+            },
+            {
+              "cycle": 4862,
+              "destination": 22,
+              "source": 1,
+              "vc": 0
+            },
+            {
+              "cycle": 4878,
+              "destination": 20,
+              "source": 22,
+              "vc": 0
+            },
+            {
+              "cycle": 4902,
+              "destination": 0,
+              "source": 20,
+              "vc": 0
+            }
+          ],
+          "message": 0,
+          "router_path": [
+            3,
+            30,
+            29,
+            1,
+            22,
+            20,
+            0
+          ],
+          "source": 3
+        },
+        {
+          "destination": 0,
+          "ejected": 4914,
+          "generated": 4753,
+          "hops": 7,
+          "id": 1,
+          "injected": 4754,
+          "injection_router_arrival": 4761,
+          "link_arrivals": [
+            {
+              "cycle": 4790,
+              "destination": 30,
+              "source": 3,
+              "vc": 0
+            },
+            {
+              "cycle": 4812,
+              "destination": 29,
+              "source": 30,
+              "vc": 0
+            },
+            {
+              "cycle": 4838,
+              "destination": 1,
+              "source": 29,
+              "vc": 0
+            },
+            {
+              "cycle": 4864,
+              "destination": 22,
+              "source": 1,
+              "vc": 0
+            },
+            {
+              "cycle": 4880,
+              "destination": 20,
+              "source": 22,
+              "vc": 0
+            },
+            {
+              "cycle": 4904,
+              "destination": 0,
+              "source": 20,
+              "vc": 0
+            }
+          ],
+          "message": 0,
+          "router_path": [
+            3,
+            30,
+            29,
+            1,
+            22,
+            20,
+            0
+          ],
+          "source": 3
+        },
+        {
+          "destination": 0,
+          "ejected": 4916,
+          "generated": 4753,
+          "hops": 7,
+          "id": 2,
+          "injected": 4755,
+          "injection_router_arrival": 4762,
+          "link_arrivals": [
+            {
+              "cycle": 4792,
+              "destination": 30,
+              "source": 3,
+              "vc": 0
+            },
+            {
+              "cycle": 4814,
+              "destination": 29,
+              "source": 30,
+              "vc": 0
+            },
+            {
+              "cycle": 4840,
+              "destination": 1,
+              "source": 29,
+              "vc": 0
+            },
+            {
+              "cycle": 4866,
+              "destination": 22,
+              "source": 1,
+              "vc": 0
+            },
+            {
+              "cycle": 4882,
+              "destination": 20,
+              "source": 22,
+              "vc": 0
+            },
+            {
+              "cycle": 4906,
+              "destination": 0,
+              "source": 20,
+              "vc": 0
+            }
+          ],
+          "message": 0,
+          "router_path": [
+            3,
+            30,
+            29,
+            1,
+            22,
+            20,
+            0
+          ],
+          "source": 3
+        }
+      ],
+      "generated": 4753,
+      "id": 0,
+      "last_eject": 4916,
+      "last_inject": 4755,
+      "ready": 4753,
+      "source": 3,
+      "source_memory": "3",
+      "token": "attention_sum/phase/1"
+    },
+    {
+      "bytes": 4096,
+      "data": "r1/attention_sum:out",
+      "destination": 3,
+      "destination_memory": "3",
+      "expected_flits": 3,
+      "finish": 5913,
+      "first_eject": 5908,
+      "first_inject": 5749,
+      "flit_bytes": 2000,
+      "flits": [
+        {
+          "destination": 3,
+          "ejected": 5908,
+          "generated": 5749,
+          "hops": 7,
+          "id": 3,
+          "injected": 5749,
+          "injection_router_arrival": 5756,
+          "link_arrivals": [
+            {
+              "cycle": 5782,
+              "destination": 25,
+              "source": 0,
+              "vc": 0
+            },
+            {
+              "cycle": 5804,
+              "destination": 26,
+              "source": 25,
+              "vc": 0
+            },
+            {
+              "cycle": 5830,
+              "destination": 2,
+              "source": 26,
+              "vc": 0
+            },
+            {
+              "cycle": 5854,
+              "destination": 28,
+              "source": 2,
+              "vc": 0
+            },
+            {
+              "cycle": 5870,
+              "destination": 30,
+              "source": 28,
+              "vc": 0
+            },
+            {
+              "cycle": 5898,
+              "destination": 3,
+              "source": 30,
+              "vc": 0
+            }
+          ],
+          "message": 1,
+          "router_path": [
+            0,
+            25,
+            26,
+            2,
+            28,
+            30,
+            3
+          ],
+          "source": 0
+        },
+        {
+          "destination": 3,
+          "ejected": 5910,
+          "generated": 5749,
+          "hops": 7,
+          "id": 4,
+          "injected": 5750,
+          "injection_router_arrival": 5757,
+          "link_arrivals": [
+            {
+              "cycle": 5784,
+              "destination": 25,
+              "source": 0,
+              "vc": 0
+            },
+            {
+              "cycle": 5806,
+              "destination": 26,
+              "source": 25,
+              "vc": 0
+            },
+            {
+              "cycle": 5832,
+              "destination": 2,
+              "source": 26,
+              "vc": 0
+            },
+            {
+              "cycle": 5856,
+              "destination": 28,
+              "source": 2,
+              "vc": 0
+            },
+            {
+              "cycle": 5872,
+              "destination": 30,
+              "source": 28,
+              "vc": 0
+            },
+            {
+              "cycle": 5900,
+              "destination": 3,
+              "source": 30,
+              "vc": 0
+            }
+          ],
+          "message": 1,
+          "router_path": [
+            0,
+            25,
+            26,
+            2,
+            28,
+            30,
+            3
+          ],
+          "source": 0
+        },
+        {
+          "destination": 3,
+          "ejected": 5912,
+          "generated": 5749,
+          "hops": 7,
+          "id": 5,
+          "injected": 5751,
+          "injection_router_arrival": 5758,
+          "link_arrivals": [
+            {
+              "cycle": 5786,
+              "destination": 25,
+              "source": 0,
+              "vc": 0
+            },
+            {
+              "cycle": 5808,
+              "destination": 26,
+              "source": 25,
+              "vc": 0
+            },
+            {
+              "cycle": 5834,
+              "destination": 2,
+              "source": 26,
+              "vc": 0
+            },
+            {
+              "cycle": 5858,
+              "destination": 28,
+              "source": 2,
+              "vc": 0
+            },
+            {
+              "cycle": 5874,
+              "destination": 30,
+              "source": 28,
+              "vc": 0
+            },
+            {
+              "cycle": 5902,
+              "destination": 3,
+              "source": 30,
+              "vc": 0
+            }
+          ],
+          "message": 1,
+          "router_path": [
+            0,
+            25,
+            26,
+            2,
+            28,
+            30,
+            3
+          ],
+          "source": 0
+        }
+      ],
+      "generated": 5749,
+      "id": 1,
+      "last_eject": 5912,
+      "last_inject": 5751,
+      "ready": 5749,
+      "source": 0,
+      "source_memory": "0",
+      "token": "attention_sum/phase/7"
+    },
+    {
+      "bytes": 4096,
+      "data": "r1/ffn_down:out",
+      "destination": 0,
+      "destination_memory": "0",
+      "expected_flits": 3,
+      "finish": 11858,
+      "first_eject": 11853,
+      "first_inject": 11694,
+      "flit_bytes": 2000,
+      "flits": [
+        {
+          "destination": 0,
+          "ejected": 11853,
+          "generated": 11694,
+          "hops": 7,
+          "id": 6,
+          "injected": 11694,
+          "injection_router_arrival": 11701,
+          "link_arrivals": [
+            {
+              "cycle": 11729,
+              "destination": 30,
+              "source": 3,
+              "vc": 0
+            },
+            {
+              "cycle": 11751,
+              "destination": 29,
+              "source": 30,
+              "vc": 0
+            },
+            {
+              "cycle": 11777,
+              "destination": 1,
+              "source": 29,
+              "vc": 0
+            },
+            {
+              "cycle": 11803,
+              "destination": 22,
+              "source": 1,
+              "vc": 0
+            },
+            {
+              "cycle": 11819,
+              "destination": 20,
+              "source": 22,
+              "vc": 0
+            },
+            {
+              "cycle": 11843,
+              "destination": 0,
+              "source": 20,
+              "vc": 0
+            }
+          ],
+          "message": 2,
+          "router_path": [
+            3,
+            30,
+            29,
+            1,
+            22,
+            20,
+            0
+          ],
+          "source": 3
+        },
+        {
+          "destination": 0,
+          "ejected": 11855,
+          "generated": 11694,
+          "hops": 7,
+          "id": 7,
+          "injected": 11695,
+          "injection_router_arrival": 11702,
+          "link_arrivals": [
+            {
+              "cycle": 11731,
+              "destination": 30,
+              "source": 3,
+              "vc": 0
+            },
+            {
+              "cycle": 11753,
+              "destination": 29,
+              "source": 30,
+              "vc": 0
+            },
+            {
+              "cycle": 11779,
+              "destination": 1,
+              "source": 29,
+              "vc": 0
+            },
+            {
+              "cycle": 11805,
+              "destination": 22,
+              "source": 1,
+              "vc": 0
+            },
+            {
+              "cycle": 11821,
+              "destination": 20,
+              "source": 22,
+              "vc": 0
+            },
+            {
+              "cycle": 11845,
+              "destination": 0,
+              "source": 20,
+              "vc": 0
+            }
+          ],
+          "message": 2,
+          "router_path": [
+            3,
+            30,
+            29,
+            1,
+            22,
+            20,
+            0
+          ],
+          "source": 3
+        },
+        {
+          "destination": 0,
+          "ejected": 11857,
+          "generated": 11694,
+          "hops": 7,
+          "id": 8,
+          "injected": 11696,
+          "injection_router_arrival": 11703,
+          "link_arrivals": [
+            {
+              "cycle": 11733,
+              "destination": 30,
+              "source": 3,
+              "vc": 0
+            },
+            {
+              "cycle": 11755,
+              "destination": 29,
+              "source": 30,
+              "vc": 0
+            },
+            {
+              "cycle": 11781,
+              "destination": 1,
+              "source": 29,
+              "vc": 0
+            },
+            {
+              "cycle": 11807,
+              "destination": 22,
+              "source": 1,
+              "vc": 0
+            },
+            {
+              "cycle": 11823,
+              "destination": 20,
+              "source": 22,
+              "vc": 0
+            },
+            {
+              "cycle": 11847,
+              "destination": 0,
+              "source": 20,
+              "vc": 0
+            }
+          ],
+          "message": 2,
+          "router_path": [
+            3,
+            30,
+            29,
+            1,
+            22,
+            20,
+            0
+          ],
+          "source": 3
+        }
+      ],
+      "generated": 11694,
+      "id": 2,
+      "last_eject": 11857,
+      "last_inject": 11696,
+      "ready": 11694,
+      "source": 3,
+      "source_memory": "3",
+      "token": "ffn_sum/phase/1"
+    },
+    {
+      "bytes": 4096,
+      "data": "r1/ffn_sum:out",
+      "destination": 3,
+      "destination_memory": "3",
+      "expected_flits": 3,
+      "finish": 12854,
+      "first_eject": 12849,
+      "first_inject": 12690,
+      "flit_bytes": 2000,
+      "flits": [
+        {
+          "destination": 3,
+          "ejected": 12849,
+          "generated": 12690,
+          "hops": 7,
+          "id": 9,
+          "injected": 12690,
+          "injection_router_arrival": 12697,
+          "link_arrivals": [
+            {
+              "cycle": 12723,
+              "destination": 25,
+              "source": 0,
+              "vc": 0
+            },
+            {
+              "cycle": 12745,
+              "destination": 26,
+              "source": 25,
+              "vc": 0
+            },
+            {
+              "cycle": 12771,
+              "destination": 2,
+              "source": 26,
+              "vc": 0
+            },
+            {
+              "cycle": 12795,
+              "destination": 28,
+              "source": 2,
+              "vc": 0
+            },
+            {
+              "cycle": 12811,
+              "destination": 30,
+              "source": 28,
+              "vc": 0
+            },
+            {
+              "cycle": 12839,
+              "destination": 3,
+              "source": 30,
+              "vc": 0
+            }
+          ],
+          "message": 3,
+          "router_path": [
+            0,
+            25,
+            26,
+            2,
+            28,
+            30,
+            3
+          ],
+          "source": 0
+        },
+        {
+          "destination": 3,
+          "ejected": 12851,
+          "generated": 12690,
+          "hops": 7,
+          "id": 10,
+          "injected": 12691,
+          "injection_router_arrival": 12698,
+          "link_arrivals": [
+            {
+              "cycle": 12725,
+              "destination": 25,
+              "source": 0,
+              "vc": 0
+            },
+            {
+              "cycle": 12747,
+              "destination": 26,
+              "source": 25,
+              "vc": 0
+            },
+            {
+              "cycle": 12773,
+              "destination": 2,
+              "source": 26,
+              "vc": 0
+            },
+            {
+              "cycle": 12797,
+              "destination": 28,
+              "source": 2,
+              "vc": 0
+            },
+            {
+              "cycle": 12813,
+              "destination": 30,
+              "source": 28,
+              "vc": 0
+            },
+            {
+              "cycle": 12841,
+              "destination": 3,
+              "source": 30,
+              "vc": 0
+            }
+          ],
+          "message": 3,
+          "router_path": [
+            0,
+            25,
+            26,
+            2,
+            28,
+            30,
+            3
+          ],
+          "source": 0
+        },
+        {
+          "destination": 3,
+          "ejected": 12853,
+          "generated": 12690,
+          "hops": 7,
+          "id": 11,
+          "injected": 12692,
+          "injection_router_arrival": 12699,
+          "link_arrivals": [
+            {
+              "cycle": 12727,
+              "destination": 25,
+              "source": 0,
+              "vc": 0
+            },
+            {
+              "cycle": 12749,
+              "destination": 26,
+              "source": 25,
+              "vc": 0
+            },
+            {
+              "cycle": 12775,
+              "destination": 2,
+              "source": 26,
+              "vc": 0
+            },
+            {
+              "cycle": 12799,
+              "destination": 28,
+              "source": 2,
+              "vc": 0
+            },
+            {
+              "cycle": 12815,
+              "destination": 30,
+              "source": 28,
+              "vc": 0
+            },
+            {
+              "cycle": 12843,
+              "destination": 3,
+              "source": 30,
+              "vc": 0
+            }
+          ],
+          "message": 3,
+          "router_path": [
+            0,
+            25,
+            26,
+            2,
+            28,
+            30,
+            3
+          ],
+          "source": 0
+        }
+      ],
+      "generated": 12690,
+      "id": 3,
+      "last_eject": 12853,
+      "last_inject": 12692,
+      "ready": 12690,
+      "source": 0,
+      "source_memory": "0",
+      "token": "ffn_sum/phase/7"
+    }
+  ]
+}

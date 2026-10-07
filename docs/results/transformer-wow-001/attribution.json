@@ -1,0 +1,856 @@
+{
+  "arms": [
+    {
+      "application_cycles": 13062,
+      "capacity_wait_cycles": 0,
+      "compute_queue_wait_cycles": 1408,
+      "critical_chain": {
+        "compute": 6406,
+        "memory": 6368,
+        "network": 288
+      },
+      "first_injection_wait_cycles": 0,
+      "memory_queue_wait_cycles": 2816,
+      "peak_outstanding_messages": 1,
+      "placement": "baseline",
+      "retained_data": [
+        "r0/ln1:beta",
+        "r0/ln1:gamma",
+        "r0/ln2:beta",
+        "r0/ln2:gamma",
+        "r0/output:out",
+        "r0/wdown",
+        "r0/wk",
+        "r0/wo",
+        "r0/wq",
+        "r0/wup",
+        "r0/wv",
+        "r1/ln1:beta",
+        "r1/ln1:gamma",
+        "r1/ln2:beta",
+        "r1/ln2:gamma",
+        "r1/output:out",
+        "r1/wdown",
+        "r1/wk",
+        "r1/wo",
+        "r1/wq",
+        "r1/wup",
+        "r1/wv"
+      ]
+    },
+    {
+      "application_cycles": 13430,
+      "capacity_wait_cycles": 0,
+      "compute_queue_wait_cycles": 1408,
+      "critical_chain": {
+        "compute": 6406,
+        "memory": 6368,
+        "network": 656
+      },
+      "first_injection_wait_cycles": 0,
+      "memory_queue_wait_cycles": 2816,
+      "peak_outstanding_messages": 1,
+      "placement": "ours_rotated",
+      "retained_data": [
+        "r0/ln1:beta",
+        "r0/ln1:gamma",
+        "r0/ln2:beta",
+        "r0/ln2:gamma",
+        "r0/output:out",
+        "r0/wdown",
+        "r0/wk",
+        "r0/wo",
+        "r0/wq",
+        "r0/wup",
+        "r0/wv",
+        "r1/ln1:beta",
+        "r1/ln1:gamma",
+        "r1/ln2:beta",
+        "r1/ln2:gamma",
+        "r1/output:out",
+        "r1/wdown",
+        "r1/wk",
+        "r1/wo",
+        "r1/wq",
+        "r1/wup",
+        "r1/wv"
+      ]
+    }
+  ],
+  "input_complete_sha256": "ceacdce5a4c27290fa144eae881ffd2943a9d98b7c45cff9fdf8a95a989dcb45",
+  "operations": [
+    {
+      "admitted_duration_delta": 184,
+      "baseline_finish": 5857,
+      "baseline_ready": 4625,
+      "finish_delta": 184,
+      "operation": "attention_sum",
+      "ready_delta": 0,
+      "rotated_finish": 6041,
+      "rotated_ready": 4625
+    },
+    {
+      "admitted_duration_delta": 184,
+      "baseline_finish": 12614,
+      "baseline_ready": 11382,
+      "finish_delta": 368,
+      "operation": "ffn_sum",
+      "ready_delta": 184,
+      "rotated_finish": 12982,
+      "rotated_ready": 11566
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 4625,
+      "baseline_ready": 3665,
+      "finish_delta": 0,
+      "operation": "r0/attention_out",
+      "ready_delta": 0,
+      "rotated_finish": 4625,
+      "rotated_ready": 3665
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 6305,
+      "baseline_ready": 5857,
+      "finish_delta": 184,
+      "operation": "r0/attention_residual",
+      "ready_delta": 184,
+      "rotated_finish": 6489,
+      "rotated_ready": 6041
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 3665,
+      "baseline_ready": 3345,
+      "finish_delta": 0,
+      "operation": "r0/context",
+      "ready_delta": 0,
+      "rotated_finish": 3665,
+      "rotated_ready": 3345
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 11382,
+      "baseline_ready": 9590,
+      "finish_delta": 184,
+      "operation": "r0/ffn_down",
+      "ready_delta": 184,
+      "rotated_finish": 11566,
+      "rotated_ready": 9774
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 8822,
+      "baseline_ready": 7030,
+      "finish_delta": 184,
+      "operation": "r0/ffn_up",
+      "ready_delta": 184,
+      "rotated_finish": 9006,
+      "rotated_ready": 7214
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 9590,
+      "baseline_ready": 8822,
+      "finish_delta": 184,
+      "operation": "r0/gelu",
+      "ready_delta": 184,
+      "rotated_finish": 9774,
+      "rotated_ready": 9006
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 2197,
+      "baseline_ready": 725,
+      "finish_delta": 0,
+      "operation": "r0/k",
+      "ready_delta": 0,
+      "rotated_finish": 2197,
+      "rotated_ready": 725
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 725,
+      "baseline_ready": 0,
+      "finish_delta": 0,
+      "operation": "r0/ln1",
+      "ready_delta": 0,
+      "rotated_finish": 725,
+      "rotated_ready": 0
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 7030,
+      "baseline_ready": 6305,
+      "finish_delta": 184,
+      "operation": "r0/ln2",
+      "ready_delta": 184,
+      "rotated_finish": 7214,
+      "rotated_ready": 6489
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 13062,
+      "baseline_ready": 12614,
+      "finish_delta": 368,
+      "operation": "r0/output",
+      "ready_delta": 368,
+      "rotated_finish": 13430,
+      "rotated_ready": 12982
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 1941,
+      "baseline_ready": 725,
+      "finish_delta": 0,
+      "operation": "r0/q",
+      "ready_delta": 0,
+      "rotated_finish": 1941,
+      "rotated_ready": 725
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 2837,
+      "baseline_ready": 2197,
+      "finish_delta": 0,
+      "operation": "r0/scores",
+      "ready_delta": 0,
+      "rotated_finish": 2837,
+      "rotated_ready": 2197
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 3345,
+      "baseline_ready": 2837,
+      "finish_delta": 0,
+      "operation": "r0/softmax",
+      "ready_delta": 0,
+      "rotated_finish": 3345,
+      "rotated_ready": 2837
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 2709,
+      "baseline_ready": 725,
+      "finish_delta": 0,
+      "operation": "r0/v",
+      "ready_delta": 0,
+      "rotated_finish": 2709,
+      "rotated_ready": 725
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 4625,
+      "baseline_ready": 3665,
+      "finish_delta": 0,
+      "operation": "r1/attention_out",
+      "ready_delta": 0,
+      "rotated_finish": 4625,
+      "rotated_ready": 3665
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 6305,
+      "baseline_ready": 5857,
+      "finish_delta": 184,
+      "operation": "r1/attention_residual",
+      "ready_delta": 184,
+      "rotated_finish": 6489,
+      "rotated_ready": 6041
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 3665,
+      "baseline_ready": 3345,
+      "finish_delta": 0,
+      "operation": "r1/context",
+      "ready_delta": 0,
+      "rotated_finish": 3665,
+      "rotated_ready": 3345
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 11382,
+      "baseline_ready": 9590,
+      "finish_delta": 184,
+      "operation": "r1/ffn_down",
+      "ready_delta": 184,
+      "rotated_finish": 11566,
+      "rotated_ready": 9774
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 8822,
+      "baseline_ready": 7030,
+      "finish_delta": 184,
+      "operation": "r1/ffn_up",
+      "ready_delta": 184,
+      "rotated_finish": 9006,
+      "rotated_ready": 7214
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 9590,
+      "baseline_ready": 8822,
+      "finish_delta": 184,
+      "operation": "r1/gelu",
+      "ready_delta": 184,
+      "rotated_finish": 9774,
+      "rotated_ready": 9006
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 2197,
+      "baseline_ready": 725,
+      "finish_delta": 0,
+      "operation": "r1/k",
+      "ready_delta": 0,
+      "rotated_finish": 2197,
+      "rotated_ready": 725
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 725,
+      "baseline_ready": 0,
+      "finish_delta": 0,
+      "operation": "r1/ln1",
+      "ready_delta": 0,
+      "rotated_finish": 725,
+      "rotated_ready": 0
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 7030,
+      "baseline_ready": 6305,
+      "finish_delta": 184,
+      "operation": "r1/ln2",
+      "ready_delta": 184,
+      "rotated_finish": 7214,
+      "rotated_ready": 6489
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 13062,
+      "baseline_ready": 12614,
+      "finish_delta": 368,
+      "operation": "r1/output",
+      "ready_delta": 368,
+      "rotated_finish": 13430,
+      "rotated_ready": 12982
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 1941,
+      "baseline_ready": 725,
+      "finish_delta": 0,
+      "operation": "r1/q",
+      "ready_delta": 0,
+      "rotated_finish": 1941,
+      "rotated_ready": 725
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 2837,
+      "baseline_ready": 2197,
+      "finish_delta": 0,
+      "operation": "r1/scores",
+      "ready_delta": 0,
+      "rotated_finish": 2837,
+      "rotated_ready": 2197
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 3345,
+      "baseline_ready": 2837,
+      "finish_delta": 0,
+      "operation": "r1/softmax",
+      "ready_delta": 0,
+      "rotated_finish": 3345,
+      "rotated_ready": 2837
+    },
+    {
+      "admitted_duration_delta": 0,
+      "baseline_finish": 2709,
+      "baseline_ready": 725,
+      "finish_delta": 0,
+      "operation": "r1/v",
+      "ready_delta": 0,
+      "rotated_finish": 2709,
+      "rotated_ready": 725
+    }
+  ],
+  "path_scope": "Actual flit paths and configured costs; no inferred router stall causes",
+  "paths": [
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 0,
+      "flit": 0,
+      "injection_to_ejection": 67,
+      "injection_wait": 0,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        1,
+        23,
+        22,
+        0
+      ],
+      "source": 1,
+      "token": "attention_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 0,
+      "flit": 1,
+      "injection_to_ejection": 68,
+      "injection_wait": 1,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        1,
+        23,
+        22,
+        0
+      ],
+      "source": 1,
+      "token": "attention_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 0,
+      "flit": 2,
+      "injection_to_ejection": 69,
+      "injection_wait": 2,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        1,
+        23,
+        22,
+        0
+      ],
+      "source": 1,
+      "token": "attention_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 1,
+      "flit": 3,
+      "injection_to_ejection": 67,
+      "injection_wait": 0,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        0,
+        22,
+        23,
+        1
+      ],
+      "source": 0,
+      "token": "attention_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 1,
+      "flit": 4,
+      "injection_to_ejection": 68,
+      "injection_wait": 1,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        0,
+        22,
+        23,
+        1
+      ],
+      "source": 0,
+      "token": "attention_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 1,
+      "flit": 5,
+      "injection_to_ejection": 69,
+      "injection_wait": 2,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        0,
+        22,
+        23,
+        1
+      ],
+      "source": 0,
+      "token": "attention_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 0,
+      "flit": 6,
+      "injection_to_ejection": 67,
+      "injection_wait": 0,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        1,
+        23,
+        22,
+        0
+      ],
+      "source": 1,
+      "token": "ffn_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 0,
+      "flit": 7,
+      "injection_to_ejection": 68,
+      "injection_wait": 1,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        1,
+        23,
+        22,
+        0
+      ],
+      "source": 1,
+      "token": "ffn_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 0,
+      "flit": 8,
+      "injection_to_ejection": 69,
+      "injection_wait": 2,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        1,
+        23,
+        22,
+        0
+      ],
+      "source": 1,
+      "token": "ffn_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 1,
+      "flit": 9,
+      "injection_to_ejection": 67,
+      "injection_wait": 0,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        0,
+        22,
+        23,
+        1
+      ],
+      "source": 0,
+      "token": "ffn_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 1,
+      "flit": 10,
+      "injection_to_ejection": 68,
+      "injection_wait": 1,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        0,
+        22,
+        23,
+        1
+      ],
+      "source": 0,
+      "token": "ffn_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 38,
+      "configured_router_cycles": 16,
+      "destination": 1,
+      "flit": 11,
+      "injection_to_ejection": 69,
+      "injection_wait": 2,
+      "inter_router_links": 3,
+      "placement": "baseline",
+      "routers": [
+        0,
+        22,
+        23,
+        1
+      ],
+      "source": 0,
+      "token": "ffn_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 0,
+      "flit": 0,
+      "injection_to_ejection": 159,
+      "injection_wait": 0,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        3,
+        30,
+        29,
+        1,
+        22,
+        20,
+        0
+      ],
+      "source": 3,
+      "token": "attention_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 0,
+      "flit": 1,
+      "injection_to_ejection": 160,
+      "injection_wait": 1,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        3,
+        30,
+        29,
+        1,
+        22,
+        20,
+        0
+      ],
+      "source": 3,
+      "token": "attention_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 0,
+      "flit": 2,
+      "injection_to_ejection": 161,
+      "injection_wait": 2,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        3,
+        30,
+        29,
+        1,
+        22,
+        20,
+        0
+      ],
+      "source": 3,
+      "token": "attention_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 3,
+      "flit": 3,
+      "injection_to_ejection": 159,
+      "injection_wait": 0,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        0,
+        25,
+        26,
+        2,
+        28,
+        30,
+        3
+      ],
+      "source": 0,
+      "token": "attention_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 3,
+      "flit": 4,
+      "injection_to_ejection": 160,
+      "injection_wait": 1,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        0,
+        25,
+        26,
+        2,
+        28,
+        30,
+        3
+      ],
+      "source": 0,
+      "token": "attention_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 3,
+      "flit": 5,
+      "injection_to_ejection": 161,
+      "injection_wait": 2,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        0,
+        25,
+        26,
+        2,
+        28,
+        30,
+        3
+      ],
+      "source": 0,
+      "token": "attention_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 0,
+      "flit": 6,
+      "injection_to_ejection": 159,
+      "injection_wait": 0,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        3,
+        30,
+        29,
+        1,
+        22,
+        20,
+        0
+      ],
+      "source": 3,
+      "token": "ffn_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 0,
+      "flit": 7,
+      "injection_to_ejection": 160,
+      "injection_wait": 1,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        3,
+        30,
+        29,
+        1,
+        22,
+        20,
+        0
+      ],
+      "source": 3,
+      "token": "ffn_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 0,
+      "flit": 8,
+      "injection_to_ejection": 161,
+      "injection_wait": 2,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        3,
+        30,
+        29,
+        1,
+        22,
+        20,
+        0
+      ],
+      "source": 3,
+      "token": "ffn_sum/phase/1"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 3,
+      "flit": 9,
+      "injection_to_ejection": 159,
+      "injection_wait": 0,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        0,
+        25,
+        26,
+        2,
+        28,
+        30,
+        3
+      ],
+      "source": 0,
+      "token": "ffn_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 3,
+      "flit": 10,
+      "injection_to_ejection": 160,
+      "injection_wait": 1,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        0,
+        25,
+        26,
+        2,
+        28,
+        30,
+        3
+      ],
+      "source": 0,
+      "token": "ffn_sum/phase/7"
+    },
+    {
+      "configured_link_cycles": 118,
+      "configured_router_cycles": 28,
+      "destination": 3,
+      "flit": 11,
+      "injection_to_ejection": 161,
+      "injection_wait": 2,
+      "inter_router_links": 6,
+      "placement": "ours_rotated",
+      "routers": [
+        0,
+        25,
+        26,
+        2,
+        28,
+        30,
+        3
+      ],
+      "source": 0,
+      "token": "ffn_sum/phase/7"
+    }
+  ],
+  "queue_scope": "Summed request waits overlap and are not additive application time",
+  "run_source_commit": "b572fb2412b110f5533d7aca891cf5115830bbce"
+}

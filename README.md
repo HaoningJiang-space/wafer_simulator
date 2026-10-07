@@ -36,9 +36,9 @@ general ranking or a congestion result. See the [controls and live interface](do
 
 The research question is whether a WoW Logic-on-Interconnect placement with
 better network metrics also completes the same AI workload sooner, and which
-execution costs must be modeled to make that judgment. The current study
-compares Baseline and Rotated under fixed operating conditions. It tests one
-specific boundary in the earlier full-capture experiment: original GPU-cluster-local transfers represented as fixed
+execution costs must be modeled to make that judgment. The current block study
+compares Baseline and Rotated under fixed operating conditions. The earlier
+full-capture experiment tests a separate boundary: original GPU-cluster-local transfers represented as fixed
 `calc` costs versus those same transfers competing for target wafer resources.
 Remaining measured intervals and reduction/copy costs stay fixed. This is a
 controlled workload-model comparison, not calibrated native wafer training
