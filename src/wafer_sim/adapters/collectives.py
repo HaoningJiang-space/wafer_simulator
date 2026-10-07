@@ -17,6 +17,7 @@ class Action:
     id: str
     dependencies: tuple[str, ...]
     participants: frozenset[int]
+    completion_ranks: frozenset[int]
     phase: Phase
 
 
@@ -46,16 +47,17 @@ def bind_collective(collective, target, placement, *, policy):
     def allocation(role, rank, slot, size, suffix=""):
         return Allocation((role, collective.id, str(rank), str(slot), suffix), homes[rank].id, size)
 
-    def action(label, phase, deps=(), participants=()):
+    def action(label, phase, deps=(), participants=(), completion_ranks=None):
         if label in actions:
             raise ValueError("Repeated collective action")
-        actions[label] = Action(label, tuple(deps), frozenset(participants), phase)
+        actions[label] = Action(label, tuple(deps), frozenset(participants),
+                               frozenset(participants if completion_ranks is None else completion_ranks), phase)
         return label
 
     def port(label, rank, write, amount, deps=(), participants=()):
         m = homes[rank]
         return action(label, Phase("memory_write" if write else "memory_read",
-            (Demand(m.write_port if write else m.read_port, "bytes", amount),)), deps, {rank, *participants})
+            (Demand(m.write_port if write else m.read_port, "bytes", amount),)), deps, {rank, *participants}, (rank,))
 
     def deliver(label, src, dst, size, dependency, data):
         a, b = homes[src], homes[dst]
@@ -107,7 +109,7 @@ def bind_collective(collective, target, placement, *, policy):
                     if "scalar_add" not in c.work_units:
                         raise ValueError("Target lacks explicit scalar-add service for reduction")
                     reduced = action(f"{slot_index}/sum/{dst}", Phase("compute", (
-                        Demand(c.id, "scalar_add", (len(ranks)-1)*elements),)), deps, ranks)
+                        Demand(c.id, "scalar_add", (len(ranks)-1)*elements),)), deps, ranks, (dst,))
                     deps = (reduced,)
                 final = port(f"{slot_index}/result/{dst}", dst, True, size, deps, ranks)
                 requirements[(dst, slot_index)] = frozenset({final})

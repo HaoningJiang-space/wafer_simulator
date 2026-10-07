@@ -56,5 +56,8 @@ class CollectiveState:
     def wait_satisfied(self, rank):
         if rank not in self.binding.collective.members:
             raise ValueError("Unknown waiter")
-        # Conservative whole-collective completion also makes input reuse safe.
-        return self.all_complete()
+        if self.binding.collective.kind == "barrier":
+            return self.entered == set(self.binding.collective.members)
+        local = {a.id for a in self.binding.actions.values() if rank in a.completion_ranks}
+        return (rank in self.entered and local <= self.finished and all(
+            self.output_ready(r, slot) for r, slot in self.binding.outputs if r == rank))

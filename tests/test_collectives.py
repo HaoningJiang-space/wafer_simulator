@@ -202,6 +202,22 @@ class TargetCollectiveTests(unittest.TestCase):
         self.assertTrue(state.output_ready(7,0))
         self.assertTrue(state.wait_satisfied(7))
 
+    def test_local_completion_does_not_add_global_barrier(self):
+        b = self.binding(); state = self.entered(b)
+        deferred = "0/3->7/write"
+        while True:
+            ready = [a for a in state.ready_actions() if a != deferred]
+            if not ready:
+                break
+            for action in ready:
+                state.begin(action); state.complete(action)
+        self.assertTrue(state.wait_satisfied(3))
+        self.assertFalse(state.wait_satisfied(7))
+        self.assertFalse(state.all_complete())
+        self.assertFalse(state.output_ready(7,0))
+        state.begin(deferred); state.complete(deferred)
+        self.assertTrue(state.all_complete())
+
     def test_send_requires_destination_entry(self):
         b = self.binding(); state = CollectiveState(b)
         state.pool.reserve(b.inputs.values())
