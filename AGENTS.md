@@ -9,6 +9,7 @@ Keep responsibilities separate:
 - `patches/`: reviewed changes applied to isolated upstream build worktrees.
 - `src/wafer_sim/workloads/`: complete workload DAGs and input validation.
 - `src/wafer_sim/adapters/`: upstream geometry and BookSim integration.
+- `src/wafer_sim/execution/`: resource admission and data lifetime state, separate from timing backends.
 - `src/wafer_sim/analysis/`: independent completion audit and paired comparison.
 - `src/wafer_sim/experiments/`: experiment orchestration only.
 - `configs/`: explicit fixed experiment controls.
