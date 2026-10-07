@@ -1,5 +1,10 @@
 # Placement attribution status
 
+**Final update, 2026-10-07:** the independent 002–006 full-event equivalence
+check has passed for both placements. Mapping remains deferred with zero new
+mapping groups; see [final receipts](results/model-boundary-001/REVIEW.md).
+The 2026-10-06 account below is preserved as historical context.
+
 Checked on eex005 at **2026-10-06 13:02 UTC**. This is a dated status receipt,
 not a claim that pending simulations have completed.
 

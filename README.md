@@ -1,8 +1,15 @@
-# WoW application-completion simulator
+# Spatial Workload Execution for Wafer-Scale Systems
 
 Pinned author geometry and BookSim, complete same-workload execution, independent
 completion checks, and placement comparison. Read [the source audit](docs/UPSTREAM_AUDIT.md)
 for what is reused, repaired, and not claimed.
+
+The [research direction](docs/RESEARCH_DIRECTION.md) derives a compute–memory–network
+execution contract from spatial locality and finite resources. It separates
+logical work, compute/data mapping, execution policy and target resources.
+The current implementation is a
+conditional WoW replay with partial communication retargeting; it does not yet
+implement a source-machine-independent workload model.
 
 The research question is whether a WoW Logic-on-Interconnect placement with
 better network metrics also completes the same AI workload sooner, and which
@@ -57,7 +64,7 @@ full placement arms pass the independent all-operation audit.
 
 Historical optimization notes and existing remote runs remain evidence. Their
 old build scripts and incremental patches are recoverable at Git commit
-`f530c82`; they are not maintained implementation choices. The ongoing complete
+`f530c82`; they are not maintained implementation choices. The completed full
 runs and their automatic event comparisons remain intact. See
 [run status](docs/LLAMA16_RUN_STATUS.md), [CSR semantics](docs/CSR_FRONTIER.md),
 and [HeteroSTA transfer](docs/HETEROSTA_TRANSFER.md).
@@ -68,13 +75,23 @@ critical chains and paired the complete message set from existing full events.
 The [006 placement result and reviewed interpretation](docs/results/llama16-006/REVIEW.md)
 are now available: mean packet latency falls by 14.7490%, while complete
 conditional replay time falls by 0.13603%. Both full arms and attribution pass;
-direct event equivalence to reference 002 is still pending.
+direct full-event equivalence to reference 002 has now
+[passed for both placements](docs/results/model-boundary-001/implementation_equivalence.json).
+The earlier report is preserved as a dated snapshot.
 
 The [local-stage source audit](docs/LOCAL_STAGE_PROVENANCE.md) is complete.
 It identifies the two dominant calc operations as composite measured intervals
 and recovers 1,337,280 intra-host transfers. Complete M0 lowered traces and
 contracts are unchanged. One [registered M0/M1 study](configs/llama16_model_boundary.json)
-reuses M0 and runs both M1 placements with those transfers on target resources.
+reuses M0 and has completed both M1 placements with those transfers on target resources.
 Mapping experiments remain deferred; the native binary remains frozen 006.
-The [dated execution snapshot](docs/results/local-stage-provenance/M1_RUNNING.json)
-records both M1 arms past input loading; their application results are pending.
+The [accepted M0/M1 comparison](docs/results/model-boundary-001/REVIEW.md) records
+a placement-gap change from 2.365264 ms to 13.118157 ms (completion-time reduction
+0.136030% to 0.642944%). Both modeled completion times increase. This establishes
+model sensitivity, not native wafer accuracy or a need for dynamic contention
+instead of simpler target costs.
+
+Current deliverables are the source table above, the
+[target-resource mapping](docs/TARGET_RESOURCE_MAPPING.md) and the
+[M0/M1 protocol](docs/MODEL_BOUNDARY_PROTOCOL.md). No new experiment is launched
+by this documentation stage; static-cost modeling remains a next research question.

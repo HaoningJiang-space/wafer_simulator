@@ -1,5 +1,12 @@
 # Full-capture run receipt — 2026-10-06
 
+**Final update, 2026-10-07:** 002 completed both arms; the direct 002–006
+comparison passed exact full input/event hashes in both placements.
+The previously authorized M1 pair also completed and passed full audits.
+See [final evidence and results](results/model-boundary-001/REVIEW.md).
+The dated launch/progress account below is historical. No new run is launched
+by this update.
+
 Status checked **2026-10-06 13:02 UTC**: runs 003 through 006 have passed
 their paired full-completion audits. The 006 attribution report and all message
 pairs are now available and checked. Run 002 is still executing both arms;

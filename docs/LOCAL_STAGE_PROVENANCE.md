@@ -1,5 +1,12 @@
 # Fixed local stages: source audit and the M0/M1 boundary
 
+**Update, 2026-10-07:** the existing M1 retry has completed both full arms and
+attribution; the separate 002–006 full-event equivalence check also passed.
+See the [final result](results/model-boundary-001/REVIEW.md),
+[target-resource mapping](TARGET_RESOURCE_MAPPING.md) and
+[comparison protocol](MODEL_BOUNDARY_PROTOCOL.md). This delivery launches no
+new simulation. The launch account below is retained as history.
+
 Checked on eex005 on 2026-10-06. The 006 implementation and result are frozen;
 random mapping and further simulator optimization remain deferred.
 
@@ -8,10 +15,10 @@ attempt (`llama16-model-boundary-M1-001`) failed during native input loading:
 006 rejects repeated predecessor IDs. Both failure records are retained and
 provide no application result. The adapter now explicitly represents shared
 requires/arrival predicates once, retaining both source relation kinds in the
-graph and independent audit. The same study retries in `llama16-model-boundary-M1-002`
+graph and independent audit. The same study retried in `llama16-model-boundary-M1-002`
 after rechecking both complete M0 serializations and the full predecessor graph.
 The native binary remains unchanged. Accepted results and critical-chain
-readback will be written to `runs/model-boundary-analysis-001`.
+readback are recorded in `runs/model-boundary-analysis-001`.
 
 The second controller started at **14:48:20 UTC**, PID `2727834`, with log
 `logs/model-boundary-M1-002.log`. Both complete M0 traces have again matched
@@ -168,5 +175,7 @@ Compute dominance and frozen communication costs are not mutually exclusive
 explanations; this controlled comparison tests the latter's effect without
 claiming to settle the former.
 
-The 002–006 direct full-event comparison continues independently. Neither
-source correspondence nor M0 lowering identity claims that it has finished.
+The separate 002–006 direct full-event comparison has now passed for both
+placements. Its [final receipt](results/model-boundary-001/FINAL_ACCEPTED.json)
+establishes implementation equivalence independently of source correspondence
+and M0 lowering identity.
