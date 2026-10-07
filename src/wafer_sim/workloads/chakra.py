@@ -4,6 +4,34 @@ The upstream generated classes own field interpretation. This wrapper differs
 from protolib.decodeMessage only in its completion checks: a partial prefix or
 payload is an error, never an apparently successful end of the workload.
 """
+import ast
+
+
+def decode_io(info):
+    """Decode the author's literal IO representation; never execute it."""
+    fields = []
+    for key in ("values", "shapes", "types"):
+        text = getattr(info, key)
+        value = ast.literal_eval(text) if text else []
+        if not isinstance(value, list):
+            raise ValueError(f"Chakra IO {key} must be a list")
+        fields.append(value)
+    if len({len(v) for v in fields}) != 1:
+        raise ValueError("Chakra IO values/shapes/types lengths disagree")
+    return tuple(fields)
+
+
+def attribute_values(message):
+    result = {}
+    for attr in message.attr:
+        if attr.name in result:
+            raise ValueError(f"Duplicate Chakra attribute: {attr.name}")
+        field = attr.WhichOneof("value")
+        if not field:
+            raise ValueError(f"Unset Chakra attribute: {attr.name}")
+        value = getattr(attr, field)
+        result[attr.name] = list(value.values) if field.endswith("_list") else value
+    return result
 
 
 def read_frame(stream, message_class, *, max_bytes=64 * 1024 * 1024):

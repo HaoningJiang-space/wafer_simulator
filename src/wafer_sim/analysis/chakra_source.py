@@ -3,40 +3,12 @@
 CPU operators, GPU kernels and metadata remain separate. Captured durations
 are evidence about the source, not target work or a time-to-FLOPs conversion.
 """
-import ast
 from collections import Counter
 import graphlib
 import json
 
-from wafer_sim.workloads.chakra import read_metadata, nodes
+from wafer_sim.workloads.chakra import read_metadata, nodes, decode_io, attribute_values
 from wafer_sim.workloads.chakra_work import matrix_work, transformer_engine_work
-
-
-def decode_io(info):
-    """Upstream writes Python list repr into IOInfo; accept literals only."""
-    fields = []
-    for key in ("values", "shapes", "types"):
-        text = getattr(info, key)
-        value = ast.literal_eval(text) if text else []
-        if not isinstance(value, list):
-            raise ValueError(f"Chakra IO {key} must be a list")
-        fields.append(value)
-    if len({len(v) for v in fields}) != 1:
-        raise ValueError("Chakra IO values/shapes/types lengths disagree")
-    return tuple(fields)
-
-
-def attribute_values(message):
-    result = {}
-    for attr in message.attr:
-        if attr.name in result:
-            raise ValueError(f"Duplicate Chakra attribute: {attr.name}")
-        field = attr.WhichOneof("value")
-        if not field:
-            raise ValueError(f"Unset Chakra attribute: {attr.name}")
-        value = getattr(attr, field)
-        result[attr.name] = list(value.values) if field.endswith("_list") else value
-    return result
 
 
 def graph_summary(predecessors):

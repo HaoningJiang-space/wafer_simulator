@@ -64,3 +64,9 @@ Preserve author licensing: Chakra and TransformerEngine have Apache-2.0 and
 component notices; nlohmann JSON has MIT notices. The inspected WoW and ATLAHS
 revisions have no repository-wide license file; their provenance and original
 notices are retained without relicensing.
+
+The selected PyTorch observer reference under `third_party/references/pytorch`
+is also stored here, with its original license and file hashes in `SOURCE.json`.
+It is the exact revision linked by Chakra's tensor reader (`7cd48df2`), used to
+inspect descriptor/stride recording. It is not built or imported, is not a full
+PyTorch checkout, and does not establish the capture's exact PyTorch build.

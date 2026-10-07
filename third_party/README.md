@@ -8,3 +8,7 @@ See ../docs/EXTERNAL_SOURCES.md and ../configs/upstream_repositories.json for
 origin, exact revisions and purpose. manifests/ retains file hashes and original
 Git objects needed to restore exact runtime source checkouts offline. Optional
 nested upstream gitlinks are recorded but not used by this project.
+
+`references/pytorch/` retains selected unmodified observer source and its license
+at the revision linked by Chakra, with a separate `SOURCE.json`. It is an
+inspection reference, not a PyTorch runtime dependency or a complete checkout.
