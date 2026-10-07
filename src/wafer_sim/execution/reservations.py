@@ -7,6 +7,7 @@ class ReservationPool:
         self.used = {m: 0 for m in memory}
         self.peak = self.used.copy()
         self.allocations = {}
+        self.pins = {}
 
     def shortages(self, reservations):
         needed, keys = dict.fromkeys(self.used, 0), set()
@@ -26,10 +27,24 @@ class ReservationPool:
             return False
         for a in reservations:
             self.allocations[a.key] = a
+            self.pins[a.key] = set()
             self.used[a.memory] += a.size_bytes
             self.peak[a.memory] = max(self.peak[a.memory], self.used[a.memory])
         return True
 
     def release(self, key):
+        if self.pins[key]:
+            raise ValueError("Cannot release storage with active value consumers")
         a = self.allocations.pop(key)
+        del self.pins[key]
         self.used[a.memory] -= a.size_bytes
+
+    def pin(self, key, consumer):
+        if key not in self.allocations or consumer in self.pins[key]:
+            raise ValueError("Missing allocation or repeated lifetime pin")
+        self.pins[key].add(consumer)
+
+    def unpin(self, key, consumer):
+        if consumer not in self.pins[key]:
+            raise ValueError("Missing lifetime pin")
+        self.pins[key].remove(consumer)

@@ -1,7 +1,6 @@
 """Full-source collective extraction and independent raw/normalized readback."""
 from collections import Counter
 import gzip
-from itertools import zip_longest
 import json
 
 from wafer_sim.workloads.chakra import nodes, read_metadata, decode_io, attribute_values

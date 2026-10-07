@@ -31,14 +31,17 @@ class CollectiveBinding:
     outputs: object
     output_requirements: object
     policy: str
+    values: object = None
 
 
-def bind_collective(collective, target, placement, *, policy):
+def bind_collective(collective, target, placement, *, policy, values=None):
     validate(collective)
     if policy != "direct_exchange_rank_order_sum":
         raise ValueError("An explicit supported target collective policy is required")
     memory, compute, attachments, component = validate_target(target)
     ranks = collective.members
+    if values is not None and values.collective != collective:
+        raise ValueError("Tensor versions belong to another collective")
     if set(placement) != set(ranks) or any(c not in compute for c in placement.values()):
         raise ValueError("Every collective participant needs exactly one target compute binding")
     homes = {r: memory[compute[placement[r]].memory] for r in ranks}
@@ -72,8 +75,17 @@ def bind_collective(collective, target, placement, *, policy):
     for slot_index, slot in enumerate(collective.slots):
         for rank in ranks:
             key = (rank, slot_index)
-            inputs[key] = allocation("collective_input", rank, slot_index, slot.input_elements*slot.element_bytes)
+            if collective.kind != "broadcast" or rank == collective.root:
+                inputs[key] = allocation("collective_input", rank, slot_index, slot.input_elements*slot.element_bytes)
             outputs[key] = allocation("collective_output", rank, slot_index, slot.output_elements*slot.element_bytes)
+            if values is not None:
+                for table, versions in ((inputs, values.inputs), (outputs, values.outputs)):
+                    if key not in table:
+                        continue
+                    value = versions[key]
+                    if value.size_bytes != table[key].size_bytes:
+                        raise ValueError("Version bytes differ from collective volume")
+                    table[key] = Allocation(value.key, homes[rank].id, value.size_bytes)
             reserves[rank].append(outputs[key])
         if collective.kind in {"allgather", "broadcast"}:
             sources = ranks if collective.kind == "allgather" else (collective.root,)
@@ -124,4 +136,4 @@ def bind_collective(collective, target, placement, *, policy):
                         requirements[(rank, slot_index)] = frozenset({written})
     return CollectiveBinding(collective, MappingProxyType(memory), MappingProxyType(actions),
         MappingProxyType(inputs), MappingProxyType({r: tuple(a) for r, a in reserves.items()}),
-        MappingProxyType(outputs), MappingProxyType(requirements), policy)
+        MappingProxyType(outputs), MappingProxyType(requirements), policy, values)

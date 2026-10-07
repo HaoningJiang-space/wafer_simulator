@@ -219,7 +219,7 @@ def resolve_rank(rows, rank):
 
 def match_collectives(rank_reports):
     """Cross-rank matching requires explicit group + sequence, never list order."""
-    groups, buckets, problems = {}, defaultdict(list), []
+    groups, buckets = {}, defaultdict(list)
     ranks = {r["rank"] for r in rank_reports}
     if len(ranks) != len(rank_reports):
         raise ValueError("Duplicate rank reports")
