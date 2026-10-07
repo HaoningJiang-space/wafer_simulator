@@ -57,6 +57,9 @@ class MemoryBoundary:
             result=self.done;self.done=[];self.now=self.clock.now
             return result
         self.client.advance(until);self.now=self.client.now
+        if self.clock is None:
+            if self.client.progress: raise ValueError('Packet progressed before any movement')
+            return []
         self.clock.now=self.now
         for event in self.client.progress:
             row=self.moves[self.by_id[event['id']]];p=row['packets'][event['ordinal']]

@@ -67,9 +67,17 @@ class MemoryBoundaryTests(unittest.TestCase):
             client.close()
         finally:client.abort()
 
-    def run_collective(self, name, mode, limit=100000):
+    def run_collective(self, name, mode, limit=100000, delayed=False):
         directory,_,config=self.prepare(name,nodes=4)
         binding,rates=case(4)
+        if delayed:
+            from wafer_sim.workloads.spatial import Workload,Operation,validate
+            from wafer_sim.execution.plan import OperationPlan,Phase,Demand
+            precursor=Operation('prepare',(),(),(('scalar_add',10),),0,(),'fixture')
+            graph=validate(Workload(tuple(binding.graph.data.values()),
+                (precursor,replace(binding.graph.operations['sum'],control_deps=('prepare',)))))
+            plans={'prepare':OperationPlan((),(Phase('compute',(Demand('compute-0','scalar_add',10),)),)),**binding.plans}
+            binding=replace(binding,graph=graph,plans=plans)
         binding=reserve_endpoint_storage(binding,4,2,2)
         client=BoundaryBookSim(self.binary,config,directory,flit_bytes=4)
         controller=client
@@ -105,6 +113,11 @@ class MemoryBoundaryTests(unittest.TestCase):
             limit=self.run_collective(mode+'-measure',mode)[2]['application_cycles']
             self.run_collective(mode+'-equal',mode,limit)
             with self.assertRaises(TimeoutError):self.run_collective(mode+'-short',mode,limit-1)
+
+    def test_local_work_before_first_network_movement(self):
+        _,_,result=self.run_collective('delayed','bounded',delayed=True)
+        self.assertEqual(result['operations']['prepare']['finish'],5)
+        self.assertEqual(result['operations']['sum']['admitted'],5)
 
     def test_buffer_storage_is_charged_and_ambiguous_fusion_rejected(self):
         binding,_=case(4)
