@@ -3,8 +3,11 @@
 This milestone implements the first resource-binding and lifetime contract
 from [the research direction](RESEARCH_DIRECTION.md). It does not yet calculate
 application time, run a new Llama model, or replace the accepted 006 backend.
-The runtime reports `timing_evaluated=false`, including when all declared
+The semantic state reports `timing_evaluated=false`, including when all declared
 operations have completed their semantic phase callbacks.
+The new [timed backend](TIMED_EXECUTION.md) now drives these callbacks from
+explicit target compute, memory and network services; its result records
+`timing_evaluated=true`. The original state remains usable for semantic checks.
 
 ## Implemented layers
 
@@ -74,7 +77,7 @@ unadmitted, duplicate and out-of-order completion calls are rejected.
 
 An operation can be admitted while another is active. Its memory reservation
 does not grant its compute unit, memory port or network link. Equal resource
-IDs in demands must be arbitrated by a future timing backend; source and
+IDs in demands are arbitrated by the separate timed backend; source and
 destination memory ports must be included. A caller advancing callbacks without
 that service model checks lifecycle semantics only. No bandwidth contention,
 runtime or speedup can be claimed from these callbacks themselves.

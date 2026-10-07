@@ -1,0 +1,16 @@
+{
+  "name": "declared_A_B_allreduce_C_v1",
+  "scope": "Complete analytical execution unit; not a Llama prefix or measured hardware",
+  "region_capacity_bytes": 128,
+  "macs_per_cycle": 8,
+  "scalar_adds_per_cycle": 4,
+  "memory_bytes_per_cycle": 8,
+  "link_bytes_per_cycle": 4,
+  "endpoint_bytes_per_cycle": 8,
+  "link_latency_cycles": 2,
+  "endpoint_routers": [[0, 10], [1, 20], [2, 30]],
+  "router_links": [[10, 11], [11, 20], [11, 30]],
+  "operation_placement": {"A": "compute-0", "B0": "compute-1", "B1": "compute-2", "AllReduce": "compute-1", "C0": "compute-1", "C1": "compute-2"},
+  "data_placement": {"seed": "0", "x": "0", "b0": "1", "b1": "2", "sum0": "1", "sum1": "2", "out0": "1", "out1": "2"},
+  "controlled_cases": ["declared", "double_compute_rate", "double_memory_rate", "double_network_rate"]
+}

@@ -1,0 +1,117 @@
+"""Independent service, dependency and capacity readback for timed execution."""
+from collections import defaultdict
+from fractions import Fraction
+from math import ceil
+
+
+def audit(binding, timing, result):
+    if not result["complete"] or result["application_cycles"] is None:
+        raise ValueError("Incomplete execution cannot pass completion audit")
+    services = {(s.resource,s.unit):s for s in (
+        *timing.services, *(l.service for l in timing.links),
+        *(s for e in timing.endpoints for s in (e.injection,e.ejection)))}
+    records,by_resource,by_token = result["services"],defaultdict(list),defaultdict(list)
+    for i,event in enumerate(records):
+        if event["id"] != i: raise ValueError("Service identities not complete and ordered")
+        service = services[event["resource"],event["unit"]]
+        duration = ceil(Fraction(event["amount"]*service.rate_denominator,service.rate_numerator))
+        if (event["start"] < event["ready"] or event["resource_released"]-event["start"] != duration or
+                event["finish"]-event["resource_released"] != service.latency_cycles):
+            raise ValueError("Resource service rate, latency or readiness violation")
+        by_resource[event["resource"]].append(event)
+        by_token[event["token"]].append(event)
+        if event["start"] > event["ready"]:
+            pred = event["resource_predecessor"]
+            if (type(pred) is not int or not 0 <= pred < i or
+                    records[pred]["resource"] != event["resource"] or
+                    records[pred]["resource_released"] != event["start"]):
+                raise ValueError("Resource wait lacks a releasing predecessor")
+    for events in by_resource.values():
+        ordered = sorted(events,key=lambda e:(e["start"],e["id"]))
+        if any(a["resource_released"] > b["start"] for a,b in zip(ordered,ordered[1:])):
+            raise ValueError("Overlapping service on a finite resource")
+    phases = {(p["operation"],p["phase"]):p for p in result["phases"]}
+    if len(phases) != len(result["phases"]): raise ValueError("Duplicate phase")
+    expected_tokens = set()
+    for op,plan in binding.plans.items():
+        previous = result["operations"][op]["admitted"]
+        for index,phase in enumerate(plan.phases):
+            row = phases[op,index]
+            token = f"{op}/phase/{index}"
+            expected_tokens.add(token)
+            events = by_token[token]
+            if (row["ready"] != previous or row["kind"] != phase.kind or
+                    not events or events[0]["ready"] != previous or events[-1]["finish"] != row["finish"]):
+                raise ValueError("Missing or mistimed phase service")
+            if any(e["step"] != i for i,e in enumerate(events)) or any(
+                    a["finish"] != b["ready"] for a,b in zip(events,events[1:])):
+                raise ValueError("Next service began before prior completion")
+            if phase.transfer is None:
+                demands = [(d.resource,d.unit,d.amount) for d in phase.demands]
+            else:
+                t = phase.transfer
+                path = tuple(row["path"])
+                attachments = dict(binding.network.endpoint_routers)
+                links = {(l.source,l.destination):l.service for l in timing.links}
+                endpoints = {e.endpoint:e for e in timing.endpoints}
+                if (not path or path[0] != attachments[t.source_endpoint] or
+                        path[-1] != attachments[t.destination_endpoint] or len(set(path)) != len(path)):
+                    raise ValueError("Transfer path endpoint or loop mismatch")
+                route = [endpoints[t.source_endpoint].injection,
+                         *(links[a,b] for a,b in zip(path,path[1:])),endpoints[t.destination_endpoint].ejection]
+                demands = [(s.resource,"bytes",t.size_bytes) for s in route]
+                if row["transfer_bytes"] != t.size_bytes: raise ValueError("Transfer byte conservation failed")
+            if demands != [(e["resource"],e["unit"],e["amount"]) for e in events]:
+                raise ValueError("Phase work conservation failed")
+            previous = row["finish"]
+        if previous != result["operations"][op]["finish"]:
+            raise ValueError("Operation finished before its last phase")
+    if expected_tokens != set(by_token) or len(phases) != sum(len(p.phases) for p in binding.plans.values()):
+        raise ValueError("Extra or missing phase/service")
+    allocations, used = {},dict.fromkeys(binding.memory,0)
+    def reserve(key,memory,size):
+        if key in allocations: raise ValueError("Duplicate allocation")
+        allocations[key] = memory,size
+        used[memory] += size
+        if used[memory] > binding.memory[memory].capacity_bytes:
+            raise ValueError("Regional capacity exceeded")
+    def release(key):
+        memory,size = allocations.pop(key)
+        used[memory] -= size
+    remaining = {d:set(consumers) for d,consumers in binding.graph.consumers.items()}
+    for d in binding.graph.data.values():
+        if d.producer is None and (remaining[d.id] or d.retain):
+            reserve(("object",d.id),binding.homes[d.id],d.size_bytes)
+    admitted,completed = set(),set()
+    peak = used.copy()
+    for event in result["lifecycle"]:
+        op,cycle = event["operation"],event["cycle"]
+        if event["event"] == "admit":
+            if op in admitted or not binding.graph.predecessors[op] <= completed:
+                raise ValueError("Premature or duplicate admission")
+            if cycle != result["operations"][op]["admitted"]: raise ValueError("Admission clock mismatch")
+            for a in binding.plans[op].reservations: reserve(a.key,a.memory,a.size_bytes)
+            admitted.add(op)
+        elif event["event"] == "complete":
+            if op not in admitted or op in completed or cycle != result["operations"][op]["finish"]:
+                raise ValueError("Invalid operation completion")
+            operation = binding.graph.operations[op]
+            for d in operation.inputs: remaining[d].remove(op)
+            for d in operation.inputs+operation.outputs:
+                if not remaining[d] and not binding.graph.data[d].retain: release(("object",d))
+            for a in binding.plans[op].reservations:
+                if a.key[0] != "object": release(a.key)
+            completed.add(op)
+        else:
+            raise ValueError("Unknown lifecycle event")
+        if used != event["used_bytes"]: raise ValueError("Storage accounting mismatch")
+        peak = {m:max(peak[m],used[m]) for m in used}
+    if completed != set(binding.plans) or peak != result["peak_bytes"]:
+        raise ValueError("Incomplete work or incorrect peak capacity")
+    for op,parents in binding.graph.predecessors.items():
+        ready = max((result["operations"][p]["finish"] for p in parents),default=0)
+        if ready != result["operations"][op]["ready"]: raise ValueError("Dependency-ready clock mismatch")
+    makespan = max(r["finish"] for r in result["operations"].values())
+    if makespan != result["application_cycles"]: raise ValueError("Terminal work excluded")
+    return dict(passed=True,operations=len(completed),phases=len(phases),services=len(records),
+                application_cycles=makespan,source_duration_used=False)
