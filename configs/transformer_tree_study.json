@@ -1,0 +1,12 @@
+{
+  "name": "fixed_heap_tree_tp8_spatial_projection_v1",
+  "heads": 8,
+  "shards": 8,
+  "mapping": "row_major",
+  "memory_bytes_per_cycle": [32, 256, 1024],
+  "collective_algorithm": "binary_tree_sum",
+  "tree_definition": "Communicator positions i=0..P-1; parent(i)=floor((i-1)/2). At TP8 rank 7 is a child of rank 3. No geometry or timing input to tree construction.",
+  "reference_run": "/home/wangziheng/wafer_simulator/runs/collective-memory-balance-001",
+  "controls": "Reuse direct-root at the same three rates after current-code re-audit and exact workload/resource checks. Same complete TP8 block, row-major, compute, capacity, seed, network and rank-local publication. Tree changes reduction placement, dependencies and physical traffic; extra partial-result memory reads/writes are reported, not hidden.",
+  "scope": "Six new tree arms and six reused direct-root arms. Whole tensors, no topology-aware optimization, no new workload, no native calibration or equal-cost claim."
+}

@@ -29,6 +29,7 @@ def bind_operation(op, target, homes, root_compute, execution_policy):
     indices = {name: i for i, name in enumerate(names)}
     identities = {f"{op.id}/input/{r}/0": d for r, d in rank_inputs.items()}
     identities.update({f"{op.id}/result/{r}/0": d for r, d in rank_outputs.items()})
+    identities.update({f"{op.id}/partial/{r}/0": f"{op.id}/partial/{r}/0" for r in collective.members})
     phases = tuple(replace(a.phase, transfer=replace(a.phase.transfer, data=identities[a.phase.transfer.data]))
                    if a.phase.transfer else a.phase for a in binding.actions.values())
     outputs = {a.key: Allocation(("object", rank_outputs[r]), a.memory, a.size_bytes)

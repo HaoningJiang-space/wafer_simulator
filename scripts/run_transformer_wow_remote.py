@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--serial-control",action="store_true",help="TP2 diagnostic: serialize the same corrected collective actions")
     parser.add_argument("--global-completion-control",action="store_true",help="Retain historical collective publication at global retirement")
     parser.add_argument("--balance",action="store_true",help="Registered TP8 row-major memory-bandwidth pairs")
+    parser.add_argument("--tree",action="store_true",help="Fixed logical binary tree at three registered memory regimes")
     args=parser.parse_args()
     repo=Path(__file__).resolve().parents[1]
     runtime=Path("/home/wangziheng/wafer_simulator")
@@ -31,8 +32,8 @@ def main():
             not Path(tests["tests_log"]).read_text().rstrip().endswith("OK")):
         raise ValueError("Passing same-revision native interface and semantic tests required")
     config=read_json(repo/"configs/transformer_wow_pair.json")
-    if sum((args.study,args.serial_control,args.balance))>1: raise ValueError("Separate study, balance and serial control")
-    if args.balance and args.global_completion_control: raise ValueError("Balance uses registered rank-local semantics")
+    if sum((args.study,args.serial_control,args.balance,args.tree))>1: raise ValueError("Separate study, balance, tree and serial control")
+    if (args.balance or args.tree) and args.global_completion_control: raise ValueError("Study uses registered rank-local semantics")
     if args.serial_control: config["action_schedule"]="serial_control"
     if args.global_completion_control:
         config["execution_policy"]["collective_completion"]="global_retirement"
@@ -41,7 +42,10 @@ def main():
     if not args.output.is_absolute(): raise ValueError("Fresh absolute output required")
     args.output.mkdir(exist_ok=False)
     study=read_json(repo/"configs/transformer_collective_study.json") if args.study else None
-    balance=read_json(repo/"configs/transformer_resource_balance.json") if args.balance else None
+    balance_path=repo/("configs/transformer_tree_study.json" if args.tree else "configs/transformer_resource_balance.json")
+    balance=read_json(balance_path) if args.balance or args.tree else None
+    if args.tree:
+        config["execution_policy"]["collective_algorithm"]=balance["collective_algorithm"]
     write_json(args.output/"CONFIG.json",dict(experiment=config,workload=workload,study=study,balance=balance))
     native=runtime/"build/booksim/rapidchiplet/booksim2/src/booksim"
     online=runtime/"build/booksim-online/online_booksim"
@@ -49,7 +53,7 @@ def main():
         python=sys.version,executable=sys.executable,executable_sha256=digest(Path(sys.executable).resolve()),
         config_sha256=digest(repo/"configs/transformer_wow_pair.json"),workload_config_sha256=digest(source_config),
         study_config_sha256=digest(repo/"configs/transformer_collective_study.json") if study else None,
-        balance_config_sha256=digest(repo/"configs/transformer_resource_balance.json") if balance else None,
+        balance_config_sha256=digest(balance_path) if balance else None,
         tests_receipt_sha256=digest(args.test_receipt),native_binary_sha256=digest(native),
         online_binary_sha256=digest(online),online_source_sha256=digest(repo/"src/wafer_sim/adapters/native/online_booksim.cpp"),
         build_source_commit=(runtime/"build/booksim-online/source_commit").read_text().strip(),

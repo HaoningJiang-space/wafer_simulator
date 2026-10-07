@@ -16,7 +16,7 @@ from wafer_sim.workloads.collectives import Collective, Slot
 from wafer_sim.workloads.spatial import DataObject, Operation, Workload
 
 
-def case(n=2, capacity=128):
+def case(n=2, capacity=128, algorithm="direct_exchange_rank_order_sum"):
     members = tuple(range(n))
     inputs = tuple(f"x{r}" for r in members)
     outputs = tuple(f"y{r}" for r in members)
@@ -30,7 +30,7 @@ def case(n=2, capacity=128):
         endpoint_bytes_per_cycle=4,link_latency_cycles=0)
     target,timing = build_target(config)
     placement = Placement({"sum":"compute-0"},{d:str(r) for r in members for d in (inputs[r],outputs[r])})
-    return bind(workload,target,placement),timing
+    return bind(workload,target,placement,execution_policy=ExecutionPolicy(collective_algorithm=algorithm)),timing
 
 
 class CollectiveTimingTests(unittest.TestCase):

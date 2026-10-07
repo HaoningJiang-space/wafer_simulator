@@ -36,6 +36,9 @@ class CollectiveBinding:
 
 def bind_collective(collective, target, placement, *, policy, values=None):
     validate(collective)
+    if policy == "binary_tree_sum":
+        from wafer_sim.adapters.tree_collective import bind_tree
+        return bind_tree(collective, target, placement, values=values)
     if policy != "direct_exchange_rank_order_sum":
         raise ValueError("An explicit supported target collective policy is required")
     memory, compute, attachments, component = validate_target(target)

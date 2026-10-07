@@ -146,3 +146,18 @@ class OnlineBookSimTests(unittest.TestCase):
         broken=copy.deepcopy(result)
         broken["network_messages"][0]["finish"]-=1
         with self.assertRaisesRegex(ValueError,"final flit"): audit(binding,rates,broken)
+
+    def test_tree_actions_native_completion_and_reference(self):
+        directory,inputs,config=self.prepare("tree",nodes=4)
+        binding,rates=collective_case(4,algorithm="binary_tree_sum")
+        client=OnlineBookSim(self.binary,config,directory,flit_bytes=4)
+        try:
+            result=execute(binding,rates,network=client)
+            record=client.close()
+        finally:client.abort()
+        self.assertTrue(audit(binding,rates,result)["passed"])
+        self.assertEqual(len(record["messages"]),6)
+        self.assertEqual(sum(m["bytes"] for m in record["messages"]),48)
+        self.assertLess(result["output_ready"]["y0"],result["operations"]["sum"]["retired"])
+        self.assertEqual(result["storage"]["used_bytes"],{str(r):8 for r in range(4)})
+        compare_reference(inputs,directory,directory/"reference",self.reference,record["messages"],1)

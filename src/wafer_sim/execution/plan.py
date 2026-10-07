@@ -49,7 +49,7 @@ class ExecutionPolicy:
     collective_completion: str = "rank_local"
 
     def __post_init__(self):
-        if self.collective_algorithm != "direct_exchange_rank_order_sum":
+        if self.collective_algorithm not in {"direct_exchange_rank_order_sum", "binary_tree_sum"}:
             raise ValueError("Unsupported collective algorithm")
         if self.collective_completion not in {"rank_local", "global_retirement"}:
             raise ValueError("Unsupported collective completion policy")
