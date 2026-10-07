@@ -1,0 +1,9 @@
+{
+  "name": "concurrent_collective_wow_tp4_tp8_v1",
+  "heads": 8,
+  "shards": [4, 8],
+  "mappings": ["row_major", "nearest_root"],
+  "mapping_definition": "nearest_root: anchor at first row-major compute endpoint, then ascending squared planar distance, y, x, endpoint ID; no performance search",
+  "controls": "Within each TP: same complete block, root-gather/sum/broadcast action DAG, seed, compute/memory rates and capacities. Only author placement and the two explicit mapping policies vary.",
+  "scope": "Separate eight-head block because TP8 requires at least eight whole attention heads; not a workload-preserving change to the original four-head TP2 case. No sweep or calibration."
+}

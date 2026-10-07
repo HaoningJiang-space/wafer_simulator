@@ -94,7 +94,16 @@ def rank_mapping(endpoints, ranks, policy="row_major", seed=1234):
     if len(ordered) < ranks:
         raise ValueError("Not enough compute reticles for the same workload")
     mapping = [e["node"] for e in ordered[:ranks]]
-    if policy == "permuted":
+    if policy == "nearest_root":
+        root = ordered[0]
+        if len({e["layer"] for e in ordered}) != 1:
+            raise ValueError("Planar nearest-root mapping requires one compute layer")
+        ordered = sorted(ordered, key=lambda e: (
+            (e["position"]["x"]-root["position"]["x"])**2 +
+            (e["position"]["y"]-root["position"]["y"])**2,
+            e["position"]["y"], e["position"]["x"], e["node"]))
+        mapping = [e["node"] for e in ordered[:ranks]]
+    elif policy == "permuted":
         random.Random(seed).shuffle(mapping)
     elif policy != "row_major":
         raise ValueError("Unknown mapping policy")

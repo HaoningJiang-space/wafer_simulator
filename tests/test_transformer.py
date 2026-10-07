@@ -24,8 +24,8 @@ def config():
 class TransformerTests(unittest.TestCase):
     def test_dense_and_partitioned_forward_agree(self):
         # Includes multi-batch and single-token cases; no source capture involved.
-        for batch,sequence,shards in ((1,3,2),(2,2,4),(1,1,2)):
-            block = build_block(batch=batch,sequence=sequence,hidden=8,heads=4,ffn_hidden=12,shards=shards)
+        for batch,sequence,shards,heads,ffn in ((1,3,2,4,12),(2,2,4,4,12),(1,1,2,4,12),(1,3,8,8,16)):
+            block = build_block(batch=batch,sequence=sequence,hidden=8,heads=heads,ffn_hidden=ffn,shards=shards)
             initial = initial_values(block)
             outputs = evaluate_graph(block,initial)
             reference = dense_forward(block,initial)

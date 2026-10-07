@@ -1,5 +1,5 @@
 """One fixed-work/mapping-policy WoW pair with native online execution."""
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import json
 from pathlib import Path
 
@@ -32,6 +32,13 @@ def run_placement(config, workload_config, root, runtime_root, method):
     mapping=wow.rank_mapping(endpoints,block.dimensions["shards"],config["mapping"])
     placement=place_block(block,mapping)
     binding=bind(block.workload,target,placement)
+    schedule=config.get("action_schedule","dependencies")
+    if schedule not in {"dependencies","serial_control"}:
+        raise ValueError("Unknown collective action schedule")
+    if schedule == "serial_control":
+        binding=replace(binding,plans={op:replace(plan,dependencies=tuple((i-1,) if i else ()
+            for i in range(len(plan.phases)))) if plan.dependencies is not None else plan
+            for op,plan in binding.plans.items()})
     native_config=prepare_online_config(inputs,directory,config["network_seed"])
     client=OnlineBookSim(Path(runtime_root)/"build/booksim-online/online_booksim",native_config,
                         directory,flit_bytes=config["flit_bytes"])
@@ -47,7 +54,7 @@ def run_placement(config, workload_config, root, runtime_root, method):
         Path(runtime_root)/"build/booksim/rapidchiplet/booksim2/src/booksim",native["network_messages"],config["network_seed"])
     coarse=json.loads(json.dumps(execute(binding,timing)))
     coarse_checked=audit(binding,timing,coarse)
-    record=dict(placement=method,logical_workload=asdict(block.workload),tensors=block.tensors,
+    record=dict(placement=method,action_schedule=schedule,logical_workload=asdict(block.workload),tensors=block.tensors,
         operators=block.operators,collectives=block.collectives,mapping=asdict(placement),
         worker_endpoints=mapping,worker_locations=[endpoints[e] for e in mapping],
         target=asdict(target),timing=asdict(timing),resource_contract=contract,
@@ -62,11 +69,18 @@ def run_placement(config, workload_config, root, runtime_root, method):
     collective_times={c["operation"]:dict(native["operations"][c["operation"]],
         duration=native["operations"][c["operation"]]["finish"]-native["operations"][c["operation"]]["admitted"])
         for c in block.collectives}
-    summary=dict(placement=method,booksim_cycles=native["application_cycles"],
+    active=peak_messages=0
+    for _,change in sorted([(m["ready"],1) for m in native["network_messages"]]+
+                           [(m["finish"],-1) for m in native["network_messages"]]):
+        active+=change; peak_messages=max(peak_messages,active)
+    summary=dict(placement=method,action_schedule=schedule,booksim_cycles=native["application_cycles"],
         coarse_cycles=coarse["application_cycles"],critical_chain_cycles=chain["cycles"],
         collectives=collective_times,messages=messages,network_resources=resources,
         worker_endpoints=mapping,worker_locations=[endpoints[e] for e in mapping],
         peak_bytes=native["peak_bytes"],network_audit=network_checked,
+        peak_outstanding_messages=peak_messages,
+        memory_queue_wait_cycles=sum(r["queue_wait_cycles"] for k,r in native["resources"].items() if k.startswith("memory-")),
+        first_injection_wait_cycles=sum(m["injection_wait"] for m in messages),
         audit=checked,standalone_reference=reference,
         logical_identity=object_digest(dict(workload=asdict(block.workload),tensors=block.tensors,
                                            operators=block.operators,collectives=block.collectives)),

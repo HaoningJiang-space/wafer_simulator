@@ -12,6 +12,8 @@ from wafer_sim.execution.timing import execute
 from wafer_sim.io import read_json
 from test_spatial import data,op
 from wafer_sim.workloads.spatial import Workload
+from wafer_sim.adapters.wow import rank_mapping
+from wafer_sim.workloads.transformer import build_block
 
 
 def exported():
@@ -23,6 +25,23 @@ def exported():
 
 
 class WoWTargetTests(unittest.TestCase):
+    def test_nearest_root_is_geometric_deterministic_and_not_performance_search(self):
+        endpoints=[dict(node=i,layer=0,position=dict(x=x,y=y))
+                   for i,(x,y) in enumerate(((0,0),(9,0),(1,1),(2,1)))]
+        self.assertEqual(rank_mapping(endpoints,3,"row_major"),[0,1,2])
+        self.assertEqual(rank_mapping(endpoints,3,"nearest_root"),[0,2,3])
+        self.assertEqual(rank_mapping(list(reversed(endpoints)),3,"nearest_root"),[0,2,3])
+
+    def test_study_declares_eight_heads_before_requesting_tp8(self):
+        repo=Path(__file__).resolve().parents[1]
+        study=read_json(repo/"configs/transformer_collective_study.json")
+        base=read_json(repo/"configs/transformer_block.json")
+        with self.assertRaises(ValueError):build_block(**dict(base["block"],shards=8))
+        for shards in study["shards"]:
+            block=build_block(**dict(base["block"],heads=study["heads"],shards=shards))
+            self.assertEqual(len(block.workload.operations),14*shards+2)
+        self.assertEqual(study["mappings"],["row_major","nearest_root"])
+
     def parameters(self):
         return dict(scope="analytical local resources",region_capacity_bytes=128,
                     compute_rates={"mac":4},memory_bytes_per_cycle=8)
