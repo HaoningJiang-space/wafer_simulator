@@ -62,10 +62,10 @@ def unused(roots):
                 command = (proc/'comm').read_text().strip()
             except FileNotFoundError:
                 continue
-            if command != 'sshd':
+            if command not in ('sshd', '(sd-pam)'):
                 raise
             excluded.append(dict(pid=int(proc.name), command=command,
-                                 reason='Nondumpable session daemon; user child processes checked'))
+                                 reason='Nondumpable session helper; user child processes checked'))
     return excluded
 
 
