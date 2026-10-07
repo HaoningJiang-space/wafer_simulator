@@ -64,6 +64,8 @@ class ResourceCalendar:
 
 
 def execute(binding, timing, *, network=None, cycle_limit=1000000):
+    from wafer_sim.workloads.spatial import natural
+    natural(cycle_limit, "execution cycle limit", positive=True)
     target = TimedTarget(binding,timing)
     state = StorageState(binding)
     clock = ResourceCalendar(target.services)
@@ -134,7 +136,13 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
         if not clock.events and not network_callbacks:
             complete = False
             break
+        # Inclusive deadline: drain every completion at the limit, then accept
+        # only if the entire work retired. Never execute a later local event.
+        if clock.now >= cycle_limit and (not clock.events or clock.events[0][0] > cycle_limit):
+            raise TimeoutError("Target execution reached its declared cycle limit")
         if network is None:
+            if clock.events[0][0] > cycle_limit:
+                raise TimeoutError("Target execution reached its declared cycle limit")
             clock.advance()
         else:
             boundary = min(clock.events[0][0],cycle_limit) if clock.events else cycle_limit
@@ -146,8 +154,6 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
                 network_callbacks.pop(token)()
             if not completed_tokens and clock.events and clock.events[0][0] == clock.now:
                 clock.advance()
-            if clock.now >= cycle_limit:
-                raise TimeoutError("Target execution reached its declared cycle limit")
     blocked = {}
     for op in pending:
         decision = state.admission(op)

@@ -85,6 +85,25 @@ class CalendarTests(unittest.TestCase):
 
 
 class TimedExecutionTests(unittest.TestCase):
+    def test_cycle_limit_is_inclusive_for_local_and_external_network(self):
+        class IdleNetwork:
+            now = 0
+            messages = []
+            def advance(self, until):
+                self.now = until
+                return []
+        for external in (False, True):
+            for limit in (1, 6):
+                with self.assertRaises(TimeoutError):
+                    execute(local_binding(), timing(), network=IdleNetwork() if external else None,
+                            cycle_limit=limit)
+            result = execute(local_binding(), timing(), network=IdleNetwork() if external else None,
+                             cycle_limit=7)
+            self.assertTrue(result['complete'])
+            self.assertEqual(result['application_cycles'], 7)
+        for bad in (0, -1, True, 1.5):
+            with self.assertRaises(ValueError): execute(local_binding(), timing(), cycle_limit=bad)
+
     def test_compute_tasks_share_or_overlap_by_physical_resource(self):
         w=Workload((),(op("a"),op("b")))
         for second,expected in (("compute-A",8),("compute-B",4)):
