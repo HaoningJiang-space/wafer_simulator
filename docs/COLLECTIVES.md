@@ -12,10 +12,13 @@ facts, unresolved source identities and the separately tested target contract.
 |---|---|---|
 | Source decoding | `workloads/chakra_collectives.py` | Tensor argument roles, explicit communicator/sequence, source ports |
 | Logical work | `workloads/collectives.py` | Ordered members, slots, reduction and root; volume validation |
+| Tensor values | `workloads/collective_values.py` | Exact source access bindings, input snapshots and output producer versions |
 | Target binding | `adapters/collectives.py` | Explicit collective algorithm mapped to compute, memory and network demands |
 | Execution state | `execution/collectives.py` | Capacity admission, service prerequisites and completion |
 | Shared storage | `execution/reservations.py` | Atomic finite-memory reservations shared with ordinary spatial execution |
+| Value lifetime | `execution/values.py` | Resident version readiness, declared consumers and last-consumer release |
 | Independent readback | `analysis/collective_sources.py` | Raw records, identities and operand-size correspondence |
+| Source port join | `analysis/collective_ports.py` | Join all calls, GPU and wait ports to checked ownership/effect ledgers |
 
 `scripts/normalize_collectives_remote.py` orchestrates complete 16-rank source
 processing on eex005. It reads every original node, inventories every collective
@@ -84,14 +87,17 @@ network backend resolves routes and contention on the target graph. Co-located
 memory avoids a network transfer; disconnected endpoints reject binding.
 This layer does not assign calibrated bandwidth, compute rates or latency.
 
-The current storage policy uses distinct immutable input/output versions and
+The current target storage policy uses distinct immutable input/output versions and
 separate receive staging. Inputs must already be resident and ready. Each
 participant atomically reserves output and staging capacity before entry;
 failure leaves no partial reservation. The same `ReservationPool` can be passed
 from ordinary execution so concurrent operations share one capacity budget.
-Input lifetime belongs to the caller, outputs remain allocated, and staging is
-conservatively retained until global collective completion. There is no spill
-policy. In-place aliasing and capacity deadlock recovery are not implemented.
+With version binding, `ValueLifetime` controls input/output residency using the
+complete declared consumer set. Staging is conservatively retained until global
+collective completion. The older unversioned analytical interface leaves input
+and output lifetime to its caller. There is no spill policy or capacity deadlock
+recovery. Source in-place writes can become distinct immutable target versions;
+target in-place buffer reuse is not implemented.
 
 ## Completion is a resource event
 
@@ -111,11 +117,58 @@ current semantic rendezvous is not evidence for zero-cost barriers.
 
 The binder's analytical tests establish these rules on declared resource
 fixtures. The source exporter preserves CPU call IDs, input/output operand
-ports, attached GPU IDs and matching wait IDs. Joining these ports to complete
-call ownership and concrete tensor allocation/version lifetimes remains required
-before full-capture target lowering. Unknown communicator identities, reduction
-operators and tensor layouts cannot be filled by this target policy.
+ports, attached GPU IDs and matching wait IDs. These ports are now joined to
+complete call ownership; concrete allocation/version bindings remain required
+for the capture. Unknown communicator identities, reduction operators and tensor
+layouts cannot be filled by the target policy.
+
+## Source ports to resident versions
+
+`bind_values` accepts a checked collective match, original call records and
+`AccessBinding` entries keyed by `(rank, call_node, argument_path)`. Every access
+needs an explicit live `StorageKey` generation and exact byte spans. It checks
+rank/device/storage identity and footprint volume. Missing or stale generations,
+missing bindings and overlapping destinations reject the whole operation before
+any write. Repeated/broadcast elements needing packing have no implicit rule.
+
+All required inputs are read before **any** output version is created. An
+in-place source collective consequently retains its old immutable input even
+after the source storage receives a new producer version. Partial prior writes
+retain all contributing producers. A broadcast's non-root destination is an
+overwrite, not a read of potentially uninitialized contents. Source storage
+sharing alone never merges versions or makes them ready.
+
+`TensorValue.key` incorporates rank, device, storage generation, exact slices and
+immutable producers. `bind_collective(..., values=...)` uses these identities for
+target allocations and transfers; reduce-scatter chunk labels retain communicator
+position. Values passed between collectives use the same allocation key, so an
+already resident input is not allocated again. Whole value materialization and
+placement are explicit; partial views do not automatically become free target
+aliases or packing operations.
+
+For execution, first declare each allocation, producer prerequisites, complete
+consumer set and retention policy in `ValueLifetime`, sharing a `ReservationPool`.
+Then use `CollectiveState(binding, lifetime=...)`. Creating a logical producer
+version does not publish it. Target readiness requires the resident allocation
+and service completion. Input acquisition pins storage; `release` rejects active
+pins. Capacity failure leaves inputs unacquired and output reservations unchanged.
+
+Output writes publish that rank's version for downstream consumers. Each input
+consumer finishes only after that rank's collective completion condition. A
+separate internal output consumer keeps results resident while the collective
+may still read them, and releases at global completion. External consumers can
+begin once their data and control prerequisites are satisfied. The last completed
+consumer frees an unretained value; retained results remain charged. Consumer
+sets must be complete before execution, rather than appended after a release.
+
+The [connected value/lifetime result](results/collective-values-001/REVIEW.md)
+includes a two-collective chain, partial producer history, source in-place
+updates, failed admission, fanout and local versus global completion. The
+catalogue exposes an ordinary producer/consumer interface and shares the existing
+finite storage pool; automatic lowering of all ordinary source operators and
+their control dependencies is still frontend work.
 
 No complete native wafer application time is claimed. The next integration is
-source-port-to-value binding and recovery of missing collective identities,
-followed by a validated timed resource backend, not a new placement sweep.
+recovery of source allocation/layout/order evidence and missing collective
+identities, followed by a validated timed resource backend, not a new placement
+sweep. The full source join records unresolved requirements per call.

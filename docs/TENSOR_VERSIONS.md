@@ -1,5 +1,11 @@
 # Tensor effects and byte-region values
 
+Collective integration now uses the same byte-version model. See
+[source-port binding and runtime lifetimes](COLLECTIVES.md#source-ports-to-resident-versions)
+for the boundary between assigning a producer version and publishing ready
+target data. The [complete source join](results/collective-values-001/REVIEW.md)
+retains unresolved allocation/layout evidence explicitly.
+
 The workload frontend must distinguish a tensor reference, a live allocation,
 and an immutable value. The same recorded tensor ID can refer to several
 storages; multiple tensor views can refer to one allocation; a partial in-place

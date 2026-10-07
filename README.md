@@ -143,3 +143,12 @@ remain unresolved rather than being matched by order or size. The
 memory/network/reduction demands and rank-local completion. All 101 semantic
 tests and the full-source readback pass. This is a resource-demand and completion
 interface; tensor-version integration and calibrated application timing remain.
+
+The next [value/lifetime integration](docs/results/collective-values-001/REVIEW.md)
+connects matched collective ports to immutable tensor versions and shared finite
+storage. Existing versions pass between collectives without a second input
+allocation; consumers release them only after completion. All 119 semantic tests
+pass. A complete join checks all 33,632 source calls and their implementation/wait
+ports against the 4,530,939-node ownership/effect ledgers. Exact allocation
+generations, layouts and access order remain explicit missing inputs for the
+capture; no guessed versions or new application timing are reported.
