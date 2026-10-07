@@ -32,9 +32,13 @@ def main():
     patch = repo / "patches/chakra-preserve-layout.patch"
     subprocess.run(["git", "apply", "--check", str(patch)], cwd=checkout, check=True)
     subprocess.run(["git", "apply", str(patch)], cwd=checkout, check=True)
-    schema = ROOT / "deps/chakra-schema/generated/et_def_pb2.py"
-    shutil.copy2(schema, checkout / "schema/protobuf/et_def_pb2.py")
-    env = dict(os.environ, PYTHONPATH=os.pathsep.join(map(str, (args.output, repo/"src", repo/"tests"))),
+    generated = ROOT / "deps/chakra-schema/generated"
+    schema_hashes = {}
+    for name in ("et_def_pb2.py", "storage_pb2.py"):
+        shutil.copy2(generated/name, checkout/"schema/protobuf"/name)
+        schema_hashes[name] = digest(generated/name)
+    env = dict(os.environ, PYTHONPATH=os.pathsep.join(map(str, (
+                   args.output, checkout/"schema/protobuf", repo/"src", repo/"tests"))),
                PYTHONDONTWRITEBYTECODE="1")
     log = args.output / "tests.log"
     with log.open("w") as stream:
@@ -45,7 +49,7 @@ def main():
     write_json(args.output / "VALIDATED.json", dict(passed=True, source_commit=commit,
         host=platform.node(), python=sys.version, executable=sys.executable,
         executable_sha256=digest(Path(sys.executable).resolve()), upstream_files_sha256=hashes,
-        patch_sha256=digest(patch), generated_schema_sha256=digest(schema),
+        patch_sha256=digest(patch), generated_schema_sha256=schema_hashes,
         tests_log_sha256=digest(log), tests=4, patched_converter_sha256=digest(checkout/"src/converter/pytorch_converter.py"),
         packages=subprocess.check_output([sys.executable, "-m", "pip", "freeze"], text=True).splitlines(),
         original_capture_modified=False, original_capture_layout_recovered=False, new_simulations_launched=0))
