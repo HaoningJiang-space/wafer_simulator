@@ -32,6 +32,35 @@ def local_binding():
 
 
 class CalendarTests(unittest.TestCase):
+    def test_memory_bursts_rejoin_fcfs_without_reserving_future_bandwidth(self):
+        clock=ResourceCalendar({('port','bytes'):Service('port','bytes',2)},memory_quantum_bytes=4)
+        done={}
+        for name,amount in (('a',10),('b',4)):
+            clock.submit(name,(Step('port','bytes',amount,'memory'),),
+                         lambda name=name:done.update({name:clock.now}))
+        while clock.events:clock.advance()
+        self.assertEqual(done,{'b':4,'a':7})
+        self.assertEqual([(r['token'],r['amount'],r['start'],r['finish']) for r in clock.records],
+                         [('a',4,0,2),('b',4,2,4),('a',4,4,6),('a',2,6,7)])
+        self.assertEqual(clock.resource_summary()['port']['busy_cycles'],7)
+
+    def test_burst_tail_latency_and_other_service_categories(self):
+        services={('p','bytes'):Service('p','bytes',2,latency_cycles=2),
+                  ('n','bytes'):Service('n','bytes',2),('c','mac'):Service('c','mac',2)}
+        clock=ResourceCalendar(services,memory_quantum_bytes=3);done={}
+        for name,step in (('m',Step('p','bytes',8,'memory')),
+                          ('n',Step('n','bytes',8,'network')),('c',Step('c','mac',8,'compute'))):
+            clock.submit(name,(step,),lambda name=name:done.update({name:clock.now}))
+        while clock.events:clock.advance()
+        self.assertEqual(done,{'n':4,'c':4,'m':11})
+        self.assertEqual([r['amount'] for r in clock.records if r['token']=='m'],[3,3,2])
+        self.assertEqual(len([r for r in clock.records if r['token']=='n']),1)
+        self.assertEqual(len([r for r in clock.records if r['token']=='c']),1)
+
+    def test_invalid_memory_quantum_rejected(self):
+        for quantum in (0,-1,True,1.5):
+            with self.assertRaises(ValueError):ResourceCalendar({},memory_quantum_bytes=quantum)
+
     def test_shared_port_never_supplies_full_rate_to_two_clients(self):
         clock = ResourceCalendar({("port","bytes"):Service("port","bytes",4)})
         finish = {}
@@ -85,6 +114,19 @@ class CalendarTests(unittest.TestCase):
 
 
 class TimedExecutionTests(unittest.TestCase):
+    def test_independent_burst_readback_and_policy_tampering(self):
+        b=local_binding();t=timing()
+        result=execute(b,t,memory_quantum_bytes=3)
+        self.assertEqual(result['application_cycles'],9)
+        self.assertTrue(audit(b,t,result)['passed'])
+        self.assertEqual([e['amount'] for e in result['services'] if e['category']=='memory'],[3,3,2,3,1])
+        broken=copy.deepcopy(result);broken['policy'].pop('memory_quantum_bytes')
+        with self.assertRaisesRegex(ValueError,'conservation'):audit(b,t,broken)
+        broken=copy.deepcopy(result);broken['policy']['memory_quantum_bytes']=True
+        with self.assertRaisesRegex(ValueError,'quantum'):audit(b,t,broken)
+        with self.assertRaises(TimeoutError):execute(b,t,memory_quantum_bytes=3,cycle_limit=8)
+        self.assertTrue(execute(b,t,memory_quantum_bytes=3,cycle_limit=9)['complete'])
+
     def test_cycle_limit_is_inclusive_for_local_and_external_network(self):
         class IdleNetwork:
             now = 0

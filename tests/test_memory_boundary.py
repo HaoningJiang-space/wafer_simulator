@@ -67,7 +67,7 @@ class MemoryBoundaryTests(unittest.TestCase):
             client.close()
         finally:client.abort()
 
-    def run_collective(self, name, mode, limit=100000, delayed=False):
+    def run_collective(self, name, mode, limit=100000, delayed=False, memory_quantum=None):
         directory,_,config=self.prepare(name,nodes=4)
         binding,rates=case(4)
         if delayed:
@@ -86,7 +86,7 @@ class MemoryBoundaryTests(unittest.TestCase):
             binding,_=fuse_movements(binding)
             controller=MemoryBoundary(client,tx_slots=2,rx_slots=2,bounded=mode=='bounded')
         try:
-            result=execute(binding,rates,network=controller,cycle_limit=limit)
+            result=execute(binding,rates,network=controller,cycle_limit=limit,memory_quantum_bytes=memory_quantum)
             controller.close()
         finally:controller.abort()
         self.assertTrue(audit(binding,rates,result)['passed'])
@@ -113,6 +113,25 @@ class MemoryBoundaryTests(unittest.TestCase):
             limit=self.run_collective(mode+'-measure',mode)[2]['application_cycles']
             self.run_collective(mode+'-equal',mode,limit)
             with self.assertRaises(TimeoutError):self.run_collective(mode+'-short',mode,limit-1)
+
+    def test_memory_quantum_is_independent_of_native_packet_and_conserves_work(self):
+        results=[]
+        for mode in ('serial','pipeline','bounded'):
+            binding,rates,result=self.run_collective('quantum-'+mode,mode,memory_quantum=3)
+            results.append(result)
+            self.assertEqual(sum(m['expected_flits'] for m in result['network_messages']),12)
+            self.assertTrue(all(s['amount']<=3 for s in result['services'] if s['category']=='memory'))
+            if mode!='serial':
+                move=result['boundary']['moves'][0];p=move['packets'][0]
+                read=[s for s in result['services'] if s['token']==move['token']+'/read/0']
+                self.assertEqual([s['amount'] for s in read],[3,1])
+                self.assertEqual(p['supplied'],read[-1]['finish'])
+                self.assertGreaterEqual(p['injected'],p['supplied'])
+                broken=copy.deepcopy(result)
+                broken['boundary']['moves'][0]['packets'][0]['supplied']=read[0]['finish']
+                with self.assertRaises(ValueError):audit(binding,rates,broken)
+        totals=[sum(s['amount'] for s in r['services'] if s['category']=='memory') for r in results]
+        self.assertEqual(len(set(totals)),1)
 
     def test_local_work_before_first_network_movement(self):
         _,_,result=self.run_collective('delayed','bounded',delayed=True)

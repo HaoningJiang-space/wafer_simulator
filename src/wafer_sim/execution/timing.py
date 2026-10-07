@@ -5,13 +5,18 @@ the next hop/phase is submitted only after completion, so future resources are
 not reserved early. Admission and data lifetime reuse StorageState unchanged.
 """
 import heapq
+from dataclasses import replace
 
 from wafer_sim.adapters.timing import TimedTarget
 from wafer_sim.execution.storage import StorageState
 
 
 class ResourceCalendar:
-    def __init__(self, services):
+    def __init__(self, services, *, memory_quantum_bytes=None):
+        if memory_quantum_bytes is not None:
+            from wafer_sim.workloads.spatial import natural
+            natural(memory_quantum_bytes, 'memory service quantum', positive=True)
+        self.memory_quantum_bytes = memory_quantum_bytes
         self.services = services
         self.now = 0
         self.events = []
@@ -24,8 +29,20 @@ class ResourceCalendar:
             raise ValueError("Repeated request or empty service sequence")
         if any((s.resource,s.unit) not in self.services or type(s.amount) is not int or s.amount <= 0 for s in steps):
             raise ValueError("Missing service or invalid requested work")
+        requests = []
+        for step in steps:
+            if self.memory_quantum_bytes is not None and step.category == 'memory':
+                if step.unit != 'bytes':
+                    raise ValueError('Memory burst service requires byte work')
+                remaining = step.amount
+                while remaining:
+                    amount = min(remaining, self.memory_quantum_bytes)
+                    requests.append(replace(step, amount=amount))
+                    remaining -= amount
+            else:
+                requests.append(step)
         self.active.add(token)
-        self._schedule(token,tuple(steps),0,callback)
+        self._schedule(token,tuple(requests),0,callback)
 
     def _schedule(self, token, steps, index, callback):
         step = steps[index]
@@ -63,12 +80,12 @@ class ResourceCalendar:
         return result
 
 
-def execute(binding, timing, *, network=None, cycle_limit=1000000):
+def execute(binding, timing, *, network=None, cycle_limit=1000000, memory_quantum_bytes=None):
     from wafer_sim.workloads.spatial import natural
     natural(cycle_limit, "execution cycle limit", positive=True)
     target = TimedTarget(binding,timing)
     state = StorageState(binding)
-    clock = ResourceCalendar(target.services)
+    clock = ResourceCalendar(target.services, memory_quantum_bytes=memory_quantum_bytes)
     operations, phases, lifecycle = {}, [], []
     output_ready = {d.id: 0 for d in binding.graph.data.values() if d.producer is None}
     dependency_ready = {}
@@ -182,4 +199,7 @@ def execute(binding, timing, *, network=None, cycle_limit=1000000):
         if hasattr(network, 'evidence'): result.update(network.evidence())
     if any(p.dependencies is not None for p in binding.plans.values()):
         result["policy"]["collectives"] = "explicit action DAG and output requirements; atomic admission; all actions precede retirement; producer outputs and staging pinned until retirement"
+    if memory_quantum_bytes is not None:
+        result['policy']['memory_quantum_bytes'] = memory_quantum_bytes
+        result['policy']['memory_requests'] = 'successive bounded byte bursts; next request at prior completion; all clients share FCFS'
     return result

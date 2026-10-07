@@ -4,11 +4,13 @@ from fractions import Fraction
 from math import ceil
 
 import networkx as nx
+from wafer_sim.analysis.memory_service import quantum_from_result, expected_demands
 
 
 def audit(binding, timing, result):
     if not result["complete"] or result["application_cycles"] is None:
         raise ValueError("Incomplete execution cannot pass completion audit")
+    memory_quantum = quantum_from_result(result)
     services = {(s.resource,s.unit):s for s in (
         *timing.services, *(l.service for l in timing.links),
         *(s for e in timing.endpoints for s in (e.injection,e.ejection)))}
@@ -86,7 +88,8 @@ def audit(binding, timing, result):
                 from wafer_sim.analysis.memory_boundary import audit_move
                 network_tokens.add(token)
                 move=next(m for m in result['boundary']['moves'] if m['token']==token)
-                expected_tokens.update(audit_move(phase,row,move,native_messages[token],by_token,previous))
+                expected_tokens.update(audit_move(phase,row,move,native_messages[token],by_token,previous,
+                                                  memory_quantum=memory_quantum))
                 continue
             if phase.transfer is not None and native_messages is not None:
                 network_tokens.add(token)
@@ -137,6 +140,7 @@ def audit(binding, timing, result):
                          *(links[a,b] for a,b in zip(path,path[1:])),endpoints[t.destination_endpoint].ejection]
                 demands = [(s.resource,"bytes",t.size_bytes) for s in route]
                 if row["transfer_bytes"] != t.size_bytes: raise ValueError("Transfer byte conservation failed")
+            demands = expected_demands(demands, category, memory_quantum)
             if demands != [(e["resource"],e["unit"],e["amount"]) for e in events]:
                 raise ValueError("Phase work conservation failed")
             if any(e["category"] != category for e in events):

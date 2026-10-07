@@ -38,6 +38,8 @@ def prepare(descriptor):
     binding=reserve_endpoint_storage(binding,cfg['flit_bytes'],cfg['tx_slots'],cfg['rx_slots'])
     identity['boundary_contract']=cfg
     identity['usable_memory']={k:asdict(v) for k,v in binding.memory.items()}
+    if descriptor.get('memory_quantum_bytes') is not None:
+        identity['memory_quantum_bytes']=descriptor['memory_quantum_bytes']
     return binding,timing,exported,identity
 
 
@@ -65,7 +67,9 @@ def worker(descriptor_path,mode,directory,cpus):
         if mode=='serial':native.configure(rx_slots=cfg['rx_slots'],bounded=False,streaming=False)
         else:backend=MemoryBoundary(native,tx_slots=cfg['tx_slots'],rx_slots=cfg['rx_slots'],bounded=mode=='bounded')
     try:
-        with meter.phase('execution'):result=execute(binding,timing,network=backend,cycle_limit=d['experiment']['cycle_limit'])
+        with meter.phase('execution'):
+            result=execute(binding,timing,network=backend,cycle_limit=d['experiment']['cycle_limit'],
+                           memory_quantum_bytes=d.get('memory_quantum_bytes'))
         if not result['complete']:raise ValueError('Incomplete work under unchanged capacity')
         peaks=dict(python_lifetime_peak_rss_kib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
                    native_peak_rss_kib=native_peak(native))

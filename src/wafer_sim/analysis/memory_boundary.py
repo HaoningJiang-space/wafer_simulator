@@ -1,8 +1,9 @@
 """Independent byte, packet, event and endpoint capacity readback."""
 from collections import defaultdict
+from wafer_sim.analysis.memory_service import expected_demands
 
 
-def audit_move(phase, row, move, message, services, ready):
+def audit_move(phase, row, move, message, services, ready, *, memory_quantum=None):
     t=phase.transfer;token=move['token'];expected=set()
     if (row['kind']!='memory_network' or row['ready']!=ready or move['ready']!=ready or
         row['finish']!=move['finish'] or message['ready']!=ready or
@@ -19,14 +20,15 @@ def audit_move(phase, row, move, message, services, ready):
             raise ValueError('Chunk identity or valid payload differs')
         for kind,port in (('read',phase.demands[0].resource),('write',phase.demands[1].resource)):
             name=f'{token}/{kind}/{k}';expected.add(name);rows=services[name]
-            if (len(rows)!=1 or rows[0]['resource']!=port or rows[0]['amount']!=p['bytes'] or
-                    rows[0]['unit']!='bytes' or rows[0]['category']!='memory' or rows[0]['step']!=0):
+            demands=expected_demands([(port,'bytes',p['bytes'])],'memory',memory_quantum)
+            if ([(r['resource'],r['unit'],r['amount']) for r in rows]!=demands or
+                    any(r['category']!='memory' or r['step']!=i for i,r in enumerate(rows)) or
+                    any(a['finish']!=b['ready'] for a,b in zip(rows,rows[1:]))):
                 raise ValueError('Chunk memory service missing or duplicated')
-            event=rows[0]
             if kind=='read':
-                if event['ready']!=p['reserved'] or event['finish']!=p['supplied']:
+                if rows[0]['ready']!=p['reserved'] or rows[-1]['finish']!=p['supplied']:
                     raise ValueError('Supply is not the completed read')
-            elif event['ready']!=p['received'] or event['finish']!=p['committed']:
+            elif rows[0]['ready']!=p['received'] or rows[-1]['finish']!=p['committed']:
                 raise ValueError('Commit is not the completed destination write')
         if not ready<=p['reserved']<p['supplied']<=f['injected']<p['injected']<=p['received']<p['committed']:
             raise ValueError('Premature injection, receive or commit')

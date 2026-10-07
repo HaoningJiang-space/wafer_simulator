@@ -42,17 +42,18 @@ def critical_chain(binding, result):
                             node(base+':receive',packet['received'],[point],
                                  packet['received']-packet['supplied'],'network',operation=op,phase=index,token=token)
                             point=base+':receive'
-                        event=services[f'{token}/{kind}/{k}'][0];identity=event['id']
-                        incoming=[point]
-                        if event['resource_predecessor'] is not None:
-                            incoming.append(f"service:{event['resource_predecessor']}:release")
-                        node(f'service:{identity}:start',event['start'],incoming)
-                        node(f'service:{identity}:release',event['resource_released'],
-                             [f'service:{identity}:start'],event['resource_released']-event['start'],
-                             'memory',operation=op,phase=index,resource=event['resource'],token=token)
-                        node(f'service:{identity}:finish',event['finish'],[f'service:{identity}:release'],
-                             event['finish']-event['resource_released'],'memory',operation=op,phase=index,token=token)
-                        point=f'service:{identity}:finish'
+                        for event in services[f'{token}/{kind}/{k}']:
+                            identity=event['id']
+                            incoming=[point]
+                            if event['resource_predecessor'] is not None:
+                                incoming.append(f"service:{event['resource_predecessor']}:release")
+                            node(f'service:{identity}:start',event['start'],incoming)
+                            node(f'service:{identity}:release',event['resource_released'],
+                                 [f'service:{identity}:start'],event['resource_released']-event['start'],
+                                 'memory',operation=op,phase=index,resource=event['resource'],token=token)
+                            node(f'service:{identity}:finish',event['finish'],[f'service:{identity}:release'],
+                                 event['finish']-event['resource_released'],'memory',operation=op,phase=index,token=token)
+                            point=f'service:{identity}:finish'
                     finishes.append(point)
                 previous=f'boundary:{token}:commit'
                 node(previous,p['finish'],finishes)
