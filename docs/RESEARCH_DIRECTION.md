@@ -237,9 +237,14 @@ Separate parameter uncertainty, abstraction error and changes in the machine.
 Use [accuracy versus cost](MODEL_FIDELITY_PROTOCOL.md) only against a justified
 reference for the same declared machine and workload. The existing two network
 backends share the local abstraction and cannot validate it against each other.
-The next deliverable is one reference-supported error-localization comparison,
-not a full 8-GPC NoC or a mandatory finite-FIFO implementation. The saved 12-case
-coarse/native analysis is complete; the generic new cost sweep is deferred.
+The first [reference-supported error-localization comparison](results/transfer-granularity-001/REVIEW.md)
+is complete. Matched-path whole-message service can err by 15–42.857% while
+complete application errors remain 0.367%/0.204%. Measured coarse execution
+cost is about half the native path here; retain it for the declared application
+objective, while distinguishing message accuracy and much smaller design gaps.
+This network-service result does not validate common compute/SRAM aggregation.
+There is no evidence-driven requirement yet for a full 8-GPC NoC or finite FIFO.
+The saved 12-case coarse/native analysis is retained; the generic cost sweep is deferred.
 Keep aggregation when it meets the declared prediction objective. The broader architecture
 sequence above is a future use case, not the current development queue.
 No new algorithm, mapping sweep, full capture recovery, thermal, PDN or runtime

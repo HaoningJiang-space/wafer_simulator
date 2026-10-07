@@ -9,8 +9,13 @@ Freeze collective and mapping expansion. Distinguish parameter uncertainty,
 abstraction error and changed hardware; compare accuracy/cost against a justified
 reference for the same declared machine. Local NoC and boundary feedback remain
 candidate mechanisms, not mandatory next modules. Existing rankings are validation cases,
-not evidence that a detailed simulator is necessary. The generic new cost sweep
-is deferred; only saved-result and source-boundary audits were run at this step.
+not evidence that a detailed simulator is necessary. The generic cost sweep remains
+deferred. A [bounded matched-path experiment](docs/results/transfer-granularity-001/REVIEW.md)
+has now completed: two full blocks have only 0.367%/0.204% coarse application error,
+but up to 15%/42.857% isolated message-service error. Whole-message hop-by-hop
+service misses native pipelining. The coarse execution stage costs about half as
+much here. This supports retaining it for the declared 2% application-time target,
+not validating shared local-resource assumptions or sub-percent design gaps.
 
 The [research direction](docs/RESEARCH_DIRECTION.md) derives a compute–memory–network
 execution contract from spatial locality and finite resources. It separates

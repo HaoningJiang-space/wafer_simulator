@@ -141,7 +141,11 @@ Rotated 收益。不能给 R 更多 GPC、更多供数通道或不同内存总�
 
 ## 本轮状态
 
-- 没有新仿真；旧运行未改写。新增代码仅是只读模型误差与 source/boundary 审计。
-- `MODEL_FIDELITY_PROTOCOL.md` 的通用六条件 cost sweep 延后，不启动。
-- 开始编写但未提交/运行的 cost-runner 草稿已移除，避免留一条无人使用的执行路径。
-- 不新增 collective/mapping/topology，不复活 Chakra recovery；原型保留。
+- 已完成[同路径整消息服务对照](results/transfer-granularity-001/REVIEW.md)：两种
+  完整声明工作、24次完整执行、28条孤立传输，全部在eex005检查；旧结果不改写。
+- 应用误差0.367%/0.204%，孤立服务最大误差15%/42.857%。本轮服务参考覆盖的是
+  endpoint—WoW网络，发现的是整消息逐跳服务与分片流水差异，不是本地聚合失效。
+- 本地GPC/SRAM没有独立参考，不能借用网络对照验证。当前应用目标下保留粗模型；
+  更精确的消息预测需要检验流水服务，而非立即添加local NoC或FIFO。
+- `MODEL_FIDELITY_PROTOCOL.md` 的通用六条件 sweep仍延后；新实验的固定卡为
+  `TRANSFER_GRANULARITY_PROTOCOL.md`，没有新增算法、mapping、thermal或capture恢复。
