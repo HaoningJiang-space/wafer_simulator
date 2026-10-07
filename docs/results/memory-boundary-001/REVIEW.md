@@ -4,6 +4,10 @@
 接收写入和端点 credit 的衔接。**参考目标是明确登记的 streaming DMA 设计假设，
 不是已标定的 WoW SRAM/DMA 硬件。**以下误差均相对于这个条件化边界参考。
 
+后续[内存请求粒度对照](../memory-service-isolation-001/REVIEW.md)已完成：本报告的
+六种应用结果逐事件恢复；新的 256 B 服务合同明显改变模型差距。因此下面的
+约 7% 偏差应保留其 request-atomic 合同限定，不能作为独立于仲裁政策的流水效应。
+
 ## 对照合同与结果
 
 使用既有 Baseline、row-major、TP8、direct-root，完整 s16/s64 forward block。

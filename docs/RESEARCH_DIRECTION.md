@@ -255,6 +255,12 @@ shared-port interleaving and application time. Finite receive feedback preserves
 capacity and changes message commits, while the checked chunk-model makespans
 are unchanged. Keep this optional endpoint model for that declared contract;
 the result does not establish a calibrated WoW DMA model or require a full 8-GPC NoC.
+The [memory-service isolation](results/memory-service-isolation-001/REVIEW.md)
+shows a strong interaction with the declared memory arbitration quantum:
+the same boundary contrast shrinks from 1,049/3,978 to 253/1,355 cycles when all
+memory clients use 256-byte bursts. Neither this quantum nor the original
+request-atomic policy is claimed as calibrated hardware. Retain explicit policy
+and message/capacity observables; do not attribute the whole gap to overlap.
 The saved 12-case coarse/native analysis is retained; the generic cost sweep is deferred.
 Keep aggregation when it meets the declared prediction objective. The broader architecture
 sequence above is a future use case, not the current development queue.

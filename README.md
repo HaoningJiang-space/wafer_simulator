@@ -39,6 +39,17 @@ preserves capacity and checked lifetimes, at higher measured execution cost.
 This is conditional boundary-model evidence, not calibrated native wafer timing.
 151 tests, 30 complete runs, 460 artifact hashes and 18 command replays passed.
 
+The [memory-service isolation](docs/results/memory-service-isolation-001/REVIEW.md)
+now separates native flit width from memory arbitration quantum. Applying the
+same 256-byte burst contract to ordinary memory clients and DMA reduces the
+streaming-versus-serial gap from 1,049/3,978 to 253/1,355 cycles (s16/s64).
+Memory bandwidth, useful bytes and busy cycles are unchanged across the two
+memory contracts within each boundary model; request interleaving changes.
+Finite RX still changes message commits/capacity, not these application times.
+This is policy interaction, not a measured pure-overlap penalty. All 36 complete
+executions pass readback; request-atomic controls reproduce the earlier full
+event records. The default remains unchanged; 256 bytes is a diagnostic assumption.
+
 The [research direction](docs/RESEARCH_DIRECTION.md) derives a compute–memory–network
 execution contract from spatial locality and finite resources. It separates
 logical work, compute/data mapping, execution policy and target resources.

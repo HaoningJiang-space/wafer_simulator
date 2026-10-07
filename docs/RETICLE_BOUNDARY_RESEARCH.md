@@ -161,3 +161,7 @@ Rotated 收益。不能给 R 更多 GPC、更多供数通道或不同内存总�
   overlap 差异。简单分片恢复两例 makespan，但 RX 峰值 18/60 槽超过规定 8 槽，
   且消息提交误差超过预登记目标。可选有限端点反馈保留必要占用状态；这些结果
   不证明所有 workload 的应用时间需要 finite FIFO，也不启动完整 8-GPC NoC。
+- [内存合同隔离](results/memory-service-isolation-001/REVIEW.md)进一步固定 bandwidth、
+  bytes 和模型内的 busy 总量，对普通访存及 DMA 统一施加 256 B burst 仲裁。
+  流水与整消息差距缩至 253/1,355 cycles，显示原差异显著依赖请求交错。
+  这不是纯 overlap 的独立因果分解；256 B 未标定，不替代原默认合同。
