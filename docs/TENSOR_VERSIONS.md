@@ -23,6 +23,14 @@ source concurrency, choose a target schedule or allocate wafer memory. Values
 are a precursor to the immutable spatial workload; the full capture is not yet
 lowered into that workload.
 
+`workloads/tensor_effect_binding.py` connects supported write/view rules to
+this value model when exact allocation/span bindings are provided. It resolves
+all input versions before a write and rejects missing bindings, cross-rank
+identities and unsupported effects. It supplies no captured-tensor layout or
+allocation size by default. The copy → view → accumulation regression verifies
+that a later read resolves to the correct earlier writer without charging the
+view as a second allocation.
+
 `workloads/chakra_effects.py` classifies source call IO into allocations, aliases,
 explicit writes, schema-declared potential mutations, functional signatures,
 storage rebinding and unresolved calls. Nested tensor lists retain argument

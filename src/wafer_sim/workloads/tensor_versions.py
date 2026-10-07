@@ -133,6 +133,10 @@ class ByteVersions:
                     result.append(ReadSlice(a, b, version))
         return tuple(result)
 
+    def check_access(self, key, spans):
+        """Check liveness and capacity without reading uninitialized contents."""
+        return self._checked(key, spans)
+
     def _replace(self, key, spans, value):
         segments = self._segments[key]
         for start, stop in spans:

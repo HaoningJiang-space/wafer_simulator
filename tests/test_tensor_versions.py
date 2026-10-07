@@ -4,6 +4,7 @@ import unittest
 
 from wafer_sim.workloads.tensor_versions import ByteVersions, strided_footprint
 from wafer_sim.workloads.chakra_effects import effects, tensor_leaves
+from wafer_sim.workloads.tensor_effect_binding import AccessBinding, apply_effect
 from test_chakra import te_fixture
 
 
@@ -127,6 +128,48 @@ class TensorVersionsTests(unittest.TestCase):
         result = effects("aten::is_pinned", "aten::is_pinned(Tensor self) -> bool", io(a), io())
         self.assertEqual(result["operand_inputs"], ["i:0"])
         self.assertEqual(result["reads"], [])
+
+    def test_copy_then_alias_then_accumulation_recovers_producer(self):
+        state = ByteVersions()
+        src = state.allocate(0, "cuda:0", 4, 32, initial="source input")
+        dest = state.allocate(0, "cuda:0", 2, 32)
+        a, b, view = tensor(1, 2), tensor(3, 4), tensor(5, 2)
+        bind = {"i:0": AccessBinding(dest, ((0, 32),)), "i:1": AccessBinding(src, ((0, 32),)),
+                "o:0": AccessBinding(dest, ((0, 32),))}
+        copy = effects("aten::copy_", "aten::copy_(Tensor(a!) self, Tensor src) -> Tensor(a!)", io(a, b), io(a))
+        result = apply_effect(state, copy, bind, "copy", "explicit fixture")
+        self.assertEqual(result["reads"]["i:1"][0].version.producer, None)
+        alias = effects("aten::view", "", io(a), io(view))
+        self.assertEqual(apply_effect(state, alias, bind, "view", "fixture")["writes"], {})
+        add = effects("aten::add_", "aten::add_(Tensor(a!) self, Tensor other) -> Tensor(a!)", io(view, b), io(view))
+        result = apply_effect(state, add, bind, "accumulate", "fixture")
+        self.assertEqual(result["reads"]["i:0"][0].version.producer, "copy")
+        self.assertEqual(state.read(dest, ((0, 32),))[0].version.producer, "accumulate")
+
+    def test_unresolved_or_mismatched_call_never_mutates_state(self):
+        state = ByteVersions()
+        src = state.allocate(0, "cuda:0", 4, 32)  # no initialized source
+        dest = state.allocate(0, "cuda:0", 2, 32, initial="old destination")
+        a, b = tensor(1, 2), tensor(3, 4)
+        copy = effects("aten::copy_", "aten::copy_(Tensor(a!) self, Tensor src) -> Tensor(a!)", io(a, b), io(a))
+        bind = {"i:1": AccessBinding(src, ((0, 32),)), "o:0": AccessBinding(dest, ((0, 32),))}
+        with self.assertRaisesRegex(ValueError, "uninitialized"):
+            apply_effect(state, copy, bind, "copy", "fixture")
+        self.assertEqual(state.read(dest, ((0, 32),))[0].version.provenance, "old destination")
+        with self.assertRaisesRegex(ValueError, "binding"):
+            apply_effect(state, copy, {}, "copy", "fixture")
+        with self.assertRaisesRegex(ValueError, "lowering"):
+            apply_effect(state, effects("opaque", "", io(a), io(b)), bind, "opaque", "fixture")
+
+    def test_binding_cannot_cross_a_rank_or_storage(self):
+        state = ByteVersions()
+        src = state.allocate(1, "cuda:0", 4, 32, initial="other rank")
+        dest = state.allocate(0, "cuda:0", 2, 32)
+        a, b = tensor(1, 2), tensor(3, 4)
+        copy = effects("aten::copy_", "aten::copy_(Tensor(a!) self, Tensor src) -> Tensor(a!)", io(a, b), io(a))
+        bind = {"i:1": AccessBinding(src, ((0, 32),)), "o:0": AccessBinding(dest, ((0, 32),))}
+        with self.assertRaisesRegex(ValueError, "rank"):
+            apply_effect(state, copy, bind, "copy", "fixture")
 
 
 if __name__ == "__main__":
