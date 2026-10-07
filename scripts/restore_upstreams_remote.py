@@ -1,4 +1,4 @@
-"""Restore only the five pinned source trees used by this project, on eex005."""
+"""Restore only the pinned source trees used by this project, on eex005."""
 import argparse
 import json
 from pathlib import Path

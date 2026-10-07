@@ -49,6 +49,11 @@ def main():
     revision = subprocess.check_output(["git", "-C", str(upstream), "rev-parse", "HEAD"], text=True).strip()
     if revision != expected or subprocess.check_output(["git", "-C", str(upstream), "status", "--porcelain"]):
         raise ValueError("Chakra source must be clean at the pinned commit")
+    te = root / "upstream/TransformerEngine"
+    te_commit = subprocess.check_output(["git", "-C", str(te), "rev-parse", "HEAD"], text=True).strip()
+    if te_commit != "e5edd6cc3d5a868bb3fe4e81088d22aab505a30d" or subprocess.check_output([
+            "git", "-C", str(te), "status", "--porcelain"]):
+        raise ValueError("TransformerEngine semantic source must match its clean pin")
     files = {f"chakra.{rank}.et" for rank in range(16)}
     if {p.name for p in capture.glob("*.et")} != files or list(capture.glob("*.part")):
         raise ValueError("Complete acquisition of exactly 16 ranks is required")
@@ -77,6 +82,11 @@ def main():
     report = dict(source_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         source_dirty=bool(subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()),
         chakra_commit=revision, python=platform.python_version(),
+        te_semantic_reference=dict(commit=te_commit, source_sha256={name: digest(te / name) for name in (
+            "transformer_engine/pytorch/csrc/ts_fp8_op.cpp",
+            "transformer_engine/common/gemm/cublaslt_gemm.cu",
+            "transformer_engine/common/include/transformer_engine/transformer_engine.h")},
+            capture_build_version_established=False, kernel_execution=False),
         environment={package: importlib.metadata.version(package) for package in ("protobuf", "grpcio-tools")},
         schema_sha256={p.name: digest(p) for p in sorted((upstream / "schema/protobuf").glob("*.proto"))},
         generated_schema_sha256={p.name: digest(p) for p in sorted(generated.glob("*_pb2.py"))},

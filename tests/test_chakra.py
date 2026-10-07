@@ -5,7 +5,24 @@ import unittest
 
 from wafer_sim.workloads.chakra import read_frame
 from wafer_sim.analysis.chakra_source import decode_io, graph_summary
-from wafer_sim.workloads.chakra_work import matrix_work, tensor_reference
+from wafer_sim.workloads.chakra_work import matrix_work, tensor_reference, transformer_engine_work
+
+
+def te_fixture(transa=1, transb=0, accumulate=0):
+    """Analytic M=2, N=4, K=3; no captured workload bytes."""
+    empty = [99, 98, 0, 0, 4, "cpu"]
+    values, shapes, types = [0] * 22, [[] for _ in range(22)], ["Int"] * 22
+    for index in (1, 6, 11, 13, 14, 16):
+        values[index], shapes[index], types[index] = empty[:], [0], "Tensor(float)"
+    for index, dims in ((0, [2, 3] if transa else [3, 2]),
+                        (5, [3, 4] if transb else [4, 3]), (10, [4, 2])):
+        values[index] = [index + 1, index + 2, 0, dims[0] * dims[1], 2, "cuda:0"]
+        shapes[index], types[index] = dims, "Tensor(c10::BFloat16)"
+    for index in (3, 8, 12, 15): values[index] = 5
+    values[4], values[9], values[20] = transa, transb, accumulate
+    values[18], shapes[18], types[18] = [70, 71, 0, 16, 1, "cuda:0"], [16], "Tensor(unsigned char)"
+    values[19] = 16
+    return (values, shapes, types), ([values[10]], [shapes[10]], [types[10]])
 
 
 class Payload:
@@ -87,6 +104,37 @@ class ChakraSourceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "element count"):
             tensor_reference([11, 7, 12, 7, 4, "cuda:0"], [2, 3], "Tensor(float)")
         self.assertIsNone(matrix_work("unrecognized_kernel", None, None))
+
+    def test_te_non_square_transpose_conventions(self):
+        for ta, tb in ((1, 0), (0, 0), (0, 1)):
+            work = transformer_engine_work(*te_fixture(ta, tb))
+            self.assertEqual(work["work_amount"], 24)
+            self.assertEqual(work["output_logical_bytes"], 16)
+        with self.assertRaisesRegex(ValueError, "TT"):
+            transformer_engine_work(*te_fixture(1, 1))
+
+    def test_te_accumulation_reads_destination_and_source_scratch_stays_separate(self):
+        work = transformer_engine_work(*te_fixture(accumulate=1))
+        self.assertEqual(len(work["inputs"]), 3)
+        self.assertEqual(work["extra_scalar_adds"], 8)
+        self.assertEqual(work["input_logical_bytes"], 52)
+        self.assertTrue(work["reads_old_destination"])
+        self.assertFalse(work["source_workspace_is_target_scratch"])
+
+    def test_te_rejects_fp8_fusion_and_mismatched_output(self):
+        for index, replacement in ((3, 6), (4, 3), (19, 17)):
+            inputs, outputs = te_fixture()
+            inputs[0][index] = replacement
+            with self.assertRaises(ValueError): transformer_engine_work(inputs, outputs)
+        inputs, outputs = te_fixture()
+        inputs[0][14] = [91, 92, 0, 2, 4, "cpu"]
+        inputs[1][14] = [2]
+        with self.assertRaisesRegex(ValueError, "epilogue"):
+            transformer_engine_work(inputs, outputs)
+        inputs, outputs = te_fixture()
+        outputs[0][0] = [90, 91, 0, 8, 2, "cuda:0"]
+        with self.assertRaisesRegex(ValueError, "destination"):
+            transformer_engine_work(inputs, outputs)
 
 
 if __name__ == "__main__":

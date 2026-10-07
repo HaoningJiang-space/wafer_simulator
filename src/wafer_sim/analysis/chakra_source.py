@@ -9,7 +9,7 @@ import graphlib
 import json
 
 from wafer_sim.workloads.chakra import read_metadata, nodes
-from wafer_sim.workloads.chakra_work import matrix_work
+from wafer_sim.workloads.chakra_work import matrix_work, transformer_engine_work
 
 
 def decode_io(info):
@@ -102,9 +102,11 @@ def inspect_rank(path, schema):
             shape_key = tuple(json.dumps(parsed[s][1], separators=(",", ":")) if parsed[s] else "UNPARSED"
                               for s in ("inputs", "outputs"))
             signatures[(kind, domain, node.name, *shape_key)] += 1
-            if domain == "CPU" and node.name in ("aten::mm", "aten::bmm"):
+            if domain == "CPU" and node.name in ("aten::mm", "aten::bmm", "tex_ts::te_gemm_ts"):
                 try:
-                    work = matrix_work(node.name, parsed["inputs"], parsed["outputs"])
+                    work = (transformer_engine_work(parsed["inputs"], parsed["outputs"])
+                            if node.name == "tex_ts::te_gemm_ts" else
+                            matrix_work(node.name, parsed["inputs"], parsed["outputs"]))
                 except ValueError as error:
                     counts["unsupported_matrix_primitives"] += 1
                     key = "matrix_rejection: " + str(error)
@@ -115,7 +117,9 @@ def inspect_rank(path, schema):
                         source_data_deps=list(node.data_deps), source_ctrl_deps=list(node.ctrl_deps))
                     work_records.append(work)
                     counts["normalized_matrix_primitives"] += 1
+                    counts[f"normalized_matrix_operator:{node.name}"] += 1
                     counts["normalized_matrix_mac"] += work["work_amount"]
+                    counts["normalized_extra_scalar_adds"] += work.get("extra_scalar_adds", 0)
             # Compact source examples only; no synthesized producer, version or lifetime.
             key = f"{kind}:{domain}"
             if key not in examples:
