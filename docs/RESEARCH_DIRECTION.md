@@ -123,27 +123,67 @@ Source analysis prepares the choice of abstraction; it is not the research
 objective. Recovering an author's existing grouping/transfer functionality
 is baseline construction, not by itself a new simulator contribution.
 
-## Next research steps, in dependency order
+## Research sequence and delivery criteria
 
-1. **Define and source the minimum spatial contract above.** Distinguish work,
-   data objects and semantic dependencies from source scheduling and intervals.
-   Preserve unresolved stages explicitly. Do not remove an edge merely because
-   it appears to encode scheduling; a complete independence claim needs evidence
-   for those replacements.
-2. **Use the existing transfer case to test abstraction sufficiency.** Compare static target costs
-   with dynamic service using the same work, issue, completion and lane-occupancy
-   semantics. Separate stale cost parameters from interactions static costs
-   cannot capture. The [protocol](MODEL_BOUNDARY_PROTOCOL.md) lists open choices;
-   no such new experiment is registered.
-3. **Study compute/data locality, then topology–workload interaction.** Use common messages, readiness,
-   resource waits and actual chains. Examine controlled local-cost or mapping
-   sensitivity after the mechanism is identified. If static service suffices
-   for the intended decision, retain it.
-4. **Establish reuse and validity.** Extend one axis at a time to a second complete
-   workload with different compute/communication structure, then placement and
-   resource budgets. Validate component service and execution semantics against
-   independent evidence at the fidelity claimed. Model disagreement alone is
-   not an accuracy reference.
+The sequence is **workload abstraction → wafer machine model → target execution
+→ validation → fixed-mapping application comparison → Topology × Mapping ×
+Workload**. Each stage supplies the inputs needed by the next. Detailed physical
+closure and then power/thermal follow later. Do not alternate between those
+later topics while this execution layer is being established.
+
+1. **Workload abstraction.** Recover computation quantities, data objects,
+   transfers and required dependencies. Separate source durations, host call
+   hierarchy, source scheduling and GPU kernel records. The new full Chakra
+   source is being normalized using actual shapes and identities; its CPU
+   dispatcher operators are not target CPU resources. Alias/view and in-place
+   mutation semantics must establish object versions and lifetimes. No duplicate
+   charge for a logical operator and its implementation kernels. A model
+   comparison must use one complete logical workload identity in both models;
+   matching a dataset directory name alone does not establish that identity.
+2. **Wafer machine model, `H=(C,M,N,G)`.** Include geometry, feasible connectivity,
+   link latency/bandwidth, router ports, finite buffers and local memory capacity
+   from the start. Add explicit compute and memory service parameters, including
+   their source and units. These define the machine rather than optional later
+   physics. Source GPU workspace or service duration is not automatically the
+   target SRAM requirement or compute rate.
+3. **Target execution.** Bind task and data placement separately, reserve local
+   storage, serve compute/memory/network demands with explicit sharing, and
+   advance dependencies only on the required completions. Completion time follows
+   from this execution. The v1 binding/lifetime code is a foundation; it currently
+   has no timed service backend. Policy and initial residency remain explicit.
+4. **Validation before architectural interpretation.** Use analytical DAGs for
+   execution timing and overlap; shared-resource examples for arbitration;
+   local/remote accesses for memory service; and per-region capacity, output
+   reservation and lifetime regressions. These are software correctness tests,
+   not smoke experiments or application-performance evidence. Match network
+   components to the retained WoW/BookSim reference and check new component
+   service against independent models or characterization. For a complete
+   input, check work/data/dependency conservation, final completion, resource
+   limits and independent event readback. Semantic tests establish what the
+   implementation does; characterization establishes the physical accuracy
+   claimed. Neither a plausible speedup nor disagreement with replay is an
+   accuracy reference.
+5. **First architecture case: fixed mapping, same full Llama work.** Compare
+   Baseline and Rotated with the same logical input, mapping rule, compute/memory
+   parameters and execution policy. Report application completion time,
+   compute/memory/network/dependency waits, capacity use, actual critical work
+   and physical data movement. Explain the placement difference through that
+   work. No particular speedup or ranking reversal is required. The old 14.75%
+   packet mean is not held constant when the workload/execution model changes.
+6. **Joint Topology × Mapping × Workload study.** Mapping is not a prerequisite
+   study that can be finished independently of topology. Vary task/data placement
+   jointly with topology and workload structure, extending one controlled axis
+   at a time. Use both a common mapping policy and, when studied, equally budgeted
+   mapping search for each topology; distinguish policy quality from topology
+   value. Explain differences through locality, critical communication, cut/port
+   contention and memory placement. Separate original-design comparisons from
+   equal-resource-budget comparisons.
+
+The [static versus shared transfer question](MODEL_BOUNDARY_PROTOCOL.md) remains
+a useful abstraction comparison within validation and bottleneck analysis. Use
+the same work, issue, completion and lane-occupancy semantics to distinguish
+target cost changes from sharing effects. It does not replace the workload and
+target-execution stages, and is not currently a launched experiment.
 
 The eventual paper must connect a demonstrated modeling gap, a target-resource
 method and an architecture conclusion with validity limits. Logical/physical
@@ -157,7 +197,10 @@ wiring, power and cooling can deliver those assumed resources. Thermal, PDN,
 new schedulers and new simulator acceleration are outside the current work.
 Original-design and equal-budget comparisons remain distinct.
 
-The source table, target-resource description and M0/M1 protocol are delivered.
-The subsequent v1 implementation adds logical work/resource binding and storage
-lifetime semantics, verified with analytical software checks. It launches no
-new placement scan and makes no new application-performance claim.
+The immediate research milestone is to answer, for one supported complete Llama
+workload, **how long Baseline and Rotated take under the target compute–memory–
+network model, and why**. It is complete only after the execution model passes
+the validation stage and both full placement arms pass completion checks.
+Mapping and topology expansion follows that paired case. The first paper can
+stop at the validated joint architecture study; it need not include detailed
+wiring closure, PDN or thermal to justify its scope.

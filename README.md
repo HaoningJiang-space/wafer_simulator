@@ -32,7 +32,18 @@ configs in the working tree. See [selection and verification](docs/IMPLEMENTATIO
 
 Code layers: `workloads` → `adapters` → native BookSim → `analysis`;
 `experiments` orchestrates these layers. `configs/` contains fixed controls;
-`patches/` contains isolated upstream changes. Author source is a Git submodule.
+`patches/` contains isolated upstream changes. Reused external source repositories
+are pinned Git submodules backed by [owned GitHub forks](docs/EXTERNAL_SOURCES.md).
+
+```bash
+git submodule update --init
+```
+
+The research sequence is workload abstraction, target compute–memory–network
+execution, layered validation, then a fixed-mapping Baseline–Rotated application
+case. Subsequent studies jointly vary topology, mapping and workload. Basic
+geometry/connectivity/capacity belongs in the first machine model; detailed
+physical closure and power/thermal remain later work.
 
 Build, tests and experiments run on `wangziheng@eex005`. Local work is editing,
 source review, and Git. The remote root is `/home/wangziheng/wafer_simulator`.
@@ -94,7 +105,8 @@ a placement-gap change from 2.365264 ms to 13.118157 ms (completion-time reducti
 model sensitivity, not native wafer accuracy or a need for dynamic contention
 instead of simpler target costs.
 
-Current deliverables are the source table above, the
+Earlier deliverables are the source table above, the
 [target-resource mapping](docs/TARGET_RESOURCE_MAPPING.md) and the
 [M0/M1 protocol](docs/MODEL_BOUNDARY_PROTOCOL.md). No new experiment is launched
-by this documentation stage; static-cost modeling remains a next research question.
+by this documentation stage. Current development is complete-source workload
+normalization; static versus shared costs remains a later abstraction comparison.
