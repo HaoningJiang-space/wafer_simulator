@@ -1,9 +1,9 @@
 # Target-resource timed execution
 
-The current main task is an executable compute–memory–network model. Source
-recovery remains frozen at its accepted result; missing Chakra communication
-identities do not gate this backend. Mstatic remains a separate next model
-comparison and is not required to validate the backend's service semantics.
+The executable compute–memory–network model is established. The current
+research compares simulation abstractions, prediction error and measured cost.
+Source recovery remains frozen at its accepted result; missing Chakra
+communication identities do not gate this backend.
 
 ## Execution contract
 
@@ -47,12 +47,23 @@ calibrates compute/SRAM parameters. See the [online contract and checked
 placement experiment](TRANSFORMER_WOW_PROTOCOL.md), including the explicit
 native-cycle to external-boundary conversion and equal-boundary event order.
 
+The same interface accepts the optional `PacketPipeline` candidate. It reuses
+the resource calendar for cross-hop packet pipelining under the pinned trace
+configuration, with source-derived initiation periods and fixed coarse routes.
+It retains FCFS output service but omits input arbitration, finite buffers,
+credits and adaptive routing. Unsupported configurations are rejected by the
+adapter. This is not the default backend. See its
+[contract](PACKET_PIPELINE_PROTOCOL.md) and
+[same-work accuracy/cost comparison](results/packet-pipeline-001/REVIEW.md).
+
 Admission still atomically reserves output, staging and scratch storage across
 regions. An admission blocked by capacity retries after a service completion;
 it never busy-waits through idle cycles. If no event can release the blockage,
 the result is incomplete with explicit shortages and no application time.
-Data becomes available only after every producer phase, including destination
-writes. Last-consumer release and retained outputs use the existing state.
+Ordinary-operation data becomes available after all producer phases, including
+destination writes. Explicit collectives publish each rank's final output
+after its materialization completes; operation retirement still waits for all
+actions. Last-consumer release and retained outputs use the existing state.
 
 ## Responsibilities and evidence
 

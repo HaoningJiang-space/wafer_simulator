@@ -243,6 +243,12 @@ complete application errors remain 0.367%/0.204%. Measured coarse execution
 cost is about half the native path here; retain it for the declared application
 objective, while distinguishing message accuracy and much smaller design gaps.
 This network-service result does not validate common compute/SRAM aggregation.
+A [minimal packet-pipeline candidate](results/packet-pipeline-001/REVIEW.md)
+has now removed isolated service error and reduced complete-work error to
+0%/0.0154% on those same inputs. The remaining same-path message error reaches
+3.5714% at a merging output, with identical aggregate link slots but different
+message order. Keep the candidate optional and the reference intact; this is
+bounded mechanism and cost evidence, not unseen-workload generalization.
 There is no evidence-driven requirement yet for a full 8-GPC NoC or finite FIFO.
 The saved 12-case coarse/native analysis is retained; the generic cost sweep is deferred.
 Keep aggregation when it meets the declared prediction objective. The broader architecture

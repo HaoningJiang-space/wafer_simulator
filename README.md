@@ -17,6 +17,16 @@ service misses native pipelining. The coarse execution stage costs about half as
 much here. This supports retaining it for the declared 2% application-time target,
 not validating shared local-resource assumptions or sub-percent design gaps.
 
+A [restricted packet-pipeline refinement](docs/results/packet-pipeline-001/REVIEW.md)
+now reuses the event calendar with source-derived packet initiation timing.
+On the same two complete blocks, application error becomes 0%/0.0154%, and
+isolated service error becomes zero. The remaining maximum in-application
+message error is 3.5714%, localized to service order on a shared output link.
+Measured execution costs are about 2.4–2.5 times lower than BookSim here.
+This optional model does not reproduce finite-credit/input arbitration or
+adaptive routing, and does not replace the default backend or validate reticle
+compute/SRAM aggregation. Both original backends retain exact accepted events.
+
 The [research direction](docs/RESEARCH_DIRECTION.md) derives a compute–memory–network
 execution contract from spatial locality and finite resources. It separates
 logical work, compute/data mapping, execution policy and target resources.

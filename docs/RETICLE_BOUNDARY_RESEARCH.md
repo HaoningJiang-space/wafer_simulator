@@ -149,3 +149,7 @@ Rotated 收益。不能给 R 更多 GPC、更多供数通道或不同内存总�
   更精确的消息预测需要检验流水服务，而非立即添加local NoC或FIFO。
 - `MODEL_FIDELITY_PROTOCOL.md` 的通用六条件 sweep仍延后；新实验的固定卡为
   `TRANSFER_GRANULARITY_PROTOCOL.md`，没有新增算法、mapping、thermal或capture恢复。
+- [最小流水修正](results/packet-pipeline-001/REVIEW.md)已完成同工作三后端对照。
+  候选在当前两例的应用APE为0%/0.0154%，孤立服务全部对齐，应用内最大消息
+  误差3.5714%；剩余差异定位到共享输出的消息服务顺序。未改变默认后端，
+  不以此验证本地聚合，也不继续为了逐事件对齐增加模型。

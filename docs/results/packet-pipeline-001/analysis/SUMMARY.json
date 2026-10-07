@@ -1,0 +1,3592 @@
+{
+  "common_cost": [
+    {
+      "exited_children_cpu_seconds": 0.002954999999999819,
+      "phase": "common_geometry_export",
+      "python_cpu_seconds": 14.499214,
+      "wall_seconds": 0.7760864542797208
+    }
+  ],
+  "costs": [
+    {
+      "backend": "booksim",
+      "case": "s16",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 927201,
+          "median": 927200,
+          "minimum": 927200,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 0.3469671783968806,
+          "median": 0.34428086318075657,
+          "minimum": 0.3439895138144493,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.9034659999999997,
+          "median": 0.8962930000000001,
+          "minimum": 0.8962,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.7876179711893201,
+          "median": 0.7806692197918892,
+          "minimum": 0.7806302886456251,
+          "samples": 3
+        },
+        "cold_worker_less_validation_seconds": {
+          "maximum": 1.0574706317856908,
+          "median": 1.0572461280971766,
+          "minimum": 1.0566213512793183,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.21231,
+          "median": 0.20761600000000013,
+          "minimum": 0.20525900000000008,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.004851311445236206,
+          "median": 0.004834058694541454,
+          "minimum": 0.004795797169208527,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 0.004339356906712055,
+          "median": 0.004336272366344929,
+          "minimum": 0.004327966831624508,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 9568,
+          "median": 9532,
+          "minimum": 9516,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.234114,
+          "median": 0.231959,
+          "minimum": 0.231313,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.010616783052682877,
+          "median": 0.01045124139636755,
+          "minimum": 0.010219534859061241,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 160520,
+          "median": 160484,
+          "minimum": 160468,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 492,
+          "median": 492,
+          "minimum": 492,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 0.5492905359715223,
+          "median": 0.4993216432631016,
+          "minimum": 0.4986914172768593,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.4341495241969824,
+          "median": 0.42751701083034277,
+          "minimum": 0.42452862579375505,
+          "samples": 3
+        }
+      },
+      "mode": "cold"
+    },
+    {
+      "backend": "coarse",
+      "case": "s16",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 516682,
+          "median": 516682,
+          "minimum": 516682,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 4.608184099197388e-06,
+          "median": 4.327856004238129e-06,
+          "minimum": 4.287809133529663e-06,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.21401299999999993,
+          "median": 0.21054200000000006,
+          "minimum": 0.20944599999999997,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.21498847473412752,
+          "median": 0.21161234937608242,
+          "minimum": 0.21046829596161842,
+          "samples": 3
+        },
+        "cold_worker_less_validation_seconds": {
+          "maximum": 0.5019085817039013,
+          "median": 0.45240329299122095,
+          "minimum": 0.45190691761672497,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.20940799999999996,
+          "median": 0.205984,
+          "minimum": 0.204818,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.00464017316699028,
+          "median": 0.00461609847843647,
+          "minimum": 0.004570172168314457,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 3.236345946788788e-06,
+          "median": 3.0659139156341553e-06,
+          "minimum": 3.0044466257095337e-06,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.013003305532038212,
+          "median": 0.012735691852867603,
+          "minimum": 0.012387104332447052,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 716,
+          "median": 716,
+          "minimum": 716,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 3.316439688205719e-06,
+          "median": 3.0854716897010803e-06,
+          "minimum": 2.9262155294418335e-06,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.21036498248577118,
+          "median": 0.20703488495200872,
+          "minimum": 0.20582027826458216,
+          "samples": 3
+        }
+      },
+      "mode": "cold"
+    },
+    {
+      "backend": "packet_pipeline",
+      "case": "s16",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 1065323,
+          "median": 1065323,
+          "minimum": 1065323,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 0.002161407843232155,
+          "median": 0.0021348372101783752,
+          "minimum": 0.00213013868778944,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.190114,
+          "median": 0.18996299999999997,
+          "minimum": 0.18707999999999997,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.19113907497376204,
+          "median": 0.19077943824231625,
+          "minimum": 0.1879148054867983,
+          "samples": 3
+        },
+        "cold_worker_less_validation_seconds": {
+          "maximum": 0.4978565461933613,
+          "median": 0.49761248379945755,
+          "minimum": 0.44803580082952976,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.17852900000000002,
+          "median": 0.178342,
+          "minimum": 0.175771,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.006977293640375137,
+          "median": 0.006820297800004482,
+          "minimum": 0.006734815426170826,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 0.002688910812139511,
+          "median": 0.002565898932516575,
+          "minimum": 0.002477622590959072,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 672,
+          "median": 672,
+          "minimum": 672,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.017362961545586586,
+          "median": 0.016733726486563683,
+          "minimum": 0.016527599655091763,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 492,
+          "median": 492,
+          "minimum": 492,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 2.985820174217224e-06,
+          "median": 2.9765069484710693e-06,
+          "minimum": 2.864748239517212e-06,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.17949502915143967,
+          "median": 0.1791061069816351,
+          "minimum": 0.17654095962643623,
+          "samples": 3
+        }
+      },
+      "mode": "cold"
+    },
+    {
+      "backend": "booksim",
+      "case": "s16",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 927284,
+          "median": 927284,
+          "minimum": 927284,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 0.35654955450445414,
+          "median": 0.03327628318220377,
+          "minimum": 0.032900054939091206,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.9018069999999999,
+          "median": 0.47863600000000023,
+          "minimum": 0.47208900000000015,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.786178220063448,
+          "median": 0.46962239127606153,
+          "minimum": 0.4636959070339799,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.20927099999999998,
+          "median": 0.20580199999999993,
+          "minimum": 0.20222000000000007,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.004933386109769344,
+          "median": 0.004920049570500851,
+          "minimum": 0.00486186146736145,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 0.005162065848708153,
+          "median": 0.004457399249076843,
+          "minimum": 0.0044569289311766624,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 9568,
+          "median": 9512,
+          "minimum": 9444,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.23084600000000005,
+          "median": 0.22989900000000002,
+          "minimum": 0.226483,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.010555055923759937,
+          "median": 0.010241387411952019,
+          "minimum": 0.010229473933577538,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 160520,
+          "median": 160464,
+          "minimum": 160396,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 492,
+          "median": 492,
+          "minimum": 492,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 0.49908039905130863,
+          "median": 0.49730526749044657,
+          "minimum": 0.4972428595647216,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.4266402209177613,
+          "median": 0.421100833453238,
+          "minimum": 0.42023788020014763,
+          "samples": 3
+        }
+      },
+      "mode": "reuse_graph"
+    },
+    {
+      "backend": "coarse",
+      "case": "s16",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 516682,
+          "median": 516682,
+          "minimum": 516682,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 4.327856004238129e-06,
+          "median": 3.887340426445007e-06,
+          "minimum": 3.807246685028076e-06,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.2156070000000001,
+          "median": 0.21537899999999993,
+          "minimum": 0.21238599999999996,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.21653816476464272,
+          "median": 0.2163021070882678,
+          "minimum": 0.21338661015033722,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.21085700000000002,
+          "median": 0.21075899999999997,
+          "minimum": 0.20777899999999994,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.004764138720929623,
+          "median": 0.0046373577788472176,
+          "minimum": 0.00461767241358757,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 3.0156224966049194e-06,
+          "median": 2.874992787837982e-06,
+          "minimum": 2.7548521757125854e-06,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.012709332630038261,
+          "median": 0.01223601121455431,
+          "minimum": 0.011668061837553978,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 716,
+          "median": 716,
+          "minimum": 716,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 3.3155083656311035e-06,
+          "median": 3.1152740120887756e-06,
+          "minimum": 2.8461217880249023e-06,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.21176712308079004,
+          "median": 0.2116575464606285,
+          "minimum": 0.2087623756378889,
+          "samples": 3
+        }
+      },
+      "mode": "reuse_graph"
+    },
+    {
+      "backend": "packet_pipeline",
+      "case": "s16",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 1065323,
+          "median": 1065323,
+          "minimum": 1065323,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 0.002125309780240059,
+          "median": 0.0019218670204281807,
+          "minimum": 0.0019196225330233574,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.18917700000000004,
+          "median": 0.18594,
+          "minimum": 0.18583799999999978,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.19013385381549597,
+          "median": 0.1869304645806551,
+          "minimum": 0.18685773760080338,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.177885,
+          "median": 0.17508999999999997,
+          "minimum": 0.17484899999999987,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.0066956933587789536,
+          "median": 0.006634528748691082,
+          "minimum": 0.006456212140619755,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 0.0025317054241895676,
+          "median": 0.0025306232273578644,
+          "minimum": 0.0024954769760370255,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 672,
+          "median": 672,
+          "minimum": 672,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.016045440919697285,
+          "median": 0.016009563580155373,
+          "minimum": 0.015044167637825012,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 150952,
+          "median": 150952,
+          "minimum": 150952,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 492,
+          "median": 492,
+          "minimum": 492,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 3.014691174030304e-06,
+          "median": 2.956017851829529e-06,
+          "minimum": 2.944841980934143e-06,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.1787822274491191,
+          "median": 0.17602292448282242,
+          "minimum": 0.1758058648556471,
+          "samples": 3
+        }
+      },
+      "mode": "reuse_graph"
+    },
+    {
+      "backend": "booksim",
+      "case": "s16",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.01562782470136881,
+          "median": 0.01490623690187931,
+          "minimum": 0.014514079317450523,
+          "samples": 3
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.002985789440572262,
+          "median": 0.0029129628092050552,
+          "minimum": 0.002858600579202175,
+          "samples": 3
+        }
+      },
+      "mode": "setup_cold"
+    },
+    {
+      "backend": "coarse",
+      "case": "s16",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.0169020127505064,
+          "median": 0.016817694529891014,
+          "minimum": 0.014915804378688335,
+          "samples": 3
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.003038720227777958,
+          "median": 0.0029679154977202415,
+          "minimum": 0.002949953079223633,
+          "samples": 3
+        }
+      },
+      "mode": "setup_cold"
+    },
+    {
+      "backend": "packet_pipeline",
+      "case": "s16",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.017102119512856007,
+          "median": 0.01630798541009426,
+          "minimum": 0.015116693452000618,
+          "samples": 3
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.0030487878248095512,
+          "median": 0.002987353131175041,
+          "minimum": 0.0028971731662750244,
+          "samples": 3
+        }
+      },
+      "mode": "setup_cold"
+    },
+    {
+      "backend": "booksim",
+      "case": "s16",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.01660518441349268,
+          "median": 0.01660518441349268,
+          "minimum": 0.01660518441349268,
+          "samples": 1
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.0029694894328713417,
+          "median": 0.0029694894328713417,
+          "minimum": 0.0029694894328713417,
+          "samples": 1
+        }
+      },
+      "mode": "setup_reuse_graph"
+    },
+    {
+      "backend": "coarse",
+      "case": "s16",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.014906346797943115,
+          "median": 0.014906346797943115,
+          "minimum": 0.014906346797943115,
+          "samples": 1
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.0029344726353883743,
+          "median": 0.0029344726353883743,
+          "minimum": 0.0029344726353883743,
+          "samples": 1
+        }
+      },
+      "mode": "setup_reuse_graph"
+    },
+    {
+      "backend": "packet_pipeline",
+      "case": "s16",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.015012828633189201,
+          "median": 0.015012828633189201,
+          "minimum": 0.015012828633189201,
+          "samples": 1
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.0028580790385603905,
+          "median": 0.0028580790385603905,
+          "minimum": 0.0028580790385603905,
+          "samples": 1
+        }
+      },
+      "mode": "setup_reuse_graph"
+    },
+    {
+      "backend": "booksim",
+      "case": "s64",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 1469846,
+          "median": 1469846,
+          "minimum": 1469845,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 0.3524227971211076,
+          "median": 0.3520025759935379,
+          "minimum": 0.3507930599153042,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.9350639999999999,
+          "median": 0.9344790000000001,
+          "minimum": 0.9332429999999998,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.8179965186864138,
+          "median": 0.8174114478752017,
+          "minimum": 0.8161796387284994,
+          "samples": 3
+        },
+        "cold_worker_less_validation_seconds": {
+          "maximum": 1.1544918864965439,
+          "median": 1.15437604021281,
+          "minimum": 1.153765699826181,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.2134250000000001,
+          "median": 0.21100700000000006,
+          "minimum": 0.20989900000000006,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.0061779385432600975,
+          "median": 0.005972300656139851,
+          "minimum": 0.005954377353191376,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 0.006039386615157127,
+          "median": 0.005862974561750889,
+          "minimum": 0.005841374397277832,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 10440,
+          "median": 10408,
+          "minimum": 10404,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.257905,
+          "median": 0.25527,
+          "minimum": 0.253488,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.012790694832801819,
+          "median": 0.01277951430529356,
+          "minimum": 0.012659247033298016,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 165260,
+          "median": 165228,
+          "minimum": 165224,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 492,
+          "median": 492,
+          "minimum": 492,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 1.4004723252728581,
+          "median": 1.4001269666478038,
+          "minimum": 1.3506317548453808,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.4541802676394582,
+          "median": 0.45356922689825296,
+          "minimum": 0.4527713255956769,
+          "samples": 3
+        }
+      },
+      "mode": "cold"
+    },
+    {
+      "backend": "coarse",
+      "case": "s64",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 520657,
+          "median": 520657,
+          "minimum": 520657,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 5.5907294154167175e-06,
+          "median": 4.909001290798187e-06,
+          "minimum": 4.7292560338974e-06,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.21353000000000003,
+          "median": 0.21275,
+          "minimum": 0.21181200000000003,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.2143831653520465,
+          "median": 0.21371989883482456,
+          "minimum": 0.212618175894022,
+          "samples": 3
+        },
+        "cold_worker_less_validation_seconds": {
+          "maximum": 0.502243934199214,
+          "median": 0.5021167937666178,
+          "minimum": 0.5018343823030591,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.20884299999999997,
+          "median": 0.207982,
+          "minimum": 0.207073,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.004785617813467979,
+          "median": 0.004751012660562992,
+          "minimum": 0.0047107869759202,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 3.205612301826477e-06,
+          "median": 3.1152740120887756e-06,
+          "minimum": 3.096647560596466e-06,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.012835569679737091,
+          "median": 0.012699143029749393,
+          "minimum": 0.01268674898892641,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 716,
+          "median": 716,
+          "minimum": 716,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 3.38628888130188e-06,
+          "median": 3.1758099794387817e-06,
+          "minimum": 2.975575625896454e-06,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.2096643541008234,
+          "median": 0.20892548467963934,
+          "minimum": 0.2078593373298645,
+          "samples": 3
+        }
+      },
+      "mode": "cold"
+    },
+    {
+      "backend": "packet_pipeline",
+      "case": "s64",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 2295835,
+          "median": 2295835,
+          "minimum": 2295835,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 0.0021287063136696815,
+          "median": 0.0021217241883277893,
+          "minimum": 0.0020976774394512177,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.2058350000000001,
+          "median": 0.2018530000000001,
+          "minimum": 0.201799,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.20664259791374207,
+          "median": 0.20278099738061428,
+          "minimum": 0.20260748453438282,
+          "samples": 3
+        },
+        "cold_worker_less_validation_seconds": {
+          "maximum": 0.4891905440017581,
+          "median": 0.48914772272109985,
+          "minimum": 0.4889788059517741,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.18449300000000002,
+          "median": 0.18043599999999999,
+          "minimum": 0.180313,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.011647433042526245,
+          "median": 0.011569386348128319,
+          "minimum": 0.01156743336468935,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 0.007833434268832207,
+          "median": 0.00781982857733965,
+          "minimum": 0.007734077982604504,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 2016,
+          "median": 2016,
+          "minimum": 2016,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.025688260793685913,
+          "median": 0.025662862695753574,
+          "minimum": 0.025541584938764572,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 492,
+          "median": 492,
+          "minimum": 492,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 3.4170225262641907e-06,
+          "median": 3.335997462272644e-06,
+          "minimum": 3.255903720855713e-06,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.18521042726933956,
+          "median": 0.1812024526298046,
+          "minimum": 0.18109849840402603,
+          "samples": 3
+        }
+      },
+      "mode": "cold"
+    },
+    {
+      "backend": "booksim",
+      "case": "s64",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 1469930,
+          "median": 1469930,
+          "minimum": 1469930,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 0.3527821935713291,
+          "median": 0.032410454005002975,
+          "minimum": 0.03217283729463816,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.9368559999999999,
+          "median": 0.5074549999999998,
+          "minimum": 0.5026779999999995,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.8232398573309183,
+          "median": 0.4968215664848685,
+          "minimum": 0.492508752271533,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.21273599999999993,
+          "median": 0.21224900000000024,
+          "minimum": 0.20820799999999973,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.006077168509364128,
+          "median": 0.005992960184812546,
+          "minimum": 0.005968574434518814,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 0.009938525967299938,
+          "median": 0.007096797227859497,
+          "minimum": 0.005890287458896637,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 10364,
+          "median": 10360,
+          "minimum": 10352,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.255725,
+          "median": 0.253765,
+          "minimum": 0.253359,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.013328377157449722,
+          "median": 0.013055973686277866,
+          "minimum": 0.012494557537138462,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 165184,
+          "median": 165180,
+          "minimum": 165172,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 492,
+          "median": 492,
+          "minimum": 492,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 1.3500792244449258,
+          "median": 1.349149726331234,
+          "minimum": 1.3488656617701054,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.45455056335777044,
+          "median": 0.45147476345300674,
+          "minimum": 0.44821505062282085,
+          "samples": 3
+        }
+      },
+      "mode": "reuse_graph"
+    },
+    {
+      "backend": "coarse",
+      "case": "s64",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 520657,
+          "median": 520657,
+          "minimum": 520657,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 5.150213837623596e-06,
+          "median": 4.237517714500427e-06,
+          "minimum": 3.826804459095001e-06,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.212963,
+          "median": 0.2098770000000001,
+          "minimum": 0.20984899999999984,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.213844851590693,
+          "median": 0.2107447860762477,
+          "minimum": 0.21074319630861282,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.208071,
+          "median": 0.20510799999999996,
+          "minimum": 0.20488799999999996,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.0049784015864133835,
+          "median": 0.004902607761323452,
+          "minimum": 0.004782841540873051,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 2.9550865292549133e-06,
+          "median": 2.7138739824295044e-06,
+          "minimum": 2.6552006602287292e-06,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.012865676544606686,
+          "median": 0.012306584045290947,
+          "minimum": 0.01160831842571497,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 716,
+          "median": 716,
+          "minimum": 716,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 3.1758099794387817e-06,
+          "median": 2.9150396585464478e-06,
+          "minimum": 2.8852373361587524e-06,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.2089343797415495,
+          "median": 0.20595475193113089,
+          "minimum": 0.20575831271708012,
+          "samples": 3
+        }
+      },
+      "mode": "reuse_graph"
+    },
+    {
+      "backend": "packet_pipeline",
+      "case": "s64",
+      "metrics": {
+        "artifact_bytes": {
+          "maximum": 2295835,
+          "median": 2295835,
+          "minimum": 2295835,
+          "samples": 3
+        },
+        "backend_initialization_seconds": {
+          "maximum": 0.002149316482245922,
+          "median": 0.001961451955139637,
+          "minimum": 0.0019524451345205307,
+          "samples": 3
+        },
+        "backend_total_cpu_seconds": {
+          "maximum": 0.20202599999999993,
+          "median": 0.20051100000000005,
+          "minimum": 0.19873600000000002,
+          "samples": 3
+        },
+        "backend_total_wall_seconds": {
+          "maximum": 0.20279626827687025,
+          "median": 0.20127284061163664,
+          "minimum": 0.19949495419859886,
+          "samples": 3
+        },
+        "execution_cpu_python_seconds": {
+          "maximum": 0.18061900000000003,
+          "median": 0.18032099999999998,
+          "minimum": 0.1786589999999999,
+          "samples": 3
+        },
+        "execution_serialization_seconds": {
+          "maximum": 0.011743794195353985,
+          "median": 0.011053425259888172,
+          "minimum": 0.01088724285364151,
+          "samples": 3
+        },
+        "native_close_and_serialization_seconds": {
+          "maximum": 0.007904818281531334,
+          "median": 0.007161429151892662,
+          "minimum": 0.007145298644900322,
+          "samples": 3
+        },
+        "native_peak_rss_kib": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "samples": 3
+        },
+        "native_total_cpu_seconds": {
+          "maximum": 0.0,
+          "median": 0.0,
+          "minimum": 0.0,
+          "samples": 3
+        },
+        "packet_services": {
+          "maximum": 2016,
+          "median": 2016,
+          "minimum": 2016,
+          "samples": 3
+        },
+        "phases": {
+          "maximum": 440,
+          "median": 440,
+          "minimum": 440,
+          "samples": 3
+        },
+        "python_peak_rss_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "readback_independent_audit_seconds": {
+          "maximum": 0.024822120554745197,
+          "median": 0.02454968821257353,
+          "minimum": 0.022996705025434494,
+          "samples": 3
+        },
+        "rss_separate_peaks_upper_bound_kib": {
+          "maximum": 154820,
+          "median": 154820,
+          "minimum": 154820,
+          "samples": 3
+        },
+        "services": {
+          "maximum": 492,
+          "median": 492,
+          "minimum": 492,
+          "samples": 3
+        },
+        "standalone_reference_seconds": {
+          "maximum": 3.5259872674942017e-06,
+          "median": 3.2158568501472473e-06,
+          "minimum": 3.005377948284149e-06,
+          "samples": 3
+        },
+        "timed_execution_seconds": {
+          "maximum": 0.18128785397857428,
+          "median": 0.180998339317739,
+          "minimum": 0.1793186478316784,
+          "samples": 3
+        }
+      },
+      "mode": "reuse_graph"
+    },
+    {
+      "backend": "booksim",
+      "case": "s64",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.016894379630684853,
+          "median": 0.016606517136096954,
+          "minimum": 0.01621363777667284,
+          "samples": 3
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.002947518602013588,
+          "median": 0.0029157083481550217,
+          "minimum": 0.002898765727877617,
+          "samples": 3
+        }
+      },
+      "mode": "setup_cold"
+    },
+    {
+      "backend": "coarse",
+      "case": "s64",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.01762748882174492,
+          "median": 0.01737838052213192,
+          "minimum": 0.016978728584945202,
+          "samples": 3
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.003043878823518753,
+          "median": 0.0030194642022252083,
+          "minimum": 0.002969047985970974,
+          "samples": 3
+        }
+      },
+      "mode": "setup_cold"
+    },
+    {
+      "backend": "packet_pipeline",
+      "case": "s64",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.017496041022241116,
+          "median": 0.01691859494894743,
+          "minimum": 0.016478816978633404,
+          "samples": 3
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.0030745966359972954,
+          "median": 0.0030466942116618156,
+          "minimum": 0.002983805723488331,
+          "samples": 3
+        }
+      },
+      "mode": "setup_cold"
+    },
+    {
+      "backend": "booksim",
+      "case": "s64",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.016761197708547115,
+          "median": 0.016761197708547115,
+          "minimum": 0.016761197708547115,
+          "samples": 1
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.0029607033357024193,
+          "median": 0.0029607033357024193,
+          "minimum": 0.0029607033357024193,
+          "samples": 1
+        }
+      },
+      "mode": "setup_reuse_graph"
+    },
+    {
+      "backend": "coarse",
+      "case": "s64",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.0166493970900774,
+          "median": 0.0166493970900774,
+          "minimum": 0.0166493970900774,
+          "samples": 1
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.003007691353559494,
+          "median": 0.003007691353559494,
+          "minimum": 0.003007691353559494,
+          "samples": 1
+        }
+      },
+      "mode": "setup_reuse_graph"
+    },
+    {
+      "backend": "packet_pipeline",
+      "case": "s64",
+      "metrics": {
+        "input_graph_binding_seconds": {
+          "maximum": 0.01653748843818903,
+          "median": 0.01653748843818903,
+          "minimum": 0.01653748843818903,
+          "samples": 1
+        },
+        "input_serialization_seconds": {
+          "maximum": 0.002926989458501339,
+          "median": 0.002926989458501339,
+          "minimum": 0.002926989458501339,
+          "samples": 1
+        }
+      },
+      "mode": "setup_reuse_graph"
+    }
+  ],
+  "isolated_transfers": [
+    {
+      "absolute_percentage_error": 12.5,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 81,
+      "coarse_path": [
+        0,
+        22,
+        23,
+        1
+      ],
+      "destination": 1,
+      "ejection_span_cycles": 4,
+      "error_cycles": 9,
+      "first_flit_completion_boundary": 68,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 0,
+      "injection_span_cycles": 2,
+      "latency_cycles": 66,
+      "logical_tokens": [
+        "attention_sum/phase/32",
+        "ffn_sum/phase/32"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 66,
+            "serialization_cycles": 15
+          },
+          "count": 3,
+          "path": [
+            0,
+            22,
+            23,
+            1
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4
+      ],
+      "physical_links": 3,
+      "reference_cycles": 72,
+      "serialization_cycles": 15,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 12.857142857142856,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 158,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6,
+        32,
+        35,
+        2
+      ],
+      "destination": 2,
+      "ejection_span_cycles": 4,
+      "error_cycles": 18,
+      "first_flit_completion_boundary": 136,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 1,
+      "injection_span_cycles": 2,
+      "latency_cycles": 134,
+      "logical_tokens": [
+        "attention_sum/phase/35",
+        "ffn_sum/phase/35"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 134,
+            "serialization_cycles": 24
+          },
+          "count": 3,
+          "path": [
+            0,
+            22,
+            21,
+            6,
+            32,
+            35,
+            2
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "physical_links": 6,
+      "reference_cycles": 140,
+      "serialization_cycles": 24,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 14.210526315789473,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 217,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6,
+        32,
+        33,
+        7,
+        40,
+        43,
+        3
+      ],
+      "destination": 3,
+      "ejection_span_cycles": 4,
+      "error_cycles": 27,
+      "first_flit_completion_boundary": 186,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 2,
+      "injection_span_cycles": 2,
+      "latency_cycles": 184,
+      "logical_tokens": [
+        "attention_sum/phase/38",
+        "ffn_sum/phase/38"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 184,
+            "serialization_cycles": 33
+          },
+          "count": 3,
+          "path": [
+            0,
+            22,
+            21,
+            6,
+            32,
+            33,
+            7,
+            40,
+            43,
+            3
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "physical_links": 9,
+      "reference_cycles": 190,
+      "serialization_cycles": 33,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 14.999999999999991,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 276,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6,
+        32,
+        33,
+        7,
+        40,
+        41,
+        8,
+        48,
+        51,
+        4
+      ],
+      "destination": 4,
+      "ejection_span_cycles": 4,
+      "error_cycles": 36,
+      "first_flit_completion_boundary": 236,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 3,
+      "injection_span_cycles": 2,
+      "latency_cycles": 234,
+      "logical_tokens": [
+        "attention_sum/phase/41",
+        "ffn_sum/phase/41"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 234,
+            "serialization_cycles": 42
+          },
+          "count": 3,
+          "path": [
+            0,
+            22,
+            21,
+            6,
+            32,
+            33,
+            7,
+            40,
+            41,
+            8,
+            48,
+            51,
+            4
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "physical_links": 12,
+      "reference_cycles": 240,
+      "serialization_cycles": 42,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 12.162162162162172,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 83,
+      "coarse_path": [
+        0,
+        22,
+        20,
+        5
+      ],
+      "destination": 5,
+      "ejection_span_cycles": 4,
+      "error_cycles": 9,
+      "first_flit_completion_boundary": 70,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 4,
+      "injection_span_cycles": 2,
+      "latency_cycles": 68,
+      "logical_tokens": [
+        "attention_sum/phase/44",
+        "ffn_sum/phase/44"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 68,
+            "serialization_cycles": 15
+          },
+          "count": 3,
+          "path": [
+            0,
+            22,
+            20,
+            5
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4
+      ],
+      "physical_links": 3,
+      "reference_cycles": 74,
+      "serialization_cycles": 15,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 11.111111111111116,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 90,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6
+      ],
+      "destination": 6,
+      "ejection_span_cycles": 4,
+      "error_cycles": 9,
+      "first_flit_completion_boundary": 77,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 5,
+      "injection_span_cycles": 2,
+      "latency_cycles": 75,
+      "logical_tokens": [
+        "attention_sum/phase/47",
+        "ffn_sum/phase/47"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 75,
+            "serialization_cycles": 15
+          },
+          "count": 3,
+          "path": [
+            0,
+            22,
+            21,
+            6
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4
+      ],
+      "physical_links": 3,
+      "reference_cycles": 81,
+      "serialization_cycles": 15,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 13.740458015267176,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 149,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6,
+        32,
+        33,
+        7
+      ],
+      "destination": 7,
+      "ejection_span_cycles": 4,
+      "error_cycles": 18,
+      "first_flit_completion_boundary": 127,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 6,
+      "injection_span_cycles": 2,
+      "latency_cycles": 125,
+      "logical_tokens": [
+        "attention_sum/phase/50",
+        "ffn_sum/phase/50"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 125,
+            "serialization_cycles": 24
+          },
+          "count": 3,
+          "path": [
+            0,
+            22,
+            21,
+            6,
+            32,
+            33,
+            7
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "physical_links": 6,
+      "reference_cycles": 131,
+      "serialization_cycles": 24,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 12.5,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 81,
+      "coarse_path": [
+        1,
+        23,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 4,
+      "error_cycles": 9,
+      "first_flit_completion_boundary": 68,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 7,
+      "injection_span_cycles": 2,
+      "latency_cycles": 66,
+      "logical_tokens": [
+        "attention_sum/phase/2",
+        "ffn_sum/phase/2"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 66,
+            "serialization_cycles": 15
+          },
+          "count": 3,
+          "path": [
+            1,
+            23,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4
+      ],
+      "physical_links": 3,
+      "reference_cycles": 72,
+      "serialization_cycles": 15,
+      "source": 1
+    },
+    {
+      "absolute_percentage_error": 12.857142857142856,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 158,
+      "coarse_path": [
+        2,
+        35,
+        32,
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 4,
+      "error_cycles": 18,
+      "first_flit_completion_boundary": 136,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 8,
+      "injection_span_cycles": 2,
+      "latency_cycles": 134,
+      "logical_tokens": [
+        "attention_sum/phase/6",
+        "ffn_sum/phase/6"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 134,
+            "serialization_cycles": 24
+          },
+          "count": 3,
+          "path": [
+            2,
+            35,
+            32,
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "physical_links": 6,
+      "reference_cycles": 140,
+      "serialization_cycles": 24,
+      "source": 2
+    },
+    {
+      "absolute_percentage_error": 14.210526315789473,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 217,
+      "coarse_path": [
+        3,
+        43,
+        40,
+        7,
+        33,
+        32,
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 4,
+      "error_cycles": 27,
+      "first_flit_completion_boundary": 186,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 9,
+      "injection_span_cycles": 2,
+      "latency_cycles": 184,
+      "logical_tokens": [
+        "attention_sum/phase/10",
+        "ffn_sum/phase/10"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 184,
+            "serialization_cycles": 33
+          },
+          "count": 3,
+          "path": [
+            3,
+            43,
+            40,
+            7,
+            33,
+            32,
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "physical_links": 9,
+      "reference_cycles": 190,
+      "serialization_cycles": 33,
+      "source": 3
+    },
+    {
+      "absolute_percentage_error": 14.999999999999991,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 276,
+      "coarse_path": [
+        4,
+        51,
+        48,
+        8,
+        41,
+        40,
+        7,
+        33,
+        32,
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 4,
+      "error_cycles": 36,
+      "first_flit_completion_boundary": 236,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 10,
+      "injection_span_cycles": 2,
+      "latency_cycles": 234,
+      "logical_tokens": [
+        "attention_sum/phase/14",
+        "ffn_sum/phase/14"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 234,
+            "serialization_cycles": 42
+          },
+          "count": 3,
+          "path": [
+            4,
+            51,
+            48,
+            8,
+            41,
+            40,
+            7,
+            33,
+            32,
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "physical_links": 12,
+      "reference_cycles": 240,
+      "serialization_cycles": 42,
+      "source": 4
+    },
+    {
+      "absolute_percentage_error": 12.162162162162172,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 83,
+      "coarse_path": [
+        5,
+        20,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 4,
+      "error_cycles": 9,
+      "first_flit_completion_boundary": 70,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 11,
+      "injection_span_cycles": 2,
+      "latency_cycles": 68,
+      "logical_tokens": [
+        "attention_sum/phase/18",
+        "ffn_sum/phase/18"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 68,
+            "serialization_cycles": 15
+          },
+          "count": 3,
+          "path": [
+            5,
+            20,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4
+      ],
+      "physical_links": 3,
+      "reference_cycles": 74,
+      "serialization_cycles": 15,
+      "source": 5
+    },
+    {
+      "absolute_percentage_error": 11.111111111111116,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 90,
+      "coarse_path": [
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 4,
+      "error_cycles": 9,
+      "first_flit_completion_boundary": 77,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 12,
+      "injection_span_cycles": 2,
+      "latency_cycles": 75,
+      "logical_tokens": [
+        "attention_sum/phase/22",
+        "ffn_sum/phase/22"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 75,
+            "serialization_cycles": 15
+          },
+          "count": 3,
+          "path": [
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4
+      ],
+      "physical_links": 3,
+      "reference_cycles": 81,
+      "serialization_cycles": 15,
+      "source": 6
+    },
+    {
+      "absolute_percentage_error": 13.740458015267176,
+      "bytes": 4096,
+      "case": "s16",
+      "coarse_cycles": 149,
+      "coarse_path": [
+        7,
+        33,
+        32,
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 4,
+      "error_cycles": 18,
+      "first_flit_completion_boundary": 127,
+      "first_injection_wait_cycles": 0,
+      "flits": 3,
+      "index": 13,
+      "injection_span_cycles": 2,
+      "latency_cycles": 125,
+      "logical_tokens": [
+        "attention_sum/phase/26",
+        "ffn_sum/phase/26"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 125,
+            "serialization_cycles": 24
+          },
+          "count": 3,
+          "path": [
+            7,
+            33,
+            32,
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "physical_links": 6,
+      "reference_cycles": 131,
+      "serialization_cycles": 24,
+      "source": 7
+    },
+    {
+      "absolute_percentage_error": 32.14285714285714,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 111,
+      "coarse_path": [
+        0,
+        22,
+        23,
+        1
+      ],
+      "destination": 1,
+      "ejection_span_cycles": 16,
+      "error_cycles": 27,
+      "first_flit_completion_boundary": 68,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 0,
+      "injection_span_cycles": 8,
+      "latency_cycles": 66,
+      "logical_tokens": [
+        "attention_sum/phase/32",
+        "ffn_sum/phase/32"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 66,
+            "serialization_cycles": 45
+          },
+          "count": 9,
+          "path": [
+            0,
+            22,
+            23,
+            1
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16
+      ],
+      "physical_links": 3,
+      "reference_cycles": 84,
+      "serialization_cycles": 45,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 35.52631578947369,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 206,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6,
+        32,
+        35,
+        2
+      ],
+      "destination": 2,
+      "ejection_span_cycles": 16,
+      "error_cycles": 54,
+      "first_flit_completion_boundary": 136,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 1,
+      "injection_span_cycles": 8,
+      "latency_cycles": 134,
+      "logical_tokens": [
+        "attention_sum/phase/35",
+        "ffn_sum/phase/35"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 134,
+            "serialization_cycles": 72
+          },
+          "count": 9,
+          "path": [
+            0,
+            22,
+            21,
+            6,
+            32,
+            35,
+            2
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "physical_links": 6,
+      "reference_cycles": 152,
+      "serialization_cycles": 72,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 40.09900990099009,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 283,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6,
+        32,
+        33,
+        7,
+        40,
+        43,
+        3
+      ],
+      "destination": 3,
+      "ejection_span_cycles": 16,
+      "error_cycles": 81,
+      "first_flit_completion_boundary": 186,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 2,
+      "injection_span_cycles": 8,
+      "latency_cycles": 184,
+      "logical_tokens": [
+        "attention_sum/phase/38",
+        "ffn_sum/phase/38"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 184,
+            "serialization_cycles": 99
+          },
+          "count": 9,
+          "path": [
+            0,
+            22,
+            21,
+            6,
+            32,
+            33,
+            7,
+            40,
+            43,
+            3
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "physical_links": 9,
+      "reference_cycles": 202,
+      "serialization_cycles": 99,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 42.85714285714286,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 360,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6,
+        32,
+        33,
+        7,
+        40,
+        41,
+        8,
+        48,
+        51,
+        4
+      ],
+      "destination": 4,
+      "ejection_span_cycles": 16,
+      "error_cycles": 108,
+      "first_flit_completion_boundary": 236,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 3,
+      "injection_span_cycles": 8,
+      "latency_cycles": 234,
+      "logical_tokens": [
+        "attention_sum/phase/41",
+        "ffn_sum/phase/41"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 234,
+            "serialization_cycles": 126
+          },
+          "count": 9,
+          "path": [
+            0,
+            22,
+            21,
+            6,
+            32,
+            33,
+            7,
+            40,
+            41,
+            8,
+            48,
+            51,
+            4
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "physical_links": 12,
+      "reference_cycles": 252,
+      "serialization_cycles": 126,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 31.39534883720929,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 113,
+      "coarse_path": [
+        0,
+        22,
+        20,
+        5
+      ],
+      "destination": 5,
+      "ejection_span_cycles": 16,
+      "error_cycles": 27,
+      "first_flit_completion_boundary": 70,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 4,
+      "injection_span_cycles": 8,
+      "latency_cycles": 68,
+      "logical_tokens": [
+        "attention_sum/phase/44",
+        "ffn_sum/phase/44"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 68,
+            "serialization_cycles": 45
+          },
+          "count": 9,
+          "path": [
+            0,
+            22,
+            20,
+            5
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16
+      ],
+      "physical_links": 3,
+      "reference_cycles": 86,
+      "serialization_cycles": 45,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 29.032258064516125,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 120,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6
+      ],
+      "destination": 6,
+      "ejection_span_cycles": 16,
+      "error_cycles": 27,
+      "first_flit_completion_boundary": 77,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 5,
+      "injection_span_cycles": 8,
+      "latency_cycles": 75,
+      "logical_tokens": [
+        "attention_sum/phase/47",
+        "ffn_sum/phase/47"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 75,
+            "serialization_cycles": 45
+          },
+          "count": 9,
+          "path": [
+            0,
+            22,
+            21,
+            6
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16
+      ],
+      "physical_links": 3,
+      "reference_cycles": 93,
+      "serialization_cycles": 45,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 37.762237762237774,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 197,
+      "coarse_path": [
+        0,
+        22,
+        21,
+        6,
+        32,
+        33,
+        7
+      ],
+      "destination": 7,
+      "ejection_span_cycles": 16,
+      "error_cycles": 54,
+      "first_flit_completion_boundary": 127,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 6,
+      "injection_span_cycles": 8,
+      "latency_cycles": 125,
+      "logical_tokens": [
+        "attention_sum/phase/50",
+        "ffn_sum/phase/50"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 125,
+            "serialization_cycles": 72
+          },
+          "count": 9,
+          "path": [
+            0,
+            22,
+            21,
+            6,
+            32,
+            33,
+            7
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "physical_links": 6,
+      "reference_cycles": 143,
+      "serialization_cycles": 72,
+      "source": 0
+    },
+    {
+      "absolute_percentage_error": 32.14285714285714,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 111,
+      "coarse_path": [
+        1,
+        23,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 16,
+      "error_cycles": 27,
+      "first_flit_completion_boundary": 68,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 7,
+      "injection_span_cycles": 8,
+      "latency_cycles": 66,
+      "logical_tokens": [
+        "attention_sum/phase/2",
+        "ffn_sum/phase/2"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 66,
+            "serialization_cycles": 45
+          },
+          "count": 9,
+          "path": [
+            1,
+            23,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16
+      ],
+      "physical_links": 3,
+      "reference_cycles": 84,
+      "serialization_cycles": 45,
+      "source": 1
+    },
+    {
+      "absolute_percentage_error": 35.52631578947369,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 206,
+      "coarse_path": [
+        2,
+        35,
+        32,
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 16,
+      "error_cycles": 54,
+      "first_flit_completion_boundary": 136,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 8,
+      "injection_span_cycles": 8,
+      "latency_cycles": 134,
+      "logical_tokens": [
+        "attention_sum/phase/6",
+        "ffn_sum/phase/6"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 134,
+            "serialization_cycles": 72
+          },
+          "count": 9,
+          "path": [
+            2,
+            35,
+            32,
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "physical_links": 6,
+      "reference_cycles": 152,
+      "serialization_cycles": 72,
+      "source": 2
+    },
+    {
+      "absolute_percentage_error": 40.09900990099009,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 283,
+      "coarse_path": [
+        3,
+        43,
+        40,
+        7,
+        33,
+        32,
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 16,
+      "error_cycles": 81,
+      "first_flit_completion_boundary": 186,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 9,
+      "injection_span_cycles": 8,
+      "latency_cycles": 184,
+      "logical_tokens": [
+        "attention_sum/phase/10",
+        "ffn_sum/phase/10"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 184,
+            "serialization_cycles": 99
+          },
+          "count": 9,
+          "path": [
+            3,
+            43,
+            40,
+            7,
+            33,
+            32,
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "physical_links": 9,
+      "reference_cycles": 202,
+      "serialization_cycles": 99,
+      "source": 3
+    },
+    {
+      "absolute_percentage_error": 42.85714285714286,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 360,
+      "coarse_path": [
+        4,
+        51,
+        48,
+        8,
+        41,
+        40,
+        7,
+        33,
+        32,
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 16,
+      "error_cycles": 108,
+      "first_flit_completion_boundary": 236,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 10,
+      "injection_span_cycles": 8,
+      "latency_cycles": 234,
+      "logical_tokens": [
+        "attention_sum/phase/14",
+        "ffn_sum/phase/14"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 234,
+            "serialization_cycles": 126
+          },
+          "count": 9,
+          "path": [
+            4,
+            51,
+            48,
+            8,
+            41,
+            40,
+            7,
+            33,
+            32,
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "physical_links": 12,
+      "reference_cycles": 252,
+      "serialization_cycles": 126,
+      "source": 4
+    },
+    {
+      "absolute_percentage_error": 31.39534883720929,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 113,
+      "coarse_path": [
+        5,
+        20,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 16,
+      "error_cycles": 27,
+      "first_flit_completion_boundary": 70,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 11,
+      "injection_span_cycles": 8,
+      "latency_cycles": 68,
+      "logical_tokens": [
+        "attention_sum/phase/18",
+        "ffn_sum/phase/18"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 68,
+            "serialization_cycles": 45
+          },
+          "count": 9,
+          "path": [
+            5,
+            20,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16
+      ],
+      "physical_links": 3,
+      "reference_cycles": 86,
+      "serialization_cycles": 45,
+      "source": 5
+    },
+    {
+      "absolute_percentage_error": 29.032258064516125,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 120,
+      "coarse_path": [
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 16,
+      "error_cycles": 27,
+      "first_flit_completion_boundary": 77,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 12,
+      "injection_span_cycles": 8,
+      "latency_cycles": 75,
+      "logical_tokens": [
+        "attention_sum/phase/22",
+        "ffn_sum/phase/22"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 75,
+            "serialization_cycles": 45
+          },
+          "count": 9,
+          "path": [
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16
+      ],
+      "physical_links": 3,
+      "reference_cycles": 93,
+      "serialization_cycles": 45,
+      "source": 6
+    },
+    {
+      "absolute_percentage_error": 37.762237762237774,
+      "bytes": 16384,
+      "case": "s64",
+      "coarse_cycles": 197,
+      "coarse_path": [
+        7,
+        33,
+        32,
+        6,
+        21,
+        22,
+        0
+      ],
+      "destination": 0,
+      "ejection_span_cycles": 16,
+      "error_cycles": 54,
+      "first_flit_completion_boundary": 127,
+      "first_injection_wait_cycles": 0,
+      "flits": 9,
+      "index": 13,
+      "injection_span_cycles": 8,
+      "latency_cycles": 125,
+      "logical_tokens": [
+        "attention_sum/phase/26",
+        "ffn_sum/phase/26"
+      ],
+      "matched_path": true,
+      "native_paths": [
+        {
+          "coarse_cost_on_observed_path": {
+            "latency_cycles": 125,
+            "serialization_cycles": 72
+          },
+          "count": 9,
+          "path": [
+            7,
+            33,
+            32,
+            6,
+            21,
+            22,
+            0
+          ]
+        }
+      ],
+      "observed_ejection_intervals": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "observed_per_link_arrival_spans": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "physical_links": 6,
+      "reference_cycles": 143,
+      "serialization_cycles": 72,
+      "source": 7
+    }
+  ],
+  "registration": {
+    "accepted_reference_run": "/home/wangziheng/wafer_simulator/runs/transfer-granularity-001",
+    "algorithm": "direct_exchange_rank_order_sum",
+    "application_error_tolerance_percent": 2,
+    "backends": [
+      "booksim",
+      "coarse",
+      "packet_pipeline"
+    ],
+    "block": {
+      "batch": 1,
+      "ffn_hidden": 128,
+      "heads": 8,
+      "hidden": 64,
+      "shards": 8
+    },
+    "cases": [
+      {
+        "name": "s16",
+        "sequence": 16
+      },
+      {
+        "name": "s64",
+        "sequence": 64
+      }
+    ],
+    "cold_repetitions": 3,
+    "graph_reuse_repetitions": 3,
+    "mapping": "row_major",
+    "memory_bytes_per_cycle": 32,
+    "message_error_tolerance_percent": 5,
+    "name": "packet_pipeline_refinement_v1",
+    "placement": "baseline",
+    "protocol": "docs/PACKET_PIPELINE_PROTOCOL.md",
+    "scope": "Same complete inputs and hardware as transfer-granularity-001. Candidate changes network service granularity, not local resources. FCFS output queues, source-derived single-VC packet initiation, no input arbitration/finite-credit/adaptive-route model. No claims beyond the checked configuration."
+  },
+  "rows": [
+    {
+      "application_ape_percent": 0.36700175522579315,
+      "application_target_met": true,
+      "case": "s16",
+      "coarse_cycles": 12580,
+      "coarse_message_max_ape_percent": 15.0,
+      "coarse_network_queue_cycles": 2,
+      "complete_operations": 114,
+      "critical_chain_cycles": {
+        "booksim": {
+          "compute": 3080,
+          "memory": 9040,
+          "network": 414
+        },
+        "coarse": {
+          "compute": 3080,
+          "memory": 9040,
+          "network": 460
+        },
+        "packet_pipeline": {
+          "compute": 3080,
+          "memory": 9040,
+          "network": 414
+        }
+      },
+      "error_cycles": 46,
+      "full_application_route_mismatched_flits": 0,
+      "input_identity": "bf77b7fe6a96ed6cac4a59989fcfd1bc379c194634d50fef85571008e0e0d871",
+      "isolated": {
+        "matched_paths": 14,
+        "max_matched_ape_percent": 14.999999999999991,
+        "meets_service_target": false,
+        "route_mismatches": 0,
+        "tolerance_percent": 5,
+        "total": 14
+      },
+      "logical_message_bytes": 114688,
+      "maximum_native_first_injection_wait": 0,
+      "message_count": 28,
+      "native_flits": 84,
+      "peak_region_bytes": 62464,
+      "pipeline_application_ape_percent": 0.0,
+      "pipeline_application_target_met": true,
+      "pipeline_cycles": 12534,
+      "pipeline_isolated_matched_paths": 14,
+      "pipeline_isolated_max_ape_percent": 0.0,
+      "pipeline_isolated_target_met": true,
+      "pipeline_message_mape_percent": 0.0,
+      "pipeline_message_matched_max_ape_percent": 0.0,
+      "pipeline_message_max_ape_percent": 0.0,
+      "pipeline_packet_queue_cycles": 210,
+      "pipeline_packet_services": 672,
+      "reference_cycles": 12534,
+      "repeated_execution_identities": {
+        "booksim": "3e9af92401d18291526bc6c26a8f9bb9f3b714d78adb9346e5161215d68e7c90",
+        "coarse": "d619d68f19c1bff13624eed29a271d40cca7f5f06871da3208ba6d779c5a4035",
+        "packet_pipeline": "c0dd2b0bf95a610fd096d630fd64cd54fe8155ed1c3f9859e652252558037da1"
+      },
+      "sequence": 16
+    },
+    {
+      "application_ape_percent": 0.2039795250740939,
+      "application_target_met": true,
+      "case": "s64",
+      "coarse_cycles": 52072,
+      "coarse_message_max_ape_percent": 42.857142857142854,
+      "coarse_network_queue_cycles": 32,
+      "complete_operations": 114,
+      "critical_chain_cycles": {
+        "booksim": {
+          "compute": 15392,
+          "memory": 36064,
+          "network": 510
+        },
+        "coarse": {
+          "compute": 15392,
+          "memory": 36064,
+          "network": 616
+        },
+        "packet_pipeline": {
+          "compute": 15392,
+          "memory": 36064,
+          "network": 502
+        }
+      },
+      "error_cycles": 106,
+      "full_application_route_mismatched_flits": 4,
+      "input_identity": "b860ac2f0b3a99544abc58c6690cb6ae106dee231911500bb92053b9242f18b6",
+      "isolated": {
+        "matched_paths": 14,
+        "max_matched_ape_percent": 42.85714285714286,
+        "meets_service_target": false,
+        "route_mismatches": 0,
+        "tolerance_percent": 5,
+        "total": 14
+      },
+      "logical_message_bytes": 458752,
+      "maximum_native_first_injection_wait": 0,
+      "message_count": 28,
+      "native_flits": 252,
+      "peak_region_bytes": 197632,
+      "pipeline_application_ape_percent": 0.015394681137670396,
+      "pipeline_application_target_met": true,
+      "pipeline_cycles": 51958,
+      "pipeline_isolated_matched_paths": 14,
+      "pipeline_isolated_max_ape_percent": 0.0,
+      "pipeline_isolated_target_met": true,
+      "pipeline_message_mape_percent": 0.3804153240243468,
+      "pipeline_message_matched_max_ape_percent": 3.57142857142857,
+      "pipeline_message_max_ape_percent": 3.57142857142857,
+      "pipeline_packet_queue_cycles": 2952,
+      "pipeline_packet_services": 2016,
+      "reference_cycles": 51966,
+      "repeated_execution_identities": {
+        "booksim": "d25a2ecd8a8aaf3caca0135084f4bb8aa3a6a314931a273db5eb483efb0fb816",
+        "coarse": "994ca7715def83334d85b577f77769897dcc40f86b7eee2218ec61fc5f7e66c4",
+        "packet_pipeline": "75484835b3da097f62e9805ba6daf329ae53c056894f8be244fddd5493364d3c"
+      },
+      "sequence": 64
+    }
+  ]
+}
