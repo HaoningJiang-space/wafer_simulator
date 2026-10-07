@@ -224,8 +224,15 @@ Rank-local completion and the [memory-balance study](RANK_LOCAL_BALANCE.md) are
 accepted. The [fixed-tree study](TREE_SPATIAL_PROTOCOL.md) now compares two
 communication structures with identical logical network volume and total adds,
 while accounting for tree partial-result memory work. Spatial projection and
-the critical dependency chain, together, explain placement benefits. The next
-research axis can be embedding these two logical communication structures:
-separate active-endpoint selection from rank assignment before a bounded mapping
-comparison. Larger workloads, a complete Llama capture, thermal, PDN and runtime
-optimization are not prerequisites.
+the critical dependency chain, together, explain placement benefits. These are
+architecture-mechanism cases, not proof that detailed simulation is necessary.
+Freeze both algorithms and mapping comparisons. The immediate milestone is
+[accuracy versus cost of network abstractions](MODEL_FIDELITY_PROTOCOL.md):
+make the existing coarse backend a formal comparator to live BookSim, audit
+application errors and design-gap errors, then measure isolated execution costs
+and a bounded set of legal larger/overlapping demands. Only change a model
+after isolating a consequential omitted mechanism. The broader architecture
+sequence above is a future use case, not the current development queue.
+No new algorithm, mapping sweep, full capture recovery, thermal, PDN or runtime
+optimization is a prerequisite. Correctness tests and ranking reversals alone
+do not establish new simulation-method accuracy or novelty.

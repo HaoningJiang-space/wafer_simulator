@@ -1,0 +1,20 @@
+{
+  "name": "wow_network_abstraction_accuracy_cost_v1",
+  "placement": "baseline",
+  "mapping": "row_major",
+  "collective_algorithm": "direct_exchange_rank_order_sum",
+  "memory_bytes_per_cycle": 32,
+  "cases": [
+    {"name": "tp2-s16", "shards": 2, "sequence": 16},
+    {"name": "tp8-s16", "shards": 8, "sequence": 16},
+    {"name": "tp2-s32", "shards": 2, "sequence": 32},
+    {"name": "tp8-s32", "shards": 8, "sequence": 32},
+    {"name": "tp2-s64", "shards": 2, "sequence": 64},
+    {"name": "tp8-s64", "shards": 8, "sequence": 64}
+  ],
+  "heads": 8,
+  "repetitions": 3,
+  "scope": "Complete analytical Transformer forwards. Fixed 256 KiB per region, original compute rates and 32 B/cycle memory; no calibrated reticle performance claim. TP and sequence change defined work/parallelism, not packet multiplicity. No input truncation or free capacity expansion.",
+  "reuse_scope": "Immutable geometry, logical graph, mapping and binding only; new native process every execution. Full native-state reuse is not implemented.",
+  "feasibility_rule": "Run both unchanged backends for each registered case. Infeasible capacity is recorded as excluded with exact shortage, never silently shrink work, enlarge SRAM or count as a completed timed sample."
+}
