@@ -82,6 +82,8 @@ class MemoryBoundaryTests(unittest.TestCase):
             controller.close()
         finally:controller.abort()
         self.assertTrue(audit(binding,rates,result)['passed'])
+        from wafer_sim.analysis.timed_attribution import critical_chain
+        critical_chain(binding,result)
         return binding,rates,result
 
     def test_complete_collective_conserves_memory_network_and_lifetimes(self):

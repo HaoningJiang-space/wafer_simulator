@@ -27,7 +27,36 @@ def critical_chain(binding, result):
             token = f"{op}/phase/{index}"
             p = phases[op,index]
             node(previous,p["ready"],incoming)
-            if phase.transfer is not None and result.get("network_backend") in {"booksim","packet_pipeline"}:
+            if phase.kind == 'memory_network':
+                move=next(m for m in result['boundary']['moves'] if m['token']==token)
+                finishes=[]
+                for packet in move['packets']:
+                    k=packet['ordinal'];base=f'boundary:{token}:{k}'
+                    # Source admission wait is observed duration, not a claim
+                    # that an omitted internal queue has been causally resolved.
+                    node(base+':read-ready',packet['reserved'],[previous],
+                         packet['reserved']-p['ready'],'source_queue',operation=op,phase=index,token=token)
+                    point=base+':read-ready'
+                    for kind in ('read','write'):
+                        if kind=='write':
+                            node(base+':receive',packet['received'],[point],
+                                 packet['received']-packet['supplied'],'network',operation=op,phase=index,token=token)
+                            point=base+':receive'
+                        event=services[f'{token}/{kind}/{k}'][0];identity=event['id']
+                        incoming=[point]
+                        if event['resource_predecessor'] is not None:
+                            incoming.append(f"service:{event['resource_predecessor']}:release")
+                        node(f'service:{identity}:start',event['start'],incoming)
+                        node(f'service:{identity}:release',event['resource_released'],
+                             [f'service:{identity}:start'],event['resource_released']-event['start'],
+                             'memory',operation=op,phase=index,resource=event['resource'],token=token)
+                        node(f'service:{identity}:finish',event['finish'],[f'service:{identity}:release'],
+                             event['finish']-event['resource_released'],'memory',operation=op,phase=index,token=token)
+                        point=f'service:{identity}:finish'
+                    finishes.append(point)
+                previous=f'boundary:{token}:commit'
+                node(previous,p['finish'],finishes)
+            elif phase.transfer is not None and result.get("network_backend") in {"booksim","packet_pipeline"}:
                 point = f"network:{token}"
                 node(point,p["finish"],[previous],p["finish"]-p["ready"],"network",
                      operation=op,phase=index,token=token)

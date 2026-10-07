@@ -1,11 +1,97 @@
 {
   "name": "memory_network_boundary_v1",
-  "placement": "baseline", "mapping": "row_major",
-  "algorithm": "direct_exchange_rank_order_sum", "network_seed": 1,
-  "tx_slots": 2, "rx_slots": 8, "flit_bytes": 2000,
-  "modes": ["serial", "pipeline", "bounded"], "repetitions": 3,
-  "cases": [{"name": "s16", "sequence": 16}, {"name": "s64", "sequence": 64}],
-  "application_tolerance_percent": 2, "application_tolerance_cycles": 100,
-  "message_tolerance_percent": 5, "message_tolerance_cycles": 20,
-  "scope": "Conditional streaming DMA target; shared read/write ports; FIFO storage carved out of unchanged SRAM. BookSim internal network fixed. Whole-object consumer visibility."
+  "placement": "baseline",
+  "mapping": "row_major",
+  "algorithm": "direct_exchange_rank_order_sum",
+  "network_seed": 1,
+  "tx_slots": 2,
+  "rx_slots": 8,
+  "flit_bytes": 2000,
+  "modes": [
+    "serial",
+    "pipeline",
+    "bounded"
+  ],
+  "repetitions": 3,
+  "cases": [
+    {
+      "name": "s16",
+      "sequence": 16
+    },
+    {
+      "name": "s64",
+      "sequence": 64
+    }
+  ],
+  "application_tolerance_percent": 2,
+  "application_tolerance_cycles": 100,
+  "message_tolerance_percent": 5,
+  "message_tolerance_cycles": 20,
+  "scope": "Conditional streaming DMA target; shared read/write ports; FIFO storage carved out of unchanged SRAM. BookSim internal network fixed. Whole-object consumer visibility.",
+  "mechanisms": [
+    {
+      "name": "single",
+      "flows": [
+        [
+          1,
+          0,
+          32000
+        ]
+      ]
+    },
+    {
+      "name": "slow_source",
+      "flows": [
+        [
+          1,
+          0,
+          32000
+        ]
+      ],
+      "memory_overrides": {
+        "1": 8
+      }
+    },
+    {
+      "name": "incast",
+      "flows": [
+        [
+          1,
+          0,
+          32000
+        ],
+        [
+          5,
+          0,
+          32000
+        ],
+        [
+          6,
+          0,
+          32000
+        ]
+      ],
+      "memory_overrides": {
+        "0": 8
+      }
+    },
+    {
+      "name": "shared_slow_sink",
+      "flows": [
+        [
+          7,
+          0,
+          32000
+        ],
+        [
+          6,
+          1,
+          32000
+        ]
+      ],
+      "memory_overrides": {
+        "0": 8
+      }
+    }
+  ]
 }
