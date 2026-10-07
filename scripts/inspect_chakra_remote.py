@@ -1,8 +1,10 @@
 """Inventory the complete 16-rank public Llama source on eex005."""
 import argparse
 from collections import Counter
+from concurrent.futures import ProcessPoolExecutor
 import csv
 import importlib.metadata
+import json
 from pathlib import Path
 import platform
 import subprocess
@@ -10,6 +12,24 @@ import sys
 
 from wafer_sim.io import digest, read_json, write_json
 from wafer_sim.analysis.chakra_source import inspect_rank
+
+
+def inspect_file(job):
+    rank, capture, generated, expected_sha = job
+    path = capture / f"chakra.{rank}.et"
+    sys.path.insert(0, str(generated))
+    import et_def_pb2 as schema
+    before = path.stat()
+    actual = digest(path)
+    if actual != expected_sha:
+        raise ValueError(f"Input changed: {path}")
+    report, signatures, work = inspect_rank(path, schema)
+    after = path.stat()
+    if report["bytes_read"] != before.st_size or (before.st_size, before.st_mtime_ns) != (after.st_size, after.st_mtime_ns):
+        raise ValueError("Source changed or full bytes were not consumed")
+    report.update(rank=rank, input_sha256=actual, input_bytes=before.st_size,
+                  source_url=(capture / (path.name + ".url")).read_text().strip())
+    return report, signatures, work
 
 
 def main():
@@ -35,26 +55,20 @@ def main():
     sums = {name: sha for sha, name in (line.split() for line in (capture / "SHA256SUMS").read_text().splitlines())}
     if set(sums) != files:
         raise ValueError("Download hash manifest must cover all ranks")
-    sys.path.insert(0, str(generated))
-    import et_def_pb2 as schema
     ranks, signature_totals, total_counts = [], Counter(), Counter()
-    for rank in range(16):
-        path = capture / f"chakra.{rank}.et"
-        before = path.stat()
-        actual = digest(path)
-        if actual != sums[path.name]:
-            raise ValueError(f"Input changed: {path}")
-        report, signatures = inspect_rank(path, schema)
-        after = path.stat()
-        if report["bytes_read"] != before.st_size or (before.st_size, before.st_mtime_ns) != (after.st_size, after.st_mtime_ns):
-            raise ValueError("Source changed or full bytes were not consumed")
-        report.update(rank=rank, input_sha256=actual, input_bytes=before.st_size,
-                      source_url=(capture / (path.name + ".url")).read_text().strip())
-        write_json(args.output / f"rank-{rank:02}.json", report)
-        ranks.append({k: v for k, v in report.items() if k != "examples"})
-        signature_totals.update(signatures)
-        total_counts.update(report["counts"])
-        print(f"rank={rank} nodes={report['nodes']} all_bytes_read=True", flush=True)
+    jobs = [(rank, capture, generated, sums[f"chakra.{rank}.et"]) for rank in range(16)]
+    # Independent complete source files, no simulation order or source event
+    # order is changed. Bound host processing to four workers.
+    with ProcessPoolExecutor(max_workers=4) as pool, (args.output / "matrix_work.jsonl").open("w") as stream:
+        for report, signatures, work in pool.map(inspect_file, jobs):
+            rank = report["rank"]
+            write_json(args.output / f"rank-{rank:02}.json", report)
+            for record in work:
+                stream.write(json.dumps(dict(rank=rank, **record), sort_keys=True) + "\n")
+            ranks.append({k: v for k, v in report.items() if k != "examples"})
+            signature_totals.update(signatures)
+            total_counts.update(report["counts"])
+            print(f"rank={rank} nodes={report['nodes']} all_bytes_read=True", flush=True)
     with (args.output / "operator_signatures.csv").open("w") as stream:
         writer = csv.writer(stream)
         writer.writerow(("kind", "domain", "name", "input_shapes", "output_shapes", "occurrences"))

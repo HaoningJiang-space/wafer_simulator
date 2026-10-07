@@ -9,6 +9,7 @@ import graphlib
 import json
 
 from wafer_sim.workloads.chakra import read_metadata, nodes
+from wafer_sim.workloads.chakra_work import matrix_work
 
 
 def decode_io(info):
@@ -59,6 +60,7 @@ def inspect_rank(path, schema):
     signatures = Counter()
     examples = {}
     min_start, max_end = None, 0
+    work_records = []
     with path.open("rb") as stream:
         metadata = read_metadata(stream, schema)
         for offset, node in nodes(stream, schema):
@@ -100,6 +102,20 @@ def inspect_rank(path, schema):
             shape_key = tuple(json.dumps(parsed[s][1], separators=(",", ":")) if parsed[s] else "UNPARSED"
                               for s in ("inputs", "outputs"))
             signatures[(kind, domain, node.name, *shape_key)] += 1
+            if domain == "CPU" and node.name in ("aten::mm", "aten::bmm"):
+                try:
+                    work = matrix_work(node.name, parsed["inputs"], parsed["outputs"])
+                except ValueError as error:
+                    counts["unsupported_matrix_primitives"] += 1
+                    key = "matrix_rejection: " + str(error)
+                    if key not in examples:
+                        examples[key] = dict(id=node.id, byte_offset=offset)
+                else:
+                    work.update(node_id=node.id, byte_offset=offset,
+                        source_data_deps=list(node.data_deps), source_ctrl_deps=list(node.ctrl_deps))
+                    work_records.append(work)
+                    counts["normalized_matrix_primitives"] += 1
+                    counts["normalized_matrix_mac"] += work["work_amount"]
             # Compact source examples only; no synthesized producer, version or lifetime.
             key = f"{kind}:{domain}"
             if key not in examples:
@@ -121,4 +137,4 @@ def inspect_rank(path, schema):
         combined_reference_graph=graph_summary(combined),
         nonzero_start_time_range_micros=[min_start, max_end], examples=examples,
         source_duration_is_target_work=False, tensor_versions_inferred=False)
-    return report, signatures
+    return report, signatures, work_records
