@@ -205,6 +205,14 @@ class TimedExecutionTests(unittest.TestCase):
         row=next(p for p in result["phases"] if p["kind"]=="transfer")
         self.assertEqual(row["path"],(11,20,10))
         row["path"]=(11,21,10)
+        # Keep the alternate physical route internally consistent. The older
+        # conservation-only audit accepted this equal-hop, wrong-tie route.
+        replacements={"11->20":"11->21", "20->10":"21->10"}
+        for event in result["services"]:
+            if event["resource"] in replacements:
+                event["resource"]=replacements[event["resource"]]
+        for old,new in replacements.items():
+            result["resources"][new]=result["resources"].pop(old)
         with self.assertRaisesRegex(ValueError,"route policy"): audit(b,rates,result)
 
     def test_fixed_work_changes_time_only_through_declared_rates(self):

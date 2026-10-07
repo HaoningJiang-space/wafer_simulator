@@ -39,6 +39,18 @@ class TransformerTests(unittest.TestCase):
         for op in block.workload.operations:
             counts.update(dict(op.work))
             self.assertNotIn("cycles", dict(op.work))
+            shapes=[block.tensors[d]["shape"] for d in op.inputs]
+            output=block.tensors[op.outputs[0]]["shape"]
+            kind=block.operators[op.id]["kind"]
+            if kind == "linear":
+                expected_mac=prod(shapes[0][:-1])*prod(shapes[1])
+            elif kind == "attention_scores":
+                expected_mac=prod(output)*(shapes[0][-1]//output[1])
+            elif kind == "attention_values":
+                expected_mac=prod(output)*shapes[0][-1]
+            else:
+                continue
+            self.assertEqual(dict(op.work)["mac"],expected_mac,op.id)
         # Independent dense formula: four HxH and two HxF projections,
         # plus QK^T and attention-V; parallelization conserves MACs.
         b,s,h,f,p,heads = 1,16,64,128,2,4
