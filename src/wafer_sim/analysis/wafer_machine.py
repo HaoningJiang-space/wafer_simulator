@@ -17,9 +17,9 @@ def audit_machine(workload,placement,compiled,binding,result,control_bytes=16):
         if op not in by_op:raise ValueError('Message from unknown logical operation')
         by_op[op].append(msg)
     objects={d.id:d for d in workload.data}; counts=Counter(); payload=Counter(); control=Counter()
-    expected_command=Counter(); expected_channel=Counter(); expected_bank=Counter()
+    expected_command=Counter(); expected_channel=Counter(); expected_bank=Counter(); expected_staging=Counter()
     for op in workload.operations:
-        local=locals_[placement.compute[op.id]]; expected=[]
+        local=locals_[placement.compute[op.id]]; expected=[]; protocols=[]
         def add(name,source,destination,size,kind):
             expected.append((name,source,destination,size));counts[kind]+=1
             (control if kind in {'read_request','write_ack'} else payload)[kind]+=size
@@ -27,27 +27,49 @@ def audit_machine(workload,placement,compiled,binding,result,control_bytes=16):
             home=placement.data[name];d=objects[name]
             if home==local:continue
             if stores[home].kind!='sram':
+                protocols.append((len(expected),len(expected)+1,home,d.size_bytes,'read'))
                 add(name,local,home,control_bytes,'read_request')
                 expected_command[stores[home].controller]+=control_bytes
                 expected_channel[stores[home].controller]+=d.size_bytes
                 expected_bank[home]+=d.size_bytes
+                expected_staging[op.id,stores[home].controller+'/buffer',d.size_bytes]+=1
             add(name,home,local,d.size_bytes,'read_response' if stores[home].kind!='sram' else 'c2c')
         for name in op.outputs:
             home=placement.data[name];d=objects[name]
             if home==local:continue
+            first=len(expected)
             add(name,local,home,d.size_bytes,'write_data' if stores[home].kind!='sram' else 'c2c')
             if stores[home].kind!='sram':
+                protocols.append((first,first+1,home,d.size_bytes,'write'))
                 add(name,home,local,control_bytes,'write_ack')
                 expected_command[stores[home].controller]+=control_bytes
                 expected_channel[stores[home].controller]+=d.size_bytes
                 expected_bank[home]+=d.size_bytes
+                expected_staging[op.id,stores[home].controller+'/buffer',d.size_bytes]+=1
         observed=sorted(by_op[op.id],key=lambda m:int(m['token'].rsplit('/',1)[1]))
         actual=[(m['data'],m['source_memory'],m['destination_memory'],m['bytes']) for m in observed]
         if actual!=expected:raise ValueError('Request/response/ack sequence or logical byte count differs')
+        for before,after,home,size,kind in protocols:
+            first,last=observed[before],observed[after]
+            lo=int(first['token'].rsplit('/',1)[1]);hi=int(last['token'].rsplit('/',1)[1])
+            events=[e for e in result['services'] if e['token'].rsplit('/phase/',1)[0]==op.id
+                    and lo<int(e['token'].rsplit('/',1)[1])<hi]
+            ctrl=stores[home].controller
+            expected_service=[(ctrl+'/command',control_bytes)]
+            data_service=[(home+'/port',size),(ctrl+'/channel',size)]
+            expected_service+=data_service if kind=='read' else data_service[::-1]
+            if [(e['resource'],e['amount']) for e in events]!=expected_service:
+                raise ValueError('Bank/channel service does not occur inside its transaction')
+            if (events[0]['ready']!=first['finish'] or events[-1]['finish']!=last['ready'] or
+                any(a['finish']!=b['ready'] for a,b in zip(events,events[1:]))):
+                raise ValueError('Memory service precedes request/data arrival or response precedes commit')
         for msg in observed:
             if (msg['source']!=compiled.endpoints[msg['source_memory']] or
                 msg['destination']!=compiled.endpoints[msg['destination_memory']]):
                 raise ValueError('Packet endpoint does not belong to its data location')
+    actual_staging=Counter((op,a.memory,a.size_bytes) for op,p in binding.plans.items()
+                           for a in p.reservations if a.key[0]=='controller-staging')
+    if actual_staging!=expected_staging:raise ValueError('Missing or repeated controller staging capacity')
     work=Counter()
     for e in result['services']:work[e['resource'],e['unit']]+=e['amount']
     for ctrl in compiled.physical.controllers:

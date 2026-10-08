@@ -99,7 +99,7 @@ class WaferMachineTests(unittest.TestCase):
         b,_=bind_machine(w,c,Placement({'f':'c0'},{'x':'dram-0-0','y':'sram-0'}))
         r=execute(b,c.timing)
         self.assertFalse(r['complete'])
-        self.assertEqual(r['blocked']['f']['shortage_bytes']['controller-0/buffer'],32)
+        self.assertEqual(dict(r['blocked']['f']['shortage_bytes'])['controller-0/buffer'],32)
 
     def test_data_placement_keeps_logical_work_and_compute_unchanged(self):
         w,p,meta=build(4,8,16)
@@ -121,7 +121,10 @@ class WaferMachineTests(unittest.TestCase):
 
     def test_same_bank_and_controller_are_shared_not_replicated(self):
         w,p,_=build(4,8,16);p=place_data(p,4,'single_controller')
-        c=compile_machine(machine());b,_=bind_machine(w,c,p);r=execute(b,c.timing)
+        # Deliberately constrained service in this semantic fixture. The
+        # registered candidate is unchanged and need not exhibit congestion.
+        m=machine();m=replace(m,controllers=tuple(replace(c,channel_bytes_per_cycle=1) for c in m.controllers))
+        c=compile_machine(m);b,_=bind_machine(w,c,p);r=execute(b,c.timing)
         self.assertTrue(audit(b,c.timing,r)['passed'])
         self.assertGreater(r['resources']['controller-0/channel']['queue_wait_cycles'],0)
         self.assertEqual(r['resources']['controller-0/command']['work']['bytes'],(8+4)*16)
