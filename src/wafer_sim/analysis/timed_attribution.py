@@ -57,7 +57,7 @@ def critical_chain(binding, result):
                     finishes.append(point)
                 previous=f'boundary:{token}:commit'
                 node(previous,p['finish'],finishes)
-            elif phase.transfer is not None and result.get("network_backend") in {"booksim","packet_pipeline"}:
+            elif phase.transfer is not None and result.get("network_backend") in {"booksim","packet_pipeline","memory_approximation"}:
                 point = f"network:{token}"
                 node(point,p["finish"],[previous],p["finish"]-p["ready"],"network",
                      operation=op,phase=index,token=token)

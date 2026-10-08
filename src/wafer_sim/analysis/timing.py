@@ -16,6 +16,10 @@ def audit(binding, timing, result):
         *(s for e in timing.endpoints for s in (e.injection,e.ejection)))}
     records,by_resource,by_token = result["services"],defaultdict(list),defaultdict(list)
     native_messages = None
+    if result.get('network_backend') == 'memory_approximation':
+        from wafer_sim.analysis.memory_abstraction import audit_network
+        audit_network(binding.network, result)
+        native_messages = {m['token']: m for m in result['network_messages']}
     if result.get("network_backend") in {"booksim","packet_pipeline","booksim_boundary"}:
         from wafer_sim.analysis.online_network import audit_messages
         audit_messages(binding.network, result["network_messages"])

@@ -1,0 +1,12 @@
+{
+  "reference_commit": "592d327abe66ce598d74ddd5abcaad55c2525b45",
+  "base_registration": "configs/wafer_machine_validation.json",
+  "models": ["U0", "U1", "S"],
+  "layouts": ["near", "opposite", "single_controller"],
+  "cold_repetitions": 3,
+  "binding_reuse_repetitions": 3,
+  "selection_tolerance_cycles": 100,
+  "gap_error_budget_cycles": 100,
+  "absolute_time_error_budget_percent": 2,
+  "scope": "Same machine, work and layout per comparison. U0 pools DRAM but preserves physical controller staging. U1 removes DRAM spatial communication only. S is a declared-policy mechanism reference, not hardware truth."
+}
