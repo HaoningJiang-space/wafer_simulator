@@ -64,6 +64,7 @@ def pair_messages(rows, registration):
                 for place in registration['placements']:
                     if {k[4] for k in index if k[:4]==(shape,policy,mode,place)}!=tokens:
                         raise ValueError('Missing logical messages across designs')
+            for mode in registration['modes']:
                 for token in sorted(tokens):
                     b=index[shape,policy,mode,'baseline',token];r=index[shape,policy,mode,'ours_rotated',token]
                     rb=index[shape,policy,'bounded','baseline',token];rr=index[shape,policy,'bounded','ours_rotated',token]
