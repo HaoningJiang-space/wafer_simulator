@@ -30,7 +30,7 @@ def save(path, value):
     with path.open('x') as stream: json.dump(value, stream, indent=2, sort_keys=True)
 
 
-def process_check(root):
+def process_check(root, strict=True):
     wanted = tuple(str(root/p)+'/' for p in PARTS)
     blocked, protected = [], []
     for proc in Path('/proc').iterdir():
@@ -55,8 +55,8 @@ def process_check(root):
             if comm not in {'sshd', '(sd-pam)', 'systemd'}:
                 raise RuntimeError('Cannot inspect user process '+proc.name+' '+comm)
             protected.append(dict(pid=int(proc.name), process=comm))
-    if blocked: raise RuntimeError('Live project references: '+json.dumps(blocked))
-    return dict(no_accessible_live_references=True, protected_processes=protected)
+    if blocked and strict: raise RuntimeError('Live project references: '+json.dumps(blocked))
+    return dict(no_accessible_live_references=not blocked, live_references=blocked, protected_processes=protected)
 
 
 def inventory(root):
@@ -99,7 +99,9 @@ def main():
     args = p.parse_args(); host = platform.node().split('.')[0]
     if args.action == 'inventory':
         if host != 'eex005': raise ValueError('Inventory the retired host only')
-        live = process_check(OLD)
+        # Readers may remain while taking a read-only, content-stable inventory.
+        # Retirement still strictly rejects every live reference.
+        live = process_check(OLD, strict=False)
         m = inventory(OLD); m.update(process_check=live, created_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()))
         save(args.manifest, m)
         print(dict(files=len(m['entries']), bytes=m['file_bytes'], manifest_sha256=digest(args.manifest)), flush=True)
