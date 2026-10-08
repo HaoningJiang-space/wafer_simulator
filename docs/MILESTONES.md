@@ -6,6 +6,8 @@ in [README](../README.md) and [RESEARCH_DIRECTION](RESEARCH_DIRECTION.md).
 
 | Area | Status | Accepted evidence / scope |
 |---|---|---|
+| Spatial scaling / locality–load tradeoff | Complete; models frozen | [27 cells, 81 executions, three array sizes](results/spatial-scaling-001/REVIEW.md); U1 misses the A–B decision at 6×6/7×7; zero staging-capacity waits |
+| Runtime relocation to hn072 | Complete; old evidence cold-archived | [Verified archive and cleanup](results/server-migration-001/REVIEW.md); 50,072 entries verified, 26.5 GB observed free-space increase; current native binary unchanged |
 | Spatial storage abstraction U0/U1/S | Complete; machine and execution kernel frozen | [9 cells, 54 executions, layout-selection error and cost](results/memory-abstraction-001/REVIEW.md); aggregate communication misses the 3,193-cycle near/remote gap |
 | Independent compute/memory wafer machine | First integration accepted; numerical resources uncalibrated | [Physical legality, transactions and three complete same-work cases](results/wafer-machine-001/REVIEW.md); original execution kernel and LoI evidence retained |
 | Independent groups sharing one WoW | Complete; models remain frozen | [12-cell solo/joint coverage](results/group-sharing-001/REVIEW.md); actual path sharing, no final slowdown, +48-cycle joint gap error |

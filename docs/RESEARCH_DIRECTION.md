@@ -51,15 +51,27 @@ Capacity waiting is reported separately; identical retirement rules can produce
 different waits when network and service timing change. No kernel change or new
 network feature was needed to obtain this result.
 
-## Next coverage question
+## Completed spatial scaling and decision coverage
 
-Freeze these models and register physically legal larger machine/work instances.
-Specify how compute, storage, controllers, horizontal cuts and vertical capacity
-scale before execution. First test whether the current model-selection result
-holds beyond 4×4 tiles and 32 GEMMs. Do not grow work merely to obtain a ranking
-reversal, assume compute and all communication budgets scale together, or add
-another memory/network mechanism before this coverage question is answered.
-No larger configuration has been executed or accepted by the present study.
+The [registered locality–controller balance study](SPATIAL_SCALING_PROTOCOL.md)
+is [accepted](results/spatial-scaling-001/REVIEW.md): 4×4, 6×6 and 7×7 arrays,
+fixed work and resources per tile, 27 model/layout/size cells, 81 full executions.
+Geometry/connectivity legality does not imply manufacturing qualification.
+All-operation capacity upper bounds fit and observed capacity waits are zero.
+
+The fixed clustered-near versus remote-balanced pair changes ordering between
+4×4 and 6×6 in S. U1 preserves the bank-load penalty but misses the growing
+spatial communication time, selecting the wrong member at 6×6/7×7. The local
+layout still wins globally. Critical network exposure increases; nominal cut
+or HB saturation and a universal bottleneck-migration sequence are not proven.
+
+This closes the larger-coverage question without changing the execution kernel.
+S remains practical for these instances (largest execution median 7.51 seconds
+on hn072), but it performs and logs far more network events than U0/U1. A future
+method question is whether a lower-cost spatial service model recovers these
+decisions. The current results do not select a unique omitted mechanism or
+prove all detailed BookSim states necessary. No new model is committed by this
+milestone; retain the registered controls and the negative saturation result.
 
 Parameter uncertainty must remain visible. If results depend on an uncalibrated
 bank/controller policy, characterize that component rather than declaring the
@@ -75,3 +87,5 @@ pending experiment. Do not restart packet/FIFO enhancement, algorithm or mapping
 search, Chakra recovery, thermal/PDN or runtime optimization as a prerequisite.
 The superseded benchmark-envelope draft had no executed or accepted results.
 All accepted artifacts remain indexed in [MILESTONES.md](MILESTONES.md).
+The active experiment server is now hn072; historical eex005 evidence is kept
+in a verified cold archive, with [recovery and cleanup records](results/server-migration-001/REVIEW.md).

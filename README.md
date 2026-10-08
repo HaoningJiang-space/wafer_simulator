@@ -27,6 +27,14 @@ See the [model choice](docs/results/memory-abstraction-001/model_selection.md):
 these are reference-relative findings under declared policies, not hardware
 accuracy or a claim that every fine network detail is necessary.
 
+The [4×4/6×6/7×7 coverage study](docs/results/spatial-scaling-001/REVIEW.md)
+is now complete: 27 cells, 81 executions and 27 native replays. With fixed
+per-tile work/resources, remote balanced storage wins over clustered nearby
+storage at 4×4, but loses at 6×6/7×7 in S. U1 predicts the opposite direction
+at those two larger sizes; gap errors are 7,164 / 7,902 cycles. Capacity waits
+are zero. This identifies a spatial service limitation in the uniform model,
+not proof of network saturation or of a minimum required flit-level model.
+
 ## Current entry point (hn072 only)
 
 Local work is source inspection, editing and Git. Builds, tests and execution
@@ -53,6 +61,8 @@ paths. No timeout or truncated work can produce a completion receipt.
 The 4×4, 6×6 and 7×7 candidates keep per-tile work/resources fixed. Two predefined
 layouts trade shorter distance against controller balance. Capacity upper bounds
 exclude staging exhaustion before execution. Other model features remain frozen.
+The registered milestone is closed; a cheaper spatial approximation, if pursued,
+must be tested against these fixed decisions rather than selected for a reversal.
 
 ## Retained model-selection evidence
 
