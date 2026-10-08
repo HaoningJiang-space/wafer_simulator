@@ -1,5 +1,5 @@
 """Independent readback: own-position solos, shared routes and model decisions."""
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 from wafer_sim.analysis.boundary_study import analyze as boundary_analysis, movement_rows
@@ -36,6 +36,26 @@ def shared_paths(messages):
         shared_link_details=details)
 
 
+def message_observations(result, origins, chain, mode):
+    critical={s.get('token') for s in chain['segments']}; rows={}
+    for message in result['network_messages']:
+        token=message['token']; op,phase=token.rsplit('/phase/',1)
+        canonical=token if mode=='serial' else f"{op}/phase/{origins[op][phase]['transfer']}"
+        read_token=f'{op}/phase/{int(phase)-1}'; write_token=f'{op}/phase/{int(phase)+1}'
+        services=result['services']
+        reads=[s for s in services if (s['token']==read_token if mode=='serial' else s['token'].startswith(token+'/read/'))]
+        writes=[s for s in services if (s['token']==write_token if mode=='serial' else s['token'].startswith(token+'/write/'))]
+        supply=message['ready'] if mode=='serial' else min(p['supplied'] for m in result['boundary']['moves']
+            if m['token']==token for p in m['packets'])
+        rows[canonical]=dict(paths=[dict(path=list(p),flits=n) for p,n in sorted(Counter(
+            tuple(f['router_path']) for f in message['flits']).items())],
+            source_memory_queue=sum(s['start']-s['ready'] for s in reads),
+            destination_memory_queue=sum(s['start']-s['ready'] for s in writes),
+            first_flit_injection_wait=message['first_inject']-supply,
+            on_observed_critical_chain=bool(critical.intersection((token,read_token,write_token) if mode=='serial' else (token,))))
+    return rows
+
+
 def analyze(root):
     from wafer_sim.experiments.group_sharing import prepare
     root=Path(root); result=boundary_analysis(root,prepare_case=prepare)
@@ -58,8 +78,9 @@ def analyze(root):
             raise ValueError('Model/repetition changed input')
         metadata[case]=dict(scenario=l['scenario'],placement=l['placement'])
         if l['repeat']==0:
-            events[key[:3]]=dict(result=read_json(directory/'execution.json'),
-                moves=movement_rows(read_json(directory/'execution.json'),read_json(directory/'PHASE_MAP.json')))
+            recorded=read_json(directory/'execution.json'); origins=read_json(directory/'PHASE_MAP.json')
+            events[key[:3]]=dict(result=recorded,moves=movement_rows(recorded,origins),
+                observations=message_observations(recorded,origins,read_json(directory/'critical_chain.json'),l['mode']))
             inputs[key[:2]]=identity
     if found!=expected or any(len(h)!=1 for h in hashes.values()): raise ValueError('Incomplete/divergent experiment')
     for placement in reg['placements']:
@@ -105,6 +126,8 @@ def analyze(root):
                 for token,s in solo['moves'].items():
                     j=jm[token]
                     if any(s[k]!=j[k] for k in ('source','destination','bytes')): raise ValueError('Changed transfer work')
+                    observation={label+'_'+k:v for label,source in (('solo',solo),('joint',joint))
+                        for k,v in source['observations'][token].items()}
                     pairs.append(dict(placement=placement,mode=mode,group=group,token=token,bytes=s['bytes'],
                         solo_ready=s['ready'],joint_ready=j['ready'],solo_commit=s['commit'],joint_commit=j['commit'],
                         absolute_commit_change=j['commit']-s['commit'],
@@ -112,7 +135,9 @@ def analyze(root):
                         service_change=(j['commit']-j['ready'])-(s['commit']-s['ready']),
                         solo_supply_span=s['last_supply']-s['first_supply'],joint_supply_span=j['last_supply']-j['first_supply'],
                         solo_receive_tail=s['last_receive']-s['first_supply'],joint_receive_tail=j['last_receive']-j['first_supply'],
-                        solo_commit_tail=s['commit']-s['last_receive'],joint_commit_tail=j['commit']-j['last_receive']))
+                        solo_commit_tail=s['commit']-s['last_receive'],joint_commit_tail=j['commit']-j['last_receive'],
+                        path_counts_changed=solo['observations'][token]['paths']!=joint['observations'][token]['paths'],
+                        **observation))
                 totals.append(dict(bytes=sum(m['bytes'] for m in sr['network_messages']),
                     flits=sum(m['expected_flits'] for m in sr['network_messages']),
                     memory=sum(s['amount'] for s in sr['services'] if s['category']=='memory')))
