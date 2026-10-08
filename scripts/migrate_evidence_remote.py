@@ -1,7 +1,7 @@
 """Inventory, verify and retire exact project copies across the two servers.
 
 Transfer uses tar separately. This tool never deletes an unverified unique
-artifact; apply requires a destination verification receipt and a fresh full
+artifact; apply requires a verified copy/archive receipt and a fresh full
 source-content verification. Source checkout and Git repository are preserved.
 """
 import argparse
@@ -173,7 +173,7 @@ def main():
             raise ValueError('Missing verified destination')
         checked = verify(OLD, m); live = process_check(OLD)
         before = shutil.disk_usage(OLD)
-        # No unique evidence is discarded: a verified full copy remains on NEW.
+        # A verified full copy remains at the receipt's destination.
         for part in PARTS: shutil.rmtree(OLD/part)
         os.sync()
         after = shutil.disk_usage(OLD)

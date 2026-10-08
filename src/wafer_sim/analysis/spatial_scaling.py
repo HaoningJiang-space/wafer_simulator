@@ -68,7 +68,7 @@ def pressure(compiled, result, chain):
             injection_span=m['last_inject']-m['first_inject'] if native else None,
             mean_physical_links=sum((len(p)-1)*n for p,n in paths.items())/sum(paths.values()) if native else None,
             routes=[dict(routers=list(p), flits=n) for p,n in sorted(paths.items())]))
-    return dict(resource_summary=by_kind, memory_chain=dict(memory_chain),
+    return dict(resource_summary=by_kind, memory_chain_by_resource=dict(memory_chain),
         native_kind_link_flits=dict(kinds), padded_byte_hops=sum(links.values())*compiled.physical.flit_bytes,
         max_injection_wait=max((m['first_inject']-m['ready'] for m in raw), default=0),
         resources=resources, links=rows, messages=messages)
@@ -120,6 +120,9 @@ def analyze(root, output):
                             or any(sample[k] != v for k,v in events.items())): raise ValueError('Event summary mismatch')
                     checked_count += 1
                 if len(hashes) != 1: raise ValueError('Nondeterministic events')
+                replay = read_json(root/f'{side}-{layout}-{model}-rep-0/replay/REPLAY.json')
+                if not replay['passed'] or replay['binary_sha256'] != start['binary_sha256']:
+                    raise ValueError('Missing matching native replay')
                 key = dict(side=side,workers=side*side,layout=layout,model=model)
                 detail = pressure(c, result, chain)
                 for r in detail.pop('links'): links.append(dict(**key,**r))
