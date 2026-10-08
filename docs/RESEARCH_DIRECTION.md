@@ -1,282 +1,78 @@
-# Spatial Workload Execution for Wafer-Scale Systems
+# Current research: reliable WoW design-gain prediction
 
-Current milestone: [select boundary abstractions by prediction objective](results/boundary-model-selection-001/REVIEW.md).
-The report separates declared target parameters, model error and implementation
-cost. Saved events show where finite-RX message differences reconverge before
-reduction; application-time agreement does not establish message or capacity
-accuracy. Runtime optimization is closed. The broader architectural questions
-below remain motivation, not authorization for new algorithm/mapping sweeps.
+Study how little execution state is sufficient to predict **data availability,
+resource feasibility and design gains** on a declared spatial wafer machine.
+The simulator already executes logical compute/memory/network work; rebuilding
+that capability or recovering missing Chakra fields is not a prerequisite.
 
-Research question: **how should execution of the same AI work change with the
-target wafer's topology, placement and resource structure, and how does that
-change application completion time?**
+## Physical question and fixed target
 
-The initial target is WoW Logic-on-Interconnect, comparing Baseline and Rotated.
-The method should explain when network improvements reach the application,
-which work or resources prevent that, and when a simpler model already gives
-the same design decision. A ranking reversal is not required.
+WoW geometry determines which reticles connect, path lengths and shared network
+resources. Source/receiver memory and port service determine when data can enter
+and leave those paths. Dependencies turn data arrival into application progress.
+These couplings matter to the extent that omitting them changes the requested
+prediction. FIFO and FCFS mechanisms alone are not wafer-specific novelty.
 
-## Derive the model from spatial resources
+Distinguish three comparisons:
 
-Omelet is a reference for organizing evidence: modeling gap, targeted model,
-then consequences for architectural decisions. It does not determine what
-wafer execution must model. That follows from the target's distributed compute,
-memory and finite communication resources.
+| Comparison | What changes | Meaning |
+|---|---|---|
+| Target/policy | Memory quantum, hardware capacity, execution policy | Sensitivity to the declared machine |
+| Abstraction | serial/pipeline/bounded within one target | Prediction error relative to the mechanism reference |
+| Implementation | Source revision, data structure, logging/measurement | Cost to compute the same result |
 
-For an `n x n` array with constant compute per tile, fixed-pitch local mesh
-links, fixed link capacity and a fixed number of network layers, total compute
-scales as `n^2` while a straight bisection has capacity proportional to `n`.
-This is a conditional cut argument, not a universal law for every 3D wafer or
-a proof that any workload is bandwidth-bound. The useful constraint is the
-residual traffic that actually crosses each target resource cut after mapping
-and reuse. Derive that cut's capacity from the actual resource graph.
+Current compute/SRAM and DMA rules are analytical assumptions. Author WoW
+network parameters are pinned model inputs, not automatically measured silicon.
+Keep geometry, connectivity and finite capacity from the start; detailed physical
+closure and thermal are outside this milestone. Omelet informs the evidence
+structure (gap, targeted model, design consequence), not the target's physics.
 
-Geometry determines feasible connectivity and link timing in the reused WoW
-model. Locality then depends on both producer/consumer placement and data
-residency. Moving a fixed-size tensor farther away does **not** by itself change
-its logical bytes: distinguish logical payload, per-link bytes, byte-hops and
-bytes crossing a selected cut. Residency, replication, reuse or collective
-lowering can change which physical transfers are required.
+## The one active milestone
 
-Memory is a spatial resource from the start, not a later physical add-on.
-Capacity is checked per region and time, and read/write service competes for
-local ports. Application progress follows data availability, task dependencies
-and shared-resource service, with overlap; compute and network totals cannot
-generally be added to obtain makespan. These phenomena also occur beyond wafers;
-the research must demonstrate why the selected wafer structures expose an
-important modeling gap rather than claim exclusivity.
+Follow [BOUNDARY_DESIGN_PROTOCOL.md](BOUNDARY_DESIGN_PROTOCOL.md):
 
-## Logical work, execution policy and target resources
+- two existing complete s16/s64 TP8 direct-root blocks;
+- Baseline and Rotated, fixed row-major rule and saved endpoint coordinates;
+- request_atomic and burst_256 target memory policies;
+- serial, pipeline and bounded abstractions;
+- native BookSim, existing resources/seed/buffer budgets, unchanged execution.
 
-The intended interface is
-`Execute(logical_work, mapping, execution_policy, target_resources, initial_state)`.
+The matrix has 24 configurations. Twelve Rotated configurations add the missing
+design column. Baseline remeasurement supplies contemporary cost controls and
+must preserve all accepted events. No mapping or bandwidth search.
 
-Write logical work as `W = (V_compute, V_data, E_semantic)` and the target as
-`H = (C, M, N, G)`: compute, memory, network and geometry. Mapping has separate
-task and data placements, `phi_compute` and `phi_data`. Execution is
-`E = Execute(W, H, phi, pi, S0)`. Policy `pi` and initial state `S0` remain
-explicit; geometry alone cannot determine scheduling, allocation or routing.
+For each local policy q, report delta_m = T_m(B) - T_m(R) and
+E_gap = delta_m - delta_bounded = error_B - error_R.
+Absolute time bias can cancel in design gains; small opposite errors can change
+a close ordering. Record signed cycles, raw ranking and the registered 100-cycle
+indifference/error bands; do not magnify relative errors near zero.
 
-| Input | Contains | Must not silently inherit |
-| --- | --- | --- |
-| Logical work | Operation identity/work amount; data objects, sizes and production/consumption dependencies; collective semantics | Source host-local/remote classifications, waiting or transport times |
-| Mapping and execution policy | Worker/data placement, collective algorithm and lowering, scheduling/routing policy | Source stream serialization presented as necessary semantic dependence |
-| Target resources | Compute/copy/memory service, modeled storage capacity, endpoints/network, resource ownership and release | Source machine timing presented as a target hardware parameter |
-| Initial state | Required data residency and resource state | Unspecified warm/cold start or missing inputs |
+Inspect matched messages and existing critical-chain/source-window records to
+explain differences. Do not sum overlapping waits into an application time or
+interpret a critical-chain fraction as an optimization limit.
 
-Target binding determines locality, visited resources and contention.
-Execution generates message readiness and completion from task progress and
-resource service. A changed architecture need not change the tensor program
-or logical byte requirements; it can change paths, contention and the realized
-critical chain. Collective lowering and scheduling remain explicit policies
-so a topology comparison does not silently become an algorithm comparison.
+## Acceptance and stop decisions
 
-This is a research contract, not a claim that the current code implements all
-these inputs. Source-supported transfer bytes alone do not reconstruct tensor
-identity, liveness or mathematical semantics.
+Execution completion, semantic audit, capacity feasibility, reference agreement
+and physical calibration remain separate public states. pipeline overflow is a
+diagnostic result, never a feasible winner. serial FIFO capacity is unmodeled.
+bounded self-agreement is not an independent hardware-accuracy measurement.
 
-## Current spatial execution contract
+Deliver one main decision table, a model-selection conclusion, a design-gap
+figure and a same-version execution-cost figure. Preserve all accepted evidence.
 
-The [v1 contract implementation](SPATIAL_CONTRACT.md) now covers logical objects,
-resource binding and finite storage state. The [timed backend](TIMED_EXECUTION.md)
-now adds target service rates, shared-resource arbitration and event-driven
-completion. Complete analytical A/B/AllReduce/C and
-[Transformer forward](TRANSFORMER_EXECUTION.md) units are validated inputs;
-a complete semantic Llama input remains separate. M0/M1 results are
-unchanged. Old Chakra recovery is frozen at the accepted source boundary and
-does not gate this implementation.
+If serial predicts design gaps accurately despite absolute bias, keep that
+simple use case with its message/capacity limitations. If errors depend on
+placement, retain only the state evidenced to explain the discrepancy. If target
+policy dominates the conclusion, characterize that policy rather than add more
+network detail. If results remain limited to small cases, close this milestone
+and plan independent workload/scale coverage; do not search these cases for
+another feature to implement. No preselected speedup or ranking reversal.
 
-The [first fixed-rule WoW block pair](results/transformer-wow-001/REVIEW.md)
-now connects the Transformer to the accepted BookSim kernel online. Baseline
-and Rotated originally finished in 13,062 and 13,430 cycles with common analytical local
-resources. The selected endpoint pairs have different path costs; four
-serialized critical transfers explain the difference. This validates one
-complete declared block, not a complete native Llama execution or a general
-placement ranking.
+## Closed or frozen work
 
-The [collective-action correction and bounded study](results/collective-execution-001/REVIEW.md)
-replace generic AllReduce lowering: corrected TP2 times are 12,550/12,918, with
-the same placement gap. Explicit concurrent TP4/TP8 gathers now exercise shared
-resources. Two predetermined mapping policies reveal small ordering changes and
-a case where lower mean message time does not improve application completion.
-
-| Object | Required information | Event or constraint |
-| --- | --- | --- |
-| Compute operation | Operation/work description, inputs, outputs, scratch demand, target service model | Inputs available, output/scratch storage reserved, required service resources available |
-| Data object | Stable identity/version, size, producer, consumers, resident copies, release rule | Capacity charged at each live copy; availability only after its production or arrival |
-| Memory region | Capacity, read/write service rates, port sharing, initial contents | Live allocations plus reservations never exceed that region's capacity |
-| Transfer | Required object or supported slice, source copy, target location, bytes, dependency | Reads, transport and destination writes use defined resources; availability after defined completion |
-| Network resource | Feasible links, bandwidth/latency, routing policy, buffers/credits | Shared service and backpressure follow the chosen network abstraction |
-
-The first contract must decide when destination space is reserved, whether
-operations stream or require complete inputs, when consumers release each
-copy, and whether memory/network stages pipeline or serialize. Define these
-before implementing them. If full-input availability and full-output reservation
-are chosen initially, label that policy and keep it identical across arms.
-Do not charge the same transfer in a fixed interval and again through memory
-or the network. An infeasible allocation must block or be reported infeasible;
-it cannot silently use free spill memory or an invented eviction policy.
-
-These fields cannot be recovered from a duration alone. `calc = 556 ms` does
-not identify FLOPs, tensor sizes or memory traffic. Missing semantic identity
-and capacity/service parameters are explicit input gaps. Retain opaque stages
-as conditional baselines until supported replacements exist; do not claim
-data-placement feasibility or source independence for that baseline.
-
-The first locality question is whether, at fixed logical work and stated
-policies, separate compute and data placement changes physical movement and
-application progress enough to affect the design judgment. Report per-region
-capacity/port usage, logical and physical movement separately, critical tasks
-and completion time. This is stronger than rerouting the same fixed messages.
-
-## Present evidence and its limits
-
-The [source analysis](LOCAL_STAGE_PROVENANCE.md) recovers 1,337,280 transfer pairs
-frozen as source-local calc costs. The [target binding](TARGET_RESOURCE_MAPPING.md)
-assigns their endpoints to distinct compute reticles. The accepted
-[M0/M1 pair](results/model-boundary-001/REVIEW.md) changes the predicted
-Baseline–Rotated gap from 2.365264 ms to 13.118157 ms. This demonstrates a source
-boundary sensitivity under fixed remaining local costs, with identical native
-implementation and retained complete logical work.
-
-M1 is **partial communication retargeting**, not a source-machine-independent
-workload model. Measured intervals, reduction/copy costs, CPU-lane serialization
-and source collective organization remain. The largest intervals have source
-provenance but lack target compute calibration. Data objects and application
-storage lifetimes are not explicit.
-
-Source analysis prepares the choice of abstraction; it is not the research
-objective. Recovering an author's existing grouping/transfer functionality
-is baseline construction, not by itself a new simulator contribution.
-
-## Research sequence and delivery criteria
-
-The sequence is **workload abstraction → wafer machine model → target execution
-→ validation → fixed-mapping application comparison → Topology × Mapping ×
-Workload**. Each stage supplies the inputs needed by the next. Detailed physical
-closure and then power/thermal follow later. Do not alternate between those
-later topics while this execution layer is being established.
-
-1. **Workload abstraction.** Recover computation quantities, data objects,
-   transfers and required dependencies. Separate source durations, host call
-   hierarchy, source scheduling and GPU kernel records. The full Chakra
-   source remains a partially normalized input with missing evidence; its CPU
-   dispatcher operators are not target CPU resources. Independent explicitly
-   defined logical workloads can develop and validate the target backend now.
-   Alias/view and in-place
-   mutation semantics must establish object versions and lifetimes. No duplicate
-   charge for a logical operator and its implementation kernels. A model
-   comparison must use one complete logical workload identity in both models;
-   matching a dataset directory name alone does not establish that identity.
-2. **Wafer machine model, `H=(C,M,N,G)`.** Include geometry, feasible connectivity,
-   link latency/bandwidth, router ports, finite buffers and local memory capacity
-   from the start. Add explicit compute and memory service parameters, including
-   their source and units. These define the machine rather than optional later
-   physics. Source GPU workspace or service duration is not automatically the
-   target SRAM requirement or compute rate.
-3. **Target execution.** Bind task and data placement separately, reserve local
-   storage, serve compute/memory/network demands with explicit sharing, and
-   advance dependencies only on the required completions. Completion time follows
-   from this execution. The v1 binding/lifetime code now has a timed service
-   backend and a live BookSim adapter. Policy and initial residency remain explicit.
-4. **Validation before architectural interpretation.** Use analytical DAGs for
-   execution timing and overlap; shared-resource examples for arbitration;
-   local/remote accesses for memory service; and per-region capacity, output
-   reservation and lifetime regressions. These are software correctness tests,
-   not smoke experiments or application-performance evidence. Match network
-   components to the retained WoW/BookSim reference and check new component
-   service against independent models or characterization. For a complete
-   input, check work/data/dependency conservation, final completion, resource
-   limits and independent event readback. Semantic tests establish what the
-   implementation does; characterization establishes the physical accuracy
-   claimed. Neither a plausible speedup nor disagreement with replay is an
-   accuracy reference.
-5. **First architecture case: fixed mapping rule, same complete declared work.** Compare
-   Baseline and Rotated with the same logical input, mapping rule, compute/memory
-   parameters and execution policy. Report application completion time,
-   compute/memory/network/dependency waits, capacity use, actual critical work
-   and physical data movement. Explain the placement difference through that
-   work. No particular speedup or ranking reversal is required. The old 14.75%
-   packet mean is not held constant when the workload/execution model changes.
-   The complete Transformer block is the first accepted case; a fully supported
-   Llama input is a later extension, not a prerequisite for this case.
-6. **Joint Topology × Mapping × Workload study.** Mapping is not a prerequisite
-   study that can be finished independently of topology. Vary task/data placement
-   jointly with topology and workload structure, extending one controlled axis
-   at a time. Use both a common mapping policy and, when studied, equally budgeted
-   mapping search for each topology; distinguish policy quality from topology
-   value. Explain differences through locality, critical communication, cut/port
-   contention and memory placement. Separate original-design comparisons from
-   equal-resource-budget comparisons.
-
-The [static versus shared transfer question](MODEL_BOUNDARY_PROTOCOL.md) remains
-a useful abstraction comparison within validation and bottleneck analysis. Use
-the same work, issue, completion and lane-occupancy semantics to distinguish
-target cost changes from sharing effects. It does not replace the workload and
-target-execution stages, and is not currently a launched experiment.
-
-The eventual paper must connect a demonstrated modeling gap, a target-resource
-method and an architecture conclusion with validity limits. Logical/physical
-separation is the framing, not an automatic novelty claim. Compare existing
-workload reorganization and execution-model capabilities before claiming a new
-method.
-
-Basic finite capacity and bandwidth constraints belong in the spatial model.
-Detailed physical feasibility is a later question: whether ports, links, bonding,
-wiring, power and cooling can deliver those assumed resources. Thermal, PDN,
-new schedulers and new simulator acceleration are outside the current work.
-Original-design and equal-budget comparisons remain distinct.
-
-Rank-local completion and the [memory-balance study](RANK_LOCAL_BALANCE.md) are
-accepted. The [fixed-tree study](TREE_SPATIAL_PROTOCOL.md) now compares two
-communication structures with identical logical network volume and total adds,
-while accounting for tree partial-result memory work. Spatial projection and
-the critical dependency chain, together, explain placement benefits. These are
-architecture-mechanism cases, not proof that detailed simulation is necessary.
-Freeze both algorithms and mapping comparisons. The immediate question is
-[whether aggregate compute/memory/endpoint resources are sufficient](RETICLE_BOUNDARY_RESEARCH.md).
-The author central-router model has finite ports and credits; our trace-mode
-endpoint count is one, while the author synthetic mode has eight. Current
-whole-message memory phases do not control native ejection credit. These are precise scope
-boundaries to examine, not proof that the author's topology results are wrong.
-Missing mechanisms are candidates, not a prescribed implementation queue.
-Separate parameter uncertainty, abstraction error and changes in the machine.
-Use [accuracy versus cost](MODEL_FIDELITY_PROTOCOL.md) only against a justified
-reference for the same declared machine and workload. The existing two network
-backends share the local abstraction and cannot validate it against each other.
-The first [reference-supported error-localization comparison](results/transfer-granularity-001/REVIEW.md)
-is complete. Matched-path whole-message service can err by 15–42.857% while
-complete application errors remain 0.367%/0.204%. Measured coarse execution
-cost is about half the native path here; retain it for the declared application
-objective, while distinguishing message accuracy and much smaller design gaps.
-This network-service result does not validate common compute/SRAM aggregation.
-A [minimal packet-pipeline candidate](results/packet-pipeline-001/REVIEW.md)
-has now removed isolated service error and reduced complete-work error to
-0%/0.0154% on those same inputs. The remaining same-path message error reaches
-3.5714% at a merging output, with identical aggregate link slots but different
-message order. Keep the candidate optional and the reference intact; this is
-bounded mechanism and cost evidence, not unseen-workload generalization.
-The subsequent [boundary study](results/memory-boundary-001/REVIEW.md) fixes native
-BookSim and tests an explicit streaming-DMA target. Chunk memory requests change
-shared-port interleaving and application time. Finite receive feedback preserves
-capacity and changes message commits, while the checked chunk-model makespans
-are unchanged. Keep this optional endpoint model for that declared contract;
-the result does not establish a calibrated WoW DMA model or require a full 8-GPC NoC.
-The [memory-service isolation](results/memory-service-isolation-001/REVIEW.md)
-shows a strong interaction with the declared memory arbitration quantum:
-the same boundary contrast shrinks from 1,049/3,978 to 253/1,355 cycles when all
-memory clients use 256-byte bursts. Neither this quantum nor the original
-request-atomic policy is claimed as calibrated hardware. Retain explicit policy
-and message/capacity observables; do not attribute the whole gap to overlap.
-The [fixed-contract cost probe](results/memory-execution-cost-001/REVIEW.md)
-then found substantial repeated admission work. Eliminating checks whose state
-inputs have not changed preserves full events and native replies and lowers
-measured execution cost 3.09×/4.21×. This implementation result improves the
-reference cost, but does not establish a new abstraction or justify removing
-burst/receive-buffer state. The bounded optimization stops there.
-The saved 12-case coarse/native analysis is retained; the generic cost sweep is deferred.
-Keep aggregation when it meets the declared prediction objective. The broader architecture
-sequence above is a future use case, not the current development queue.
-No new algorithm, mapping sweep, full capture recovery, thermal, PDN or runtime
-optimization is a prerequisite. Correctness tests and ranking reversals alone
-do not establish new simulation-method accuracy or novelty.
+Old trace/Chakra recovery, collective/tree expansion, packet event alignment and
+runtime hotspot optimization are frozen. Their results remain in the
+[milestone index](MILESTONES.md). No new FIFO/NoC, SRAM banks, thermal/PDN,
+collective algorithm, GPU acceleration or universal plugin framework is part
+of this milestone. Further work is selected only after the design-gain conclusion.

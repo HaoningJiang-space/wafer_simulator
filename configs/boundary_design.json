@@ -1,0 +1,12 @@
+{
+  "name": "boundary_design_gap_v1",
+  "accepted_run": "/home/wangziheng/wafer_simulator/runs/memory-service-isolation-001",
+  "placements": ["baseline", "ours_rotated"],
+  "cases": ["s16", "s64"],
+  "contracts": ["request_atomic", "burst_256"],
+  "modes": ["serial", "pipeline", "bounded"],
+  "repetitions": 3,
+  "gap_tolerance_cycles": 100,
+  "design_indifference_cycles": 100,
+  "scope": "Frozen execution and native BookSim; same accepted work and local policies. Re-measure Baseline for contemporary costs and require exact accepted events. Add the twelve Rotated cells. Gap is Baseline minus Rotated; no equal physical-cost or hardware-calibration claim."
+}
