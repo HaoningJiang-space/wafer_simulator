@@ -153,6 +153,16 @@ def analyze_run(root, output):
             writer=csv.DictWriter(stream,fieldnames=list(result[key][0]));writer.writeheader();writer.writerows(result[key])
     write_json(output/'SUMMARY.json',{k:result[k] for k in ('rows','decision_table')})
     write_json(output/'ACCEPTANCE.json',result['acceptance'])
+    plot_result(result,output)
+    write_json(output/'ANALYZED.json',dict(passed=True,host=platform.node(),
+        analysis_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+        input_manifest_sha256=digest(root/'COMPLETE.json'),
+        artifacts_sha256={str(f.relative_to(output)):digest(f) for f in sorted(output.rglob('*')) if f.is_file()}))
+    print(result['decision_table'],flush=True)
+
+
+def plot_result(result, output):
+    """Render existing decision/cost rows; no execution or audit rerun required."""
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -161,7 +171,7 @@ def analyze_run(root, output):
     for i,mode in enumerate(colors):
         ax.bar([j+(i-1)*.24 for j in range(len(rows))],[r[mode+'_gap_cycles'] for r in rows],.24,label=mode,color=colors[mode])
     ax.axhspan(-100,100,color='gray',alpha=.12,label='100-cycle indifference band')
-    ax.axhline(0,color='black',linewidth=.6);ax.set_ylabel('Baseline - Rotated (cycles); positive favors Rotated')
+    ax.axhline(0,color='black',linewidth=.6);ax.set_ylabel('Baseline - Rotated (cycles)')
     ax.set_xticks(range(len(rows)),[r['shape']+'\n'+r['memory_policy'] for r in rows]);ax.legend()
     fig.savefig(output/'design_gap.png',dpi=160);plt.close(fig)
     fig,axes=plt.subplots(1,2,figsize=(11,4),layout='constrained')
@@ -172,13 +182,8 @@ def analyze_run(root, output):
             ax.bar([j+(i-1)*.24 for j in range(len(rows))],[v['median'] for v in vals],.24,label=mode,color=colors[mode],
                 yerr=[[v['median']-v['minimum'] for v in vals],[v['maximum']-v['median'] for v in vals]],capsize=2)
         ax.set_title(placement);ax.set_xticks(range(len(rows)),[r['shape']+'\n'+r['memory_policy'] for r in rows])
-        ax.set_ylabel('Execution wall seconds; median and range, 3 cold runs');ax.legend()
+        ax.set_ylabel('Execution wall time (s)\nMedian and range, 3 cold runs');ax.legend()
     fig.savefig(output/'execution_cost.png',dpi=160);plt.close(fig)
-    write_json(output/'ANALYZED.json',dict(passed=True,host=platform.node(),
-        analysis_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
-        input_manifest_sha256=digest(root/'COMPLETE.json'),
-        artifacts_sha256={str(f.relative_to(output)):digest(f) for f in sorted(output.rglob('*')) if f.is_file()}))
-    print(result['decision_table'],flush=True)
 
 
 def main():
