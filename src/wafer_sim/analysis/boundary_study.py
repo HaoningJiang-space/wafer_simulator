@@ -51,8 +51,9 @@ def replay(directory,descriptor,exported,output):
     return record
 
 
-def analyze(root):
-    from wafer_sim.experiments.memory_boundary import prepare
+def analyze(root, *, prepare_case=None):
+    from wafer_sim.experiments.memory_boundary import prepare as default_prepare
+    prepare = prepare_case or default_prepare
     root=Path(root);manifest=read_json(root/'COMPLETE.json');started=read_json(root/'STARTED.json')
     if not manifest['all_registered_work_complete']:raise ValueError('Incomplete registered experiment')
     for name,h in manifest['artifacts_sha256'].items():

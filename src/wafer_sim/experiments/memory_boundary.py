@@ -53,11 +53,11 @@ def client(descriptor,exported,directory):
                            flit_bytes=descriptor['boundary']['flit_bytes'])
 
 
-def worker(descriptor_path,mode,directory,cpus,*,profile_execution=False):
+def worker(descriptor_path,mode,directory,cpus,*,profile_execution=False,prepare_case=None):
     os.sched_setaffinity(0,cpus);directory=Path(directory);directory.mkdir(exist_ok=False)
     meter=Meter();d=read_json(descriptor_path);cfg=d['boundary']
     with meter.phase('input_graph_binding'):
-        binding,timing,exported,identity=prepare(d)
+        binding,timing,exported,identity=(prepare_case or prepare)(d)
         source_map={}
         if mode!='serial':binding,source_map=fuse_movements(binding)
     write_json(directory/'INPUT.json',identity);write_json(directory/'PHASE_MAP.json',source_map)

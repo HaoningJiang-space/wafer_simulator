@@ -24,8 +24,12 @@ band. pipeline reproduces all reference makespans but violates RX capacity.
 **Decision:** retain serial for this scoped gap estimate, bounded for declared
 message/capacity predictions, and close endpoint enhancement/runtime optimization.
 Compute/SRAM/DMA remain design assumptions, not calibrated native wafer inputs.
-The next research question is independent workload/shared-resource coverage;
-it requires its own registration and has not been launched. Existing evidence:
+The next study freezes these models at `5de7a2f` and checks two independent TP8
+groups sharing ONE native network. A and B run alone at their assigned positions,
+then together; only serial and bounded are compared. The
+[registered 12-cell protocol](docs/GROUP_SHARING_PROTOCOL.md) fixes s64,
+burst_256 and the first/next eight row-major endpoints, without a mapping search.
+Existing evidence:
 [decision table](docs/results/boundary-design-001/analysis/model_decision_table.csv),
 [costs](docs/results/boundary-design-001/analysis/cost.csv),
 [earlier reduction reconvergence](docs/results/boundary-model-selection-001/REVIEW.md).
@@ -40,13 +44,13 @@ Existing accepted native binaries are reused. All output directories must be new
 cd /home/wangziheng/wafer_simulator/source
 export PYTHONPATH=src
 /home/wangziheng/wafer_simulator/.venv/bin/python scripts/test_wow_target_remote.py \
-  /home/wangziheng/wafer_simulator/runs/boundary-design-tests-NEW
-/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.cli boundary-design \
-  --tests /home/wangziheng/wafer_simulator/runs/boundary-design-tests-NEW/SEMANTICS.json \
-  --output /home/wangziheng/wafer_simulator/runs/boundary-design-NEW
-/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.cli analyze-boundary-design \
-  --run /home/wangziheng/wafer_simulator/runs/boundary-design-NEW \
-  --output /home/wangziheng/wafer_simulator/runs/boundary-design-analysis-NEW
+  /home/wangziheng/wafer_simulator/runs/group-sharing-tests-NEW
+/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.cli group-sharing \
+  --tests /home/wangziheng/wafer_simulator/runs/group-sharing-tests-NEW/SEMANTICS.json \
+  --output /home/wangziheng/wafer_simulator/runs/group-sharing-NEW
+/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.cli analyze-group-sharing \
+  --run /home/wangziheng/wafer_simulator/runs/group-sharing-NEW \
+  --output /home/wangziheng/wafer_simulator/runs/group-sharing-analysis-NEW
 ```
 
 `wafer-sim` exposes the same commands when the package entry point is installed.

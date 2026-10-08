@@ -1,0 +1,19 @@
+{
+  "name": "two_independent_tp8_groups_v1",
+  "frozen_commit": "5de7a2f90d3d1ff2fbd0f3cd8f80a19aa70abaa4",
+  "accepted_run": "/home/wangziheng/wafer_simulator/runs/boundary-design-001",
+  "shape": "s64",
+  "memory_policy": "burst_256",
+  "scenarios": {"A": ["A"], "B": ["B"], "AB": ["A", "B"]},
+  "mapping_rule": "A = first eight row-major endpoints; B = next eight; no search",
+  "placements": ["baseline", "ours_rotated"],
+  "modes": ["serial", "bounded"],
+  "repetitions": 3,
+  "gap_tolerance_cycles": 100,
+  "design_indifference_cycles": 100,
+  "application_tolerance_percent": 2,
+  "application_tolerance_cycles": 100,
+  "message_tolerance_percent": 5,
+  "message_tolerance_cycles": 20,
+  "scope": "Complete independent copies, time-zero release, disjoint local resources, ONE shared native network per run. No boundary, scheduling or network changes. No presumed saturation or required model failure."
+}
