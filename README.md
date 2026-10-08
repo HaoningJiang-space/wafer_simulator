@@ -13,6 +13,15 @@ placements and collectives are fixed validation cases, not optimization targets.
 
 ## Latest result and stop decision
 
+The [independent-group coverage report](docs/results/group-sharing-001/REVIEW.md)
+adds two fixed TP8 groups on 16 endpoints in ONE shared network, with own-position
+solos: 12 cells, 36 complete runs. Some paths and message times change, but neither
+group's final completion slows down. Joint bounded makespans are 55,743/55,629
+cycles; serial gives 54,306/54,144. The design-gap error is +48 cycles, within the
+existing 100-cycle budget. This extends the scoped gap-estimation use case; it
+does not validate saturation cases or certify serial RX capacity. Final tests:
+171 passed; 555 raw hashes, 36 independent audits, 12 cell command replays.
+
 The [paired design-gain report](docs/results/boundary-design-001/model_selection.md)
 now covers 24 configurations and 72 complete executions. serial has substantial
 absolute-time bias but only +8/+44/+20/-12 cycles of design-gap error; all four
@@ -24,9 +33,9 @@ band. pipeline reproduces all reference makespans but violates RX capacity.
 **Decision:** retain serial for this scoped gap estimate, bounded for declared
 message/capacity predictions, and close endpoint enhancement/runtime optimization.
 Compute/SRAM/DMA remain design assumptions, not calibrated native wafer inputs.
-The next study freezes these models at `5de7a2f` and checks two independent TP8
-groups sharing ONE native network. A and B run alone at their assigned positions,
-then together; only serial and bounded are compared. The
+The coverage study froze these models at `5de7a2f` and checked two independent TP8
+groups sharing ONE native network. A and B ran alone at their assigned positions,
+then together; only serial and bounded were compared. The
 [registered 12-cell protocol](docs/GROUP_SHARING_PROTOCOL.md) fixes s64,
 burst_256 and the first/next eight row-major endpoints, without a mapping search.
 Existing evidence:

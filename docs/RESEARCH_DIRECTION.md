@@ -46,12 +46,16 @@ milestone: serial gap errors are +8/+44/+20/-12 cycles, within the declared budg
 two indifference classifications nevertheless differ. Reference gaps are 74/82
 cycles, so no robust winner is claimed. pipeline agrees in time but violates RX
 capacity in both designs. Retain these distinct uses and stop endpoint expansion.
-The next [registered coverage study](GROUP_SHARING_PROTOCOL.md) retains the
+The completed [registered coverage study](GROUP_SHARING_PROTOCOL.md) retained the
 `5de7a2f` models and adds two disjoint TP8 groups in one native network. It uses
 own-position solos and simultaneous execution to separate positional cost from
 network-mediated interference. s64/burst_256, serial/bounded, two placements:
-12 configurations, not a new algorithm or mapping search. No model is expanded
-automatically if the new case exposes an applicability limit.
+12 configurations, not a new algorithm or mapping search. The
+[accepted coverage result](results/group-sharing-001/REVIEW.md) shows some shared
+links and changed messages, but zero final group slowdown. Joint gap error is
++48 cycles, still within the registered budget. Retain the scoped simple-model
+use; keep bounded for capacity/commit evidence. This is not strong-interference
+coverage, and no further model or mapping sweep is launched automatically.
 
 For each local policy q, report delta_m = T_m(B) - T_m(R) and
 E_gap = delta_m - delta_bounded = error_B - error_R.

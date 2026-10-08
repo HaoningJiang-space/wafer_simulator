@@ -1,0 +1,326 @@
+{
+  "boundary": {
+    "algorithm": "direct_exchange_rank_order_sum",
+    "application_tolerance_cycles": 100,
+    "application_tolerance_percent": 2,
+    "cases": [
+      {
+        "name": "s16",
+        "sequence": 16
+      },
+      {
+        "name": "s64",
+        "sequence": 64
+      }
+    ],
+    "flit_bytes": 2000,
+    "mapping": "row_major",
+    "mechanisms": [
+      {
+        "flows": [
+          [
+            1,
+            0,
+            32000
+          ]
+        ],
+        "name": "single"
+      },
+      {
+        "flows": [
+          [
+            1,
+            0,
+            32000
+          ]
+        ],
+        "memory_overrides": {
+          "1": 8
+        },
+        "name": "slow_source"
+      },
+      {
+        "flows": [
+          [
+            1,
+            0,
+            32000
+          ],
+          [
+            5,
+            0,
+            32000
+          ],
+          [
+            6,
+            0,
+            32000
+          ]
+        ],
+        "memory_overrides": {
+          "0": 8
+        },
+        "name": "incast"
+      },
+      {
+        "flows": [
+          [
+            0,
+            2,
+            32000
+          ],
+          [
+            6,
+            3,
+            32000
+          ]
+        ],
+        "memory_overrides": {
+          "2": 8
+        },
+        "name": "shared_slow_sink",
+        "requires_shared_directed_link": true
+      }
+    ],
+    "message_tolerance_cycles": 20,
+    "message_tolerance_percent": 5,
+    "modes": [
+      "serial",
+      "pipeline",
+      "bounded"
+    ],
+    "name": "memory_network_boundary_v1",
+    "network_seed": 1,
+    "placement": "ours_rotated",
+    "repetitions": 3,
+    "rx_slots": 8,
+    "scope": "Conditional streaming DMA target; shared read/write ports; FIFO storage carved out of unchanged SRAM. BookSim internal network fixed. Whole-object consumer visibility.",
+    "tx_slots": 2
+  },
+  "group_endpoints": {
+    "A": [
+      0,
+      3,
+      1,
+      4,
+      2,
+      5,
+      8,
+      6
+    ],
+    "B": [
+      9,
+      7,
+      10,
+      13,
+      11,
+      14,
+      12,
+      15
+    ]
+  },
+  "group_locations": {
+    "A": [
+      {
+        "layer": 0,
+        "node": 0,
+        "position": {
+          "x": -52.0,
+          "y": -59.0
+        },
+        "router": 0
+      },
+      {
+        "layer": 0,
+        "node": 3,
+        "position": {
+          "x": 26.0,
+          "y": -53.0
+        },
+        "router": 3
+      },
+      {
+        "layer": 0,
+        "node": 1,
+        "position": {
+          "x": -26.0,
+          "y": -46.0
+        },
+        "router": 1
+      },
+      {
+        "layer": 0,
+        "node": 4,
+        "position": {
+          "x": 52.0,
+          "y": -40.0
+        },
+        "router": 4
+      },
+      {
+        "layer": 0,
+        "node": 2,
+        "position": {
+          "x": 0.0,
+          "y": -33.0
+        },
+        "router": 2
+      },
+      {
+        "layer": 0,
+        "node": 5,
+        "position": {
+          "x": -52.0,
+          "y": -26.0
+        },
+        "router": 5
+      },
+      {
+        "layer": 0,
+        "node": 8,
+        "position": {
+          "x": 26.0,
+          "y": -20.0
+        },
+        "router": 8
+      },
+      {
+        "layer": 0,
+        "node": 6,
+        "position": {
+          "x": -26.0,
+          "y": -13.0
+        },
+        "router": 6
+      }
+    ],
+    "B": [
+      {
+        "layer": 0,
+        "node": 9,
+        "position": {
+          "x": 52.0,
+          "y": -7.0
+        },
+        "router": 9
+      },
+      {
+        "layer": 0,
+        "node": 7,
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "router": 7
+      },
+      {
+        "layer": 0,
+        "node": 10,
+        "position": {
+          "x": -52.0,
+          "y": 7.0
+        },
+        "router": 10
+      },
+      {
+        "layer": 0,
+        "node": 13,
+        "position": {
+          "x": 26.0,
+          "y": 13.0
+        },
+        "router": 13
+      },
+      {
+        "layer": 0,
+        "node": 11,
+        "position": {
+          "x": -26.0,
+          "y": 20.0
+        },
+        "router": 11
+      },
+      {
+        "layer": 0,
+        "node": 14,
+        "position": {
+          "x": 52.0,
+          "y": 26.0
+        },
+        "router": 14
+      },
+      {
+        "layer": 0,
+        "node": 12,
+        "position": {
+          "x": 0.0,
+          "y": 33.0
+        },
+        "router": 12
+      },
+      {
+        "layer": 0,
+        "node": 15,
+        "position": {
+          "x": -52.0,
+          "y": 40.0
+        },
+        "router": 15
+      }
+    ]
+  },
+  "groups": [
+    "A",
+    "B"
+  ],
+  "input_identity": "7db2106589760a0610ea19cb3334cdbaf31621333f1835eabe8471f62d2d4057",
+  "memory_quantum_bytes": 256,
+  "models": [
+    "serial",
+    "bounded"
+  ],
+  "network_instances": 1,
+  "network_sha256": "b8a1d6fa12167ccd9520f2f79510cba6f2ffb246a12b1d6f22a55aff6362da89",
+  "operations": 228,
+  "resources": {
+    "aggregate_directed_link_bits_per_cycle": 7232000,
+    "buffer_flits_per_vc": 32,
+    "compute_reticles": 20,
+    "link_bits_per_cycle": 16000,
+    "network_frequency_hz": 1000000000.0,
+    "physical_cost_matched": false,
+    "router_latency_cycles": 4,
+    "routers": 100,
+    "undirected_links": 226,
+    "virtual_channels": 1
+  },
+  "target": {
+    "bytes_to_flits": "ceil(payload_bytes/flit_bytes); padding consumes network only",
+    "coarse_model": "whole-message hop service; source router latency per link, final router in ejection",
+    "compute_memory_calibrated": false,
+    "compute_memory_parameters": {
+      "compute_rates": {
+        "mac": 64,
+        "scalar_add": 16,
+        "scalar_div": 4,
+        "scalar_erf": 4,
+        "scalar_exp": 4,
+        "scalar_max": 16,
+        "scalar_mul": 16,
+        "scalar_rsqrt": 4
+      },
+      "memory_bytes_per_cycle": 32,
+      "region_capacity_bytes": 262144,
+      "scope": "Common analytical compute/memory; not calibrated to WoW"
+    },
+    "flit_bytes": 2000,
+    "native_channel": "one flit per cycle; bandwidth/8 bytes per cycle",
+    "native_endpoint": "one flit per cycle, author unit-to-router channel latency",
+    "native_router": "author VC/switch/crossbar pipeline, counted inside BookSim only",
+    "network_frequency_hz": 1000000000.0,
+    "physical_cost_matched": false
+  },
+  "time_zero_release": true,
+  "visibility": "whole_object",
+  "workload_identity": "8b57527edd13e8a12b72e7dc32e503d74aff29d56622ad3666eba10058e5d2b6"
+}

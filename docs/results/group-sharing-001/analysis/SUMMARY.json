@@ -1,0 +1,1161 @@
+{
+  "decision_table": [
+    {
+      "bounded_baseline_capacity": "feasible",
+      "bounded_baseline_cycles": 55539,
+      "bounded_choice": "approximately_equal",
+      "bounded_gap_cycles": 82,
+      "bounded_gap_error_cycles": 0,
+      "bounded_gap_target_met": true,
+      "bounded_raw_order_agrees": true,
+      "bounded_rotated_capacity": "feasible",
+      "bounded_rotated_cycles": 55457,
+      "memory_policy": "burst_256",
+      "reference_choice": "approximately_equal",
+      "reference_gap_cycles": 82,
+      "scenario": "A",
+      "serial_baseline_capacity": "unmodeled",
+      "serial_baseline_cycles": 54184,
+      "serial_choice": "approximately_equal",
+      "serial_gap_cycles": 70,
+      "serial_gap_error_cycles": -12,
+      "serial_gap_target_met": true,
+      "serial_raw_order_agrees": true,
+      "serial_rotated_capacity": "unmodeled",
+      "serial_rotated_cycles": 54114
+    },
+    {
+      "bounded_baseline_capacity": "feasible",
+      "bounded_baseline_cycles": 55743,
+      "bounded_choice": "ours_rotated",
+      "bounded_gap_cycles": 114,
+      "bounded_gap_error_cycles": 0,
+      "bounded_gap_target_met": true,
+      "bounded_raw_order_agrees": true,
+      "bounded_rotated_capacity": "feasible",
+      "bounded_rotated_cycles": 55629,
+      "memory_policy": "burst_256",
+      "reference_choice": "ours_rotated",
+      "reference_gap_cycles": 114,
+      "scenario": "B",
+      "serial_baseline_capacity": "unmodeled",
+      "serial_baseline_cycles": 54306,
+      "serial_choice": "ours_rotated",
+      "serial_gap_cycles": 162,
+      "serial_gap_error_cycles": 48,
+      "serial_gap_target_met": true,
+      "serial_raw_order_agrees": true,
+      "serial_rotated_capacity": "unmodeled",
+      "serial_rotated_cycles": 54144
+    },
+    {
+      "bounded_baseline_capacity": "feasible",
+      "bounded_baseline_cycles": 55743,
+      "bounded_choice": "ours_rotated",
+      "bounded_gap_cycles": 114,
+      "bounded_gap_error_cycles": 0,
+      "bounded_gap_target_met": true,
+      "bounded_raw_order_agrees": true,
+      "bounded_rotated_capacity": "feasible",
+      "bounded_rotated_cycles": 55629,
+      "memory_policy": "burst_256",
+      "reference_choice": "ours_rotated",
+      "reference_gap_cycles": 114,
+      "scenario": "AB",
+      "serial_baseline_capacity": "unmodeled",
+      "serial_baseline_cycles": 54306,
+      "serial_choice": "ours_rotated",
+      "serial_gap_cycles": 162,
+      "serial_gap_error_cycles": 48,
+      "serial_gap_target_met": true,
+      "serial_raw_order_agrees": true,
+      "serial_rotated_capacity": "unmodeled",
+      "serial_rotated_cycles": 54144
+    }
+  ],
+  "group_interference": [
+    {
+      "changed_operation_count": 0,
+      "changed_operations": {},
+      "collective_progress": {
+        "attention_sum": {
+          "joint": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 28456,
+            "ready": 13516,
+            "retired": 28456
+          },
+          "solo": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 28456,
+            "ready": 13516,
+            "retired": 28456
+          }
+        },
+        "ffn_sum": {
+          "joint": {
+            "admitted": 37452,
+            "capacity_wait_cycles": 0,
+            "finish": 52392,
+            "ready": 37452,
+            "retired": 52392
+          },
+          "solo": {
+            "admitted": 37452,
+            "capacity_wait_cycles": 0,
+            "finish": 52392,
+            "ready": 37452,
+            "retired": 52392
+          }
+        }
+      },
+      "group": "A",
+      "joint_output_ready": 54184,
+      "joint_retired": 54184,
+      "mode": "serial",
+      "output_delay_cycles": 0,
+      "output_slowdown": 1.0,
+      "placement": "baseline",
+      "retirement_delay_cycles": 0,
+      "solo_output_ready": 54184,
+      "solo_retired": 54184
+    },
+    {
+      "changed_operation_count": 0,
+      "changed_operations": {},
+      "collective_progress": {
+        "attention_sum": {
+          "joint": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 28517,
+            "ready": 13516,
+            "retired": 28517
+          },
+          "solo": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 28517,
+            "ready": 13516,
+            "retired": 28517
+          }
+        },
+        "ffn_sum": {
+          "joint": {
+            "admitted": 37513,
+            "capacity_wait_cycles": 0,
+            "finish": 52514,
+            "ready": 37513,
+            "retired": 52514
+          },
+          "solo": {
+            "admitted": 37513,
+            "capacity_wait_cycles": 0,
+            "finish": 52514,
+            "ready": 37513,
+            "retired": 52514
+          }
+        }
+      },
+      "group": "B",
+      "joint_output_ready": 54306,
+      "joint_retired": 54306,
+      "mode": "serial",
+      "output_delay_cycles": 0,
+      "output_slowdown": 1.0,
+      "placement": "baseline",
+      "retirement_delay_cycles": 0,
+      "solo_output_ready": 54306,
+      "solo_retired": 54306
+    },
+    {
+      "changed_operation_count": 0,
+      "changed_operations": {},
+      "collective_progress": {
+        "attention_sum": {
+          "joint": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 29397,
+            "ready": 13516,
+            "retired": 29397
+          },
+          "solo": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 29397,
+            "ready": 13516,
+            "retired": 29397
+          }
+        },
+        "ffn_sum": {
+          "joint": {
+            "admitted": 38393,
+            "capacity_wait_cycles": 0,
+            "finish": 53747,
+            "ready": 38393,
+            "retired": 53747
+          },
+          "solo": {
+            "admitted": 38393,
+            "capacity_wait_cycles": 0,
+            "finish": 53747,
+            "ready": 38393,
+            "retired": 53747
+          }
+        }
+      },
+      "group": "A",
+      "joint_output_ready": 55539,
+      "joint_retired": 55539,
+      "mode": "bounded",
+      "output_delay_cycles": 0,
+      "output_slowdown": 1.0,
+      "placement": "baseline",
+      "retirement_delay_cycles": 0,
+      "solo_output_ready": 55539,
+      "solo_retired": 55539
+    },
+    {
+      "changed_operation_count": 0,
+      "changed_operations": {},
+      "collective_progress": {
+        "attention_sum": {
+          "joint": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 29499,
+            "ready": 13516,
+            "retired": 29499
+          },
+          "solo": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 29499,
+            "ready": 13516,
+            "retired": 29499
+          }
+        },
+        "ffn_sum": {
+          "joint": {
+            "admitted": 38495,
+            "capacity_wait_cycles": 0,
+            "finish": 53951,
+            "ready": 38495,
+            "retired": 53951
+          },
+          "solo": {
+            "admitted": 38495,
+            "capacity_wait_cycles": 0,
+            "finish": 53951,
+            "ready": 38495,
+            "retired": 53951
+          }
+        }
+      },
+      "group": "B",
+      "joint_output_ready": 55743,
+      "joint_retired": 55743,
+      "mode": "bounded",
+      "output_delay_cycles": 0,
+      "output_slowdown": 1.0,
+      "placement": "baseline",
+      "retirement_delay_cycles": 0,
+      "solo_output_ready": 55743,
+      "solo_retired": 55743
+    },
+    {
+      "changed_operation_count": 0,
+      "changed_operations": {},
+      "collective_progress": {
+        "attention_sum": {
+          "joint": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 28421,
+            "ready": 13516,
+            "retired": 28421
+          },
+          "solo": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 28421,
+            "ready": 13516,
+            "retired": 28421
+          }
+        },
+        "ffn_sum": {
+          "joint": {
+            "admitted": 37417,
+            "capacity_wait_cycles": 0,
+            "finish": 52322,
+            "ready": 37417,
+            "retired": 52322
+          },
+          "solo": {
+            "admitted": 37417,
+            "capacity_wait_cycles": 0,
+            "finish": 52322,
+            "ready": 37417,
+            "retired": 52322
+          }
+        }
+      },
+      "group": "A",
+      "joint_output_ready": 54114,
+      "joint_retired": 54114,
+      "mode": "serial",
+      "output_delay_cycles": 0,
+      "output_slowdown": 1.0,
+      "placement": "ours_rotated",
+      "retirement_delay_cycles": 0,
+      "solo_output_ready": 54114,
+      "solo_retired": 54114
+    },
+    {
+      "changed_operation_count": 0,
+      "changed_operations": {},
+      "collective_progress": {
+        "attention_sum": {
+          "joint": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 28436,
+            "ready": 13516,
+            "retired": 28436
+          },
+          "solo": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 28436,
+            "ready": 13516,
+            "retired": 28436
+          }
+        },
+        "ffn_sum": {
+          "joint": {
+            "admitted": 37432,
+            "capacity_wait_cycles": 0,
+            "finish": 52352,
+            "ready": 37432,
+            "retired": 52352
+          },
+          "solo": {
+            "admitted": 37432,
+            "capacity_wait_cycles": 0,
+            "finish": 52352,
+            "ready": 37432,
+            "retired": 52352
+          }
+        }
+      },
+      "group": "B",
+      "joint_output_ready": 54144,
+      "joint_retired": 54144,
+      "mode": "serial",
+      "output_delay_cycles": 0,
+      "output_slowdown": 1.0,
+      "placement": "ours_rotated",
+      "retirement_delay_cycles": 0,
+      "solo_output_ready": 54144,
+      "solo_retired": 54144
+    },
+    {
+      "changed_operation_count": 1,
+      "changed_operations": {
+        "A/r4/output": {
+          "joint": {
+            "admitted": 52121,
+            "capacity_wait_cycles": 0,
+            "finish": 53913,
+            "ready": 52121,
+            "retired": 53913
+          },
+          "solo": {
+            "admitted": 52120,
+            "capacity_wait_cycles": 0,
+            "finish": 53912,
+            "ready": 52120,
+            "retired": 53912
+          }
+        }
+      },
+      "collective_progress": {
+        "attention_sum": {
+          "joint": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 29356,
+            "ready": 13516,
+            "retired": 29356
+          },
+          "solo": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 29356,
+            "ready": 13516,
+            "retired": 29356
+          }
+        },
+        "ffn_sum": {
+          "joint": {
+            "admitted": 38352,
+            "capacity_wait_cycles": 0,
+            "finish": 53665,
+            "ready": 38352,
+            "retired": 53665
+          },
+          "solo": {
+            "admitted": 38352,
+            "capacity_wait_cycles": 0,
+            "finish": 53665,
+            "ready": 38352,
+            "retired": 53665
+          }
+        }
+      },
+      "group": "A",
+      "joint_output_ready": 55457,
+      "joint_retired": 55457,
+      "mode": "bounded",
+      "output_delay_cycles": 0,
+      "output_slowdown": 1.0,
+      "placement": "ours_rotated",
+      "retirement_delay_cycles": 0,
+      "solo_output_ready": 55457,
+      "solo_retired": 55457
+    },
+    {
+      "changed_operation_count": 0,
+      "changed_operations": {},
+      "collective_progress": {
+        "attention_sum": {
+          "joint": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 29442,
+            "ready": 13516,
+            "retired": 29442
+          },
+          "solo": {
+            "admitted": 13516,
+            "capacity_wait_cycles": 0,
+            "finish": 29442,
+            "ready": 13516,
+            "retired": 29442
+          }
+        },
+        "ffn_sum": {
+          "joint": {
+            "admitted": 38438,
+            "capacity_wait_cycles": 0,
+            "finish": 53837,
+            "ready": 38438,
+            "retired": 53837
+          },
+          "solo": {
+            "admitted": 38438,
+            "capacity_wait_cycles": 0,
+            "finish": 53837,
+            "ready": 38438,
+            "retired": 53837
+          }
+        }
+      },
+      "group": "B",
+      "joint_output_ready": 55629,
+      "joint_retired": 55629,
+      "mode": "bounded",
+      "output_delay_cycles": 0,
+      "output_slowdown": 1.0,
+      "placement": "ours_rotated",
+      "retirement_delay_cycles": 0,
+      "solo_output_ready": 55629,
+      "solo_retired": 55629
+    }
+  ],
+  "rows": [
+    {
+      "ape": 2.43972703865752,
+      "application_cycles": 54184,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "capacity_status": "unmodeled",
+      "case": "A__baseline",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 37008,
+        "network": 760
+      },
+      "error_cycles": -1355,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 458752,
+      "max_message_ape": 302.78019113814076,
+      "max_message_error_cycles": 3485,
+      "memory_busy_cycles": 132352,
+      "memory_bytes": 4235264,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 252,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 217632,
+      "placement": "baseline",
+      "reference_agreement": "outside_registered_targets",
+      "scenario": "A",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 55539,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "capacity_status": "feasible",
+      "case": "A__baseline",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 28188,
+        "network": 254,
+        "source_queue": 10681
+      },
+      "error_cycles": 0,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 458752,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 132576,
+      "memory_bytes": 4235264,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 252,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 8,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 218144,
+      "placement": "baseline",
+      "reference_agreement": "reference",
+      "scenario": "A",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 2.4216960888616406,
+      "application_cycles": 54114,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "capacity_status": "unmodeled",
+      "case": "A__ours_rotated",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 37040,
+        "network": 658
+      },
+      "error_cycles": -1343,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 458752,
+      "max_message_ape": 280.37007240547064,
+      "max_message_error_cycles": 3485,
+      "memory_busy_cycles": 132352,
+      "memory_bytes": 4235264,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 252,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 217632,
+      "placement": "ours_rotated",
+      "reference_agreement": "outside_registered_targets",
+      "scenario": "A",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 55457,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "capacity_status": "feasible",
+      "case": "A__ours_rotated",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 28188,
+        "network": 172,
+        "source_queue": 10681
+      },
+      "error_cycles": 0,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 458752,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 132576,
+      "memory_bytes": 4235264,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 252,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 8,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "8": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "8": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 218144,
+      "placement": "ours_rotated",
+      "reference_agreement": "reference",
+      "scenario": "A",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 2.577902158118508,
+      "application_cycles": 54306,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "capacity_status": "unmodeled",
+      "case": "B__baseline",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 37056,
+        "network": 834
+      },
+      "error_cycles": -1437,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 458752,
+      "max_message_ape": 302.78019113814076,
+      "max_message_error_cycles": 3485,
+      "memory_busy_cycles": 132352,
+      "memory_bytes": 4235264,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 252,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 217632,
+      "placement": "baseline",
+      "reference_agreement": "outside_registered_targets",
+      "scenario": "B",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 55743,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "capacity_status": "feasible",
+      "case": "B__baseline",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 28188,
+        "network": 458,
+        "source_queue": 10681
+      },
+      "error_cycles": 0,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 458752,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 132576,
+      "memory_bytes": 4235264,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 252,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "8": 8,
+          "9": 2,
+          "10": 2,
+          "11": 2,
+          "12": 2,
+          "13": 2,
+          "14": 2,
+          "15": 2
+        },
+        "peak_tx_slots": {
+          "8": 2,
+          "9": 2,
+          "10": 2,
+          "11": 2,
+          "12": 2,
+          "13": 2,
+          "14": 2,
+          "15": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 218144,
+      "placement": "baseline",
+      "reference_agreement": "reference",
+      "scenario": "B",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 2.6694709593916843,
+      "application_cycles": 54144,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "capacity_status": "unmodeled",
+      "case": "B__ours_rotated",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 36976,
+        "network": 752
+      },
+      "error_cycles": -1485,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 458752,
+      "max_message_ape": 296.09175870858115,
+      "max_message_error_cycles": 3485,
+      "memory_busy_cycles": 132352,
+      "memory_bytes": 4235264,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 252,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 217632,
+      "placement": "ours_rotated",
+      "reference_agreement": "outside_registered_targets",
+      "scenario": "B",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 55629,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "capacity_status": "feasible",
+      "case": "B__ours_rotated",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 28188,
+        "network": 344,
+        "source_queue": 10681
+      },
+      "error_cycles": 0,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 458752,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 132576,
+      "memory_bytes": 4235264,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 252,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "7": 2,
+          "9": 8,
+          "10": 2,
+          "11": 2,
+          "12": 2,
+          "13": 2,
+          "14": 2,
+          "15": 2
+        },
+        "peak_tx_slots": {
+          "7": 2,
+          "9": 2,
+          "10": 2,
+          "11": 2,
+          "12": 2,
+          "13": 2,
+          "14": 2,
+          "15": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 218144,
+      "placement": "ours_rotated",
+      "reference_agreement": "reference",
+      "scenario": "B",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 2.577902158118508,
+      "application_cycles": 54306,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "capacity_status": "unmodeled",
+      "case": "AB__baseline",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 37056,
+        "network": 834
+      },
+      "error_cycles": -1437,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 917504,
+      "max_message_ape": 302.78019113814076,
+      "max_message_error_cycles": 3485,
+      "memory_busy_cycles": 264704,
+      "memory_bytes": 8470528,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 504,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 217632,
+      "placement": "baseline",
+      "reference_agreement": "outside_registered_targets",
+      "scenario": "AB",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 55743,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "capacity_status": "feasible",
+      "case": "AB__baseline",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 28188,
+        "network": 458,
+        "source_queue": 10681
+      },
+      "error_cycles": 0,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 917504,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 265152,
+      "memory_bytes": 8470528,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 504,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 8,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2,
+          "8": 8,
+          "9": 2,
+          "10": 2,
+          "11": 2,
+          "12": 2,
+          "13": 2,
+          "14": 2,
+          "15": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2,
+          "8": 2,
+          "9": 2,
+          "10": 2,
+          "11": 2,
+          "12": 2,
+          "13": 2,
+          "14": 2,
+          "15": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 218144,
+      "placement": "baseline",
+      "reference_agreement": "reference",
+      "scenario": "AB",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 2.6694709593916843,
+      "application_cycles": 54144,
+      "application_target_met": false,
+      "capacity_feasible": null,
+      "capacity_status": "unmodeled",
+      "case": "AB__ours_rotated",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 36976,
+        "network": 752
+      },
+      "error_cycles": -1485,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 917504,
+      "max_message_ape": 296.09175870858115,
+      "max_message_error_cycles": 3485,
+      "memory_busy_cycles": 264704,
+      "memory_bytes": 8470528,
+      "message_target_met": false,
+      "mode": "serial",
+      "network_flits": 504,
+      "occupancy": null,
+      "peak_total_reserved_bytes": 217632,
+      "placement": "ours_rotated",
+      "reference_agreement": "outside_registered_targets",
+      "scenario": "AB",
+      "semantic_audit_passed": true
+    },
+    {
+      "ape": 0.0,
+      "application_cycles": 55629,
+      "application_target_met": true,
+      "capacity_feasible": true,
+      "capacity_status": "feasible",
+      "case": "AB__ours_rotated",
+      "critical_chain_cycles": {
+        "compute": 16416,
+        "memory": 28188,
+        "network": 344,
+        "source_queue": 10681
+      },
+      "error_cycles": 0,
+      "execution_completed": true,
+      "hardware_calibration_status": "uncalibrated_local_resources",
+      "logical_network_bytes": 917504,
+      "max_message_ape": 0.0,
+      "max_message_error_cycles": 0,
+      "memory_busy_cycles": 265152,
+      "memory_bytes": 8470528,
+      "message_target_met": true,
+      "mode": "bounded",
+      "network_flits": 504,
+      "occupancy": {
+        "passed": true,
+        "peak_rx_slots": {
+          "0": 8,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2,
+          "8": 2,
+          "9": 8,
+          "10": 2,
+          "11": 2,
+          "12": 2,
+          "13": 2,
+          "14": 2,
+          "15": 2
+        },
+        "peak_tx_slots": {
+          "0": 2,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2,
+          "8": 2,
+          "9": 2,
+          "10": 2,
+          "11": 2,
+          "12": 2,
+          "13": 2,
+          "14": 2,
+          "15": 2
+        },
+        "rx_overflow_slots": 0
+      },
+      "peak_total_reserved_bytes": 218144,
+      "placement": "ours_rotated",
+      "reference_agreement": "reference",
+      "scenario": "AB",
+      "semantic_audit_passed": true
+    }
+  ],
+  "shared_resources": [
+    {
+      "a_directed_links": 60,
+      "b_directed_links": 52,
+      "mode": "serial",
+      "placement": "baseline",
+      "shared_directed_links": 2,
+      "shared_link_details": [
+        {
+          "a_first": 27892,
+          "a_flits": 4,
+          "a_last": 51830,
+          "arrival_envelopes_overlap": true,
+          "b_first": 27679,
+          "b_flits": 18,
+          "b_last": 51692,
+          "destination": 48,
+          "source": 8
+        },
+        {
+          "a_first": 14095,
+          "a_flits": 18,
+          "a_last": 38046,
+          "arrival_envelopes_overlap": true,
+          "b_first": 14085,
+          "b_flits": 18,
+          "b_last": 38098,
+          "destination": 8,
+          "source": 48
+        }
+      ],
+      "shared_links_with_overlapping_arrival_envelopes": 2,
+      "shared_routers": 2
+    },
+    {
+      "a_directed_links": 69,
+      "b_directed_links": 61,
+      "mode": "bounded",
+      "placement": "baseline",
+      "shared_directed_links": 2,
+      "shared_link_details": [
+        {
+          "a_first": 26710,
+          "a_flits": 17,
+          "a_last": 52192,
+          "arrival_envelopes_overlap": true,
+          "b_first": 23674,
+          "b_flits": 16,
+          "b_last": 49542,
+          "destination": 48,
+          "source": 8
+        },
+        {
+          "a_first": 13645,
+          "a_flits": 16,
+          "a_last": 38963,
+          "arrival_envelopes_overlap": true,
+          "b_first": 13636,
+          "b_flits": 16,
+          "b_last": 39056,
+          "destination": 8,
+          "source": 48
+        }
+      ],
+      "shared_links_with_overlapping_arrival_envelopes": 2,
+      "shared_routers": 2
+    },
+    {
+      "a_directed_links": 40,
+      "b_directed_links": 41,
+      "mode": "serial",
+      "placement": "ours_rotated",
+      "shared_directed_links": 0,
+      "shared_link_details": [],
+      "shared_links_with_overlapping_arrival_envelopes": 0,
+      "shared_routers": 1
+    },
+    {
+      "a_directed_links": 61,
+      "b_directed_links": 61,
+      "mode": "bounded",
+      "placement": "ours_rotated",
+      "shared_directed_links": 5,
+      "shared_link_details": [
+        {
+          "a_first": 25818,
+          "a_flits": 4,
+          "a_last": 51340,
+          "arrival_envelopes_overlap": true,
+          "b_first": 13688,
+          "b_flits": 26,
+          "b_last": 39063,
+          "destination": 53,
+          "source": 2
+        },
+        {
+          "a_first": 14108,
+          "a_flits": 2,
+          "a_last": 38944,
+          "arrival_envelopes_overlap": true,
+          "b_first": 14115,
+          "b_flits": 2,
+          "b_last": 39037,
+          "destination": 2,
+          "source": 48
+        },
+        {
+          "a_first": 14115,
+          "a_flits": 2,
+          "a_last": 38951,
+          "arrival_envelopes_overlap": true,
+          "b_first": 24772,
+          "b_flits": 30,
+          "b_last": 52120,
+          "destination": 2,
+          "source": 53
+        },
+        {
+          "a_first": 25840,
+          "a_flits": 4,
+          "a_last": 51362,
+          "arrival_envelopes_overlap": true,
+          "b_first": 13636,
+          "b_flits": 46,
+          "b_last": 39085,
+          "destination": 54,
+          "source": 53
+        },
+        {
+          "a_first": 14089,
+          "a_flits": 2,
+          "a_last": 38925,
+          "arrival_envelopes_overlap": true,
+          "b_first": 23702,
+          "b_flits": 62,
+          "b_last": 53645,
+          "destination": 53,
+          "source": 54
+        }
+      ],
+      "shared_links_with_overlapping_arrival_envelopes": 5,
+      "shared_routers": 4
+    }
+  ]
+}

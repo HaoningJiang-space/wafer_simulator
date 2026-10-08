@@ -1,0 +1,653 @@
+{
+  "baseline_compatibility": {
+    "A__baseline/bounded": {
+      "full_events_equal": true,
+      "normalization": "remove A/ from logical identities only; no timestamps removed",
+      "normalized_execution_sha256": "c2f56757d5d4749cee057d9b16c8509ed8157878c33f72d703fbe8c3f9f8fbe1"
+    },
+    "A__baseline/serial": {
+      "full_events_equal": true,
+      "normalization": "remove A/ from logical identities only; no timestamps removed",
+      "normalized_execution_sha256": "b22630452584c5385ba2a3628b1ccbf26f481f2ef3b849c2f8e57260bfc0f9a6"
+    },
+    "A__ours_rotated/bounded": {
+      "full_events_equal": true,
+      "normalization": "remove A/ from logical identities only; no timestamps removed",
+      "normalized_execution_sha256": "8867661229b661669f6317abbaa5e613f51533609d314ebc96b6a34d1595b12b"
+    },
+    "A__ours_rotated/serial": {
+      "full_events_equal": true,
+      "normalization": "remove A/ from logical identities only; no timestamps removed",
+      "normalized_execution_sha256": "39e666affd7d87f39d569e9dfe9d46daa0816c0331c8844d1544d2fdec4f0034"
+    }
+  },
+  "binaries": {
+    "accepted_online": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+    "boundary": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+    "standalone": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+  },
+  "checked": [
+    {
+      "audit": {
+        "application_cycles": 54184,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "A__baseline",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 54114,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "A__ours_rotated",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55539,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "A__baseline",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55457,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "A__ours_rotated",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55457,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "A__ours_rotated",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55539,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "A__baseline",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54114,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "A__ours_rotated",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54184,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "A__baseline",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54184,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "A__baseline",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 54114,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "A__ours_rotated",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55539,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "A__baseline",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55457,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "A__ours_rotated",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 54306,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "B__baseline",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 54144,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "B__ours_rotated",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55743,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "B__baseline",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55629,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "B__ours_rotated",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55629,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "B__ours_rotated",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55743,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "B__baseline",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54144,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "B__ours_rotated",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54306,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "B__baseline",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54306,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "B__baseline",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 54144,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "B__ours_rotated",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55743,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "B__baseline",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55629,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "B__ours_rotated",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 54306,
+        "operations": 228,
+        "passed": true,
+        "phases": 880,
+        "services": 33476,
+        "source_duration_used": false
+      },
+      "case": "AB__baseline",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 54144,
+        "operations": 228,
+        "passed": true,
+        "phases": 880,
+        "services": 33476,
+        "source_duration_used": false
+      },
+      "case": "AB__ours_rotated",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55743,
+        "operations": 228,
+        "passed": true,
+        "phases": 768,
+        "services": 33700,
+        "source_duration_used": false
+      },
+      "case": "AB__baseline",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55629,
+        "operations": 228,
+        "passed": true,
+        "phases": 768,
+        "services": 33700,
+        "source_duration_used": false
+      },
+      "case": "AB__ours_rotated",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55629,
+        "operations": 228,
+        "passed": true,
+        "phases": 768,
+        "services": 33700,
+        "source_duration_used": false
+      },
+      "case": "AB__ours_rotated",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55743,
+        "operations": 228,
+        "passed": true,
+        "phases": 768,
+        "services": 33700,
+        "source_duration_used": false
+      },
+      "case": "AB__baseline",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54144,
+        "operations": 228,
+        "passed": true,
+        "phases": 880,
+        "services": 33476,
+        "source_duration_used": false
+      },
+      "case": "AB__ours_rotated",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54306,
+        "operations": 228,
+        "passed": true,
+        "phases": 880,
+        "services": 33476,
+        "source_duration_used": false
+      },
+      "case": "AB__baseline",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54306,
+        "operations": 228,
+        "passed": true,
+        "phases": 880,
+        "services": 33476,
+        "source_duration_used": false
+      },
+      "case": "AB__baseline",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 54144,
+        "operations": 228,
+        "passed": true,
+        "phases": 880,
+        "services": 33476,
+        "source_duration_used": false
+      },
+      "case": "AB__ours_rotated",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55743,
+        "operations": 228,
+        "passed": true,
+        "phases": 768,
+        "services": 33700,
+        "source_duration_used": false
+      },
+      "case": "AB__baseline",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55629,
+        "operations": 228,
+        "passed": true,
+        "phases": 768,
+        "services": 33700,
+        "source_duration_used": false
+      },
+      "case": "AB__ours_rotated",
+      "mode": "bounded",
+      "repeat": 2
+    }
+  ],
+  "checked_artifact_count": 555,
+  "complete_manifest_sha256": "26cb6d63e249b7245124c456ae0d424ccfda5ebf5cc531a0041ac842ce1ad56d",
+  "exact_solo_projections": true,
+  "full_repetitions_identical": true,
+  "joint_work_conserved": true,
+  "native_command_replays": [
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "A__baseline",
+      "commands": 16796,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "e912dc6e0d2f0940e79070a167f0bcd5fe16373db1572ff49478cbfc031e1b31",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "A__ours_rotated",
+      "commands": 16796,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "ac02b3b762f3962f500ec5251cd8aa8ecd798e1480374cf8a6648ba1c669d25f",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "A__baseline",
+      "commands": 17614,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "c31333cef621c75ea74a814da0e03792e302dc5de62c6ab93158248d2b940d43",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "A__ours_rotated",
+      "commands": 17602,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "a85226de8812c1079d90ce83e9942ccf5e1e5add21d45e698609dd596787a6a6",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "B__baseline",
+      "commands": 16796,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "24ca01e69869df9e0dfbf2c6e0aab66fa8c91365dfb24171251b4297f3cfe193",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "B__ours_rotated",
+      "commands": 16796,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "2ab9a684a0b39db647ce67243ae0bf4dfed1379302028d8063935af54268c0d7",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "B__baseline",
+      "commands": 17599,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "b8654eb8182787bb74715cfcebb4b68be168d8d40d422c2bc0ed568910823b98",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "B__ours_rotated",
+      "commands": 17620,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "2beec415c8057c4fa1606c8dac03b8694727b5118870795314e8190aecde2c44",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "AB__baseline",
+      "commands": 33586,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "63bad94c5ebcac80e374d5f9dca113001128ba2f839f039dbe23bf63c2816e2a",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "AB__ours_rotated",
+      "commands": 33589,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "2c4d8a90e442cc6f9d97e403b0102856a868565f4a18be2e54c22b2538b14a89",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "AB__baseline",
+      "commands": 35044,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "7abe7f1e8866f9ec88a620c8586c98afe8decc3e2453bacfadd3d97dc4438d51",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "AB__ours_rotated",
+      "commands": 35067,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "54c70d0fcc893337f4af3dcfe6e7691e85749e3bf9d33498622364e747fd5e14",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    }
+  ],
+  "passed": true,
+  "registered_cells": 12,
+  "registration": {
+    "accepted_run": "/home/wangziheng/wafer_simulator/runs/boundary-design-001",
+    "application_tolerance_cycles": 100,
+    "application_tolerance_percent": 2,
+    "design_indifference_cycles": 100,
+    "frozen_commit": "5de7a2f90d3d1ff2fbd0f3cd8f80a19aa70abaa4",
+    "gap_tolerance_cycles": 100,
+    "mapping_rule": "A = first eight row-major endpoints; B = next eight; no search",
+    "memory_policy": "burst_256",
+    "message_tolerance_cycles": 20,
+    "message_tolerance_percent": 5,
+    "modes": [
+      "serial",
+      "bounded"
+    ],
+    "name": "two_independent_tp8_groups_v1",
+    "placements": [
+      "baseline",
+      "ours_rotated"
+    ],
+    "repetitions": 3,
+    "scenarios": {
+      "A": [
+        "A"
+      ],
+      "AB": [
+        "A",
+        "B"
+      ],
+      "B": [
+        "B"
+      ]
+    },
+    "scope": "Complete independent copies, time-zero release, disjoint local resources, ONE shared native network per run. No boundary, scheduling or network changes. No presumed saturation or required model failure.",
+    "shape": "s64"
+  },
+  "source_commit": "de3a49e9dfa76871de4bf304568357448ca03d66"
+}
