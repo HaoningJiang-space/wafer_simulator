@@ -1,0 +1,36 @@
+{
+  "baseline": {
+    "directory": "/home/wangziheng/wafer_simulator/runs/boundary-design-001/geometry/baseline",
+    "export_wall_seconds": 0.7862947918474674,
+    "network_sha256": "e4e4ed4bad834efe1fedeb9d4c7f85720d06b9532a9a21031ea906e1f50b737f",
+    "resources": {
+      "aggregate_directed_link_bits_per_cycle": 7424000,
+      "buffer_flits_per_vc": 32,
+      "compute_reticles": 20,
+      "link_bits_per_cycle": 16000,
+      "network_frequency_hz": 1000000000.0,
+      "physical_cost_matched": false,
+      "router_latency_cycles": 4,
+      "routers": 124,
+      "undirected_links": 232,
+      "virtual_channels": 1
+    }
+  },
+  "ours_rotated": {
+    "directory": "/home/wangziheng/wafer_simulator/runs/boundary-design-001/geometry/ours_rotated",
+    "export_wall_seconds": 0.3476008102297783,
+    "network_sha256": "b8a1d6fa12167ccd9520f2f79510cba6f2ffb246a12b1d6f22a55aff6362da89",
+    "resources": {
+      "aggregate_directed_link_bits_per_cycle": 7232000,
+      "buffer_flits_per_vc": 32,
+      "compute_reticles": 20,
+      "link_bits_per_cycle": 16000,
+      "network_frequency_hz": 1000000000.0,
+      "physical_cost_matched": false,
+      "router_latency_cycles": 4,
+      "routers": 100,
+      "undirected_links": 226,
+      "virtual_channels": 1
+    }
+  }
+}

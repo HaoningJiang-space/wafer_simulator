@@ -1,0 +1,1340 @@
+{
+  "baseline_compatibility": {
+    "s16__burst_256__baseline/bounded": {
+      "exact_events": true,
+      "sha256": "c7075bc89ca70d6f0c9bd7acef9399f64bb248e58fe7a3e5c6cd47c275fc4196"
+    },
+    "s16__burst_256__baseline/pipeline": {
+      "exact_events": true,
+      "sha256": "21b2b03da5352fd2165135cc2dec879f2e1df12a1aa8aad96b84f92b765cb5a5"
+    },
+    "s16__burst_256__baseline/serial": {
+      "exact_events": true,
+      "sha256": "ebfb0bf55aba863ffa9b0e0f02dc5496fb59e2816f4fc5abc5ad621a8729ed50"
+    },
+    "s16__request_atomic__baseline/bounded": {
+      "exact_events": true,
+      "sha256": "529c2446dc1dae39beb0637dc718fee9205829a01a4ff466fa89bdddebbc13f7"
+    },
+    "s16__request_atomic__baseline/pipeline": {
+      "exact_events": true,
+      "sha256": "d473396a86916951e6ef4142d4ee9844b25f8aa519d83c3eb3854cc26a775843"
+    },
+    "s16__request_atomic__baseline/serial": {
+      "exact_events": true,
+      "sha256": "3e9af92401d18291526bc6c26a8f9bb9f3b714d78adb9346e5161215d68e7c90"
+    },
+    "s64__burst_256__baseline/bounded": {
+      "exact_events": true,
+      "sha256": "c2f56757d5d4749cee057d9b16c8509ed8157878c33f72d703fbe8c3f9f8fbe1"
+    },
+    "s64__burst_256__baseline/pipeline": {
+      "exact_events": true,
+      "sha256": "bddd2eedbf7fac14d69636587ec7a7f0d21877bd690c70457b7964e025b1ee46"
+    },
+    "s64__burst_256__baseline/serial": {
+      "exact_events": true,
+      "sha256": "b22630452584c5385ba2a3628b1ccbf26f481f2ef3b849c2f8e57260bfc0f9a6"
+    },
+    "s64__request_atomic__baseline/bounded": {
+      "exact_events": true,
+      "sha256": "a59e0448528b1e19cfe42ee9b98b8269eab71d76228dd862f91484333b04622f"
+    },
+    "s64__request_atomic__baseline/pipeline": {
+      "exact_events": true,
+      "sha256": "0efa0dafa9d2ae476a892d458f05c4e83ca74fac0df90f249135d23ea6f22764"
+    },
+    "s64__request_atomic__baseline/serial": {
+      "exact_events": true,
+      "sha256": "d25a2ecd8a8aaf3caca0135084f4bb8aa3a6a314931a273db5eb483efb0fb816"
+    }
+  },
+  "binaries": {
+    "accepted_online": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+    "boundary": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+    "standalone": "fbd6fca12ec2d5d123b23ae1affcf3a84f465b38b2a694a29f7451a25d919f42"
+  },
+  "checked": [
+    {
+      "audit": {
+        "application_cycles": 12534,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__baseline",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 12452,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__ours_rotated",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13583,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__baseline",
+      "mode": "pipeline",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13509,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13583,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__baseline",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13509,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__ours_rotated",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13509,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13583,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__baseline",
+      "mode": "pipeline",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13509,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__ours_rotated",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13583,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__baseline",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 12452,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__ours_rotated",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 12534,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__baseline",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13583,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__baseline",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 13509,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__ours_rotated",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 12534,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__baseline",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 12452,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__ours_rotated",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 13583,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__baseline",
+      "mode": "pipeline",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 13509,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 604,
+        "source_duration_used": false
+      },
+      "case": "s16__request_atomic__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 51966,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__baseline",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 51864,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__ours_rotated",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55944,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__baseline",
+      "mode": "pipeline",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55862,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55944,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__baseline",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55862,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__ours_rotated",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55862,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55944,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__baseline",
+      "mode": "pipeline",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55862,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__ours_rotated",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55944,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__baseline",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 51864,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__ours_rotated",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 51966,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__baseline",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55944,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__baseline",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55862,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__ours_rotated",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 51966,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__baseline",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 51864,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 492,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__ours_rotated",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55944,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__baseline",
+      "mode": "pipeline",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55862,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 940,
+        "source_duration_used": false
+      },
+      "case": "s64__request_atomic__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 13184,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 4354,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__baseline",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13066,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 4354,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__ours_rotated",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13437,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__baseline",
+      "mode": "pipeline",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13363,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13437,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__baseline",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13363,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__ours_rotated",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 13363,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13437,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__baseline",
+      "mode": "pipeline",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13363,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__ours_rotated",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13437,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__baseline",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13066,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 4354,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__ours_rotated",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13184,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 4354,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__baseline",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 13437,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__baseline",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 13363,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__ours_rotated",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 13184,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 4354,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__baseline",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 13066,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 4354,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__ours_rotated",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 13437,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__baseline",
+      "mode": "pipeline",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 13363,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 4410,
+        "source_duration_used": false
+      },
+      "case": "s16__burst_256__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 54184,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__baseline",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 54114,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__ours_rotated",
+      "mode": "serial",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55539,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__baseline",
+      "mode": "pipeline",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55457,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55539,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__baseline",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55457,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__ours_rotated",
+      "mode": "bounded",
+      "repeat": 0
+    },
+    {
+      "audit": {
+        "application_cycles": 55457,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55539,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__baseline",
+      "mode": "pipeline",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55457,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__ours_rotated",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55539,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__baseline",
+      "mode": "bounded",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54114,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__ours_rotated",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 54184,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__baseline",
+      "mode": "serial",
+      "repeat": 1
+    },
+    {
+      "audit": {
+        "application_cycles": 55539,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__baseline",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55457,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__ours_rotated",
+      "mode": "bounded",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 54184,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__baseline",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 54114,
+        "operations": 114,
+        "passed": true,
+        "phases": 440,
+        "services": 16738,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__ours_rotated",
+      "mode": "serial",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55539,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__baseline",
+      "mode": "pipeline",
+      "repeat": 2
+    },
+    {
+      "audit": {
+        "application_cycles": 55457,
+        "operations": 114,
+        "passed": true,
+        "phases": 384,
+        "services": 16850,
+        "source_duration_used": false
+      },
+      "case": "s64__burst_256__ours_rotated",
+      "mode": "pipeline",
+      "repeat": 2
+    }
+  ],
+  "checked_artifact_count": 1104,
+  "complete_manifest_sha256": "9e00d64ff6cc2175f7f2a670d2225fbea27c88b33a3e025245a6add8ad7a62af",
+  "endpoint_replays": [
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__request_atomic__baseline",
+      "commands": 550,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "79b4d8bc52fe98e7c6b5a657f1f06098cb3fdf1d777b766595704537e7cac109",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__request_atomic__ours_rotated",
+      "commands": 550,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "48214a94838aa5592e7f450465167d84c099029dd7554cf5664b8852a130a63e",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__request_atomic__baseline",
+      "commands": 835,
+      "mode": "pipeline",
+      "passed": true,
+      "protocol_sha256": "12231bae49fa1be9f8bb2864ca3591f58ea4ffabf3dc7573628e18bdc6f2b152",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__request_atomic__ours_rotated",
+      "commands": 835,
+      "mode": "pipeline",
+      "passed": true,
+      "protocol_sha256": "ce1adb0d354e085cabe6a112b1b11897ca444b2db066c37376f0a582b9db5661",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__request_atomic__baseline",
+      "commands": 919,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "22aab7c80abbeba674cae07ccd4e65685d42dd0090c98b2ab7c9d631b5e484a3",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__request_atomic__ours_rotated",
+      "commands": 919,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "267182bc82568c64938a1f0e991b78da4ba27f73b367bd14d17cc3e0aa8ed036",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__request_atomic__baseline",
+      "commands": 550,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "3189ac88c8c1bc452c5e60807d52d06fea6d232492caea6928f0bcc68fbdcfdd",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__request_atomic__ours_rotated",
+      "commands": 550,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "ceb28bd240b92c1e0d20cb0e1e370c6b791a4c05ad3cd39f36ab4330b54dd8e3",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__request_atomic__baseline",
+      "commands": 1504,
+      "mode": "pipeline",
+      "passed": true,
+      "protocol_sha256": "5704de5d46660b6e1b0997e50d1285d31333b2fd48e4846512bc518e8fe35e25",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__request_atomic__ours_rotated",
+      "commands": 1538,
+      "mode": "pipeline",
+      "passed": true,
+      "protocol_sha256": "fc540b7c1761504218f976b75b9e428f7cdff25433886b2b45e5d23b63af1bab",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__request_atomic__baseline",
+      "commands": 1766,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "3b099578616a0c7484397c69fafa842289a94edd67cf40344efd81e0f524111c",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__request_atomic__ours_rotated",
+      "commands": 1790,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "75dc33398e9024547eb632542f371888d6c760555fd007d90633187537f0b9ec",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__burst_256__baseline",
+      "commands": 4412,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "bfc49e3e3ea1cf1a090e18094deb94fc2d9f1c8896223204446f227f502fded3",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__burst_256__ours_rotated",
+      "commands": 4412,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "bc2d2b40fb90390481da70752c18b4aeac01e9799542586fb17cc2947b3d7610",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__burst_256__baseline",
+      "commands": 4619,
+      "mode": "pipeline",
+      "passed": true,
+      "protocol_sha256": "48a882f5462c08a9a02b68311c398d87a7ad5779860fe3234c9a049a5fa5c67f",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__burst_256__ours_rotated",
+      "commands": 4627,
+      "mode": "pipeline",
+      "passed": true,
+      "protocol_sha256": "947191ef253e81810c77266ead555524fca376b373aa9a5f3d815548b532f318",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__burst_256__baseline",
+      "commands": 4693,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "e94a6a8ab72673106b95f927b58c78a776ac2b1a7836a2dddc32da6f7376dc48",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s16__burst_256__ours_rotated",
+      "commands": 4693,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "907bb48cefb78e5633e76f0e4ed599a9c7a4661769e047fe0e156f38af7fcc46",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__burst_256__baseline",
+      "commands": 16796,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "e912dc6e0d2f0940e79070a167f0bcd5fe16373db1572ff49478cbfc031e1b31",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__burst_256__ours_rotated",
+      "commands": 16796,
+      "mode": "serial",
+      "passed": true,
+      "protocol_sha256": "ac02b3b762f3962f500ec5251cd8aa8ecd798e1480374cf8a6648ba1c669d25f",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__burst_256__baseline",
+      "commands": 17398,
+      "mode": "pipeline",
+      "passed": true,
+      "protocol_sha256": "ff79320041e0c61e46f51f8b694a0751f75eae2e828dd513a2e39c41e8bd605d",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__burst_256__ours_rotated",
+      "commands": 17406,
+      "mode": "pipeline",
+      "passed": true,
+      "protocol_sha256": "41a442c76d14fc2b3fa19d491a19f0b519513b57d0fe8631d1c1736ec00a3f8d",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__burst_256__baseline",
+      "commands": 17614,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "c31333cef621c75ea74a814da0e03792e302dc5de62c6ab93158248d2b940d43",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    },
+    {
+      "binary_sha256": "560d9fd342aa733d62d3158fc4330ac66db488bbf2376e8df7f1ff2a60c0ea56",
+      "case": "s64__burst_256__ours_rotated",
+      "commands": 17602,
+      "mode": "bounded",
+      "passed": true,
+      "protocol_sha256": "a85226de8812c1079d90ce83e9942ccf5e1e5add21d45e698609dd596787a6a6",
+      "scope": "same native binary, recorded supply/commit commands; no Python execution controller"
+    }
+  ],
+  "matrix_complete": true,
+  "passed": true,
+  "registration": {
+    "algorithm": "direct_exchange_rank_order_sum",
+    "application_tolerance_cycles": 100,
+    "application_tolerance_percent": 2,
+    "cases": [
+      {
+        "name": "s16",
+        "sequence": 16
+      },
+      {
+        "name": "s64",
+        "sequence": 64
+      }
+    ],
+    "design_study": {
+      "accepted_run": "/home/wangziheng/wafer_simulator/runs/memory-service-isolation-001",
+      "cases": [
+        "s16",
+        "s64"
+      ],
+      "contracts": [
+        "request_atomic",
+        "burst_256"
+      ],
+      "design_indifference_cycles": 100,
+      "gap_tolerance_cycles": 100,
+      "modes": [
+        "serial",
+        "pipeline",
+        "bounded"
+      ],
+      "name": "boundary_design_gap_v1",
+      "placements": [
+        "baseline",
+        "ours_rotated"
+      ],
+      "repetitions": 3,
+      "scope": "Frozen execution and native BookSim; same accepted work and local policies. Re-measure Baseline for contemporary costs and require exact accepted events. Add the twelve Rotated cells. Gap is Baseline minus Rotated; no equal physical-cost or hardware-calibration claim."
+    },
+    "flit_bytes": 2000,
+    "mapping": "row_major",
+    "mechanisms": [
+      {
+        "flows": [
+          [
+            1,
+            0,
+            32000
+          ]
+        ],
+        "name": "single"
+      },
+      {
+        "flows": [
+          [
+            1,
+            0,
+            32000
+          ]
+        ],
+        "memory_overrides": {
+          "1": 8
+        },
+        "name": "slow_source"
+      },
+      {
+        "flows": [
+          [
+            1,
+            0,
+            32000
+          ],
+          [
+            5,
+            0,
+            32000
+          ],
+          [
+            6,
+            0,
+            32000
+          ]
+        ],
+        "memory_overrides": {
+          "0": 8
+        },
+        "name": "incast"
+      },
+      {
+        "flows": [
+          [
+            0,
+            2,
+            32000
+          ],
+          [
+            6,
+            3,
+            32000
+          ]
+        ],
+        "memory_overrides": {
+          "2": 8
+        },
+        "name": "shared_slow_sink",
+        "requires_shared_directed_link": true
+      }
+    ],
+    "message_tolerance_cycles": 20,
+    "message_tolerance_percent": 5,
+    "modes": [
+      "serial",
+      "pipeline",
+      "bounded"
+    ],
+    "name": "memory_network_boundary_v1",
+    "network_seed": 1,
+    "repetitions": 3,
+    "rx_slots": 8,
+    "scope": "Conditional streaming DMA target; shared read/write ports; FIFO storage carved out of unchanged SRAM. BookSim internal network fixed. Whole-object consumer visibility.",
+    "tx_slots": 2
+  },
+  "source_commit": "31cca6a89dd3e4fc06e4361369bfa5e049f8147c"
+}

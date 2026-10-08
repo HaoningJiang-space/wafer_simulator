@@ -27,9 +27,9 @@ Keep geometry, connectivity and finite capacity from the start; detailed physica
 closure and thermal are outside this milestone. Omelet informs the evidence
 structure (gap, targeted model, design consequence), not the target's physics.
 
-## The one active milestone
+## The completed milestone
 
-Follow [BOUNDARY_DESIGN_PROTOCOL.md](BOUNDARY_DESIGN_PROTOCOL.md):
+The frozen study followed [BOUNDARY_DESIGN_PROTOCOL.md](BOUNDARY_DESIGN_PROTOCOL.md):
 
 - two existing complete s16/s64 TP8 direct-root blocks;
 - Baseline and Rotated, fixed row-major rule and saved endpoint coordinates;
@@ -40,6 +40,14 @@ Follow [BOUNDARY_DESIGN_PROTOCOL.md](BOUNDARY_DESIGN_PROTOCOL.md):
 The matrix has 24 configurations. Twelve Rotated configurations add the missing
 design column. Baseline remeasurement supplies contemporary cost controls and
 must preserve all accepted events. No mapping or bandwidth search.
+
+The [accepted result](results/boundary-design-001/model_selection.md) closes this
+milestone: serial gap errors are +8/+44/+20/-12 cycles, within the declared budget;
+two indifference classifications nevertheless differ. Reference gaps are 74/82
+cycles, so no robust winner is claimed. pipeline agrees in time but violates RX
+capacity in both designs. Retain these distinct uses and stop endpoint expansion.
+Independent workload/shared-resource coverage is a subsequent question, not a
+new model or a launched experiment within this milestone.
 
 For each local policy q, report delta_m = T_m(B) - T_m(R) and
 E_gap = delta_m - delta_bounded = error_B - error_R.

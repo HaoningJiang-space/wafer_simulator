@@ -6,7 +6,7 @@ in [README](../README.md) and [RESEARCH_DIRECTION](RESEARCH_DIRECTION.md).
 
 | Area | Status | Accepted evidence / scope |
 |---|---|---|
-| Boundary design-gain prediction | Active, kernel frozen | [Current protocol](BOUNDARY_DESIGN_PROTOCOL.md); 24-cell paired model comparison |
+| Boundary design-gain prediction | Complete; enhancement closed | [24-cell result and model selection](results/boundary-design-001/model_selection.md); kernel frozen |
 | Boundary model selection | Complete | [Objective-specific errors and reduction reconvergence](results/boundary-model-selection-001/REVIEW.md) |
 | Memory-service policy isolation | Complete | [36 runs, two target policies](results/memory-service-isolation-001/REVIEW.md) |
 | Memory/network boundary | Complete | [Streaming contract, occupancy and message evidence](results/memory-boundary-001/REVIEW.md) |

@@ -1,0 +1,49 @@
+case,mode,operation,source,start,last_supply,span,own_read_service,competing_memory_service,idle_or_other_latency,competing_by_operation,shape,contract,placement
+s16__request_atomic__baseline,serial,attention_sum,0,4751,5647,896,896,0,0,{},s16,request_atomic,baseline
+s16__request_atomic__baseline,serial,ffn_sum,0,10931,11827,896,896,0,0,{},s16,request_atomic,baseline
+s16__request_atomic__baseline,pipeline,attention_sum,0,4685,6504,1819,903,912,4,"{'r0/attention_residual': 384, 'r0/ln2': 272, 'r0/ffn_up': 256}",s16,request_atomic,baseline
+s16__request_atomic__baseline,pipeline,ffn_sum,0,11653,12945,1292,903,384,5,{'r0/output': 384},s16,request_atomic,baseline
+s16__request_atomic__baseline,bounded,attention_sum,0,4685,6504,1819,903,912,4,"{'r0/attention_residual': 384, 'r0/ln2': 272, 'r0/ffn_up': 256}",s16,request_atomic,baseline
+s16__request_atomic__baseline,bounded,ffn_sum,0,11653,12945,1292,903,384,5,{'r0/output': 384},s16,request_atomic,baseline
+s16__request_atomic__ours_rotated,serial,attention_sum,0,4751,5647,896,896,0,0,{},s16,request_atomic,ours_rotated
+s16__request_atomic__ours_rotated,serial,ffn_sum,0,10890,11786,896,896,0,0,{},s16,request_atomic,ours_rotated
+s16__request_atomic__ours_rotated,pipeline,attention_sum,0,4689,6508,1819,903,912,4,"{'r0/attention_residual': 384, 'r0/ln2': 272, 'r0/ffn_up': 256}",s16,request_atomic,ours_rotated
+s16__request_atomic__ours_rotated,pipeline,ffn_sum,0,11620,12912,1292,903,384,5,{'r0/output': 384},s16,request_atomic,ours_rotated
+s16__request_atomic__ours_rotated,bounded,attention_sum,0,4689,6508,1819,903,912,4,"{'r0/attention_residual': 384, 'r0/ln2': 272, 'r0/ffn_up': 256}",s16,request_atomic,ours_rotated
+s16__request_atomic__ours_rotated,bounded,ffn_sum,0,11620,12912,1292,903,384,5,{'r0/output': 384},s16,request_atomic,ours_rotated
+s64__request_atomic__baseline,serial,attention_sum,0,22604,26188,3584,3584,0,0,{},s64,request_atomic,baseline
+s64__request_atomic__baseline,serial,ffn_sum,0,45935,49519,3584,3584,0,0,{},s64,request_atomic,baseline
+s64__request_atomic__baseline,pipeline,attention_sum,0,22520,29610,7090,3612,3472,6,"{'r0/attention_residual': 1536, 'r0/ln2': 1040, 'r0/ffn_up': 768, 'r0/gelu': 128}",s64,request_atomic,baseline
+s64__request_atomic__baseline,pipeline,ffn_sum,0,48808,53962,5154,3612,1536,6,{'r0/output': 1536},s64,request_atomic,baseline
+s64__request_atomic__baseline,bounded,attention_sum,0,22520,29610,7090,3612,3472,6,"{'r0/attention_residual': 1536, 'r0/ln2': 1040, 'r0/ffn_up': 768, 'r0/gelu': 128}",s64,request_atomic,baseline
+s64__request_atomic__baseline,bounded,ffn_sum,0,48808,53962,5154,3612,1536,6,{'r0/output': 1536},s64,request_atomic,baseline
+s64__request_atomic__ours_rotated,serial,attention_sum,0,22594,26178,3584,3584,0,0,{},s64,request_atomic,ours_rotated
+s64__request_atomic__ours_rotated,serial,ffn_sum,0,45874,49458,3584,3584,0,0,{},s64,request_atomic,ours_rotated
+s64__request_atomic__ours_rotated,pipeline,attention_sum,0,22520,29610,7090,3612,3472,6,"{'r0/attention_residual': 1536, 'r0/ln2': 1040, 'r0/ffn_up': 768, 'r0/gelu': 128}",s64,request_atomic,ours_rotated
+s64__request_atomic__ours_rotated,pipeline,ffn_sum,0,48767,53921,5154,3612,1536,6,{'r0/output': 1536},s64,request_atomic,ours_rotated
+s64__request_atomic__ours_rotated,bounded,attention_sum,0,22520,29610,7090,3612,3472,6,"{'r0/attention_residual': 1536, 'r0/ln2': 1040, 'r0/ffn_up': 768, 'r0/gelu': 128}",s64,request_atomic,ours_rotated
+s64__request_atomic__ours_rotated,bounded,ffn_sum,0,48767,53921,5154,3612,1536,6,{'r0/output': 1536},s64,request_atomic,ours_rotated
+s16__burst_256__baseline,serial,attention_sum,0,4991,6007,1016,896,120,0,{'r0/attention_residual': 120},s16,burst_256,baseline
+s16__burst_256__baseline,serial,ffn_sum,0,11376,12392,1016,896,120,0,{'r0/output': 120},s16,burst_256,baseline
+s16__burst_256__baseline,pipeline,attention_sum,0,4925,6359,1434,903,528,3,"{'r0/attention_residual': 384, 'r0/ln2': 144}",s16,burst_256,baseline
+s16__burst_256__baseline,pipeline,ffn_sum,0,11508,12799,1291,903,384,4,{'r0/output': 384},s16,burst_256,baseline
+s16__burst_256__baseline,bounded,attention_sum,0,4925,6359,1434,903,528,3,"{'r0/attention_residual': 384, 'r0/ln2': 144}",s16,burst_256,baseline
+s16__burst_256__baseline,bounded,ffn_sum,0,11508,12799,1291,903,384,4,{'r0/output': 384},s16,burst_256,baseline
+s16__burst_256__ours_rotated,serial,attention_sum,0,4991,6007,1016,896,120,0,{'r0/attention_residual': 120},s16,burst_256,ours_rotated
+s16__burst_256__ours_rotated,serial,ffn_sum,0,11317,12333,1016,896,120,0,{'r0/output': 120},s16,burst_256,ours_rotated
+s16__burst_256__ours_rotated,pipeline,attention_sum,0,4929,6363,1434,903,528,3,"{'r0/attention_residual': 384, 'r0/ln2': 144}",s16,burst_256,ours_rotated
+s16__burst_256__ours_rotated,pipeline,ffn_sum,0,11475,12766,1291,903,384,4,{'r0/output': 384},s16,burst_256,ours_rotated
+s16__burst_256__ours_rotated,bounded,attention_sum,0,4929,6363,1434,903,528,3,"{'r0/attention_residual': 384, 'r0/ln2': 144}",s16,burst_256,ours_rotated
+s16__burst_256__ours_rotated,bounded,ffn_sum,0,11475,12766,1291,903,384,4,{'r0/output': 384},s16,burst_256,ours_rotated
+s64__burst_256__baseline,serial,attention_sum,0,23612,27700,4088,3584,504,0,{'r0/attention_residual': 504},s64,burst_256,baseline
+s64__burst_256__baseline,serial,ffn_sum,0,47548,51636,4088,3584,504,0,{'r0/output': 504},s64,burst_256,baseline
+s64__burst_256__baseline,pipeline,attention_sum,0,23528,29207,5679,3612,2064,3,"{'r0/attention_residual': 1536, 'r0/ln2': 528}",s64,burst_256,baseline
+s64__burst_256__baseline,pipeline,ffn_sum,0,48405,53557,5152,3612,1536,4,{'r0/output': 1536},s64,burst_256,baseline
+s64__burst_256__baseline,bounded,attention_sum,0,23528,29207,5679,3612,2064,3,"{'r0/attention_residual': 1536, 'r0/ln2': 528}",s64,burst_256,baseline
+s64__burst_256__baseline,bounded,ffn_sum,0,48405,53557,5152,3612,1536,4,{'r0/output': 1536},s64,burst_256,baseline
+s64__burst_256__ours_rotated,serial,attention_sum,0,23602,27690,4088,3584,504,0,{'r0/attention_residual': 504},s64,burst_256,ours_rotated
+s64__burst_256__ours_rotated,serial,ffn_sum,0,47503,51591,4088,3584,504,0,{'r0/output': 504},s64,burst_256,ours_rotated
+s64__burst_256__ours_rotated,pipeline,attention_sum,0,23528,29207,5679,3612,2064,3,"{'r0/attention_residual': 1536, 'r0/ln2': 528}",s64,burst_256,ours_rotated
+s64__burst_256__ours_rotated,pipeline,ffn_sum,0,48364,53516,5152,3612,1536,4,{'r0/output': 1536},s64,burst_256,ours_rotated
+s64__burst_256__ours_rotated,bounded,attention_sum,0,23528,29207,5679,3612,2064,3,"{'r0/attention_residual': 1536, 'r0/ln2': 528}",s64,burst_256,ours_rotated
+s64__burst_256__ours_rotated,bounded,ffn_sum,0,48364,53516,5152,3612,1536,4,{'r0/output': 1536},s64,burst_256,ours_rotated

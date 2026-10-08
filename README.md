@@ -4,27 +4,31 @@
 availability, resource feasibility and the performance difference between two
 WoW designs—and which details can be omitted?
 
-The current milestone freezes the execution kernel and compares **serial,
+The completed milestone freezes the execution kernel and compares **serial,
 pipeline and bounded memory–network boundaries** on Baseline and Rotated.
 Use the same two complete analytical Transformer blocks, two declared memory
 policies and native BookSim. This is a study of simulation abstractions;
 placements and collectives are fixed validation cases, not optimization targets.
 [Registered controls and acceptance](docs/BOUNDARY_DESIGN_PROTOCOL.md)
 
-## Latest evidence and one current task
+## Latest result and stop decision
 
-The [accepted boundary-model analysis](docs/results/boundary-model-selection-001/REVIEW.md)
-finds that immediate-credit pipelining predicts the four existing Baseline
-makespans exactly but violates RX capacity and message-error targets. Differences
-in individual operand reads reconverge before reduction. Whole-message serial
-service fails the registered application-time target. Compute/SRAM/DMA parameters
-remain explicit design assumptions, not calibrated native wafer specifications.
+The [paired design-gain report](docs/results/boundary-design-001/model_selection.md)
+now covers 24 configurations and 72 complete executions. serial has substantial
+absolute-time bias but only +8/+44/+20/-12 cycles of design-gap error; all four
+pass the registered 100-cycle gap budget. Two threshold classifications still
+disagree: a small error does not certify the winner of a close comparison.
+Reference gaps of 74/82 cycles put the designs within the declared indifference
+band. pipeline reproduces all reference makespans but violates RX capacity.
 
-**Current task:** complete the paired design-gain table. Add Rotated's 12 cells;
-re-measure the 12 Baseline controls on the same implementation for costs, requiring
-full-event agreement with accepted runs. Report error cancellation or amplification
-in `T(Baseline) - T(Rotated)`, capacity status and measured execution cost separately.
-No new workload, algorithm, NoC, thermal model or runtime optimization.
+**Decision:** retain serial for this scoped gap estimate, bounded for declared
+message/capacity predictions, and close endpoint enhancement/runtime optimization.
+Compute/SRAM/DMA remain design assumptions, not calibrated native wafer inputs.
+The next research question is independent workload/shared-resource coverage;
+it requires its own registration and has not been launched. Existing evidence:
+[decision table](docs/results/boundary-design-001/analysis/model_decision_table.csv),
+[costs](docs/results/boundary-design-001/analysis/cost.csv),
+[earlier reduction reconvergence](docs/results/boundary-model-selection-001/REVIEW.md).
 
 ## Current entry point (eex005 only)
 
