@@ -200,6 +200,9 @@ scale sweep or a new FIFO/DRAM/thermal mechanism is not required to close it.
 - [STARTED.json](STARTED.json): source, environment, tests, binary and registration.
 - [COMPLETE.json](COMPLETE.json): 81 full runs, 27 replays, raw hashes.
 - [SEMANTICS.json](SEMANTICS.json) and [tests.log](tests.log): 196 tests on hn072.
+- [PUBLISHED.json](PUBLISHED.json): downloaded analysis hashes and raw manifests
+  match server originals; independent CSV gap/MAPE recomputation passed;
+  [196 release tests](release-tests.log) passed again at `55309f6`.
 - [VERIFIED.json](analysis/VERIFIED.json): all raw hashes and all 81 full
   execution audits recomputed; input, capacity, dependency, byte/path, lifetime,
   critical-chain and repeated-event checks passed.
