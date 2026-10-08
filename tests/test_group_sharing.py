@@ -9,7 +9,7 @@ from wafer_sim.workloads.groups import namespace, independent_groups
 from wafer_sim.adapters.transformer_groups import place_groups
 from wafer_sim.adapters.transformer import place_block
 from wafer_sim.experiments.group_sharing import strip_namespace
-from wafer_sim.analysis.group_sharing import group_times, shared_paths
+from wafer_sim.analysis.group_sharing import group_times, shared_paths, progress_changes
 
 
 class GroupSharingTests(unittest.TestCase):
@@ -70,3 +70,11 @@ class GroupSharingTests(unittest.TestCase):
         r=shared_paths([message('A',1,2,10),message('B',1,2,100)])
         self.assertEqual(r['shared_directed_links'],1)
         self.assertEqual(r['shared_links_with_overlapping_arrival_envelopes'],0)
+
+    def test_progress_reports_local_changes_even_when_collective_end_is_equal(self):
+        solo=dict(operations={'A/attention_sum':dict(retired=10),'A/ffn_sum':dict(retired=20),
+                              'A/r4/output':dict(retired=25)})
+        joint=dict(operations={**solo['operations'],'A/r4/output':dict(retired=26),'B/other':dict(retired=99)})
+        row=progress_changes(solo,joint,'A')
+        self.assertEqual(row['changed_operation_count'],1)
+        self.assertEqual(row['collective_progress']['ffn_sum']['solo'],row['collective_progress']['ffn_sum']['joint'])

@@ -15,6 +15,15 @@ def group_times(result, group):
     return dict(output_ready=max(outputs.values()),retired=max(v['retired'] for v in operations.values()))
 
 
+def progress_changes(solo, joint, group):
+    operations={op:dict(solo=r,joint=joint['operations'][op]) for op,r in solo['operations'].items()
+        if r!=joint['operations'][op]}
+    collectives={name:dict(solo=solo['operations'][group+'/'+name],joint=joint['operations'][group+'/'+name])
+        for name in ('attention_sum','ffn_sum')}
+    return dict(changed_operation_count=len(operations),changed_operations=operations,
+                collective_progress=collectives)
+
+
 def shared_paths(messages):
     """Actual link arrivals; overlapping time envelopes are not saturation."""
     links={'A':defaultdict(list),'B':defaultdict(list)}; routers={'A':set(),'B':set()}
@@ -102,10 +111,13 @@ def analyze(root):
     for row in result['rows']:
         row.update(metadata[row['case']]); row.update(public_status(row))
         if row['mode']=='bounded' and row['capacity_status']!='feasible': raise ValueError('Reference capacity violated')
-    for row in result['costs']: row.update(metadata[row['case']])
+    for row in result['costs']:
+        row.update(metadata[row['case']])
+        if row['metric']=='worker_wall_seconds':
+            row['phase']='driver_launch_and_receipt_checks'
     # Reuse the accepted gap identity and close-design classification code.
     decision_rows=[dict(r,shape=r['scenario'],contract=reg['memory_policy']) for r in result['rows']]
-    decisions=decision_table(decision_rows,dict(reg,cases=list(reg['scenarios']),contracts=[reg['memory_policy']]))
+    decisions=decision_table(decision_rows,dict(reg,cases=sorted(reg['scenarios'],key=lambda s:(len(s),s)),contracts=[reg['memory_policy']]))
     for row in decisions: row['scenario']=row.pop('shape')
     interference=[]; shared=[]; pairs=[]
     for placement in reg['placements']:
@@ -120,7 +132,7 @@ def analyze(root):
                     output_delay_cycles=jt['output_ready']-st['output_ready'],
                     solo_retired=st['retired'],joint_retired=jt['retired'],
                     retirement_delay_cycles=jt['retired']-st['retired'],
-                    output_slowdown=jt['output_ready']/st['output_ready']))
+                    output_slowdown=jt['output_ready']/st['output_ready'],**progress_changes(sr,jr,group)))
                 jm={k:v for k,v in joint['moves'].items() if k.startswith(group+'/')}
                 if set(jm)!=set(solo['moves']): raise ValueError('Joint run changed logical messages')
                 for token,s in solo['moves'].items():
