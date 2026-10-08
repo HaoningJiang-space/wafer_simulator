@@ -1,0 +1,297 @@
+[
+  {
+    "application_cycles": 23903,
+    "command_replay": {
+      "binary_sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+      "commands": 470,
+      "passed": true,
+      "scope": "Recorded network command/reply equivalence, not hardware measurement"
+    },
+    "control_bytes": {
+      "read_request": 528,
+      "write_ack": 256
+    },
+    "critical_chain_cycles": {
+      "compute": 4096,
+      "memory": 14014,
+      "network": 5793
+    },
+    "data_placement": "near",
+    "execution_sha256": "2cf619aaf91c708ab06d7a3136bd1c75383c40cc6e35f24d8f1d5f927eef5bd6",
+    "input_sha256": "1603aa7cca16b01d466190fbe073136e70a36ebea20b3a0fe81f7e9408c5ef32",
+    "logical_work_sha256": "93abff738a7cc7f87fb8c9d042cc25d0dccbfe4354a57ff86324f096af90b7e7",
+    "messages": {
+      "c2c": 16,
+      "read_request": 33,
+      "read_response": 33,
+      "write_ack": 16,
+      "write_data": 16
+    },
+    "native_flits": 41265,
+    "native_peak_rss_kib": 118348,
+    "native_total_cpu_seconds": 0.96696,
+    "operations": 32,
+    "payload_bytes": {
+      "c2c": 262144,
+      "read_response": 2113536,
+      "write_data": 262144
+    },
+    "phases": [
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "network_configuration",
+        "python_cpu_seconds": 0.440292,
+        "wall_seconds": 0.3414527103304863
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "network_initialization",
+        "python_cpu_seconds": 0.04063499999999998,
+        "wall_seconds": 0.04113884549587965
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "execution",
+        "python_cpu_seconds": 0.353931,
+        "wall_seconds": 1.1667565060779452
+      },
+      {
+        "exited_children_cpu_seconds": 0.96696,
+        "phase": "network_close_serialization",
+        "python_cpu_seconds": 0.167829,
+        "wall_seconds": 0.28218674659729004
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "result_serialization",
+        "python_cpu_seconds": 0.1595819999999999,
+        "wall_seconds": 0.16041445266455412
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "independent_audit",
+        "python_cpu_seconds": 0.6967079999999999,
+        "wall_seconds": 0.7006504088640213
+      },
+      {
+        "exited_children_cpu_seconds": 0.9465250000000003,
+        "phase": "native_command_replay",
+        "python_cpu_seconds": 0.5269260000000004,
+        "wall_seconds": 1.4381411522626877
+      }
+    ],
+    "physical_kind_flits": {
+      "hb": 36912,
+      "io": 257,
+      "stitch": 7680
+    },
+    "python_lifetime_peak_rss_kib": 135988,
+    "status": {
+      "dram_command_timing": "unmodeled",
+      "execution_completed": true,
+      "hardware_calibration": "declared assumptions",
+      "semantic_audit_passed": true,
+      "storage_capacity": "feasible",
+      "streaming_rx_capacity": "unmodeled",
+      "transaction_buffer_capacity": "feasible"
+    },
+    "timing_scope": "Single acceptance run; Python lifetime RSS; no comparative speedup claim"
+  },
+  {
+    "application_cycles": 27096,
+    "command_replay": {
+      "binary_sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+      "commands": 497,
+      "passed": true,
+      "scope": "Recorded network command/reply equivalence, not hardware measurement"
+    },
+    "control_bytes": {
+      "read_request": 528,
+      "write_ack": 256
+    },
+    "critical_chain_cycles": {
+      "compute": 4096,
+      "memory": 12902,
+      "network": 10098
+    },
+    "data_placement": "opposite",
+    "execution_sha256": "8e6a6236f4093a3e1771bd5ead2c6e96e1b1eedadf18f24552f7e2906dd43e48",
+    "input_sha256": "ca4da848382bff400863dc7be89b8cc95afb9e59aa714dfac570249c13dd5107",
+    "logical_work_sha256": "93abff738a7cc7f87fb8c9d042cc25d0dccbfe4354a57ff86324f096af90b7e7",
+    "messages": {
+      "c2c": 16,
+      "read_request": 33,
+      "read_response": 33,
+      "write_ack": 16,
+      "write_data": 16
+    },
+    "native_flits": 41265,
+    "native_peak_rss_kib": 135776,
+    "native_total_cpu_seconds": 1.5365889999999998,
+    "operations": 32,
+    "payload_bytes": {
+      "c2c": 262144,
+      "read_response": 2113536,
+      "write_data": 262144
+    },
+    "phases": [
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "network_configuration",
+        "python_cpu_seconds": 0.0011150000000004212,
+        "wall_seconds": 0.0011218106374144554
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "network_initialization",
+        "python_cpu_seconds": 0.03702100000000019,
+        "wall_seconds": 0.03748406749218702
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "execution",
+        "python_cpu_seconds": 0.511603,
+        "wall_seconds": 1.839595491066575
+      },
+      {
+        "exited_children_cpu_seconds": 1.5365889999999998,
+        "phase": "network_close_serialization",
+        "python_cpu_seconds": 0.2781760000000002,
+        "wall_seconds": 0.4431991744786501
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "result_serialization",
+        "python_cpu_seconds": 0.2881349999999996,
+        "wall_seconds": 0.28968423791229725
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "independent_audit",
+        "python_cpu_seconds": 1.0598870000000007,
+        "wall_seconds": 1.0662193363532424
+      },
+      {
+        "exited_children_cpu_seconds": 1.5427430000000006,
+        "phase": "native_command_replay",
+        "python_cpu_seconds": 0.6954370000000001,
+        "wall_seconds": 2.1885573342442513
+      }
+    ],
+    "physical_kind_flits": {
+      "hb": 36912,
+      "io": 257,
+      "stitch": 81504
+    },
+    "python_lifetime_peak_rss_kib": 218808,
+    "status": {
+      "dram_command_timing": "unmodeled",
+      "execution_completed": true,
+      "hardware_calibration": "declared assumptions",
+      "semantic_audit_passed": true,
+      "storage_capacity": "feasible",
+      "streaming_rx_capacity": "unmodeled",
+      "transaction_buffer_capacity": "feasible"
+    },
+    "timing_scope": "Single acceptance run; Python lifetime RSS; no comparative speedup claim"
+  },
+  {
+    "application_cycles": 75032,
+    "command_replay": {
+      "binary_sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+      "commands": 553,
+      "passed": true,
+      "scope": "Recorded network command/reply equivalence, not hardware measurement"
+    },
+    "control_bytes": {
+      "read_request": 528,
+      "write_ack": 256
+    },
+    "critical_chain_cycles": {
+      "capacity": 24047,
+      "compute": 4096,
+      "memory": 37478,
+      "network": 9411
+    },
+    "data_placement": "single_controller",
+    "execution_sha256": "4edaf4a2510e69271bdea3c3de7c8184c5443d1c42e121502d5644c08382da3c",
+    "input_sha256": "a0eec0a58779060cb015fedaa0975c6ede1b114854b5a45621844e731a14a1be",
+    "logical_work_sha256": "93abff738a7cc7f87fb8c9d042cc25d0dccbfe4354a57ff86324f096af90b7e7",
+    "messages": {
+      "c2c": 16,
+      "read_request": 33,
+      "read_response": 33,
+      "write_ack": 16,
+      "write_data": 16
+    },
+    "native_flits": 41265,
+    "native_peak_rss_kib": 134324,
+    "native_total_cpu_seconds": 1.9720339999999998,
+    "operations": 32,
+    "payload_bytes": {
+      "c2c": 262144,
+      "read_response": 2113536,
+      "write_data": 262144
+    },
+    "phases": [
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "network_configuration",
+        "python_cpu_seconds": 0.00137499999999946,
+        "wall_seconds": 0.001390768215060234
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "network_initialization",
+        "python_cpu_seconds": 0.036106999999999445,
+        "wall_seconds": 0.036606295965611935
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "execution",
+        "python_cpu_seconds": 0.5765629999999993,
+        "wall_seconds": 2.3290283009409904
+      },
+      {
+        "exited_children_cpu_seconds": 1.9720339999999998,
+        "phase": "network_close_serialization",
+        "python_cpu_seconds": 0.32038600000000006,
+        "wall_seconds": 0.4857787536457181
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "result_serialization",
+        "python_cpu_seconds": 0.31434300000000004,
+        "wall_seconds": 0.3159854495897889
+      },
+      {
+        "exited_children_cpu_seconds": 0.0,
+        "phase": "independent_audit",
+        "python_cpu_seconds": 1.3026079999999984,
+        "wall_seconds": 1.309494860470295
+      },
+      {
+        "exited_children_cpu_seconds": 1.9582669999999993,
+        "phase": "native_command_replay",
+        "python_cpu_seconds": 0.7716109999999983,
+        "wall_seconds": 2.6777447927743196
+      }
+    ],
+    "physical_kind_flits": {
+      "hb": 36912,
+      "io": 257,
+      "stitch": 118416
+    },
+    "python_lifetime_peak_rss_kib": 282244,
+    "status": {
+      "dram_command_timing": "unmodeled",
+      "execution_completed": true,
+      "hardware_calibration": "declared assumptions",
+      "semantic_audit_passed": true,
+      "storage_capacity": "feasible",
+      "streaming_rx_capacity": "unmodeled",
+      "transaction_buffer_capacity": "feasible"
+    },
+    "timing_scope": "Single acceptance run; Python lifetime RSS; no comparative speedup claim"
+  }
+]

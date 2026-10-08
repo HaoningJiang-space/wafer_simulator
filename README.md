@@ -16,6 +16,13 @@ and an analytical bank service are explicit policies. See the
 [current research scope](docs/RESEARCH_DIRECTION.md) and
 [registered machine validation](configs/wafer_machine_validation.json).
 
+The [first machine acceptance](docs/results/wafer-machine-001/REVIEW.md) completed
+three full same-work cases: 23,903 / 27,096 / 75,032 cycles for near, offset and
+concentrated bank placement. All 183 related tests, three event audits and
+three native command replays pass; 65 artifact hashes and exact compiled-input
+equivalence were rechecked. These validate integration under the declared
+policy, not physical calibration or superiority of a new simulation method.
+
 ## Current entry point (eex005 only)
 
 Local work is source inspection, editing and Git. Builds, tests and execution

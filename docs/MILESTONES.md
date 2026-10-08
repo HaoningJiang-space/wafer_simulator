@@ -6,6 +6,7 @@ in [README](../README.md) and [RESEARCH_DIRECTION](RESEARCH_DIRECTION.md).
 
 | Area | Status | Accepted evidence / scope |
 |---|---|---|
+| Independent compute/memory wafer machine | First integration accepted; numerical resources uncalibrated | [Physical legality, transactions and three complete same-work cases](results/wafer-machine-001/REVIEW.md); original execution kernel and LoI evidence retained |
 | Independent groups sharing one WoW | Complete; models remain frozen | [12-cell solo/joint coverage](results/group-sharing-001/REVIEW.md); actual path sharing, no final slowdown, +48-cycle joint gap error |
 | Boundary design-gain prediction | Complete; enhancement closed | [24-cell result and model selection](results/boundary-design-001/model_selection.md); kernel frozen |
 | Boundary model selection | Complete | [Objective-specific errors and reduction reconvergence](results/boundary-model-selection-001/REVIEW.md) |

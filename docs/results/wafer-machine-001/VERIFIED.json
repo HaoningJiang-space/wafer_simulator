@@ -1,0 +1,58 @@
+{
+  "analysis_commit": "7693eaa913177407eeece22342a6d02b8202d007",
+  "checked_artifact_hashes": 65,
+  "frozen_kernel_unchanged": true,
+  "passed": true,
+  "rows": [
+    {
+      "application_cycles": 23903,
+      "compiled_input_equal": true,
+      "passed": true,
+      "placement": "near"
+    },
+    {
+      "application_cycles": 27096,
+      "compiled_input_equal": true,
+      "passed": true,
+      "placement": "opposite"
+    },
+    {
+      "application_cycles": 75032,
+      "compiled_input_equal": true,
+      "passed": true,
+      "placement": "single_controller"
+    }
+  ],
+  "run_commit": "0c56c24b4bf602b8b2c036681f526971305dde99",
+  "run_manifest_sha256": "85a9874a0480ccb66f0b72a369f3356592bf964712823298468b086fc65a97ed",
+  "scope": "All retained events reaudited; current compiled work/placement/resources/phases equal accepted inputs; no application rerun",
+  "source_tests": {
+    "host": "eex005",
+    "modules": [
+      "test_spatial",
+      "test_collectives",
+      "test_collective_values",
+      "test_timed_execution",
+      "test_transformer",
+      "test_collective_timing",
+      "test_tree_collective",
+      "test_spatial_traffic",
+      "test_online_booksim",
+      "test_wow_target",
+      "test_model_fidelity",
+      "test_transfer_granularity",
+      "test_packet_pipeline",
+      "test_memory_boundary",
+      "test_boundary_design",
+      "test_group_sharing",
+      "test_wafer_machine"
+    ],
+    "passed": true,
+    "python": "3.13.13 | packaged by Anaconda, Inc. | (main, Apr 14 2026, 06:19:41) [GCC 14.3.0]",
+    "source_commit": "7693eaa913177407eeece22342a6d02b8202d007",
+    "tests": 183,
+    "tests_log": "/home/wangziheng/wafer_simulator/runs/wafer-machine-tests-003/tests.log",
+    "tests_log_sha256": "ed8414a1e173c7b8b95d2dd0f281a5a14a57b330d6df2ff5dc1f2a74cfc616e0"
+  },
+  "tests_sha256": "0f800b1545f1f566b7686816e1718dc730b9abf297f39adf4295a92d229695a9"
+}

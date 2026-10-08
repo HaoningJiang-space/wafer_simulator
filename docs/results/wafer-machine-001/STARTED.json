@@ -1,0 +1,3141 @@
+{
+  "affinity": [
+    254,
+    255
+  ],
+  "binary_sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+  "executable_sha256": "c101b58503f6a58ef7d66d9b23886560e04fbb059e75aeb6e7ab6db67e9177cb",
+  "frozen_execution_commit": "371aed2fe52434b9f7226b7141d8703b5bcdabbc",
+  "frozen_paths_unchanged": true,
+  "geometry_check": {
+    "hb_signal_usage": {
+      "c0": 1024,
+      "c1": 1024,
+      "c10": 1024,
+      "c11": 1024,
+      "c12": 1024,
+      "c13": 1024,
+      "c14": 1024,
+      "c15": 1024,
+      "c2": 1024,
+      "c3": 1024,
+      "c4": 1024,
+      "c5": 1024,
+      "c6": 1024,
+      "c7": 1024,
+      "c8": 1024,
+      "c9": 1024,
+      "host": 0,
+      "m0": 1024,
+      "m1": 1024,
+      "m10": 1024,
+      "m11": 1024,
+      "m12": 1024,
+      "m13": 1024,
+      "m14": 1024,
+      "m15": 1024,
+      "m2": 1024,
+      "m3": 1024,
+      "m4": 1024,
+      "m5": 1024,
+      "m6": 1024,
+      "m7": 1024,
+      "m8": 1024,
+      "m9": 1024
+    },
+    "passed": true,
+    "qualification": "Declared geometry and resource consistency only; not PPA/yield sign-off",
+    "router_ports": {
+      "c0": 5,
+      "c1": 5,
+      "c10": 6,
+      "c11": 5,
+      "c12": 4,
+      "c13": 5,
+      "c14": 5,
+      "c15": 4,
+      "c2": 5,
+      "c3": 4,
+      "c4": 5,
+      "c5": 6,
+      "c6": 6,
+      "c7": 5,
+      "c8": 5,
+      "c9": 6,
+      "host": 2,
+      "m0": 3,
+      "m1": 3,
+      "m10": 3,
+      "m11": 3,
+      "m12": 3,
+      "m13": 3,
+      "m14": 3,
+      "m15": 3,
+      "m2": 3,
+      "m3": 3,
+      "m4": 3,
+      "m5": 3,
+      "m6": 3,
+      "m7": 3,
+      "m8": 3,
+      "m9": 3
+    }
+  },
+  "host": "eex005",
+  "load": [
+    12.9,
+    14.11,
+    10.03
+  ],
+  "machine": {
+    "access_latency_cycles": 1,
+    "compute_rates": [
+      [
+        "mac",
+        256
+      ],
+      [
+        "scalar_add",
+        64
+      ]
+    ],
+    "connections": [
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c1",
+        "id": "c0-c1",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c0"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c4",
+        "id": "c0-c4",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c0"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m0",
+        "id": "hb-0",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c0"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c2",
+        "id": "c1-c2",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c1"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c5",
+        "id": "c1-c5",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c1"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m1",
+        "id": "hb-1",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c1"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c3",
+        "id": "c2-c3",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c2"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c6",
+        "id": "c2-c6",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c2"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m2",
+        "id": "hb-2",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c2"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c7",
+        "id": "c3-c7",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c3"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m3",
+        "id": "hb-3",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c3"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c5",
+        "id": "c4-c5",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c4"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c8",
+        "id": "c4-c8",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c4"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m4",
+        "id": "hb-4",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c4"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c6",
+        "id": "c5-c6",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c5"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c9",
+        "id": "c5-c9",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c5"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m5",
+        "id": "hb-5",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c5"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c7",
+        "id": "c6-c7",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c6"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c10",
+        "id": "c6-c10",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c6"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m6",
+        "id": "hb-6",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c6"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c11",
+        "id": "c7-c11",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c7"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m7",
+        "id": "hb-7",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c7"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c9",
+        "id": "c8-c9",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c8"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c12",
+        "id": "c8-c12",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c8"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m8",
+        "id": "hb-8",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c8"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c10",
+        "id": "c9-c10",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c9"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c13",
+        "id": "c9-c13",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c9"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m9",
+        "id": "hb-9",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c9"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c11",
+        "id": "c10-c11",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c10"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c14",
+        "id": "c10-c14",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c10"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m10",
+        "id": "hb-10",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c10"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c15",
+        "id": "c11-c15",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c11"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m11",
+        "id": "hb-11",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c11"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c13",
+        "id": "c12-c13",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c12"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m12",
+        "id": "hb-12",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c12"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c14",
+        "id": "c13-c14",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c13"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m13",
+        "id": "hb-13",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c13"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "c15",
+        "id": "c14-c15",
+        "kind": "stitch",
+        "latency_cycles": 17,
+        "signals_per_direction": 512,
+        "source": "c14"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m14",
+        "id": "hb-14",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c14"
+      },
+      {
+        "bits_per_signal_cycle": 1,
+        "destination": "m15",
+        "id": "hb-15",
+        "kind": "hb",
+        "latency_cycles": 1,
+        "signals_per_direction": 512,
+        "source": "c15"
+      },
+      {
+        "bits_per_signal_cycle": 16,
+        "destination": "host",
+        "id": "edge-io",
+        "kind": "io",
+        "latency_cycles": 20,
+        "signals_per_direction": 32,
+        "source": "c0"
+      }
+    ],
+    "controllers": [
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-0",
+        "tile": "m0"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-1",
+        "tile": "m1"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-2",
+        "tile": "m2"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-3",
+        "tile": "m3"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-4",
+        "tile": "m4"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-5",
+        "tile": "m5"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-6",
+        "tile": "m6"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-7",
+        "tile": "m7"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-8",
+        "tile": "m8"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-9",
+        "tile": "m9"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-10",
+        "tile": "m10"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-11",
+        "tile": "m11"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-12",
+        "tile": "m12"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-13",
+        "tile": "m13"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-14",
+        "tile": "m14"
+      },
+      {
+        "buffer_bytes": 1048576,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 4,
+        "id": "controller-15",
+        "tile": "m15"
+      },
+      {
+        "buffer_bytes": 4194304,
+        "channel_bytes_per_cycle": 64,
+        "command_cycles": 8,
+        "id": "host-controller",
+        "tile": "host"
+      }
+    ],
+    "flit_bytes": 64,
+    "frequency_hz": 1000000000,
+    "hb_pitch_um": 10,
+    "layers": [
+      {
+        "id": "compute",
+        "role": "compute",
+        "z_um": 0
+      },
+      {
+        "id": "memory",
+        "role": "memory",
+        "z_um": 50
+      },
+      {
+        "id": "external",
+        "role": "external",
+        "z_um": 0
+      }
+    ],
+    "name": "stitched_compute_memory_candidate_v1",
+    "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+    "router_latency_cycles": 4,
+    "stitch_signals_per_boundary": 2048,
+    "stores": [
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-0",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c0"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-0",
+        "id": "dram-0-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m0"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-0",
+        "id": "dram-0-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m0"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-1",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c1"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-1",
+        "id": "dram-1-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m1"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-1",
+        "id": "dram-1-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m1"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-2",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c2"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-2",
+        "id": "dram-2-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m2"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-2",
+        "id": "dram-2-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m2"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-3",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c3"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-3",
+        "id": "dram-3-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m3"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-3",
+        "id": "dram-3-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m3"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-4",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c4"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-4",
+        "id": "dram-4-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m4"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-4",
+        "id": "dram-4-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m4"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-5",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c5"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-5",
+        "id": "dram-5-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m5"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-5",
+        "id": "dram-5-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m5"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-6",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c6"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-6",
+        "id": "dram-6-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m6"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-6",
+        "id": "dram-6-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m6"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-7",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c7"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-7",
+        "id": "dram-7-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m7"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-7",
+        "id": "dram-7-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m7"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-8",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c8"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-8",
+        "id": "dram-8-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m8"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-8",
+        "id": "dram-8-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m8"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-9",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c9"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-9",
+        "id": "dram-9-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m9"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-9",
+        "id": "dram-9-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m9"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-10",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c10"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-10",
+        "id": "dram-10-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m10"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-10",
+        "id": "dram-10-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m10"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-11",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c11"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-11",
+        "id": "dram-11-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m11"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-11",
+        "id": "dram-11-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m11"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-12",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c12"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-12",
+        "id": "dram-12-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m12"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-12",
+        "id": "dram-12-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m12"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-13",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c13"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-13",
+        "id": "dram-13-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m13"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-13",
+        "id": "dram-13-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m13"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-14",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c14"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-14",
+        "id": "dram-14-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m14"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-14",
+        "id": "dram-14-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m14"
+      },
+      {
+        "bytes_per_cycle": 64,
+        "capacity_bytes": 4194304,
+        "controller": null,
+        "id": "sram-15",
+        "kind": "sram",
+        "latency_cycles": 0,
+        "tile": "c15"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-15",
+        "id": "dram-15-0",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m15"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 67108864,
+        "controller": "controller-15",
+        "id": "dram-15-1",
+        "kind": "dram",
+        "latency_cycles": 30,
+        "tile": "m15"
+      },
+      {
+        "bytes_per_cycle": 32,
+        "capacity_bytes": 1073741824,
+        "controller": "host-controller",
+        "id": "host-memory",
+        "kind": "external",
+        "latency_cycles": 80,
+        "tile": "host"
+      }
+    ],
+    "technology": "stitched_compute_hb_memory",
+    "tiles": [
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c0",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -52000,
+        "y_um": -66000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m0",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -52000,
+        "y_um": -66000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c1",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -26000,
+        "y_um": -66000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m1",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -26000,
+        "y_um": -66000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c2",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 0,
+        "y_um": -66000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m2",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 0,
+        "y_um": -66000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c3",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 26000,
+        "y_um": -66000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m3",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 26000,
+        "y_um": -66000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c4",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -52000,
+        "y_um": -33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m4",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -52000,
+        "y_um": -33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c5",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -26000,
+        "y_um": -33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m5",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -26000,
+        "y_um": -33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c6",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 0,
+        "y_um": -33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m6",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 0,
+        "y_um": -33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c7",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 26000,
+        "y_um": -33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m7",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 26000,
+        "y_um": -33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c8",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -52000,
+        "y_um": 0
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m8",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -52000,
+        "y_um": 0
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c9",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -26000,
+        "y_um": 0
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m9",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -26000,
+        "y_um": 0
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c10",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 0,
+        "y_um": 0
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m10",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 0,
+        "y_um": 0
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c11",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 26000,
+        "y_um": 0
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m11",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 26000,
+        "y_um": 0
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c12",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -52000,
+        "y_um": 33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m12",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -52000,
+        "y_um": 33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c13",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -26000,
+        "y_um": 33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m13",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": -26000,
+        "y_um": 33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c14",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 0,
+        "y_um": 33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m14",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 0,
+        "y_um": 33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "c15",
+        "layer": "compute",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 26000,
+        "y_um": 33000
+      },
+      {
+        "hb_signal_budget": 2048,
+        "height_um": 33000,
+        "id": "m15",
+        "layer": "memory",
+        "max_ports": 8,
+        "width_um": 26000,
+        "x_um": 26000,
+        "y_um": 33000
+      },
+      {
+        "hb_signal_budget": 0,
+        "height_um": 33000,
+        "id": "host",
+        "layer": "external",
+        "max_ports": 2,
+        "width_um": 26000,
+        "x_um": -78000,
+        "y_um": -66000
+      }
+    ],
+    "wafer_diameter_um": 300000,
+    "wire_um_per_cycle": 2000
+  },
+  "native_build": "bec105197a710ee90c6f3519a10e5832e718592e",
+  "native_build_manifest_sha256": "f682ca3a36899e700393b9d25a139e79f17f011287fbbb6d269be75dcc9a87e2",
+  "packages": [
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "fonttools==4.66.1",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "networkx==3.7",
+    "numpy==2.5.3",
+    "packaging==26.3",
+    "pandas==3.0.6",
+    "pillow==12.3.0",
+    "pymetis==2025.2.2",
+    "pyparsing==3.3.3",
+    "python-dateutil==2.9.0.post0",
+    "scipy==1.18.1",
+    "shapely==2.1.2",
+    "six==1.17.0",
+    "typing_extensions==4.16.0"
+  ],
+  "python": "3.13.13 | packaged by Anaconda, Inc. | (main, Apr 14 2026, 06:19:41) [GCC 14.3.0]",
+  "registration": {
+    "cycle_limit": 2000000,
+    "data_placements": [
+      "near",
+      "opposite",
+      "single_controller"
+    ],
+    "frozen_execution_commit": "371aed2fe52434b9f7226b7141d8703b5bcdabbc",
+    "machine": "configs/wafer_machine.json",
+    "network_seed": 1,
+    "runtime": "/home/wangziheng/wafer_simulator",
+    "scope": "Three complete machine-integration acceptance cases. No design ranking, calibrated DRAM accuracy, streaming RX or simulator speedup claim. Fixed serial whole-object transaction policy.",
+    "workload": {
+      "hidden": 128,
+      "rows": 32,
+      "workers": 16
+    }
+  },
+  "scope": "Three complete machine-integration acceptance cases. No design ranking, calibrated DRAM accuracy, streaming RX or simulator speedup claim. Fixed serial whole-object transaction policy.",
+  "source_commit": "0c56c24b4bf602b8b2c036681f526971305dde99",
+  "source_hashes": {
+    "configs/wafer_machine.json": "cadc0fa6dd4c55ed5052f638ed35ac97de5db2392eed7749579f57dc4fd9b82c",
+    "configs/wafer_machine_validation.json": "a51a87fbb463b0b9a89649219a4c5eb32e9a3d296b48fda8fa36569f12b3714a",
+    "docs/WAFER_MACHINE.md": "a8ff6c8e503b78e23bee3470b441463b57fce990f575b8995237e3176644bacd",
+    "src/wafer_sim/__init__.py": "70f425c539166f1abb22b3c99938f64deddca6b668b400dca86579d0a33a70d4",
+    "src/wafer_sim/adapters/__init__.py": "fcba0d9b558132b8a70e76e2b9f3b5a6d36de972fef46d17be6317cd913b2d73",
+    "src/wafer_sim/adapters/atlahs_capture.py": "3df005b040a9c551c2a3572c58bfab30632c1a05abd51ee63229b21ff3a1356e",
+    "src/wafer_sim/adapters/atlahs_observer.py": "34733de12bffda1cc4213dffdbc9150949174e404d336d31b558890eb48d94d2",
+    "src/wafer_sim/adapters/booksim.py": "68626b1b715fd3436ef81411beb1ac33498a784e0ac6d49f1ca3f0984c9bd58f",
+    "src/wafer_sim/adapters/boundary_booksim.py": "b3ff473dfad949b3ba1326e93fa882f93154976d6342db28525cdfa186ca857d",
+    "src/wafer_sim/adapters/collective_operation.py": "067776f2be70849c7f8bbfae387d3aff70bc7382d8e789845adc3f33a603f3e4",
+    "src/wafer_sim/adapters/collectives.py": "b77ea17db65cd59c9ef585a1a3bff2aa3ece5cc0bd674f0012e84576657e0e1d",
+    "src/wafer_sim/adapters/declared_target.py": "bd9720d78c46fde797631bfb774012d4aaca3c96d7ee40fac813bae35ca1619b",
+    "src/wafer_sim/adapters/goal_booksim.py": "f01dc6cb005c1894c67369ef83d79d9768623b3279c093a2bbe33eebcb7baa15",
+    "src/wafer_sim/adapters/memory_boundary.py": "8a34917bcbc903ec35b6a43587f8c7b013546faf054e2293479b5844f3e6994a",
+    "src/wafer_sim/adapters/online_booksim.py": "842c2fd01ae9bc245a332a6c6ce656ddae87d377dc00a2da84d3ab717bc44869",
+    "src/wafer_sim/adapters/packet_pipeline.py": "ea4a79b69208af63f05728912a74eb7240569e688825414aedb88ec0f4d53da1",
+    "src/wafer_sim/adapters/spatial.py": "fdeb56bf27754efa8fdd46169ac33f47d6004f3d67d30a0346248c0ae6c189c7",
+    "src/wafer_sim/adapters/timing.py": "10557907beaa14dd6e67e90bb4762c6896dbb9918628787d275b26c14c9269bd",
+    "src/wafer_sim/adapters/transformer.py": "82ec7852dcf06bfcf1f81a1dcfc32dea7b5f706e82438c2a6fcdd842e33bc8b3",
+    "src/wafer_sim/adapters/transformer_groups.py": "a2855689202ba5197ba60b65a0228fca5d987a557296d3b81d5663ed8d14bb9e",
+    "src/wafer_sim/adapters/tree_collective.py": "78d872f9af3af9223922f872211febe95955ea4e2f6cdf5c06e9d349448033aa",
+    "src/wafer_sim/adapters/wafer_machine.py": "23bb4f39318372858f9323378a663a6feec1e486f608adef54377c4df002d906",
+    "src/wafer_sim/adapters/wow.py": "d2cbf8e7339d001a25cb91aed7175309b9018d5531b5b8119cae9b8de87605cd",
+    "src/wafer_sim/adapters/wow_target.py": "7b8475e2812bff843b22ce844abbf74050777ddda99bac023f1591a96fc17932",
+    "src/wafer_sim/analysis/__init__.py": "77f6de9f814a6582021bda4834b15e9c79275cfcf3828dc6a305540b993675ea",
+    "src/wafer_sim/analysis/audit.py": "269d694c0c396a3b2d3fd2ad6403ca0ecea5fb9f40da9116506f3608bc121bf3",
+    "src/wafer_sim/analysis/boundary_design.py": "b6864973d57eabdd3500b0f871754c0174bb38751f5b1f2e57d7f8fea052bb2d",
+    "src/wafer_sim/analysis/boundary_selection.py": "1bc42b61c91b79d4197edabe72c75c4a96293534ddf5762e9041dfec5368a39c",
+    "src/wafer_sim/analysis/boundary_study.py": "aad12a37c13d325d7e84b73147df9550bcd9af89276fff2bf33e609e5322f926",
+    "src/wafer_sim/analysis/call_regions.py": "5965d9f74478b098d1ed488715201a5caace3fafb2bfbe107fda97ab3c46e053",
+    "src/wafer_sim/analysis/campaign_acceptance.py": "3b0f9001ea5d61592dbe4db93c481ec4cd595894e285a94c3befb00573a563c5",
+    "src/wafer_sim/analysis/chakra_effects.py": "291d29fd615cb6cd5291f9de68410554e16fdb6502427e6492fa3cd898ea15be",
+    "src/wafer_sim/analysis/chakra_source.py": "3b520361fedccc9b78c26367e0e34447f90ee0d77f1c6e0ab5c39cab6118118d",
+    "src/wafer_sim/analysis/collective_contention.py": "f7db52c669f8597ac3cb54786e3ac7c5408979819a155a1e0a9f57b7b7cabad3",
+    "src/wafer_sim/analysis/collective_ports.py": "30fd2b8e43161255877dd7f449762e0787515ea2d5dd5701a85543733201f241",
+    "src/wafer_sim/analysis/collective_projection.py": "39ab8a535cb3bb6e51c9af61cba4b6d735d4f40fa02d5a83800c80515d2719b1",
+    "src/wafer_sim/analysis/collective_recovery.py": "e18e712754dd50ad08f7e494105e7894269c1ebf7a4f5ba96e113e2102bddf47",
+    "src/wafer_sim/analysis/collective_sources.py": "d65b481020aee1555ebe129bcb7ca1ce5362813e75e738e86ce5be710e414082",
+    "src/wafer_sim/analysis/comparison.py": "e6cafbba23a99008805a9806f72475578c9e79f9c5ba0a89df29a002cb6637e6",
+    "src/wafer_sim/analysis/critical_chain.py": "9f1bf7f5b9fae43e427498385ac38f18910b7cf9b930d77c67fe638a9699346c",
+    "src/wafer_sim/analysis/dependency_profile.py": "6900257d178e3d824e5d04e51750c4b6c72a8365bea31d78fd5f5863f2221d2c",
+    "src/wafer_sim/analysis/dependency_structure.py": "c43fcd2c0b8841fbf17161f1b39a14975ee5aa09f92b0308b8ea641d527a5521",
+    "src/wafer_sim/analysis/execution_cost.py": "36d4013449a6f07eab77b6556b91fae43514788e98a2b1dd1154affc2e375060",
+    "src/wafer_sim/analysis/goal_completion.py": "33ef89b5980bccabc1bb46ea131eaa0e2a88f3000d1fee6c5d7fcad3a8cc3498",
+    "src/wafer_sim/analysis/group_sharing.py": "2b579929bdd4a3e6501d8dbb5cced90ab5c85c6fe08fac88d6d4330637e66ed0",
+    "src/wafer_sim/analysis/local_stages.py": "95f33421321e41c17c2f52a3a1c9ac8ece50516fbd8825411303160177ae7a8a",
+    "src/wafer_sim/analysis/memory_boundary.py": "e3273d5f089661aa475393fb3f0079e8561dc5d9a06ad661cb938cbe8485695f",
+    "src/wafer_sim/analysis/memory_service.py": "f7a1d61a6e06b62751ec458f4014fba60ada8b6e1863e8347aeece64b2c68116",
+    "src/wafer_sim/analysis/memory_service_study.py": "e230999568acb10895484c208d946943fcd190f6c3d50888aacfe71ccb105649",
+    "src/wafer_sim/analysis/model_boundary.py": "76df5390b5abf4c4e548eed31f5f8056827697e5e2c5b0718f073c9fabbb2763",
+    "src/wafer_sim/analysis/model_fidelity.py": "70094a5cd88a8182bb62137e2fd301e1f5c3ec8b0def8a6eb7b22d7dea9ec76d",
+    "src/wafer_sim/analysis/online_network.py": "a1a9522fb2cb7984f66c0b5fe7ccacd51796ebd3f5c63c3f3cd21af70aa0a024",
+    "src/wafer_sim/analysis/packet_pipeline.py": "e503ce20718d5c417a86351cca5f36c4c9c465d08ec4ca469bbdc277f3676da0",
+    "src/wafer_sim/analysis/placement_attribution.py": "96ee5cbd810b4a111dc6ab9220d39c76ba72f44312441a951e154b403780a71f",
+    "src/wafer_sim/analysis/resource_balance.py": "9157c81a2d8386cf459793f84c8a2c8fb9dbf42eea519ffb506aa577cdb6e7ae",
+    "src/wafer_sim/analysis/source_intervals.py": "f482e64f6c5caf15b245c66445f76c84c1fa87b42d6d798f41502c27180d8da5",
+    "src/wafer_sim/analysis/spatial_traffic.py": "8a1ea212e13e7d4965512523ad24abf23d3d4f9f7c49051ff78aa24273beb9d9",
+    "src/wafer_sim/analysis/timed_attribution.py": "4306e9cd6d371db36fa0dae33bccbd6f55226575ce05f642223e2ca1d0a1429a",
+    "src/wafer_sim/analysis/timing.py": "4adfc7600d2179a910927f1b8d0d028893e996777be3295e320796b82744e0cf",
+    "src/wafer_sim/analysis/transfer_granularity.py": "41c4795a6e47d100c4bb635f6f62f015bfac9ac7cf70c36da4751128542642b3",
+    "src/wafer_sim/analysis/transfer_study.py": "4d04c339008f574c08f636b1ec929bb0a2c078ae13ec415c5ce2e8000fca05f1",
+    "src/wafer_sim/analysis/wafer_machine.py": "14993e85036a4e81c67851046ebb54637dc3af8ddf8b07838bbda0cde9dcf157",
+    "src/wafer_sim/analysis/wow_transformer.py": "22e5da4e730570d0feb97bca558599194f1d5e0a68e07aafbebac44025966455",
+    "src/wafer_sim/architecture/__init__.py": "e3fb37b55de4a174633354453e2c88f34e1b0fb1c5eb347efebca2f787d9ff37",
+    "src/wafer_sim/architecture/spatial.py": "1d0125eb046be9569909a186b9ec12341552a544d86f11f7df628e5b84a894fe",
+    "src/wafer_sim/architecture/timing.py": "f3d48f4f54541f5cd0b4be51bb00580736aa21c34ea0fc53f5e59cc9356fc318",
+    "src/wafer_sim/architecture/wafer_machine.py": "8b07afd2e1e8457ee435a93180a3a65c5118391c8320d51e45922746b9ebfb7a",
+    "src/wafer_sim/cli.py": "c17da906b5b118276d648cc8ca3c8998f4c61b05214b077a6d70a4948add3576",
+    "src/wafer_sim/execution/__init__.py": "9347bc26e805270c1b80d3351fed2872f20071fb0b4c1fcb492c74632d93ff82",
+    "src/wafer_sim/execution/collectives.py": "9e5e520707cca47fdb8d044934bd322950f30eef945cf1bb1d2417f2f6115dd2",
+    "src/wafer_sim/execution/memory_boundary.py": "08772ca611d6336d6c0cc1b68553bc644264f065b80b620f4b0d87ac2c984849",
+    "src/wafer_sim/execution/packet_pipeline.py": "d49457eee947719dd61c95a3f3658c2ffeb4f2fed1dfd955005a0113840ea0bb",
+    "src/wafer_sim/execution/plan.py": "71944fb4c9eab0f40a2ac745fbff6cedb03f51d6928fd02223468e795975d821",
+    "src/wafer_sim/execution/reservations.py": "8971299cd1266e81ea615e5d1cfca002f69f1487817a84bb3c60a1d00fbd8920",
+    "src/wafer_sim/execution/storage.py": "c3a5b5a67edc242d3aed4cfbe44199a4e1eb70149e69e4c02cf6d9bfede26aa1",
+    "src/wafer_sim/execution/timing.py": "91d6c744def291b701fddcaa3795634eee4219ff6e5c09de066bd35d982b1949",
+    "src/wafer_sim/execution/values.py": "21f5cc605f39807faa30bc627afc7d6e8359ac9f541a1f5c21a59a9649f6b99a",
+    "src/wafer_sim/experiments/__init__.py": "5c1daab86f801cea53845aaa8cd68200219e89038b3490a6fbb3e594ee6c9d24",
+    "src/wafer_sim/experiments/boundary_design.py": "0bbf2d4d89e50851cb4afb3c1faa6d7744fc5b235cd4743605d0a47e6d301bd4",
+    "src/wafer_sim/experiments/group_sharing.py": "2eaf6307cb9686d3e820ef898bd4d8a6777eee54ffadaef6fb6240fc8186d85b",
+    "src/wafer_sim/experiments/memory_boundary.py": "2a651cd729cd0da08a1584b4238114b627d0dfca33029bebfb4a40778f4f37f8",
+    "src/wafer_sim/experiments/network_reference.py": "96c143927af6c57515004a129e0c86928e6e166fe2e1a3c71e5779a68ccf890e",
+    "src/wafer_sim/experiments/next_experiment.py": "9c5a9667ee4d8f18d4c00c1b60a898b969656a81b3932ad5b5a83ba27dfbdec2",
+    "src/wafer_sim/experiments/runner.py": "06fd5f37a119dea718dbaa2d0926e97dc88f97cd5b589c173417575d3e316c6d",
+    "src/wafer_sim/experiments/target_execution.py": "b345da87176d64520fc8d922e6277d9a13ef6983579731b0a37e47afd81feb97",
+    "src/wafer_sim/experiments/timed_example.py": "0f36aefb52c6669666c3ae4827f0cd04b734fa1315856c822f0dadd7b89eee32",
+    "src/wafer_sim/experiments/transfer_granularity.py": "e8504d7c1db0e6024cb1eeb45bf7e86ab99ca88d9a2a9b79b8a9de8379bf506d",
+    "src/wafer_sim/experiments/transformer.py": "1c5d9c28a6d77585e106702518a95fc73a14e3af5fa0e9620a37260d2f3ba558",
+    "src/wafer_sim/experiments/wafer_machine.py": "a1f3387d7992c5f010ed31420839e854588d51136c2d9962990eb6b4255b319f",
+    "src/wafer_sim/experiments/wow_transformer.py": "eae09265124d772f3f0b88d257a35cdec3b5f7efa4894fea0fade1b6752c0532",
+    "src/wafer_sim/io.py": "13eecede1438f87d940096560b9453c4580d8cbcdc84e9829929425e7ad842f8",
+    "src/wafer_sim/vendor.py": "385136600d9f9b156fc021fa053b49b383617341bf47297875548c8b1b9d7c6c",
+    "src/wafer_sim/workloads/__init__.py": "979c24a7d2fd4d87b6964c753208f1325af350528246d9c80a511900db0f291e",
+    "src/wafer_sim/workloads/boundary_mechanisms.py": "2cb4967dcd817bab980fad4286568d1d90e25e44817b27c0dfea7ad9b5400d7b",
+    "src/wafer_sim/workloads/call_regions.py": "3d1f9701f2d34adae8c62c1a6e8f15de1541328ebe6aa8ec10ed545c7b22b523",
+    "src/wafer_sim/workloads/chakra.py": "3a971450249f555dac487eda87cb46ad3926446f050ab1edb0abb6dd6ac2e13e",
+    "src/wafer_sim/workloads/chakra_collectives.py": "42fe542811f5e2fc48c4c58aa9ed6df67972acca7459b6d9eb640276be6a854d",
+    "src/wafer_sim/workloads/chakra_effects.py": "2cdb4609fa5918772962234bd8d222191ea434f12bca21a3fcf3fc2ad1962305",
+    "src/wafer_sim/workloads/chakra_layout.py": "02e6607067e0bf3b591becac18b5fac46a01edb0c21e328645b5a8b9d477d4ed",
+    "src/wafer_sim/workloads/chakra_regions.py": "2eb37c684e5b408693e1abfd5955b0b4459ca44781907426147909e92e42b480",
+    "src/wafer_sim/workloads/chakra_work.py": "49e8c37cc60c5776f40e30ff1017ab191cd3585fd4765d320f36f8e90c78523f",
+    "src/wafer_sim/workloads/collective_recovery.py": "66158e4084101107975566dc3d4748326d3fd1c6e176d1dd11006b2d4d339c82",
+    "src/wafer_sim/workloads/collective_values.py": "7fb43d1fd7abba1dd6fdb94749d2c70b26713e8be04a49285dc33710706d24ab",
+    "src/wafer_sim/workloads/collectives.py": "e21e8f4874f26b2c15b8372c5db41e6495d884ac42df3558a8003d96951f0dee",
+    "src/wafer_sim/workloads/dag.py": "6212ca8aef01875c1dfce98dddab2072f0531655797297ef5d17edadd92942e0",
+    "src/wafer_sim/workloads/goal.py": "7bbe717b1d84df0111fd526b2d460bee0164991cf46a780ee2f408b6d2b8cfe6",
+    "src/wafer_sim/workloads/groups.py": "6763e03ca3d1ae613318fbfa1fe7187e72060398f3560d8fd1ea84df753ecd14",
+    "src/wafer_sim/workloads/local_transfers.py": "444e20ec7e496bfa3e9ffa91ca4bdf0c6b5aaaa5a320cda698f5d4a86d2ac73e",
+    "src/wafer_sim/workloads/memory_machine.py": "09d2e126eac1fc99227f1d187cc37cde13539437c0c9ca6044ecd2102bd196d7",
+    "src/wafer_sim/workloads/spatial.py": "19730f0542e5a20d549859b1bfc05defd202ba912ff5e5519609b0a244361534",
+    "src/wafer_sim/workloads/tensor_effect_binding.py": "1a372d7ac0417e9e73a63a3ea0f367e7183146b3cb1609a8547a3611fcd62d0f",
+    "src/wafer_sim/workloads/tensor_versions.py": "e566d3c71854614b9a84534ad861e52332bac9a78290ce9a0636346ee75db935",
+    "src/wafer_sim/workloads/timed_example.py": "6c2f2805476ac3e360cd9073ed89448bdf9fad79127c03054ad505ed7191d81d",
+    "src/wafer_sim/workloads/training.py": "5a17d0f6ee7b54b4e74a764832a8058754a1b73fa435a2b6abc1a4bcb0d40624",
+    "src/wafer_sim/workloads/transformer.py": "55230cfb5fd09eeb09d0946e7df241aa5044d687b8e90a67c68f013853527b04",
+    "third_party/nw-design-for-wsi/rapidchiplet/booksim_wrapper.py": "49c3d4ee3232e178496e6fffcaa5843365c572893225504539d46245da4800e0"
+  },
+  "tests_receipt": {
+    "host": "eex005",
+    "modules": [
+      "test_spatial",
+      "test_collectives",
+      "test_collective_values",
+      "test_timed_execution",
+      "test_transformer",
+      "test_collective_timing",
+      "test_tree_collective",
+      "test_spatial_traffic",
+      "test_online_booksim",
+      "test_wow_target",
+      "test_model_fidelity",
+      "test_transfer_granularity",
+      "test_packet_pipeline",
+      "test_memory_boundary",
+      "test_boundary_design",
+      "test_group_sharing",
+      "test_wafer_machine"
+    ],
+    "passed": true,
+    "python": "3.13.13 | packaged by Anaconda, Inc. | (main, Apr 14 2026, 06:19:41) [GCC 14.3.0]",
+    "source_commit": "0c56c24b4bf602b8b2c036681f526971305dde99",
+    "tests": 183,
+    "tests_log": "/home/wangziheng/wafer_simulator/runs/wafer-machine-tests-002/tests.log",
+    "tests_log_sha256": "dcce3d258605575cbed445c6480c3fe8b246d6e116b94ffb773a87caf8b2e389"
+  },
+  "tests_sha256": "f87b6516fb9a19479a6268d6ae1ef2f4740f8eba61a76f73adab636ad24b5aa5",
+  "workload": {
+    "data": [
+      {
+        "id": "x0",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w0",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v0",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a0",
+        "producer": "first0",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y0",
+        "producer": "second0",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x1",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w1",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v1",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a1",
+        "producer": "first1",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y1",
+        "producer": "second1",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x2",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w2",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v2",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a2",
+        "producer": "first2",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y2",
+        "producer": "second2",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x3",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w3",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v3",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a3",
+        "producer": "first3",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y3",
+        "producer": "second3",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x4",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w4",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v4",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a4",
+        "producer": "first4",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y4",
+        "producer": "second4",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x5",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w5",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v5",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a5",
+        "producer": "first5",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y5",
+        "producer": "second5",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x6",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w6",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v6",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a6",
+        "producer": "first6",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y6",
+        "producer": "second6",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x7",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w7",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v7",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a7",
+        "producer": "first7",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y7",
+        "producer": "second7",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x8",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w8",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v8",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a8",
+        "producer": "first8",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y8",
+        "producer": "second8",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x9",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w9",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v9",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a9",
+        "producer": "first9",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y9",
+        "producer": "second9",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x10",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w10",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v10",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a10",
+        "producer": "first10",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y10",
+        "producer": "second10",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x11",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w11",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v11",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a11",
+        "producer": "first11",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y11",
+        "producer": "second11",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x12",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w12",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v12",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a12",
+        "producer": "first12",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y12",
+        "producer": "second12",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x13",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w13",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v13",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a13",
+        "producer": "first13",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y13",
+        "producer": "second13",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x14",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w14",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v14",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a14",
+        "producer": "first14",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y14",
+        "producer": "second14",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      },
+      {
+        "id": "x15",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "w15",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "v15",
+        "producer": null,
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 65536
+      },
+      {
+        "id": "a15",
+        "producer": "first15",
+        "provenance": "Declared dense float32 tensor",
+        "retain": false,
+        "size_bytes": 16384
+      },
+      {
+        "id": "y15",
+        "producer": "second15",
+        "provenance": "Declared dense float32 tensor",
+        "retain": true,
+        "size_bytes": 16384
+      }
+    ],
+    "operations": [
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first0",
+        "inputs": [
+          "x0",
+          "w0"
+        ],
+        "outputs": [
+          "a0"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second0",
+        "inputs": [
+          "a0",
+          "v0"
+        ],
+        "outputs": [
+          "y0"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first1",
+        "inputs": [
+          "x1",
+          "w1"
+        ],
+        "outputs": [
+          "a1"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second1",
+        "inputs": [
+          "a1",
+          "v1"
+        ],
+        "outputs": [
+          "y1"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first2",
+        "inputs": [
+          "x2",
+          "w2"
+        ],
+        "outputs": [
+          "a2"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second2",
+        "inputs": [
+          "a2",
+          "v2"
+        ],
+        "outputs": [
+          "y2"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first3",
+        "inputs": [
+          "x3",
+          "w3"
+        ],
+        "outputs": [
+          "a3"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second3",
+        "inputs": [
+          "a3",
+          "v3"
+        ],
+        "outputs": [
+          "y3"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first4",
+        "inputs": [
+          "x4",
+          "w4"
+        ],
+        "outputs": [
+          "a4"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second4",
+        "inputs": [
+          "a4",
+          "v4"
+        ],
+        "outputs": [
+          "y4"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first5",
+        "inputs": [
+          "x5",
+          "w5"
+        ],
+        "outputs": [
+          "a5"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second5",
+        "inputs": [
+          "a5",
+          "v5"
+        ],
+        "outputs": [
+          "y5"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first6",
+        "inputs": [
+          "x6",
+          "w6"
+        ],
+        "outputs": [
+          "a6"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second6",
+        "inputs": [
+          "a6",
+          "v6"
+        ],
+        "outputs": [
+          "y6"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first7",
+        "inputs": [
+          "x7",
+          "w7"
+        ],
+        "outputs": [
+          "a7"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second7",
+        "inputs": [
+          "a7",
+          "v7"
+        ],
+        "outputs": [
+          "y7"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first8",
+        "inputs": [
+          "x8",
+          "w8"
+        ],
+        "outputs": [
+          "a8"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second8",
+        "inputs": [
+          "a8",
+          "v8"
+        ],
+        "outputs": [
+          "y8"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first9",
+        "inputs": [
+          "x9",
+          "w9"
+        ],
+        "outputs": [
+          "a9"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second9",
+        "inputs": [
+          "a9",
+          "v9"
+        ],
+        "outputs": [
+          "y9"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first10",
+        "inputs": [
+          "x10",
+          "w10"
+        ],
+        "outputs": [
+          "a10"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second10",
+        "inputs": [
+          "a10",
+          "v10"
+        ],
+        "outputs": [
+          "y10"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first11",
+        "inputs": [
+          "x11",
+          "w11"
+        ],
+        "outputs": [
+          "a11"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second11",
+        "inputs": [
+          "a11",
+          "v11"
+        ],
+        "outputs": [
+          "y11"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first12",
+        "inputs": [
+          "x12",
+          "w12"
+        ],
+        "outputs": [
+          "a12"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second12",
+        "inputs": [
+          "a12",
+          "v12"
+        ],
+        "outputs": [
+          "y12"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first13",
+        "inputs": [
+          "x13",
+          "w13"
+        ],
+        "outputs": [
+          "a13"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second13",
+        "inputs": [
+          "a13",
+          "v13"
+        ],
+        "outputs": [
+          "y13"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first14",
+        "inputs": [
+          "x14",
+          "w14"
+        ],
+        "outputs": [
+          "a14"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second14",
+        "inputs": [
+          "a14",
+          "v14"
+        ],
+        "outputs": [
+          "y14"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "first15",
+        "inputs": [
+          "x15",
+          "w15"
+        ],
+        "outputs": [
+          "a15"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      },
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "second15",
+        "inputs": [
+          "a15",
+          "v15"
+        ],
+        "outputs": [
+          "y15"
+        ],
+        "provenance": "Y = (X W) V; second GEMM on next logical tile",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            524288
+          ]
+        ]
+      }
+    ]
+  },
+  "workload_metadata": {
+    "dimensions": {
+      "hidden": 128,
+      "rows": 32,
+      "workers": 16
+    },
+    "macs": 16777216,
+    "scope": "Complete declared dense two-stage work, not Llama or measured training",
+    "tensors": {
+      "a0": [
+        32,
+        128
+      ],
+      "a1": [
+        32,
+        128
+      ],
+      "a10": [
+        32,
+        128
+      ],
+      "a11": [
+        32,
+        128
+      ],
+      "a12": [
+        32,
+        128
+      ],
+      "a13": [
+        32,
+        128
+      ],
+      "a14": [
+        32,
+        128
+      ],
+      "a15": [
+        32,
+        128
+      ],
+      "a2": [
+        32,
+        128
+      ],
+      "a3": [
+        32,
+        128
+      ],
+      "a4": [
+        32,
+        128
+      ],
+      "a5": [
+        32,
+        128
+      ],
+      "a6": [
+        32,
+        128
+      ],
+      "a7": [
+        32,
+        128
+      ],
+      "a8": [
+        32,
+        128
+      ],
+      "a9": [
+        32,
+        128
+      ],
+      "v0": [
+        128,
+        128
+      ],
+      "v1": [
+        128,
+        128
+      ],
+      "v10": [
+        128,
+        128
+      ],
+      "v11": [
+        128,
+        128
+      ],
+      "v12": [
+        128,
+        128
+      ],
+      "v13": [
+        128,
+        128
+      ],
+      "v14": [
+        128,
+        128
+      ],
+      "v15": [
+        128,
+        128
+      ],
+      "v2": [
+        128,
+        128
+      ],
+      "v3": [
+        128,
+        128
+      ],
+      "v4": [
+        128,
+        128
+      ],
+      "v5": [
+        128,
+        128
+      ],
+      "v6": [
+        128,
+        128
+      ],
+      "v7": [
+        128,
+        128
+      ],
+      "v8": [
+        128,
+        128
+      ],
+      "v9": [
+        128,
+        128
+      ],
+      "w0": [
+        128,
+        128
+      ],
+      "w1": [
+        128,
+        128
+      ],
+      "w10": [
+        128,
+        128
+      ],
+      "w11": [
+        128,
+        128
+      ],
+      "w12": [
+        128,
+        128
+      ],
+      "w13": [
+        128,
+        128
+      ],
+      "w14": [
+        128,
+        128
+      ],
+      "w15": [
+        128,
+        128
+      ],
+      "w2": [
+        128,
+        128
+      ],
+      "w3": [
+        128,
+        128
+      ],
+      "w4": [
+        128,
+        128
+      ],
+      "w5": [
+        128,
+        128
+      ],
+      "w6": [
+        128,
+        128
+      ],
+      "w7": [
+        128,
+        128
+      ],
+      "w8": [
+        128,
+        128
+      ],
+      "w9": [
+        128,
+        128
+      ],
+      "x0": [
+        32,
+        128
+      ],
+      "x1": [
+        32,
+        128
+      ],
+      "x10": [
+        32,
+        128
+      ],
+      "x11": [
+        32,
+        128
+      ],
+      "x12": [
+        32,
+        128
+      ],
+      "x13": [
+        32,
+        128
+      ],
+      "x14": [
+        32,
+        128
+      ],
+      "x15": [
+        32,
+        128
+      ],
+      "x2": [
+        32,
+        128
+      ],
+      "x3": [
+        32,
+        128
+      ],
+      "x4": [
+        32,
+        128
+      ],
+      "x5": [
+        32,
+        128
+      ],
+      "x6": [
+        32,
+        128
+      ],
+      "x7": [
+        32,
+        128
+      ],
+      "x8": [
+        32,
+        128
+      ],
+      "x9": [
+        32,
+        128
+      ],
+      "y0": [
+        32,
+        128
+      ],
+      "y1": [
+        32,
+        128
+      ],
+      "y10": [
+        32,
+        128
+      ],
+      "y11": [
+        32,
+        128
+      ],
+      "y12": [
+        32,
+        128
+      ],
+      "y13": [
+        32,
+        128
+      ],
+      "y14": [
+        32,
+        128
+      ],
+      "y15": [
+        32,
+        128
+      ],
+      "y2": [
+        32,
+        128
+      ],
+      "y3": [
+        32,
+        128
+      ],
+      "y4": [
+        32,
+        128
+      ],
+      "y5": [
+        32,
+        128
+      ],
+      "y6": [
+        32,
+        128
+      ],
+      "y7": [
+        32,
+        128
+      ],
+      "y8": [
+        32,
+        128
+      ],
+      "y9": [
+        32,
+        128
+      ]
+    },
+    "terminal_objects": [
+      "y0",
+      "y1",
+      "y2",
+      "y3",
+      "y4",
+      "y5",
+      "y6",
+      "y7",
+      "y8",
+      "y9",
+      "y10",
+      "y11",
+      "y12",
+      "y13",
+      "y14",
+      "y15"
+    ]
+  }
+}
