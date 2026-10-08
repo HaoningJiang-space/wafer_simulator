@@ -28,6 +28,7 @@ def main():
                "test_transformer", "test_collective_timing", "test_tree_collective", "test_spatial_traffic",
                "test_online_booksim", "test_wow_target", "test_model_fidelity", "test_transfer_granularity", "test_packet_pipeline", "test_memory_boundary", "test_boundary_design", "test_group_sharing", "test_wafer_machine"]
     modules.append('test_memory_abstraction')
+    modules.append('test_spatial_scaling')
     suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
     log = args.output / "tests.log"
     with log.open("w") as stream:

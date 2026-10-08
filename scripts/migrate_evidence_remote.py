@@ -12,6 +12,7 @@ from pathlib import Path
 import platform
 import shutil
 import stat
+import tarfile
 import time
 
 OLD = Path('/home/wangziheng/wafer_simulator')
@@ -92,10 +93,11 @@ def verify(root, manifest):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('action', choices=('inventory', 'verify', 'retire'))
+    p.add_argument('action', choices=('inventory', 'verify', 'verify-archive', 'retire'))
     p.add_argument('--manifest', required=True, type=Path)
     p.add_argument('--receipt', type=Path)
     p.add_argument('--destination-receipt', type=Path)
+    p.add_argument('--archive', type=Path)
     args = p.parse_args(); host = platform.node().split('.')[0]
     if args.action == 'inventory':
         if host != 'eex005': raise ValueError('Inventory the retired host only')
@@ -111,11 +113,63 @@ def main():
         checked.update(manifest_sha256=digest(args.manifest), destination=str(NEW), host=host,
                        verified_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()))
         save(args.receipt, checked); print(checked, flush=True)
+    elif args.action == 'verify-archive':
+        if host != 'eex005': raise ValueError('Cold archive stays on the original evidence host')
+        manifest = json.loads(args.manifest.read_text())
+        expected = {r['path']: r for r in manifest['entries']}; seen = {}; restored = []
+        restore_dir = args.receipt.parent/'restore-check'; restore_dir.mkdir(exist_ok=False)
+        with tarfile.open(args.archive, 'r|gz') as tar:
+            for member in tar:
+                if member.isdir(): continue
+                name = member.name.removeprefix('./')
+                if name not in expected or name in seen: raise ValueError('Unexpected archive member '+name)
+                want = expected[name]
+                if member.mode != want['mode']: raise ValueError('Changed archived mode '+name)
+                if member.issym():
+                    if want['kind'] != 'symlink' or member.linkname != want['target']: raise ValueError('Changed symlink '+name)
+                    seen[name] = dict(kind='symlink')
+                elif member.islnk():
+                    target = member.linkname.removeprefix('./')
+                    if target not in seen or seen[target].get('sha256') != want.get('sha256'):
+                        raise ValueError('Unverified archive hardlink '+name)
+                    seen[name] = seen[target]
+                elif member.isfile():
+                    h = hashlib.sha256(); stream = tar.extractfile(member); count = 0
+                    # Materialize representative binary/array/JSON files as well
+                    # as independently decoding every archived file.
+                    suffix = Path(name).suffix
+                    take = (name.endswith('booksim-online/online_booksim') or
+                            (suffix in {'.npy', '.json'} and suffix not in {r['suffix'] for r in restored}))
+                    dest = restore_dir/str(len(restored)) if take else None
+                    out = dest.open('wb') if take else None
+                    try:
+                        for chunk in iter(lambda: stream.read(4*1024*1024), b''):
+                            h.update(chunk); count += len(chunk)
+                            if out: out.write(chunk)
+                    finally:
+                        if out: out.close()
+                    if want['kind'] != 'file' or count != want['size'] or h.hexdigest() != want['sha256']:
+                        raise ValueError('Corrupt archived content '+name)
+                    seen[name] = dict(kind='file', sha256=h.hexdigest())
+                    if take:
+                        if digest(dest) != want['sha256']: raise ValueError('Restore readback differs')
+                        restored.append(dict(path=name, restored_path=str(dest), suffix=suffix, sha256=want['sha256']))
+                else: raise ValueError('Unsupported archive member '+name)
+        if set(seen) != set(expected): raise ValueError('Incomplete archive')
+        checked = dict(passed=True, host=host, destination=str(args.archive.resolve()),
+            archive_sha256=digest(args.archive), archive_bytes=args.archive.stat().st_size,
+            manifest_sha256=digest(args.manifest), files=len(seen), file_bytes=manifest['file_bytes'],
+            restored_samples=restored, format='pax tar + gzip; all member bytes independently decoded')
+        save(args.receipt, checked); print({k:v for k,v in checked.items() if k != 'restored_samples'}, flush=True)
     else:
         if host != 'eex005': raise ValueError('Retire source copies only')
         m = json.loads(args.manifest.read_text()); destination = json.loads(args.destination_receipt.read_text())
+        archive = Path(destination['destination'])
+        verified_archive = (destination['host']=='eex005' and archive.parent == args.manifest.parent
+            and archive.is_file() and digest(archive) == destination.get('archive_sha256'))
+        verified_new = destination['destination']==str(NEW) and destination['host']=='ee4e072'
         if (not destination['passed'] or destination['manifest_sha256'] != digest(args.manifest)
-                or destination['destination'] != str(NEW) or destination['host'] != 'ee4e072'):
+                or not (verified_archive or verified_new)):
             raise ValueError('Missing verified destination')
         checked = verify(OLD, m); live = process_check(OLD)
         before = shutil.disk_usage(OLD)

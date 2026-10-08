@@ -1,0 +1,15 @@
+{
+  "frozen_model_commit": "c8cb1a528e96b52865309d4a7473b01811c5ad68",
+  "machine": "configs/wafer_machine.json",
+  "sides": [4, 6, 7],
+  "layouts": ["local", "clustered_local", "remote_balanced"],
+  "models": ["U0", "U1", "S"],
+  "per_worker": {"rows": 32, "hidden": 128},
+  "network_seed": 1,
+  "cycle_limit": 2000000,
+  "repetitions": 3,
+  "tie_tolerance_cycles": 100,
+  "gap_error_budget_cycles": 100,
+  "application_error_budget_percent": 2,
+  "scope": "Geometry/connectivity constrained weak scaling; fixed per-tile resources; no fabrication validation. Locality-load tradeoff is registered, not selected for ranking reversal."
+}
