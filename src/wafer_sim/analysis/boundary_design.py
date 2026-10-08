@@ -52,6 +52,35 @@ def decision_table(rows, registration):
     return output
 
 
+def pair_messages(rows, registration):
+    """Pair logical identities across placements; durations are not causal shares."""
+    index={(r['shape'],r['contract'],r['mode'],r['placement'],r['token']):r for r in rows}
+    if len(index)!=len(rows):raise ValueError('Duplicate attribution message')
+    output=[]
+    for shape in registration['cases']:
+        for policy in registration['contracts']:
+            tokens={k[4] for k in index if k[:4]==(shape,policy,'bounded','baseline')}
+            for mode in registration['modes']:
+                for place in registration['placements']:
+                    if {k[4] for k in index if k[:4]==(shape,policy,mode,place)}!=tokens:
+                        raise ValueError('Missing logical messages across designs')
+                for token in sorted(tokens):
+                    b=index[shape,policy,mode,'baseline',token];r=index[shape,policy,mode,'ours_rotated',token]
+                    rb=index[shape,policy,'bounded','baseline',token];rr=index[shape,policy,'bounded','ours_rotated',token]
+                    if len({x['bytes'] for x in (b,r,rb,rr)})!=1:raise ValueError('Changed paired payload')
+                    service=lambda x:x['commit']-x['ready']
+                    out=dict(shape=shape,contract=policy,mode=mode,token=token,bytes=b['bytes'],
+                        baseline_service=service(b),rotated_service=service(r),
+                        reference_service_gap=service(rb)-service(rr),
+                        service_gap_error=(service(b)-service(r))-(service(rb)-service(rr)),
+                        any_observed_critical=any(x['on_observed_critical_chain'] for x in (b,r,rb,rr)))
+                    for label,x in (('baseline',b),('rotated',r)):
+                        out.update({label+'_'+k:x[k] for k in ('ready','commit','source_memory_queue',
+                            'destination_memory_queue','source_memory_service','destination_memory_service','paths')})
+                    output.append(out)
+    return output
+
+
 def analyze(root):
     root=Path(root);result=analyze_boundary(root)
     reg=result['acceptance']['registration']['design_study']
@@ -108,6 +137,7 @@ def analyze(root):
     for row in result['rows']:row.update(public_status(row))
     result['decision_table']=decision_table(result['rows'],reg)
     result['attribution']=attribution
+    result['paired_messages']=pair_messages(attribution,reg)
     result['acceptance']['matrix_complete']=True
     result['acceptance']['baseline_compatibility']=read_json(root/'COMPATIBILITY.json')
     return result

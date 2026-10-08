@@ -134,6 +134,8 @@ def analyze_run(root, output):
     _remote();root=Path(root);output=Path(output)
     if not output.is_absolute():raise ValueError('Fresh absolute output required')
     output.mkdir(exist_ok=False)
+    if _frozen(Path(__file__).resolve().parents[3])!=read_json(root/'STARTED.json')['frozen_trees']:
+        raise ValueError('Frozen model source changed since run')
     from wafer_sim.analysis.boundary_design import analyze
     from wafer_sim.analysis.boundary_study import replay
     result=analyze(root);checks=[]
@@ -145,7 +147,8 @@ def analyze_run(root, output):
         checks.append(dict(case=launch['case'],mode=launch['mode'],**check))
     result['acceptance']['endpoint_replays']=checks
     for key,name in (('rows','cells'),('decision_table','model_decision_table'),('messages','messages'),
-                     ('costs','cost'),('source_windows','source_windows'),('attribution','attribution')):
+                     ('costs','cost'),('source_windows','source_windows'),('attribution','attribution'),
+                     ('paired_messages','paired_messages')):
         with (output/(name+'.csv')).open('w',newline='') as stream:
             writer=csv.DictWriter(stream,fieldnames=list(result[key][0]));writer.writeheader();writer.writerows(result[key])
     write_json(output/'SUMMARY.json',{k:result[k] for k in ('rows','decision_table')})

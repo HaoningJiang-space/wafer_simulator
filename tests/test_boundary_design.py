@@ -1,6 +1,6 @@
 """Decision errors, feasibility and close-design handling are separate claims."""
 import unittest
-from wafer_sim.analysis.boundary_design import public_status, decision_table, design_choice
+from wafer_sim.analysis.boundary_design import public_status, decision_table, design_choice, pair_messages
 
 
 class BoundaryDesignTests(unittest.TestCase):
@@ -48,3 +48,14 @@ class BoundaryDesignTests(unittest.TestCase):
         self.assertEqual(design_choice(-100,100),'approximately_equal')
         self.assertEqual(design_choice(101,100),'ours_rotated')
         self.assertEqual(design_choice(-101,100),'baseline')
+
+    def test_message_pairing_uses_ready_relative_service_not_absolute_offset(self):
+        reg=dict(cases=['s'],contracts=['q'],placements=['baseline','ours_rotated'],modes=['serial','bounded'])
+        rows=[]
+        for mode in reg['modes']:
+            for placement,ready in [('baseline',0),('ours_rotated',100)]:
+                rows.append(dict(shape='s',contract='q',placement=placement,mode=mode,token='send',bytes=8,
+                    ready=ready,commit=ready+12,on_observed_critical_chain=True,paths=[[0,1]],
+                    source_memory_queue=0,destination_memory_queue=0,source_memory_service=1,destination_memory_service=1))
+        self.assertTrue(all(r['service_gap_error']==0 for r in pair_messages(rows,reg)))
+        with self.assertRaises(ValueError):pair_messages(rows[:-1],reg)
