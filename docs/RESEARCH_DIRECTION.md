@@ -1,4 +1,4 @@
-# Current research: a defined wafer computer before model comparison
+# Current research: spatial compute–memory–communication model fidelity
 
 The machine is not defined by `spcl/nw-design-for-wsi`. That pinned implementation
 provides one Logic-on-Interconnect baseline with its own connectivity assumptions.
@@ -34,14 +34,32 @@ The reference is an analytical, request-atomic memory contract; row timing,
 refresh, streaming RX, internal PE networks and physical closure remain outside
 its claims. Numerical rates and capacities are declared assumptions.
 
-## Next research comparison
+## Completed model comparison
 
-After this gate, fix one machine, logical work, mapping and execution policy.
-Compare a stated uniform-memory approximation with the explicit spatial-memory
-reference. Measure application and design-gap error, data-ready times, capacity
-status and simulation cost. Determine whether errors come from omitted distance,
-controller/channel sharing or another demonstrated effect. Do not conflate
-changing the machine with changing its simulation abstraction.
+The [registered U0/U1/S study](MEMORY_ABSTRACTION_PROTOCOL.md) fixes one machine,
+logical work, mapping and execution policy within each of three data layouts.
+It is [complete](results/memory-abstraction-001/REVIEW.md): both aggregate
+communication models lose the 3,193-cycle near/remote distinction and
+underestimate concentrated-storage penalties. They execute faster but fail the
+registered application/gap budgets. Controller identities alone are insufficient
+for this layout judgment. S remains a conditional mechanism reference.
+
+U0 keeps physical staging guards while pooling DRAM service/capacity. U1 retains
+the original banks/controllers and substitutes independent uniform communication.
+S–U1 therefore includes path and shared-network effects, not distance alone.
+Capacity waiting is reported separately; identical retirement rules can produce
+different waits when network and service timing change. No kernel change or new
+network feature was needed to obtain this result.
+
+## Next coverage question
+
+Freeze these models and register physically legal larger machine/work instances.
+Specify how compute, storage, controllers, horizontal cuts and vertical capacity
+scale before execution. First test whether the current model-selection result
+holds beyond 4×4 tiles and 32 GEMMs. Do not grow work merely to obtain a ranking
+reversal, assume compute and all communication budgets scale together, or add
+another memory/network mechanism before this coverage question is answered.
+No larger configuration has been executed or accepted by the present study.
 
 Parameter uncertainty must remain visible. If results depend on an uncalibrated
 bank/controller policy, characterize that component rather than declaring the

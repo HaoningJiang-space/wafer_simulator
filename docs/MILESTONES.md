@@ -6,6 +6,7 @@ in [README](../README.md) and [RESEARCH_DIRECTION](RESEARCH_DIRECTION.md).
 
 | Area | Status | Accepted evidence / scope |
 |---|---|---|
+| Spatial storage abstraction U0/U1/S | Complete; machine and execution kernel frozen | [9 cells, 54 executions, layout-selection error and cost](results/memory-abstraction-001/REVIEW.md); aggregate communication misses the 3,193-cycle near/remote gap |
 | Independent compute/memory wafer machine | First integration accepted; numerical resources uncalibrated | [Physical legality, transactions and three complete same-work cases](results/wafer-machine-001/REVIEW.md); original execution kernel and LoI evidence retained |
 | Independent groups sharing one WoW | Complete; models remain frozen | [12-cell solo/joint coverage](results/group-sharing-001/REVIEW.md); actual path sharing, no final slowdown, +48-cycle joint gap error |
 | Boundary design-gain prediction | Complete; enhancement closed | [24-cell result and model selection](results/boundary-design-001/model_selection.md); kernel frozen |

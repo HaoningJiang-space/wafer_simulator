@@ -1,7 +1,7 @@
 # Wafer-Scale Simulator
 
-**Current objective:** define a wafer computer independently of one network
-baseline, then determine which spatial resource details its simulation needs.
+**Current objective:** determine which spatial compute–memory–communication
+abstractions support application timing, capacity and layout decisions.
 
 The [candidate machine](docs/WAFER_MACHINE.md) is a stitched compute wafer plus
 an aligned memory wafer. It explicitly defines SRAM, banks, shared controllers,
@@ -16,12 +16,16 @@ and an analytical bank service are explicit policies. See the
 [current research scope](docs/RESEARCH_DIRECTION.md) and
 [registered machine validation](configs/wafer_machine_validation.json).
 
-The [first machine acceptance](docs/results/wafer-machine-001/REVIEW.md) completed
-three full same-work cases: 23,903 / 27,096 / 75,032 cycles for near, offset and
-concentrated bank placement. All 183 related tests, three event audits and
-three native command replays pass; 65 artifact hashes and exact compiled-input
-equivalence were rechecked. These validate integration under the declared
-policy, not physical calibration or superiority of a new simulation method.
+The [U0/U1/S comparison](docs/results/memory-abstraction-001/REVIEW.md) is complete:
+9 cells, 54 full executions, 192 related tests and 840 rechecked artifact hashes.
+S exactly reproduces the [accepted machine](docs/results/wafer-machine-001/REVIEW.md)
+times of 23,903 / 27,096 / 75,032 cycles. Uniform communication in both U0 and U1
+loses the 3,193-cycle near-versus-remote distinction; preserving controllers
+recovers much of the concentrated-storage penalty but not its full magnitude.
+The cheaper projections fail this study's timing and gap-error budgets.
+See the [model choice](docs/results/memory-abstraction-001/model_selection.md):
+these are reference-relative findings under declared policies, not hardware
+accuracy or a claim that every fine network detail is necessary.
 
 ## Current entry point (eex005 only)
 
@@ -33,16 +37,21 @@ Use fresh output directories and existing pinned native binaries.
 cd /home/wangziheng/wafer_simulator/source
 export PYTHONPATH=src
 /home/wangziheng/wafer_simulator/.venv/bin/python scripts/test_wow_target_remote.py \
-  /home/wangziheng/wafer_simulator/runs/wafer-machine-tests-NEW
-/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.experiments.wafer_machine \
-  --tests /home/wangziheng/wafer_simulator/runs/wafer-machine-tests-NEW/SEMANTICS.json \
-  --output /home/wangziheng/wafer_simulator/runs/wafer-machine-NEW
+  /home/wangziheng/wafer_simulator/runs/memory-abstraction-tests-NEW
+/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.experiments.memory_abstraction \
+  --tests /home/wangziheng/wafer_simulator/runs/memory-abstraction-tests-NEW/SEMANTICS.json \
+  --output /home/wangziheng/wafer_simulator/runs/memory-abstraction-NEW
+/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.analysis.memory_abstraction_study \
+  /home/wangziheng/wafer_simulator/runs/memory-abstraction-NEW \
+  /home/wangziheng/wafer_simulator/runs/memory-abstraction-analysis-NEW
 ```
 
-This runs three complete declared machine-integration cases; it is not a
-topology search, full Llama reproduction or memory-abstraction accuracy study.
-Data placement differs while logical work, task placement and machine stay fixed.
-No timeout or truncated work can produce a completion receipt.
+This reproduces the [registered same-machine abstraction study](docs/MEMORY_ABSTRACTION_PROTOCOL.md).
+U0 pools DRAM service/capacity while retaining physical staging guards; U1
+retains controllers/banks but simplifies communication; S uses the physical
+paths. No timeout or truncated work can produce a completion receipt.
+The next coverage task is larger physically legal machine/work configurations
+with preregistered scaling rules. Other model features remain frozen.
 
 ## Retained model-selection evidence
 

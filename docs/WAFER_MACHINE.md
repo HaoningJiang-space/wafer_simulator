@@ -116,7 +116,7 @@ Tests include illegal unstitched links, HB misalignment, port/bond oversubscript
 an independently calculated single-read completion, insufficient staging and
 premature output rejection. Timeout/incomplete work cannot produce COMPLETE.
 
-After this gate, the next **model comparison** can hold this machine and work
-fixed while testing a uniform-memory approximation against spatial transactions.
-That comparison is not performed merely by changing data placement, and no
-accuracy or simulator contribution claim follows from these acceptance runs.
+The subsequent [U0/U1/S model comparison](results/memory-abstraction-001/REVIEW.md)
+holds this machine and work fixed within each layout and is now complete.
+Its model-selection evidence is separate from the integration acceptance above;
+neither study establishes physical calibration.

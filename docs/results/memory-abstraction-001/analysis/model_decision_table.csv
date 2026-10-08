@@ -1,0 +1,10 @@
+model,layout,application_cycles,reference_cycles,error_cycles,error_percent,within_time_budget,compute_chain,memory_chain,network_chain,capacity_chain,capacity_wait_sum_cycles,per_bank_capacity,controller_staging_capacity,dram_spatial_contention,messages,bytes
+U0,near,14963,23903,-8940,-37.401163033928796,False,4096,7381,3486,0,0,unmodeled,feasible,unmodeled,114,2638608
+U1,near,21596,23903,-2307,-9.651508178889678,False,4096,14014,3486,0,0,feasible,feasible,unmodeled,114,2638608
+S,near,23903,23903,0,0.0,True,4096,14014,5793,0,0,feasible,feasible,modeled,114,2638608
+U0,opposite,14963,27096,-12133,-44.77782698553292,False,4096,7381,3486,0,0,unmodeled,feasible,unmodeled,114,2638608
+U1,opposite,21596,27096,-5500,-20.298198996161798,False,4096,14014,3486,0,0,feasible,feasible,unmodeled,114,2638608
+S,opposite,27096,27096,0,0.0,True,4096,12902,10098,0,0,feasible,feasible,modeled,114,2638608
+U0,single_controller,21167,75032,-53865,-71.78936986885596,False,4096,7165,3020,6886,27973,unmodeled,feasible,unmodeled,114,2638608
+U1,single_controller,56775,75032,-18257,-24.33228489177951,False,6144,38536,4561,7534,44547,feasible,feasible,unmodeled,114,2638608
+S,single_controller,75032,75032,0,0.0,True,4096,37478,9411,24047,88566,feasible,feasible,modeled,114,2638608
