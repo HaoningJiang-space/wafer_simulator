@@ -102,3 +102,58 @@ def audit_machine(workload,placement,compiled,binding,result,control_bytes=16):
         status=dict(execution_completed=True,semantic_audit_passed=True,storage_capacity='feasible',
             transaction_buffer_capacity='feasible',streaming_rx_capacity='unmodeled',
             hardware_calibration='declared assumptions',dram_command_timing='unmodeled'))
+
+
+def verify_saved(root,output,tests):
+    """Fresh readback and exact compiled-input check after source organization."""
+    from dataclasses import asdict
+    from pathlib import Path
+    import platform
+    import subprocess
+    from wafer_sim.io import read_json,write_json,digest,object_digest
+    from wafer_sim.architecture.wafer_machine import from_config
+    from wafer_sim.adapters.wafer_machine import compile_machine,bind_machine
+    from wafer_sim.adapters.memory_machine_workload import place
+    from wafer_sim.workloads.memory_machine import build
+    from wafer_sim.analysis.timed_attribution import critical_chain
+    if platform.node().split('.')[0]!='eex005':raise ValueError('Remote evidence readback only')
+    repo=Path(__file__).resolve().parents[3];root=Path(root);output=Path(output)
+    if not output.is_absolute():raise ValueError('Fresh absolute output required')
+    if subprocess.check_output(['git','-C',str(repo),'status','--porcelain']):raise ValueError('Clean source required')
+    commit=subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip()
+    receipt=read_json(tests)
+    if (not receipt['passed'] or receipt['source_commit']!=commit or
+        digest(receipt['tests_log'])!=receipt['tests_log_sha256']):raise ValueError('Same-source passing tests required')
+    done=read_json(root/'COMPLETE.json');start=read_json(root/'STARTED.json')
+    if not done['all_registered_work_complete'] or (root/'FAILED.json').exists():raise ValueError('Not an accepted complete run')
+    for f,h in done['artifacts_sha256'].items():
+        if digest(root/f)!=h:raise ValueError('Changed artifact: '+f)
+    reg=read_json(repo/'configs/wafer_machine_validation.json')
+    if reg!=start['registration']:raise ValueError('Changed registration')
+    if subprocess.check_output(['git','-C',str(repo),'diff',reg['frozen_execution_commit'],
+        '--name-only','--','src/wafer_sim/execution','patches','third_party']):raise ValueError('Changed frozen kernel')
+    if digest(Path(reg['runtime'])/'build/booksim-online/online_booksim')!=start['binary_sha256']:
+        raise ValueError('Changed native binary')
+    c=compile_machine(from_config(read_json(repo/reg['machine'])))
+    work,meta=build(**reg['workload']);rows=[]
+    for mode in reg['data_placements']:
+        directory=root/mode;p=place(meta,mode);b,tx=bind_machine(work,c,p)
+        expected=dict(machine=asdict(c.physical),target=asdict(c.target),timing=asdict(c.timing),
+            workload=asdict(work),placement=asdict(p),transactions=tx,
+            plans={k:asdict(v) for k,v in b.plans.items()},capacities={k:asdict(v) for k,v in b.memory.items()})
+        if object_digest(expected)!=object_digest(read_json(directory/'INPUT.json')):
+            raise ValueError('Compiled input changed after separation of workload and placement')
+        result=read_json(directory/'execution.json')
+        check=audit_machine(work,p,c,b,result)
+        if check!=read_json(directory/'AUDIT.json'):raise ValueError('Audit recomputation differs')
+        if object_digest(critical_chain(b,result))!=object_digest(read_json(directory/'critical_chain.json')):
+            raise ValueError('Critical-chain readback differs')
+        rows.append(dict(placement=mode,passed=True,compiled_input_equal=True,
+                         application_cycles=result['application_cycles']))
+    output.mkdir(exist_ok=False)
+    result=dict(passed=True,analysis_commit=commit,run_commit=done['source_commit'],
+        checked_artifact_hashes=len(done['artifacts_sha256']),run_manifest_sha256=digest(root/'COMPLETE.json'),
+        source_tests=receipt,tests_sha256=digest(tests),frozen_kernel_unchanged=True,rows=rows,
+        scope='All retained events reaudited; current compiled work/placement/resources/phases equal accepted inputs; no application rerun')
+    write_json(output/'VERIFIED.json',result)
+    return result

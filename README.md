@@ -1,96 +1,77 @@
 # Wafer-Scale Simulator
 
-**Research question:** which execution details are needed to predict data
-availability, resource feasibility and the performance difference between two
-WoW designs—and which details can be omitted?
+**Current objective:** define a wafer computer independently of one network
+baseline, then determine which spatial resource details its simulation needs.
 
-The completed milestone freezes the execution kernel and compares **serial,
-pipeline and bounded memory–network boundaries** on Baseline and Rotated.
-Use the same two complete analytical Transformer blocks, two declared memory
-policies and native BookSim. This is a study of simulation abstractions;
-placements and collectives are fixed validation cases, not optimization targets.
-[Registered controls and acceptance](docs/BOUNDARY_DESIGN_PROTOCOL.md)
+The [candidate machine](docs/WAFER_MACHINE.md) is a stitched compute wafer plus
+an aligned memory wafer. It explicitly defines SRAM, banks, shared controllers,
+vertical HB and edge I/O. Logical work and data placement compile to request,
+response, compute and memory services on the existing timed executor and live
+BookSim. `spcl/nw-design-for-wsi` remains a pinned LoI network baseline; it does
+not prescribe the simulator's entire machine organization.
 
-## Latest result and stop decision
-
-The [independent-group coverage report](docs/results/group-sharing-001/REVIEW.md)
-adds two fixed TP8 groups on 16 endpoints in ONE shared network, with own-position
-solos: 12 cells, 36 complete runs. Some paths and message times change, but neither
-group's final completion slows down. Joint bounded makespans are 55,743/55,629
-cycles; serial gives 54,306/54,144. The design-gap error is +48 cycles, within the
-existing 100-cycle budget. This extends the scoped gap-estimation use case; it
-does not validate saturation cases or certify serial RX capacity. Final tests:
-171 passed; 555 raw hashes, 36 independent audits, 12 cell command replays.
-
-The [paired design-gain report](docs/results/boundary-design-001/model_selection.md)
-now covers 24 configurations and 72 complete executions. serial has substantial
-absolute-time bias but only +8/+44/+20/-12 cycles of design-gap error; all four
-pass the registered 100-cycle gap budget. Two threshold classifications still
-disagree: a small error does not certify the winner of a close comparison.
-Reference gaps of 74/82 cycles put the designs within the declared indifference
-band. pipeline reproduces all reference makespans but violates RX capacity.
-
-**Decision:** retain serial for this scoped gap estimate, bounded for declared
-message/capacity predictions, and close endpoint enhancement/runtime optimization.
-Compute/SRAM/DMA remain design assumptions, not calibrated native wafer inputs.
-The coverage study froze these models at `5de7a2f` and checked two independent TP8
-groups sharing ONE native network. A and B ran alone at their assigned positions,
-then together; only serial and bounded were compared. The
-[registered 12-cell protocol](docs/GROUP_SHARING_PROTOCOL.md) fixes s64,
-burst_256 and the first/next eight row-major endpoints, without a mapping search.
-Existing evidence:
-[decision table](docs/results/boundary-design-001/analysis/model_decision_table.csv),
-[costs](docs/results/boundary-design-001/analysis/cost.csv),
-[earlier reduction reconvergence](docs/results/boundary-model-selection-001/REVIEW.md).
+All candidate resource numbers are **declared design assumptions**, not measured
+DRAM timing or a qualified TSMC/Cerebras system. Whole-object controller staging
+and an analytical bank service are explicit policies. See the
+[current research scope](docs/RESEARCH_DIRECTION.md) and
+[registered machine validation](configs/wafer_machine_validation.json).
 
 ## Current entry point (eex005 only)
 
-Local work is source inspection, editing and Git. Build, test and execution run
-on `wangziheng@eex005`, under `/home/wangziheng/wafer_simulator`; source is in `source/`.
-Existing accepted native binaries are reused. All output directories must be new.
+Local work is source inspection, editing and Git. Builds, tests and execution
+run on `wangziheng@eex005`, under `/home/wangziheng/wafer_simulator`.
+Use fresh output directories and existing pinned native binaries.
 
 ```bash
 cd /home/wangziheng/wafer_simulator/source
 export PYTHONPATH=src
 /home/wangziheng/wafer_simulator/.venv/bin/python scripts/test_wow_target_remote.py \
-  /home/wangziheng/wafer_simulator/runs/group-sharing-tests-NEW
-/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.cli group-sharing \
-  --tests /home/wangziheng/wafer_simulator/runs/group-sharing-tests-NEW/SEMANTICS.json \
-  --output /home/wangziheng/wafer_simulator/runs/group-sharing-NEW
-/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.cli analyze-group-sharing \
-  --run /home/wangziheng/wafer_simulator/runs/group-sharing-NEW \
-  --output /home/wangziheng/wafer_simulator/runs/group-sharing-analysis-NEW
+  /home/wangziheng/wafer_simulator/runs/wafer-machine-tests-NEW
+/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.experiments.wafer_machine \
+  --tests /home/wangziheng/wafer_simulator/runs/wafer-machine-tests-NEW/SEMANTICS.json \
+  --output /home/wangziheng/wafer_simulator/runs/wafer-machine-NEW
 ```
 
-`wafer-sim` exposes the same commands when the package entry point is installed.
-`goal-replay` explicitly selects the historical full-capture campaign; it is not
-the current default example. Timeout or truncated work never counts as complete.
+This runs three complete declared machine-integration cases; it is not a
+topology search, full Llama reproduction or memory-abstraction accuracy study.
+Data placement differs while logical work, task placement and machine stay fixed.
+No timeout or truncated work can produce a completion receipt.
 
-## Interpretation and evidence
+## Retained model-selection evidence
 
-Results distinguish execution completion, semantic audit, capacity status
-(`feasible`, `violated`, `unmodeled`), reference agreement and hardware calibration.
-A diagnostic pipeline with RX overflow is not a feasible design even if its
-predicted time is correct. bounded is a reference for the declared mechanisms,
-not measured hardware truth. Network resources differ between the two designs;
-these are not equal-area or equal-bandwidth comparisons. No thermal claims.
+The [two-group study](docs/results/group-sharing-001/REVIEW.md) completed 12
+configurations and 36 executions in one shared native network. Actual paths and
+message times changed, but neither group's final completion slowed down.
+Joint bounded times were 55,743/55,629 cycles; serial gave 54,306/54,144, with
+a +48-cycle design-gap error. This is limited-coverage evidence, not saturation.
 
-Every accepted run retains source/input/binary/environment hashes, events,
-independent byte/lifetime/timing audits and explicit completion status. Raw traces,
-builds and full event tables stay on eex005; compact checked results are in Git.
+The [paired boundary study](docs/results/boundary-design-001/model_selection.md)
+completed 24 configurations and 72 runs. Serial gap errors were
++8/+44/+20/-12 cycles despite larger absolute-time errors. It did not reliably
+classify near-equal designs. Pipeline matched time but violated RX capacity.
+These completed studies retain their original contracts; new machine results
+must not be spliced into their tables as if only one abstraction had changed.
 
-## Source organization and completed work
+Execution completion, semantic audit, storage/FIFO feasibility, reference
+agreement and hardware calibration are separate statuses. A model can predict
+time well without validating capacity or physical feasibility. No equal-cost,
+thermal, native wafer training-time or hardware-accuracy claim is implied.
 
-`workloads/` defines logical work; `architecture/` target resources; `adapters/`
-binds targets and integrates pinned geometry/BookSim; `execution/` manages
-admission, lifetimes and timing; `analysis/` audits and compares; `experiments/`
-only orchestrates. These live under `src/wafer_sim/`. Fixed controls are in
-`configs/`, semantic regressions in `tests/`, native changes in `patches/`.
-`third_party/` contains [pinned ordinary author source](docs/EXTERNAL_SOURCES.md),
-with notices preserved and no in-place edits or submodule dependency.
+## Source organization and evidence
 
-Maintain one branch, `main`, in this repository. See the
-[current research contract](docs/RESEARCH_DIRECTION.md),
-[milestone index](docs/MILESTONES.md), [source audit](docs/UPSTREAM_AUDIT.md),
-[storage/provenance cleanup](docs/results/remote-cleanup-001/REVIEW.md), and
-[historical GOAL protocol](docs/LLAMA16_PROTOCOL.md).
+`workloads/` defines work; `architecture/` physical resources; `adapters/` binds
+and integrates; `execution/` manages admission, lifetimes and timing;
+`analysis/` independently audits; `experiments/` only orchestrates. These are
+under `src/wafer_sim/`. Fixed controls are in `configs/`, regressions in `tests/`.
+
+Maintain one branch, `main`. `third_party/` delivers
+[pinned ordinary upstream files](docs/EXTERNAL_SOURCES.md) with notices preserved;
+reviewed native changes are in `patches/`. Raw inputs, events, builds and large
+results stay on eex005, with source/input/binary/environment/result hashes.
+Compact accepted reports are indexed in [MILESTONES.md](docs/MILESTONES.md).
+
+Historical commands remain available through `wafer-sim boundary-design`,
+`group-sharing`, their analysis commands and `goal-replay`. They do not launch
+the new candidate machine implicitly. The
+[GOAL protocol](docs/LLAMA16_PROTOCOL.md), [source audit](docs/UPSTREAM_AUDIT.md)
+and [cleanup evidence](docs/results/remote-cleanup-001/REVIEW.md) remain preserved.

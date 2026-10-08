@@ -11,7 +11,8 @@ from wafer_sim.adapters.timing import TimedTarget
 from wafer_sim.analysis.timing import audit
 from wafer_sim.execution.timing import execute
 from wafer_sim.execution.plan import Placement
-from wafer_sim.workloads.memory_machine import build,place_data
+from wafer_sim.workloads.memory_machine import build
+from wafer_sim.adapters.memory_machine_workload import place
 from wafer_sim.workloads.spatial import Workload,DataObject,Operation
 
 
@@ -102,11 +103,11 @@ class WaferMachineTests(unittest.TestCase):
         self.assertEqual(dict(r['blocked']['f']['shortage_bytes'])['controller-0/buffer'],32)
 
     def test_data_placement_keeps_logical_work_and_compute_unchanged(self):
-        w,p,meta=build(4,8,16)
+        w,meta=build(4,8,16);p=place(meta,'near')
         self.assertEqual(meta['macs'],2*4*8*16*16)
         c=compile_machine(machine())
         for mode in ('near','opposite','single_controller'):
-            pp=place_data(p,4,mode);self.assertEqual(pp.compute,p.compute)
+            pp=place(meta,mode);self.assertEqual(pp.compute,p.compute)
             b,tx=bind_machine(w,c,pp);r=execute(b,c.timing)
             self.assertTrue(audit(b,c.timing,r)['passed'])
             self.assertEqual(sum(t['kind']=='c2c' for t in tx),4)
@@ -114,13 +115,13 @@ class WaferMachineTests(unittest.TestCase):
             self.assertEqual(sum(t['kind']=='write' for t in tx),4)
 
     def test_lost_ack_and_early_publication_fail_independent_audit(self):
-        w,p,_=build(4,8,16);c=compile_machine(machine());b,_=bind_machine(w,c,p)
+        w,meta=build(4,8,16);p=place(meta,'near');c=compile_machine(machine());b,_=bind_machine(w,c,p)
         result=execute(b,c.timing);bad=copy.deepcopy(result)
         bad['output_ready']['y0']-=1
         with self.assertRaises(ValueError):audit(b,c.timing,bad)
 
     def test_same_bank_and_controller_are_shared_not_replicated(self):
-        w,p,_=build(4,8,16);p=place_data(p,4,'single_controller')
+        w,meta=build(4,8,16);p=place(meta,'single_controller')
         # Deliberately constrained service in this semantic fixture. The
         # registered candidate is unchanged and need not exhibit congestion.
         m=machine();m=replace(m,controllers=tuple(replace(c,channel_bytes_per_cycle=1) for c in m.controllers))

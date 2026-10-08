@@ -12,12 +12,13 @@ import sys
 from wafer_sim.architecture.wafer_machine import from_config,validate
 from wafer_sim.adapters.wafer_machine import compile_machine,bind_machine,export_booksim
 from wafer_sim.adapters.online_booksim import OnlineBookSim
+from wafer_sim.adapters.memory_machine_workload import place
 from wafer_sim.analysis.wafer_machine import audit_machine
 from wafer_sim.analysis.timed_attribution import critical_chain
 from wafer_sim.execution.timing import execute
 from wafer_sim.experiments.transfer_granularity import Meter,native_peak,usage
 from wafer_sim.io import read_json,write_json,digest,object_digest
-from wafer_sim.workloads.memory_machine import build,place_data
+from wafer_sim.workloads.memory_machine import build
 
 
 def replay(compiled,binary,directory,output,seed):
@@ -62,7 +63,7 @@ def run(output,tests):
     sys.path.insert(0,str(repo/'third_party/nw-design-for-wsi'))
     output.mkdir(exist_ok=False)
     machine=from_config(read_json(repo/reg['machine']));compiled=compile_machine(machine)
-    work,initial,meta=build(**reg['workload'])
+    work,meta=build(**reg['workload'])
     if len(compiled.target.compute)!=reg['workload']['workers']:raise ValueError('Work must cover declared compute tiles')
     affinity=sorted(os.sched_getaffinity(0))[-2:];os.sched_setaffinity(0,affinity)
     write_json(output/'STARTED.json',dict(source_commit=commit,registration=reg,
@@ -81,15 +82,15 @@ def run(output,tests):
         # Freeze all bindings and physical endpoints before any execution.
         for mode in reg['data_placements']:
             directory=output/mode;directory.mkdir()
-            place=place_data(initial,reg['workload']['workers'],mode)
-            binding,transactions=bind_machine(work,compiled,place)
+            placement=place(meta,mode)
+            binding,transactions=bind_machine(work,compiled,placement)
             identity=dict(machine=asdict(machine),target=asdict(compiled.target),timing=asdict(compiled.timing),
-                workload=asdict(work),placement=asdict(place),transactions=transactions,
+                workload=asdict(work),placement=asdict(placement),transactions=transactions,
                 plans={k:asdict(v) for k,v in binding.plans.items()},
                 capacities={k:asdict(v) for k,v in binding.memory.items()})
             write_json(directory/'INPUT.json',identity)
-            prepared[mode]=(place,binding,identity)
-        for mode,(place,binding,identity) in prepared.items():
+            prepared[mode]=(placement,binding,identity)
+        for mode,(placement,binding,identity) in prepared.items():
             directory=output/mode;meter=Meter();child=usage(resource.RUSAGE_CHILDREN)
             with meter.phase('network_configuration'):
                 config=export_booksim(compiled,directory,reg['network_seed'])
@@ -106,9 +107,9 @@ def run(output,tests):
             child_cpu=usage(resource.RUSAGE_CHILDREN)-child
             with meter.phase('result_serialization'):write_json(directory/'execution.json',result)
             with meter.phase('independent_audit'):
-                checked=audit_machine(work,place,compiled,binding,result)
+                checked=audit_machine(work,placement,compiled,binding,result)
                 # Re-read the serialized result independently as well.
-                if checked!=audit_machine(work,place,compiled,binding,read_json(directory/'execution.json')):
+                if checked!=audit_machine(work,placement,compiled,binding,read_json(directory/'execution.json')):
                     raise ValueError('Serialized result audit differs')
                 write_json(directory/'AUDIT.json',checked)
                 chain=critical_chain(binding,result);write_json(directory/'critical_chain.json',chain)
@@ -138,7 +139,12 @@ def run(output,tests):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',required=True);parser.add_argument('--tests',required=True)
-    args=parser.parse_args();run(args.output,args.tests)
+    parser.add_argument('--audit-run')
+    args=parser.parse_args()
+    if args.audit_run:
+        from wafer_sim.analysis.wafer_machine import verify_saved
+        print(verify_saved(args.audit_run,args.output,args.tests),flush=True)
+    else:run(args.output,args.tests)
 
 
 if __name__=='__main__':main()
