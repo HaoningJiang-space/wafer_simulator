@@ -1,0 +1,34 @@
+{
+  "name": "stitched_compute_memory_candidate_v1",
+  "technology": "stitched_compute_hb_memory",
+  "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+  "array": [4, 4],
+  "tile_um": [26000, 33000],
+  "wafer_diameter_um": 300000,
+  "frequency_hz": 1000000000,
+  "hb_pitch_um": 10,
+  "hb_signal_budget": 2048,
+  "stitch_signals_per_boundary": 2048,
+  "wire_um_per_cycle": 2000,
+  "max_router_ports": 8,
+  "router_latency_cycles": 4,
+  "access_latency_cycles": 1,
+  "flit_bytes": 64,
+  "compute_rates": {"mac": 256, "scalar_add": 64},
+  "sram": {"capacity_bytes": 4194304, "bytes_per_cycle": 64, "latency_cycles": 0},
+  "banks_per_tile": 2,
+  "dram": {
+    "bank_capacity_bytes": 67108864, "bank_bytes_per_cycle": 32,
+    "bank_latency_cycles": 30, "command_cycles": 4,
+    "channel_bytes_per_cycle": 64, "buffer_bytes": 1048576
+  },
+  "io": {
+    "capacity_bytes": 1073741824, "bytes_per_cycle": 32, "latency_cycles": 80,
+    "command_cycles": 8, "channel_bytes_per_cycle": 64, "buffer_bytes": 4194304
+  },
+  "links": {
+    "stitch": {"signals_per_direction": 512, "bits_per_signal_cycle": 1, "latency_cycles": 17},
+    "hb": {"signals_per_direction": 512, "bits_per_signal_cycle": 1, "latency_cycles": 1},
+    "io": {"signals_per_direction": 32, "bits_per_signal_cycle": 16, "latency_cycles": 20}
+  }
+}

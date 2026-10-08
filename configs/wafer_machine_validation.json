@@ -1,0 +1,10 @@
+{
+  "machine": "configs/wafer_machine.json",
+  "frozen_execution_commit": "371aed2fe52434b9f7226b7141d8703b5bcdabbc",
+  "workload": {"workers": 16, "rows": 32, "hidden": 128},
+  "data_placements": ["near", "opposite", "single_controller"],
+  "network_seed": 1,
+  "cycle_limit": 2000000,
+  "runtime": "/home/wangziheng/wafer_simulator",
+  "scope": "Three complete machine-integration acceptance cases. No design ranking, calibrated DRAM accuracy, streaming RX or simulator speedup claim. Fixed serial whole-object transaction policy."
+}
