@@ -27,31 +27,32 @@ See the [model choice](docs/results/memory-abstraction-001/model_selection.md):
 these are reference-relative findings under declared policies, not hardware
 accuracy or a claim that every fine network detail is necessary.
 
-## Current entry point (eex005 only)
+## Current entry point (hn072 only)
 
 Local work is source inspection, editing and Git. Builds, tests and execution
-run on `wangziheng@eex005`, under `/home/wangziheng/wafer_simulator`.
+run on `hn072@143.89.78.72`, under `/Projects/haoning/wafer_simulator`.
 Use fresh output directories and existing pinned native binaries.
 
 ```bash
-cd /home/wangziheng/wafer_simulator/source
+cd /Projects/haoning/wafer_simulator/source
 export PYTHONPATH=src
-/home/wangziheng/wafer_simulator/.venv/bin/python scripts/test_wow_target_remote.py \
-  /home/wangziheng/wafer_simulator/runs/memory-abstraction-tests-NEW
-/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.experiments.memory_abstraction \
-  --tests /home/wangziheng/wafer_simulator/runs/memory-abstraction-tests-NEW/SEMANTICS.json \
-  --output /home/wangziheng/wafer_simulator/runs/memory-abstraction-NEW
-/home/wangziheng/wafer_simulator/.venv/bin/python -m wafer_sim.analysis.memory_abstraction_study \
-  /home/wangziheng/wafer_simulator/runs/memory-abstraction-NEW \
-  /home/wangziheng/wafer_simulator/runs/memory-abstraction-analysis-NEW
+../.venv/bin/python scripts/test_wow_target_remote.py \
+  /Projects/haoning/wafer_simulator/runs/scaling-tests-NEW
+../.venv/bin/python -m wafer_sim.experiments.spatial_scaling \
+  --tests /Projects/haoning/wafer_simulator/runs/scaling-tests-NEW/SEMANTICS.json \
+  --output /Projects/haoning/wafer_simulator/runs/spatial-scaling-NEW
+../.venv/bin/python -m wafer_sim.analysis.spatial_scaling \
+  /Projects/haoning/wafer_simulator/runs/spatial-scaling-NEW \
+  /Projects/haoning/wafer_simulator/runs/spatial-scaling-analysis-NEW
 ```
 
-This reproduces the [registered same-machine abstraction study](docs/MEMORY_ABSTRACTION_PROTOCOL.md).
+This runs the [registered locality–controller balance study](docs/SPATIAL_SCALING_PROTOCOL.md).
 U0 pools DRAM service/capacity while retaining physical staging guards; U1
 retains controllers/banks but simplifies communication; S uses the physical
 paths. No timeout or truncated work can produce a completion receipt.
-The next coverage task is larger physically legal machine/work configurations
-with preregistered scaling rules. Other model features remain frozen.
+The 4×4, 6×6 and 7×7 candidates keep per-tile work/resources fixed. Two predefined
+layouts trade shorter distance against controller balance. Capacity upper bounds
+exclude staging exhaustion before execution. Other model features remain frozen.
 
 ## Retained model-selection evidence
 
@@ -83,7 +84,9 @@ under `src/wafer_sim/`. Fixed controls are in `configs/`, regressions in `tests/
 Maintain one branch, `main`. `third_party/` delivers
 [pinned ordinary upstream files](docs/EXTERNAL_SOURCES.md) with notices preserved;
 reviewed native changes are in `patches/`. Raw inputs, events, builds and large
-results stay on eex005, with source/input/binary/environment/result hashes.
+results stay on the active server, with source/input/binary/environment/result hashes.
+Historical eex005 results are preserved in a fully verified compressed archive;
+see [server relocation and recovery](docs/results/server-migration-001/REVIEW.md).
 Compact accepted reports are indexed in [MILESTONES.md](docs/MILESTONES.md).
 
 Historical commands remain available through `wafer-sim boundary-design`,

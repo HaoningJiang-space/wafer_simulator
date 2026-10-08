@@ -1,0 +1,31 @@
+{
+  "archive_bytes": 5372517586,
+  "archive_sha256": "d235c06363dd4cda5b3dc4fb922d140bc92e5463cb82122ed3ac7beb21890930",
+  "destination": "/home/wangziheng/wafer_simulator/migration-20261009/EVIDENCE.tar.gz",
+  "file_bytes": 33553882155,
+  "files": 50072,
+  "format": "pax tar + gzip; all member bytes independently decoded",
+  "host": "eex005",
+  "manifest_sha256": "6dceb372f8eab06c989488ac03c391bff2cd7cfbe0567ca3556c347cd691fa49",
+  "passed": true,
+  "restored_samples": [
+    {
+      "path": "runs/semantics-001/corruption_check/workload.json",
+      "restored_path": "/home/wangziheng/wafer_simulator/migration-20261009/restore-check/0",
+      "sha256": "dfdd9ba074c8ae116e9b65e2a6bbaff5d5e824ae6ab3ad5fd9e306cdaec6951e",
+      "suffix": ".json"
+    },
+    {
+      "path": "runs/llama16-full-002/baseline/checked_events.npy",
+      "restored_path": "/home/wangziheng/wafer_simulator/migration-20261009/restore-check/1",
+      "sha256": "d5f78c8f66e50194b496dd4484656cfae59bd6fe15950dc2407e0b6dc217b92d",
+      "suffix": ".npy"
+    },
+    {
+      "path": "build/booksim-online/online_booksim",
+      "restored_path": "/home/wangziheng/wafer_simulator/migration-20261009/restore-check/2",
+      "sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+      "suffix": ""
+    }
+  ]
+}
