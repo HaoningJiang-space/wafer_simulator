@@ -25,6 +25,7 @@ from wafer_sim.experiments.transfer_granularity import Meter, usage, native_peak
 from wafer_sim.experiments.wafer_machine import replay
 from wafer_sim.io import read_json, write_json, digest, object_digest
 from wafer_sim.workloads.memory_machine import build
+from wafer_sim.remote import require_active_server
 
 REPO = Path(__file__).resolve().parents[3]
 FROZEN = ['src/wafer_sim/execution', 'patches', 'third_party',
@@ -52,7 +53,7 @@ def prepare(layout, model, reg):
 
 def worker(output, layout, model, profile, repetitions):
     reg = read_json(REPO/'configs/wafer_machine_validation.json')
-    binary = Path(reg['runtime'])/'build/booksim-online/online_booksim'
+    binary = require_active_server()/'build/booksim-online/online_booksim'
     output.mkdir(exist_ok=False)
     meter = Meter()
     with meter.phase('graph_binding_preparation'):
@@ -122,7 +123,7 @@ def run(output, tests):
         raise ValueError('Same-source passing tests required')
     if subprocess.check_output(['git', '-C', str(REPO), 'diff', spec['reference_commit'], '--name-only', '--', *FROZEN]):
         raise ValueError('Frozen machine, workload or execution changed')
-    binary = Path(reg['runtime'])/'build/booksim-online/online_booksim'
+    binary = require_active_server()/'build/booksim-online/online_booksim'
     old = read_json(REPO/'docs/results/wafer-machine-001/STARTED.json')
     if digest(binary) != old['binary_sha256']: raise ValueError('Frozen native binary changed')
     os.sched_setaffinity(0, sorted(os.sched_getaffinity(0))[-2:])
@@ -187,7 +188,7 @@ def run(output, tests):
 
 
 def main():
-    if platform.node().split('.')[0] != 'eex005': raise RuntimeError('Remote execution only')
+    require_active_server()
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--output', required=True, type=Path); p.add_argument('--tests', type=Path)
     p.add_argument('--worker', action='store_true'); p.add_argument('--layout'); p.add_argument('--model')

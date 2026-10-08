@@ -8,6 +8,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from wafer_sim.vendor import restore, verify
+from wafer_sim.remote import require_active_server
 
 
 def git(*args):
@@ -15,18 +16,22 @@ def git(*args):
 
 
 def main():
-    if platform.node().split(".")[0] != "eex005":
-        raise SystemExit("Runtime source restoration belongs on eex005")
+    active_root = require_active_server()
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="Inspect existing trees without restoring")
-    parser.add_argument("--root", type=Path, default=Path("/home/wangziheng/wafer_simulator"))
+    parser.add_argument("--root", type=Path, default=active_root)
+    parser.add_argument('--only', nargs='+', help='Restore selected third_party directory names')
     args = parser.parse_args()
     project = Path(__file__).resolve().parents[1]
     root = args.root.resolve()
-    if not root.is_relative_to("/home/wangziheng/wafer_simulator"):
+    if not root.is_relative_to(active_root):
         raise ValueError("Runtime sources stay under the remote project root")
     entries = json.loads((project / "configs/upstream_repositories.json").read_text())["repositories"]
+    if args.only and not set(args.only) <= {Path(e['path']).name for e in entries}:
+        raise ValueError('Unknown source-lock selection')
     for entry in entries:
+        if args.only and Path(entry['path']).name not in args.only:
+            continue
         manifest = json.loads((project / entry["manifest"]).read_text())
         if manifest["commit"] != entry["commit"]:
             raise ValueError("Manifest and source lock differ")

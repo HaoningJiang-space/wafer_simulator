@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
-[[ $(hostname -s) == eex005 ]] || exit 1
+[[ $(hostname -s) == ee4e072 ]] || exit 1
 repo=$(cd "$(dirname "$0")/.." && pwd)
-root=${WAFER_REMOTE_ROOT:-/home/wangziheng/wafer_simulator}
+root=${WAFER_REMOTE_ROOT:-/Projects/haoning/wafer_simulator}
 [[ -z $(git -C "$repo" status --porcelain) ]]
 commit=9470042fb2d8b5368556e46cc75ac818dbf31522
 build="$root/build/booksim-boundary"

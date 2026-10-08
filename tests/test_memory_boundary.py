@@ -21,7 +21,7 @@ from wafer_sim.experiments.network_reference import compare_reference
 class MemoryBoundaryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.root=Path('/home/wangziheng/wafer_simulator')
+        cls.root=Path(os.environ.get('WAFER_REMOTE_ROOT','/home/wangziheng/wafer_simulator'))
         cls.output=Path(os.environ['WAFER_ONLINE_TEST_OUTPUT']+'-boundary');cls.output.mkdir(exist_ok=False)
         cls.binary=cls.root/'build/booksim-boundary/endpoint_booksim'
         cls.reference=cls.root/'build/booksim/rapidchiplet/booksim2/src/booksim'

@@ -1,14 +1,17 @@
 # Wafer simulator
 
 This directory is an independent project. Local work is source inspection,
-editing, and Git. Run builds, tests, and experiments on `wangziheng@eex005`
-under `/home/wangziheng/wafer_simulator`.
+editing, and Git. Run new builds, tests, and experiments on
+`hn072@143.89.78.72` (hostname `ee4e072`) under
+`/Projects/haoning/wafer_simulator`. The user migrated experiments from eex005
+because of storage pressure. Use eex005 only for evidence migration and cleanup.
 
 Maintain one project branch, `main`. Commit coherent milestones and push them
 to the project's GitHub repository. Deliver all reused Git source as pinned
 ordinary files in this repository, with upstream identity and original notices;
 external forks and submodules are not the source delivery. Preserve accepted
-run evidence and keep large captures, build products and event tables on eex005.
+run evidence and keep large captures, build products and event tables on the
+experiment server. Verify migrated bytes before deleting redundant eex005 copies.
 
 Keep responsibilities separate:
 - `third_party/`: pinned author implementation, no in-place edits.

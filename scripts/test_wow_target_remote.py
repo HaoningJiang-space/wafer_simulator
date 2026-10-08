@@ -8,11 +8,11 @@ import sys
 import unittest
 
 from wafer_sim.io import digest, write_json
+from wafer_sim.remote import require_active_server
 
 
 def main():
-    if platform.node().split(".")[0] != "eex005":
-        raise SystemExit("Run on eex005")
+    os.environ['WAFER_REMOTE_ROOT'] = str(require_active_server())
     parser = argparse.ArgumentParser()
     parser.add_argument("output", type=Path)
     args = parser.parse_args()

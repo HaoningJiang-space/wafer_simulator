@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
-[[ $(hostname -s) == eex005 ]] || { echo 'Build must run on eex005' >&2; exit 1; }
+[[ $(hostname -s) == ee4e072 ]] || { echo 'New builds run on hn072@143.89.78.72' >&2; exit 1; }
 repo=$(cd "$(dirname "$0")/.." && pwd)
-root=${WAFER_REMOTE_ROOT:-/home/wangziheng/wafer_simulator}
+root=${WAFER_REMOTE_ROOT:-/Projects/haoning/wafer_simulator}
 native="$root/build/booksim/rapidchiplet/booksim2/src"
 out="$root/build/booksim-online"
 [[ -f "$native/booksim" && -f "$root/build/booksim/.wafer-patches" ]]

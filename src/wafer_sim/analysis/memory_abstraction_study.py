@@ -11,6 +11,7 @@ from wafer_sim.analysis.timed_attribution import critical_chain
 from wafer_sim.analysis.wafer_machine import audit_machine
 from wafer_sim.experiments.memory_abstraction import prepare, REPO
 from wafer_sim.io import read_json, write_json, digest, object_digest
+from wafer_sim.remote import require_active_server
 
 
 def csv_file(path, rows):
@@ -20,7 +21,7 @@ def csv_file(path, rows):
 
 
 def analyze(root, output):
-    if platform.node().split('.')[0] != 'eex005': raise ValueError('Remote analysis only')
+    require_active_server()
     done = read_json(root/'COMPLETE.json'); start = read_json(root/'STARTED.json')
     if not done['completed'] or (root/'FAILED.json').exists(): raise ValueError('Run incomplete')
     for name, sha in done['artifacts_sha256'].items():

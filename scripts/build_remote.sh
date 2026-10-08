@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
-[[ $(hostname -s) == eex005 ]] || { echo 'Build must run on eex005' >&2; exit 1; }
+[[ $(hostname -s) == ee4e072 ]] || { echo 'New builds run on hn072@143.89.78.72' >&2; exit 1; }
 project_root=$(cd "$(dirname "$0")/.." && pwd)
-remote_root=${WAFER_REMOTE_ROOT:-/home/wangziheng/wafer_simulator}
+remote_root=${WAFER_REMOTE_ROOT:-/Projects/haoning/wafer_simulator}
 build_root="$remote_root/build/booksim"
 commit=9470042fb2d8b5368556e46cc75ac818dbf31522
 if [[ ! -d "$build_root" ]]; then
