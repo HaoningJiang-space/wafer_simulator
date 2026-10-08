@@ -4,6 +4,16 @@ Pinned author geometry and BookSim, complete same-workload execution, independen
 completion checks, and placement comparison. Read [the source audit](docs/UPSTREAM_AUDIT.md)
 for what is reused, repaired, and not claimed.
 
+**Current model decision:** [memory–network boundary selection](docs/results/boundary-model-selection-001/REVIEW.md)
+separates application time, message timing and capacity feasibility. In all four
+accepted shape/memory-policy pairs, immediate-credit pipelining matches bounded
+application time but violates RX capacity and message-error targets. Readback
+now locates the reconvergence: individual operand reads change, while the last
+operand read, reduction and downstream phases remain identical. This is a
+conditional choice of abstraction, not calibrated wafer accuracy. Parameter
+provenance and remaining evidence gaps are recorded there. Runtime optimization
+is closed; no new simulation or model expansion was needed for this conclusion.
+
 **Current research focus:** [aggregate reticle resource validity](docs/RETICLE_BOUNDARY_RESEARCH.md).
 Freeze collective and mapping expansion. Distinguish parameter uncertainty,
 abstraction error and changed hardware; compare accuracy/cost against a justified
@@ -224,8 +234,9 @@ instead of simpler target costs.
 Earlier deliverables are the source table above, the
 [target-resource mapping](docs/TARGET_RESOURCE_MAPPING.md) and the
 [M0/M1 protocol](docs/MODEL_BOUNDARY_PROTOCOL.md). No new experiment is launched
-by this documentation stage. Current development is complete-source workload
-normalization; static versus shared costs remains a later abstraction comparison.
+by that documentation stage. Source normalization is frozen; static versus shared
+costs remains a separate pending full-capture comparison, not a prerequisite for
+the current boundary study.
 
 The [complete Chakra source check](docs/results/chakra-normalization-001/REVIEW.md)
 has read all 16 published ranks and recovered 123,520 matrix primitives with

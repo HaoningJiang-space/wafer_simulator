@@ -1,0 +1,13 @@
+shape,memory_contract,model,reference,application_cycles,application_error_cycles,application_ape,application_target_met,max_message_error_cycles,max_message_ape,message_target_met,peak_rx_slots,capacity_feasible,accuracy_status
+s16,request_atomic,serial,False,12534,-1049,7.722888905249208,False,854,46.80203045685279,False,,,conditional_model_comparison
+s16,request_atomic,pipeline,False,13583,0,0.0,True,384,28.402366863905325,False,18,False,conditional_model_comparison
+s16,request_atomic,bounded,True,13583,0,0.0,True,0,0.0,True,8,True,reference_self_comparison
+s64,request_atomic,serial,False,51966,-3978,7.11068211068211,False,3041,64.29918290383407,False,,,conditional_model_comparison
+s64,request_atomic,pipeline,False,55944,0,0.0,True,1536,27.50223813786929,False,60,False,conditional_model_comparison
+s64,request_atomic,bounded,True,55944,0,0.0,True,0,0.0,True,8,True,reference_self_comparison
+s16,burst_256,serial,False,13184,-253,1.8828607576095855,False,788,207.3684210526316,False,,,conditional_model_comparison
+s16,burst_256,pipeline,False,13437,0,0.0,True,265,41.27725856697819,False,16,False,conditional_model_comparison
+s16,burst_256,bounded,True,13437,0,0.0,True,0,0.0,True,8,True,reference_self_comparison
+s64,burst_256,serial,False,54184,-1355,2.43972703865752,False,3485,302.78019113814076,False,,,conditional_model_comparison
+s64,burst_256,pipeline,False,55539,0,0.0,True,616,13.762287756925828,False,63,False,conditional_model_comparison
+s64,burst_256,bounded,True,55539,0,0.0,True,0,0.0,True,8,True,reference_self_comparison

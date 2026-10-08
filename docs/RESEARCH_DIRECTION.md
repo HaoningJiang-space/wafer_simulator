@@ -1,5 +1,12 @@
 # Spatial Workload Execution for Wafer-Scale Systems
 
+Current milestone: [select boundary abstractions by prediction objective](results/boundary-model-selection-001/REVIEW.md).
+The report separates declared target parameters, model error and implementation
+cost. Saved events show where finite-RX message differences reconverge before
+reduction; application-time agreement does not establish message or capacity
+accuracy. Runtime optimization is closed. The broader architectural questions
+below remain motivation, not authorization for new algorithm/mapping sweeps.
+
 Research question: **how should execution of the same AI work change with the
 target wafer's topology, placement and resource structure, and how does that
 change application completion time?**
