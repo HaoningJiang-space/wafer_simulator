@@ -33,7 +33,11 @@ def run(output,binary):
     if subprocess.check_output(['git','-C',str(repo),'status','--porcelain']): raise ValueError('Clean source required')
     accepted=root/'runs/d1-applications-001'; manifest=read_json(accepted/'COMPLETE.json')
     if not manifest['complete'] or (accepted/'FAILED.json').exists(): raise ValueError('Incomplete reference')
-    expected=read_json(accepted/'STARTED.json')['binary_sha256']
+    reference_start=read_json(accepted/'STARTED.json')
+    expected=reference_start['binary_sha256']
+    # Set the launcher before spawning workers, so import-time thread pools also
+    # inherit the baseline's CPU set. Profiling is diagnostic, never a speedup.
+    os.sched_setaffinity(0,reference_start['affinity'])
     baseline=root/'build/booksim-online/online_booksim'
     if digest(baseline)!=expected or digest(binary)==expected: raise ValueError('Invalid profiling binary identity')
     output.mkdir()
@@ -43,8 +47,11 @@ def run(output,binary):
         patch_sha256=digest(repo/'patches/online-booksim-cost-profile.patch'),
         original_wrapper_sha256=digest(repo/'src/wafer_sim/adapters/native/online_booksim.cpp'),
         build_manifest_sha256=digest(binary.parent/'binaries.sha256'),
+        compiler_sha256=digest(binary.parent/'compiler.txt'),
+        parser_tools_manifest_sha256=digest(binary.parent/'parser-tools.sha256'),
         host=os.uname().nodename,python=sys.version,executable_sha256=digest(Path(sys.executable).resolve()),
         affinity=sorted(os.sched_getaffinity(0)),load=os.getloadavg(),
+        packages=subprocess.check_output([sys.executable,'-m','pip','freeze'],text=True).splitlines(),
         source_hashes={str(p.relative_to(repo)):digest(p) for p in sorted((repo/'src').rglob('*')) if p.is_file() and p.suffix in ('.py','.cpp')},
         cases=[6,7],layout='remote_balanced',modes=['python_functions','native_sections'],
         scope='Four profiling executions. Baseline costs from unprofiled D1 study; no acceleration claim'))
