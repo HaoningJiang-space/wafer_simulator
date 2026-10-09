@@ -67,7 +67,8 @@ Ten periphery cases and one collective compare complete results and individual
 event/state sections with pinned f91824d captures. They cover service order,
 phase/transfer completion, output availability, capacity/lifetime state, resource
 accounting, whole/pipeline, external traffic, consumers and incomplete runs.
-A plan-order case preserves graph order even when JSON keys sort lexically.
+A plan-order case preserves declaration order even when JSON keys sort lexically
+or the graph's topological order differs.
 Another test blocks experiment/server/native imports and process creation in a
 fresh interpreter while invoking the public audit CLI on a fictitious hostname.
 

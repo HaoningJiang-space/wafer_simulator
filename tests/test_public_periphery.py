@@ -1,6 +1,7 @@
 """Portable API/readback, event equivalence and independent policy rejection."""
 import copy
 import json
+from dataclasses import replace
 from pathlib import Path
 import os
 import subprocess
@@ -16,7 +17,9 @@ from wafer_sim.adapters.memory_periphery import TransactionPolicy
 from wafer_sim.analysis.periphery_input import audit_input
 from wafer_sim.analysis.timing import audit
 from wafer_sim.execution.timing import execute
+from wafer_sim.execution.plan import Placement
 from wafer_sim.io import read_json, object_digest
+from wafer_sim.workloads.spatial import DataObject, Operation
 
 FIXTURE = Path(__file__).resolve().parent/'fixtures/public-periphery'
 
@@ -61,6 +64,18 @@ class PublicPeripheryTests(unittest.TestCase):
         # The old JSON snapshot represents tuple-valued event fields as arrays.
         actual = json.loads(json.dumps(execute(restored.binding, restored.compiled.timing)))
         self.assertEqual(actual, result)
+
+    def test_plan_restoration_preserves_declaration_order_not_topological_order(self):
+        machine, work, placement, _, kind = inputs('controller_pipeline_consumer')
+        work = replace(work, data=(*work.data, DataObject('xh', 64, None, False, 'fixture'),
+            DataObject('yh', 64, 'h', True, 'fixture')),
+            operations=(*work.operations, Operation('h', ('xh',), ('yh',), (('mac', 256),), 0, (), 'fixture')))
+        placement = Placement({**placement.compute, 'h': 'c1'}, {**placement.data, 'xh': 'sram-1', 'yh': 'sram-1'})
+        case = compile_case(machine, work, placement, TransactionPolicy(kind))
+        self.assertNotEqual(tuple(case.binding.plans), case.binding.graph.order)
+        restored = case_from_record(json.loads(json.dumps(case.to_record(), sort_keys=True)))
+        self.assertEqual(tuple(restored.binding.plans), tuple(case.binding.plans))
+        self.assertEqual(execute(restored.binding, restored.compiled.timing), execute(case.binding, case.compiled.timing))
 
     def test_faulty_supplied_plan_and_self_consistent_execution_still_fail(self):
         record = read_json(FIXTURE/'controller_pipeline_read-INPUT.json')

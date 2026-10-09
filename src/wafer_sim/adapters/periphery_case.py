@@ -125,8 +125,9 @@ def case_from_record(record):
                 raise ValueError('Target compute resource cannot serve declared work')
         if set(record['plans']) != set(graph.operations):
             raise ValueError('Missing or extra operation plan')
-        # JSON object keys may be sorted; the lowering follows graph.order.
-        plans = {op: _plan(record['plans'][op]) for op in graph.order}
+        # JSON object keys may be sorted. Ordinary lowering iterates declared
+        # operations, which can differ from the graph's topological order.
+        plans = {op: _plan(record['plans'][op]) for op in graph.operations}
         binding = Binding(graph, MappingProxyType({**memory, **{m.id: m for m in compiled.controller_buffers}}),
                           MappingProxyType(dict(placement.data)), MappingProxyType(plans), compiled.target.network)
         TimedTarget(binding, compiled.timing)

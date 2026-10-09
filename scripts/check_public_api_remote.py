@@ -88,8 +88,11 @@ def main():
         'src/wafer_sim/adapters/memory_periphery.py', 'src/wafer_sim/adapters/wafer_machine.py',
         'src/wafer_sim/analysis/memory_periphery.py', 'src/wafer_sim/workloads',
         'configs', 'patches', 'third_party', 'docs/results')
-    if subprocess.check_output(['git', '-C', str(repo), 'diff', expected['baseline_commit'], '--name-only', '--', *preserved]):
+    if subprocess.check_output(['git', '-C', str(repo), 'diff', expected['baseline_commit'], '--name-only', '--', *preserved[:-1]]):
         raise ValueError('Frozen resource, timing, execution or accepted-evidence implementation changed')
+    if subprocess.check_output(['git', '-C', str(repo), 'diff', expected['baseline_commit'], '--diff-filter=DMRT',
+            '--name-only', '--', 'docs/results']):
+        raise ValueError('Accepted evidence changed; new result directories may be added')
     native = root/'build/booksim-online/online_booksim'
     if digest(native) != start['binary_sha256']: raise ValueError('Accepted native binary changed')
     packages = subprocess.check_output([str(args.portable_python), '-m', 'pip', 'freeze'], text=True).splitlines()
