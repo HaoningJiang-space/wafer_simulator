@@ -124,6 +124,20 @@ bank/controller policy, characterize that component rather than declaring the
 whole wafer validated. If a simple abstraction is adequate, retain it. A new
 machine graph alone does not establish a simulator research contribution.
 
+## Public behavior-preserving code organization
+
+The [public API extraction](results/public-periphery-api-001/REVIEW.md) is
+complete with f91824d behavior retained. Explicit machine/work/placement/policy
+compilation, existing execution, and supplied-plan/event auditing are independent
+of private server/repository setup. The [portable suite and usage guide](PUBLIC_PERIPHERY_API.md)
+support standalone testing; private receipt workflows retain host/root,
+clean-source and same-source checks. The final 254-test formal suite and
+141-test minimal-environment suite pass. Eleven pre-refactor event/state cases,
+15 registered input identities and three old Native component readbacks match.
+There is no new application execution, model/policy change or hardware claim.
+Other historical studies retain their pinned entry points and source gates;
+this extraction does not reopen their matrices or generalize D1's scope.
+
 ## Completed memory-periphery policy sensitivity
 
 The [registered six-cell study](MEMORY_PERIPHERY_PROTOCOL.md) is

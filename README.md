@@ -77,8 +77,8 @@ not uniformly improve. Neither declared contract is selected as hardware truth.
 
 The [registered D1 candidate](docs/SHARED_SPATIAL_SERVICE_PROTOCOL.md) is retained
 under v1. Its component study completed; its application matrix has not run.
-The active priority is explicit machine organization and transaction policy,
-before further approximation accuracy against a particular S reference.
+Machine organization and transaction policy remain explicit declared contracts;
+their accepted comparison and repair rounds are closed.
 
 The [public periphery APIs](docs/PUBLIC_PERIPHERY_API.md) separate compilation,
 execution and supplied-event audit from private study/server orchestration.
@@ -86,6 +86,10 @@ execution and supplied-event audit from private study/server orchestration.
 `wafer-sim audit-periphery` audits small input/event JSON without application
 lowering, a native process or server configuration. The registered contracts
 and f91824d behavior remain the baseline.
+The [checked extraction](docs/results/public-periphery-api-001/REVIEW.md) passes
+254 formal and 141 portable regressions, retaining 11 fixed-case event/state
+identities and all 15 registered inputs. Three saved native components audit
+through the public API; no application matrix was rerun.
 
 ## Current entry point (hn072 only)
 
