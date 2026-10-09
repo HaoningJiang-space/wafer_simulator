@@ -2,7 +2,6 @@
 import argparse
 import ast
 from collections import Counter
-from dataclasses import asdict
 import os
 from pathlib import Path
 import platform
@@ -11,10 +10,11 @@ import subprocess
 import sys
 import time
 
-from wafer_sim.adapters.memory_periphery import compile_periphery, bind_periphery, TransactionPolicy
-from wafer_sim.adapters.wafer_machine import compile_machine, bind_machine, export_booksim
+from wafer_sim.adapters.memory_periphery import TransactionPolicy
+from wafer_sim.adapters.periphery_case import compile_case
+from wafer_sim.adapters.wafer_machine import export_booksim
 from wafer_sim.adapters.online_booksim import OnlineBookSim
-from wafer_sim.adapters.scaling_layout import place_scaled, capacity_bound
+from wafer_sim.adapters.scaling_layout import place_scaled
 from wafer_sim.architecture.wafer_machine import from_config
 from wafer_sim.analysis.memory_periphery import audit_periphery, transaction_timing
 from wafer_sim.analysis.wafer_machine import audit_machine
@@ -26,7 +26,7 @@ from wafer_sim.experiments.transfer_granularity import Meter, native_peak, usage
 from wafer_sim.execution.plan import Placement
 from wafer_sim.execution.timing import execute
 from wafer_sim.io import read_json, write_json, digest, object_digest
-from wafer_sim.remote import require_active_server
+from wafer_sim.experiments.server import require_active_server
 from wafer_sim.workloads.memory_machine import build
 from wafer_sim.workloads.spatial import Workload, DataObject, Operation
 
@@ -58,7 +58,6 @@ def prepare(condition, layout=None, component=None):
     if condition not in reg['conditions']: raise ValueError('Unregistered condition')
     cfg = read_json(REPO/base['machine']); cfg['array'] = [reg['side'], reg['side']]
     machine = from_config(cfg, check_router_ports=condition == 'v1_whole')
-    c = compile_machine(machine) if condition == 'v1_whole' else compile_periphery(machine)
     policy = TransactionPolicy('pipeline' if condition == 'shared_pipeline' else 'whole',
                                reg['chunk_bytes'], reg['window_chunks'])
     if component is not None:
@@ -67,13 +66,10 @@ def prepare(condition, layout=None, component=None):
     else:
         if layout not in reg['layouts']: raise ValueError('Unregistered layout')
         w, metadata = build(reg['side']**2, **base['per_worker']); p = place_scaled(metadata, reg['side'], layout)
-    b, tx = bind_periphery(w, c, p, policy)
-    bound = capacity_bound(b)
-    physical = dict(inventory=asdict(machine), target=asdict(c.target), timing=asdict(c.timing))
-    identity = dict(condition=condition, layout=layout, component=component, physical=physical,
-        workload=asdict(w), placement=asdict(p), transaction_policy=asdict(policy),
-        transactions=tx, plans={k: asdict(v) for k, v in b.plans.items()}, capacity_bound=bound)
-    return c, w, p, b, tx, policy, identity
+    case = compile_case(machine, w, p, policy,
+                        interface_organization='bank' if condition == 'v1_whole' else 'controller')
+    identity = case.to_record(condition=condition, layout=layout, component=component, include_capacity_bound=True)
+    return case.compiled, w, p, case.binding, case.transactions, policy, identity
 
 
 def function_identity(path, names, reference):

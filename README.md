@@ -80,6 +80,13 @@ under v1. Its component study completed; its application matrix has not run.
 The active priority is explicit machine organization and transaction policy,
 before further approximation accuracy against a particular S reference.
 
+The [public periphery APIs](docs/PUBLIC_PERIPHERY_API.md) separate compilation,
+execution and supplied-event audit from private study/server orchestration.
+`PYTHONPATH=src python scripts/test_public.py` runs the portable semantic suite;
+`wafer-sim audit-periphery` audits small input/event JSON without application
+lowering, a native process or server configuration. The registered contracts
+and f91824d behavior remain the baseline.
+
 ## Current entry point (hn072 only)
 
 Local work is source inspection, editing and Git. Builds, tests and execution
@@ -91,7 +98,7 @@ cd /Projects/haoning/wafer_simulator/source
 export PYTHONPATH=src
 ../.venv/bin/python scripts/test_wow_target_remote.py \
   /Projects/haoning/wafer_simulator/runs/periphery-tests-NEW
-../.venv/bin/python -m wafer_sim.analysis.memory_periphery_study \
+../.venv/bin/python -m wafer_sim.experiments.revalidate_periphery \
   --source /Projects/haoning/wafer_simulator/runs/periphery-applications-001 \
   --output /Projects/haoning/wafer_simulator/runs/periphery-revalidation-NEW \
   --tests /Projects/haoning/wafer_simulator/runs/periphery-tests-NEW/SEMANTICS.json

@@ -9,6 +9,9 @@ def main(argv=None):
         argv.insert(0,'goal-replay')
     parser=argparse.ArgumentParser(description='WoW simulation abstractions and design-gain prediction')
     commands=parser.add_subparsers(dest='command')
+    periphery=commands.add_parser('audit-periphery',help='Audit supplied JSON input/events without a server or native process')
+    periphery.add_argument('--input',required=True);periphery.add_argument('--execution',required=True)
+    periphery.add_argument('--output',required=True)
     current=commands.add_parser('boundary-design',help='Current frozen 24-cell study on eex005')
     current.add_argument('--output',required=True);current.add_argument('--tests',required=True)
     current.add_argument('--cpus',help='Two allowed CPU IDs, comma separated')
@@ -21,7 +24,11 @@ def main(argv=None):
     legacy=commands.add_parser('goal-replay',help='Historical full GOAL campaign (separate input contract)')
     for field in ('config','upstream','binary','output'):legacy.add_argument('--'+field,required=True)
     args=parser.parse_args(argv)
-    if args.command=='boundary-design':
+    if args.command=='audit-periphery':
+        from wafer_sim.analysis.periphery_input import audit_input
+        from wafer_sim.io import read_json,write_json
+        write_json(args.output,audit_input(read_json(args.input),read_json(args.execution)))
+    elif args.command=='boundary-design':
         from wafer_sim.experiments.boundary_design import run
         run(args.output,args.tests,[int(x) for x in args.cpus.split(',')] if args.cpus else None)
     elif args.command=='analyze-boundary-design':

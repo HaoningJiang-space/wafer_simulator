@@ -1,0 +1,1871 @@
+{
+  "component": null,
+  "condition": null,
+  "layout": null,
+  "physical": {
+    "inventory": {
+      "access_latency_cycles": 1,
+      "compute_rates": [
+        [
+          "mac",
+          256
+        ],
+        [
+          "scalar_add",
+          64
+        ]
+      ],
+      "connections": [
+        {
+          "bits_per_signal_cycle": 1,
+          "destination": "c1",
+          "id": "c0-c1",
+          "kind": "stitch",
+          "latency_cycles": 17,
+          "signals_per_direction": 512,
+          "source": "c0"
+        },
+        {
+          "bits_per_signal_cycle": 1,
+          "destination": "c2",
+          "id": "c0-c2",
+          "kind": "stitch",
+          "latency_cycles": 17,
+          "signals_per_direction": 512,
+          "source": "c0"
+        },
+        {
+          "bits_per_signal_cycle": 1,
+          "destination": "m0",
+          "id": "hb-0",
+          "kind": "hb",
+          "latency_cycles": 1,
+          "signals_per_direction": 512,
+          "source": "c0"
+        },
+        {
+          "bits_per_signal_cycle": 1,
+          "destination": "c3",
+          "id": "c1-c3",
+          "kind": "stitch",
+          "latency_cycles": 17,
+          "signals_per_direction": 512,
+          "source": "c1"
+        },
+        {
+          "bits_per_signal_cycle": 1,
+          "destination": "m1",
+          "id": "hb-1",
+          "kind": "hb",
+          "latency_cycles": 1,
+          "signals_per_direction": 512,
+          "source": "c1"
+        },
+        {
+          "bits_per_signal_cycle": 1,
+          "destination": "c3",
+          "id": "c2-c3",
+          "kind": "stitch",
+          "latency_cycles": 17,
+          "signals_per_direction": 512,
+          "source": "c2"
+        },
+        {
+          "bits_per_signal_cycle": 1,
+          "destination": "m2",
+          "id": "hb-2",
+          "kind": "hb",
+          "latency_cycles": 1,
+          "signals_per_direction": 512,
+          "source": "c2"
+        },
+        {
+          "bits_per_signal_cycle": 1,
+          "destination": "m3",
+          "id": "hb-3",
+          "kind": "hb",
+          "latency_cycles": 1,
+          "signals_per_direction": 512,
+          "source": "c3"
+        },
+        {
+          "bits_per_signal_cycle": 16,
+          "destination": "host",
+          "id": "edge-io",
+          "kind": "io",
+          "latency_cycles": 20,
+          "signals_per_direction": 32,
+          "source": "c0"
+        }
+      ],
+      "controllers": [
+        {
+          "buffer_bytes": 1048576,
+          "channel_bytes_per_cycle": 64,
+          "command_cycles": 4,
+          "id": "controller-0",
+          "tile": "m0"
+        },
+        {
+          "buffer_bytes": 1048576,
+          "channel_bytes_per_cycle": 64,
+          "command_cycles": 4,
+          "id": "controller-1",
+          "tile": "m1"
+        },
+        {
+          "buffer_bytes": 1048576,
+          "channel_bytes_per_cycle": 64,
+          "command_cycles": 4,
+          "id": "controller-2",
+          "tile": "m2"
+        },
+        {
+          "buffer_bytes": 1048576,
+          "channel_bytes_per_cycle": 64,
+          "command_cycles": 4,
+          "id": "controller-3",
+          "tile": "m3"
+        },
+        {
+          "buffer_bytes": 4194304,
+          "channel_bytes_per_cycle": 64,
+          "command_cycles": 8,
+          "id": "host-controller",
+          "tile": "host"
+        }
+      ],
+      "flit_bytes": 64,
+      "frequency_hz": 1000000000,
+      "hb_pitch_um": 10,
+      "layers": [
+        {
+          "id": "compute",
+          "role": "compute",
+          "z_um": 0
+        },
+        {
+          "id": "memory",
+          "role": "memory",
+          "z_um": 50
+        },
+        {
+          "id": "external",
+          "role": "external",
+          "z_um": 0
+        }
+      ],
+      "name": "stitched_compute_memory_candidate_v1",
+      "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+      "router_latency_cycles": 4,
+      "stitch_signals_per_boundary": 2048,
+      "stores": [
+        {
+          "bytes_per_cycle": 64,
+          "capacity_bytes": 4194304,
+          "controller": null,
+          "id": "sram-0",
+          "kind": "sram",
+          "latency_cycles": 0,
+          "tile": "c0"
+        },
+        {
+          "bytes_per_cycle": 32,
+          "capacity_bytes": 67108864,
+          "controller": "controller-0",
+          "id": "dram-0-0",
+          "kind": "dram",
+          "latency_cycles": 30,
+          "tile": "m0"
+        },
+        {
+          "bytes_per_cycle": 32,
+          "capacity_bytes": 67108864,
+          "controller": "controller-0",
+          "id": "dram-0-1",
+          "kind": "dram",
+          "latency_cycles": 30,
+          "tile": "m0"
+        },
+        {
+          "bytes_per_cycle": 64,
+          "capacity_bytes": 4194304,
+          "controller": null,
+          "id": "sram-1",
+          "kind": "sram",
+          "latency_cycles": 0,
+          "tile": "c1"
+        },
+        {
+          "bytes_per_cycle": 32,
+          "capacity_bytes": 67108864,
+          "controller": "controller-1",
+          "id": "dram-1-0",
+          "kind": "dram",
+          "latency_cycles": 30,
+          "tile": "m1"
+        },
+        {
+          "bytes_per_cycle": 32,
+          "capacity_bytes": 67108864,
+          "controller": "controller-1",
+          "id": "dram-1-1",
+          "kind": "dram",
+          "latency_cycles": 30,
+          "tile": "m1"
+        },
+        {
+          "bytes_per_cycle": 64,
+          "capacity_bytes": 4194304,
+          "controller": null,
+          "id": "sram-2",
+          "kind": "sram",
+          "latency_cycles": 0,
+          "tile": "c2"
+        },
+        {
+          "bytes_per_cycle": 32,
+          "capacity_bytes": 67108864,
+          "controller": "controller-2",
+          "id": "dram-2-0",
+          "kind": "dram",
+          "latency_cycles": 30,
+          "tile": "m2"
+        },
+        {
+          "bytes_per_cycle": 32,
+          "capacity_bytes": 67108864,
+          "controller": "controller-2",
+          "id": "dram-2-1",
+          "kind": "dram",
+          "latency_cycles": 30,
+          "tile": "m2"
+        },
+        {
+          "bytes_per_cycle": 64,
+          "capacity_bytes": 4194304,
+          "controller": null,
+          "id": "sram-3",
+          "kind": "sram",
+          "latency_cycles": 0,
+          "tile": "c3"
+        },
+        {
+          "bytes_per_cycle": 32,
+          "capacity_bytes": 67108864,
+          "controller": "controller-3",
+          "id": "dram-3-0",
+          "kind": "dram",
+          "latency_cycles": 30,
+          "tile": "m3"
+        },
+        {
+          "bytes_per_cycle": 32,
+          "capacity_bytes": 67108864,
+          "controller": "controller-3",
+          "id": "dram-3-1",
+          "kind": "dram",
+          "latency_cycles": 30,
+          "tile": "m3"
+        },
+        {
+          "bytes_per_cycle": 32,
+          "capacity_bytes": 1073741824,
+          "controller": "host-controller",
+          "id": "host-memory",
+          "kind": "external",
+          "latency_cycles": 80,
+          "tile": "host"
+        }
+      ],
+      "technology": "stitched_compute_hb_memory",
+      "tiles": [
+        {
+          "hb_signal_budget": 2048,
+          "height_um": 33000,
+          "id": "c0",
+          "layer": "compute",
+          "max_ports": 8,
+          "width_um": 26000,
+          "x_um": -26000,
+          "y_um": -33000
+        },
+        {
+          "hb_signal_budget": 2048,
+          "height_um": 33000,
+          "id": "m0",
+          "layer": "memory",
+          "max_ports": 8,
+          "width_um": 26000,
+          "x_um": -26000,
+          "y_um": -33000
+        },
+        {
+          "hb_signal_budget": 2048,
+          "height_um": 33000,
+          "id": "c1",
+          "layer": "compute",
+          "max_ports": 8,
+          "width_um": 26000,
+          "x_um": 0,
+          "y_um": -33000
+        },
+        {
+          "hb_signal_budget": 2048,
+          "height_um": 33000,
+          "id": "m1",
+          "layer": "memory",
+          "max_ports": 8,
+          "width_um": 26000,
+          "x_um": 0,
+          "y_um": -33000
+        },
+        {
+          "hb_signal_budget": 2048,
+          "height_um": 33000,
+          "id": "c2",
+          "layer": "compute",
+          "max_ports": 8,
+          "width_um": 26000,
+          "x_um": -26000,
+          "y_um": 0
+        },
+        {
+          "hb_signal_budget": 2048,
+          "height_um": 33000,
+          "id": "m2",
+          "layer": "memory",
+          "max_ports": 8,
+          "width_um": 26000,
+          "x_um": -26000,
+          "y_um": 0
+        },
+        {
+          "hb_signal_budget": 2048,
+          "height_um": 33000,
+          "id": "c3",
+          "layer": "compute",
+          "max_ports": 8,
+          "width_um": 26000,
+          "x_um": 0,
+          "y_um": 0
+        },
+        {
+          "hb_signal_budget": 2048,
+          "height_um": 33000,
+          "id": "m3",
+          "layer": "memory",
+          "max_ports": 8,
+          "width_um": 26000,
+          "x_um": 0,
+          "y_um": 0
+        },
+        {
+          "hb_signal_budget": 0,
+          "height_um": 33000,
+          "id": "host",
+          "layer": "external",
+          "max_ports": 2,
+          "width_um": 26000,
+          "x_um": -52000,
+          "y_um": -33000
+        }
+      ],
+      "wafer_diameter_um": 300000,
+      "wire_um_per_cycle": 2000
+    },
+    "target": {
+      "compute": [
+        {
+          "id": "c0",
+          "memory": "sram-0",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "work_units": [
+            "mac",
+            "scalar_add"
+          ]
+        },
+        {
+          "id": "c1",
+          "memory": "sram-1",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "work_units": [
+            "mac",
+            "scalar_add"
+          ]
+        },
+        {
+          "id": "c2",
+          "memory": "sram-2",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "work_units": [
+            "mac",
+            "scalar_add"
+          ]
+        },
+        {
+          "id": "c3",
+          "memory": "sram-3",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "work_units": [
+            "mac",
+            "scalar_add"
+          ]
+        }
+      ],
+      "memory": [
+        {
+          "capacity_bytes": 4194304,
+          "endpoint": 0,
+          "id": "sram-0",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "sram-0/port",
+          "write_port": "sram-0/port"
+        },
+        {
+          "capacity_bytes": 67108864,
+          "endpoint": 1,
+          "id": "dram-0-0",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "dram-0-0/port",
+          "write_port": "dram-0-0/port"
+        },
+        {
+          "capacity_bytes": 67108864,
+          "endpoint": 1,
+          "id": "dram-0-1",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "dram-0-1/port",
+          "write_port": "dram-0-1/port"
+        },
+        {
+          "capacity_bytes": 4194304,
+          "endpoint": 2,
+          "id": "sram-1",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "sram-1/port",
+          "write_port": "sram-1/port"
+        },
+        {
+          "capacity_bytes": 67108864,
+          "endpoint": 3,
+          "id": "dram-1-0",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "dram-1-0/port",
+          "write_port": "dram-1-0/port"
+        },
+        {
+          "capacity_bytes": 67108864,
+          "endpoint": 3,
+          "id": "dram-1-1",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "dram-1-1/port",
+          "write_port": "dram-1-1/port"
+        },
+        {
+          "capacity_bytes": 4194304,
+          "endpoint": 4,
+          "id": "sram-2",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "sram-2/port",
+          "write_port": "sram-2/port"
+        },
+        {
+          "capacity_bytes": 67108864,
+          "endpoint": 5,
+          "id": "dram-2-0",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "dram-2-0/port",
+          "write_port": "dram-2-0/port"
+        },
+        {
+          "capacity_bytes": 67108864,
+          "endpoint": 5,
+          "id": "dram-2-1",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "dram-2-1/port",
+          "write_port": "dram-2-1/port"
+        },
+        {
+          "capacity_bytes": 4194304,
+          "endpoint": 6,
+          "id": "sram-3",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "sram-3/port",
+          "write_port": "sram-3/port"
+        },
+        {
+          "capacity_bytes": 67108864,
+          "endpoint": 7,
+          "id": "dram-3-0",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "dram-3-0/port",
+          "write_port": "dram-3-0/port"
+        },
+        {
+          "capacity_bytes": 67108864,
+          "endpoint": 7,
+          "id": "dram-3-1",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "dram-3-1/port",
+          "write_port": "dram-3-1/port"
+        },
+        {
+          "capacity_bytes": 1073741824,
+          "endpoint": 8,
+          "id": "host-memory",
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+          "read_port": "host-memory/port",
+          "write_port": "host-memory/port"
+        }
+      ],
+      "network": {
+        "endpoint_routers": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            8,
+            8
+          ]
+        ],
+        "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+        "router_links": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            0,
+            8
+          ]
+        ]
+      },
+      "network_interfaces": [
+        {
+          "endpoint": 0,
+          "id": "sram-0/nic",
+          "memory_regions": [
+            "sram-0"
+          ],
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits."
+        },
+        {
+          "endpoint": 1,
+          "id": "controller-0/nic",
+          "memory_regions": [
+            "dram-0-0",
+            "dram-0-1"
+          ],
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits."
+        },
+        {
+          "endpoint": 2,
+          "id": "sram-1/nic",
+          "memory_regions": [
+            "sram-1"
+          ],
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits."
+        },
+        {
+          "endpoint": 3,
+          "id": "controller-1/nic",
+          "memory_regions": [
+            "dram-1-0",
+            "dram-1-1"
+          ],
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits."
+        },
+        {
+          "endpoint": 4,
+          "id": "sram-2/nic",
+          "memory_regions": [
+            "sram-2"
+          ],
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits."
+        },
+        {
+          "endpoint": 5,
+          "id": "controller-2/nic",
+          "memory_regions": [
+            "dram-2-0",
+            "dram-2-1"
+          ],
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits."
+        },
+        {
+          "endpoint": 6,
+          "id": "sram-3/nic",
+          "memory_regions": [
+            "sram-3"
+          ],
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits."
+        },
+        {
+          "endpoint": 7,
+          "id": "controller-3/nic",
+          "memory_regions": [
+            "dram-3-0",
+            "dram-3-1"
+          ],
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits."
+        },
+        {
+          "endpoint": 8,
+          "id": "host-controller/nic",
+          "memory_regions": [
+            "host-memory"
+          ],
+          "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits."
+        }
+      ]
+    },
+    "timing": {
+      "endpoints": [
+        {
+          "ejection": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "eject/0",
+            "unit": "bytes"
+          },
+          "endpoint": 0,
+          "injection": {
+            "latency_cycles": 1,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "inject/0",
+            "unit": "bytes"
+          }
+        },
+        {
+          "ejection": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "eject/1",
+            "unit": "bytes"
+          },
+          "endpoint": 1,
+          "injection": {
+            "latency_cycles": 1,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "inject/1",
+            "unit": "bytes"
+          }
+        },
+        {
+          "ejection": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "eject/2",
+            "unit": "bytes"
+          },
+          "endpoint": 2,
+          "injection": {
+            "latency_cycles": 1,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "inject/2",
+            "unit": "bytes"
+          }
+        },
+        {
+          "ejection": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "eject/3",
+            "unit": "bytes"
+          },
+          "endpoint": 3,
+          "injection": {
+            "latency_cycles": 1,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "inject/3",
+            "unit": "bytes"
+          }
+        },
+        {
+          "ejection": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "eject/4",
+            "unit": "bytes"
+          },
+          "endpoint": 4,
+          "injection": {
+            "latency_cycles": 1,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "inject/4",
+            "unit": "bytes"
+          }
+        },
+        {
+          "ejection": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "eject/5",
+            "unit": "bytes"
+          },
+          "endpoint": 5,
+          "injection": {
+            "latency_cycles": 1,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "inject/5",
+            "unit": "bytes"
+          }
+        },
+        {
+          "ejection": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "eject/6",
+            "unit": "bytes"
+          },
+          "endpoint": 6,
+          "injection": {
+            "latency_cycles": 1,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "inject/6",
+            "unit": "bytes"
+          }
+        },
+        {
+          "ejection": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "eject/7",
+            "unit": "bytes"
+          },
+          "endpoint": 7,
+          "injection": {
+            "latency_cycles": 1,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "inject/7",
+            "unit": "bytes"
+          }
+        },
+        {
+          "ejection": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "eject/8",
+            "unit": "bytes"
+          },
+          "endpoint": 8,
+          "injection": {
+            "latency_cycles": 1,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "inject/8",
+            "unit": "bytes"
+          }
+        }
+      ],
+      "links": [
+        {
+          "destination": 2,
+          "service": {
+            "latency_cycles": 21,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/0/2",
+            "unit": "bytes"
+          },
+          "source": 0
+        },
+        {
+          "destination": 0,
+          "service": {
+            "latency_cycles": 21,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/2/0",
+            "unit": "bytes"
+          },
+          "source": 2
+        },
+        {
+          "destination": 4,
+          "service": {
+            "latency_cycles": 21,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/0/4",
+            "unit": "bytes"
+          },
+          "source": 0
+        },
+        {
+          "destination": 0,
+          "service": {
+            "latency_cycles": 21,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/4/0",
+            "unit": "bytes"
+          },
+          "source": 4
+        },
+        {
+          "destination": 1,
+          "service": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/0/1",
+            "unit": "bytes"
+          },
+          "source": 0
+        },
+        {
+          "destination": 0,
+          "service": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/1/0",
+            "unit": "bytes"
+          },
+          "source": 1
+        },
+        {
+          "destination": 6,
+          "service": {
+            "latency_cycles": 21,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/2/6",
+            "unit": "bytes"
+          },
+          "source": 2
+        },
+        {
+          "destination": 2,
+          "service": {
+            "latency_cycles": 21,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/6/2",
+            "unit": "bytes"
+          },
+          "source": 6
+        },
+        {
+          "destination": 3,
+          "service": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/2/3",
+            "unit": "bytes"
+          },
+          "source": 2
+        },
+        {
+          "destination": 2,
+          "service": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/3/2",
+            "unit": "bytes"
+          },
+          "source": 3
+        },
+        {
+          "destination": 6,
+          "service": {
+            "latency_cycles": 21,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/4/6",
+            "unit": "bytes"
+          },
+          "source": 4
+        },
+        {
+          "destination": 4,
+          "service": {
+            "latency_cycles": 21,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/6/4",
+            "unit": "bytes"
+          },
+          "source": 6
+        },
+        {
+          "destination": 5,
+          "service": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/4/5",
+            "unit": "bytes"
+          },
+          "source": 4
+        },
+        {
+          "destination": 4,
+          "service": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/5/4",
+            "unit": "bytes"
+          },
+          "source": 5
+        },
+        {
+          "destination": 7,
+          "service": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/6/7",
+            "unit": "bytes"
+          },
+          "source": 6
+        },
+        {
+          "destination": 6,
+          "service": {
+            "latency_cycles": 5,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/7/6",
+            "unit": "bytes"
+          },
+          "source": 7
+        },
+        {
+          "destination": 8,
+          "service": {
+            "latency_cycles": 24,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/0/8",
+            "unit": "bytes"
+          },
+          "source": 0
+        },
+        {
+          "destination": 0,
+          "service": {
+            "latency_cycles": 24,
+            "rate_denominator": 1,
+            "rate_numerator": 64,
+            "resource": "fabric/8/0",
+            "unit": "bytes"
+          },
+          "source": 8
+        }
+      ],
+      "provenance": "Candidate architecture, not qualified technology or calibrated product. Every numerical parameter below is a declared design assumption. docs/WAFER_MACHINE.md records primary-source motivation and limits.",
+      "services": [
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "sram-0/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 30,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "dram-0-0/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 30,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "dram-0-1/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "sram-1/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 30,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "dram-1-0/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 30,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "dram-1-1/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "sram-2/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 30,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "dram-2-0/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 30,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "dram-2-1/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "sram-3/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 30,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "dram-3-0/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 30,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "dram-3-1/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 80,
+          "rate_denominator": 1,
+          "rate_numerator": 32,
+          "resource": "host-memory/port",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 256,
+          "resource": "c0",
+          "unit": "mac"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "c0",
+          "unit": "scalar_add"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 256,
+          "resource": "c1",
+          "unit": "mac"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "c1",
+          "unit": "scalar_add"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 256,
+          "resource": "c2",
+          "unit": "mac"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "c2",
+          "unit": "scalar_add"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 256,
+          "resource": "c3",
+          "unit": "mac"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "c3",
+          "unit": "scalar_add"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 4,
+          "rate_numerator": 16,
+          "resource": "controller-0/command",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "controller-0/channel",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 4,
+          "rate_numerator": 16,
+          "resource": "controller-1/command",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "controller-1/channel",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 4,
+          "rate_numerator": 16,
+          "resource": "controller-2/command",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "controller-2/channel",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 4,
+          "rate_numerator": 16,
+          "resource": "controller-3/command",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "controller-3/channel",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 8,
+          "rate_numerator": 16,
+          "resource": "host-controller/command",
+          "unit": "bytes"
+        },
+        {
+          "latency_cycles": 0,
+          "rate_denominator": 1,
+          "rate_numerator": 64,
+          "resource": "host-controller/channel",
+          "unit": "bytes"
+        }
+      ]
+    }
+  },
+  "placement": {
+    "compute": {
+      "f0": "c0"
+    },
+    "data": {
+      "x0": "dram-3-0",
+      "y0": "sram-0"
+    }
+  },
+  "plans": {
+    "f0": {
+      "action_ids": [
+        "0:read-request",
+        "1:read-command",
+        "2:bank-fragment",
+        "3:channel-fragment",
+        "4:response-fragment",
+        "5:sram-fragment",
+        "6:bank-fragment",
+        "7:channel-fragment",
+        "8:response-fragment",
+        "9:sram-fragment",
+        "10:bank-fragment",
+        "11:channel-fragment",
+        "12:response-fragment",
+        "13:sram-fragment",
+        "14:bank-fragment",
+        "15:channel-fragment",
+        "16:response-fragment",
+        "17:sram-fragment",
+        "18:bank-fragment",
+        "19:channel-fragment",
+        "20:response-fragment",
+        "21:sram-fragment",
+        "22:bank-fragment",
+        "23:channel-fragment",
+        "24:response-fragment",
+        "25:sram-fragment",
+        "26:ordinary",
+        "27:ordinary",
+        "28:ordinary"
+      ],
+      "dependencies": [
+        [],
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ],
+        [
+          1
+        ],
+        [
+          6
+        ],
+        [
+          7
+        ],
+        [
+          8
+        ],
+        [
+          1
+        ],
+        [
+          10
+        ],
+        [
+          11
+        ],
+        [
+          12
+        ],
+        [
+          1
+        ],
+        [
+          14
+        ],
+        [
+          15
+        ],
+        [
+          16
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          18
+        ],
+        [
+          19
+        ],
+        [
+          20
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          22
+        ],
+        [
+          23
+        ],
+        [
+          24
+        ],
+        [
+          5,
+          9,
+          13,
+          17,
+          21,
+          25
+        ],
+        [
+          26
+        ],
+        [
+          27
+        ]
+      ],
+      "output_requirements": [],
+      "phases": [
+        {
+          "demands": [],
+          "kind": "transfer",
+          "transfer": {
+            "data": "x0",
+            "destination_endpoint": 7,
+            "destination_memory": "dram-3-0",
+            "size_bytes": 16,
+            "source_endpoint": 0,
+            "source_memory": "sram-0"
+          }
+        },
+        {
+          "demands": [
+            {
+              "amount": 16,
+              "resource": "controller-3/command",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "dram-3-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "controller-3/channel",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [],
+          "kind": "transfer",
+          "transfer": {
+            "data": "x0",
+            "destination_endpoint": 0,
+            "destination_memory": "sram-0",
+            "size_bytes": 4096,
+            "source_endpoint": 7,
+            "source_memory": "dram-3-0"
+          }
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "sram-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_write",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "dram-3-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "controller-3/channel",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [],
+          "kind": "transfer",
+          "transfer": {
+            "data": "x0",
+            "destination_endpoint": 0,
+            "destination_memory": "sram-0",
+            "size_bytes": 4096,
+            "source_endpoint": 7,
+            "source_memory": "dram-3-0"
+          }
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "sram-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_write",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "dram-3-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "controller-3/channel",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [],
+          "kind": "transfer",
+          "transfer": {
+            "data": "x0",
+            "destination_endpoint": 0,
+            "destination_memory": "sram-0",
+            "size_bytes": 4096,
+            "source_endpoint": 7,
+            "source_memory": "dram-3-0"
+          }
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "sram-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_write",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "dram-3-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "controller-3/channel",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [],
+          "kind": "transfer",
+          "transfer": {
+            "data": "x0",
+            "destination_endpoint": 0,
+            "destination_memory": "sram-0",
+            "size_bytes": 4096,
+            "source_endpoint": 7,
+            "source_memory": "dram-3-0"
+          }
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "sram-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_write",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "dram-3-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "controller-3/channel",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [],
+          "kind": "transfer",
+          "transfer": {
+            "data": "x0",
+            "destination_endpoint": 0,
+            "destination_memory": "sram-0",
+            "size_bytes": 4096,
+            "source_endpoint": 7,
+            "source_memory": "dram-3-0"
+          }
+        },
+        {
+          "demands": [
+            {
+              "amount": 4096,
+              "resource": "sram-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_write",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 1,
+              "resource": "dram-3-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 1,
+              "resource": "controller-3/channel",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [],
+          "kind": "transfer",
+          "transfer": {
+            "data": "x0",
+            "destination_endpoint": 0,
+            "destination_memory": "sram-0",
+            "size_bytes": 1,
+            "source_endpoint": 7,
+            "source_memory": "dram-3-0"
+          }
+        },
+        {
+          "demands": [
+            {
+              "amount": 1,
+              "resource": "sram-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_write",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 20481,
+              "resource": "sram-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_read",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 256,
+              "resource": "c0",
+              "unit": "mac"
+            }
+          ],
+          "kind": "compute",
+          "transfer": null
+        },
+        {
+          "demands": [
+            {
+              "amount": 64,
+              "resource": "sram-0/port",
+              "unit": "bytes"
+            }
+          ],
+          "kind": "memory_write",
+          "transfer": null
+        }
+      ],
+      "policy": "bounded-periphery-dma",
+      "reservations": [
+        {
+          "key": [
+            "input",
+            "f0",
+            "x0"
+          ],
+          "memory": "sram-0",
+          "size_bytes": 20481
+        },
+        {
+          "key": [
+            "object",
+            "y0"
+          ],
+          "memory": "sram-0",
+          "size_bytes": 64
+        },
+        {
+          "key": [
+            "controller-staging",
+            "f0",
+            "0"
+          ],
+          "memory": "controller-3/buffer",
+          "size_bytes": 20481
+        }
+      ]
+    }
+  },
+  "transaction_policy": {
+    "chunk_bytes": 4096,
+    "kind": "pipeline",
+    "window_chunks": 4
+  },
+  "transactions": [
+    {
+      "ack_phase": null,
+      "bytes": 20481,
+      "chunks": [
+        {
+          "bytes": 4096,
+          "channel_phase": 3,
+          "destination_phase": 5,
+          "offset": 0,
+          "ordinal": 0,
+          "payload_phase": 4,
+          "source_phase": 2
+        },
+        {
+          "bytes": 4096,
+          "channel_phase": 7,
+          "destination_phase": 9,
+          "offset": 4096,
+          "ordinal": 1,
+          "payload_phase": 8,
+          "source_phase": 6
+        },
+        {
+          "bytes": 4096,
+          "channel_phase": 11,
+          "destination_phase": 13,
+          "offset": 8192,
+          "ordinal": 2,
+          "payload_phase": 12,
+          "source_phase": 10
+        },
+        {
+          "bytes": 4096,
+          "channel_phase": 15,
+          "destination_phase": 17,
+          "offset": 12288,
+          "ordinal": 3,
+          "payload_phase": 16,
+          "source_phase": 14
+        },
+        {
+          "bytes": 4096,
+          "channel_phase": 19,
+          "destination_phase": 21,
+          "offset": 16384,
+          "ordinal": 4,
+          "payload_phase": 20,
+          "source_phase": 18
+        },
+        {
+          "bytes": 1,
+          "channel_phase": 23,
+          "destination_phase": 25,
+          "offset": 20480,
+          "ordinal": 5,
+          "payload_phase": 24,
+          "source_phase": 22
+        }
+      ],
+      "command_phase": 1,
+      "controller": "controller-3",
+      "data": "x0",
+      "destination": "sram-0",
+      "entry_phases": [],
+      "first_phase": 0,
+      "kind": "read",
+      "last_phase": 25,
+      "operation": "f0",
+      "request_phase": 0,
+      "source": "dram-3-0"
+    }
+  ],
+  "workload": {
+    "data": [
+      {
+        "id": "x0",
+        "producer": null,
+        "provenance": "Public fixture",
+        "retain": false,
+        "size_bytes": 20481
+      },
+      {
+        "id": "y0",
+        "producer": "f0",
+        "provenance": "Public fixture",
+        "retain": true,
+        "size_bytes": 64
+      }
+    ],
+    "operations": [
+      {
+        "collective": null,
+        "control_deps": [],
+        "id": "f0",
+        "inputs": [
+          "x0"
+        ],
+        "outputs": [
+          "y0"
+        ],
+        "provenance": "Public fixture",
+        "scratch_bytes": 0,
+        "work": [
+          [
+            "mac",
+            256
+          ]
+        ]
+      }
+    ]
+  }
+}

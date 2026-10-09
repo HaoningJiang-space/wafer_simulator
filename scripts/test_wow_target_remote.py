@@ -8,7 +8,7 @@ import sys
 import unittest
 
 from wafer_sim.io import digest, write_json
-from wafer_sim.remote import require_active_server
+from wafer_sim.experiments.server import require_active_server
 
 
 def main():
@@ -34,6 +34,9 @@ def main():
     modules.append('test_shared_spatial_service')
     modules.append('test_memory_periphery')
     modules.append('test_periphery_evidence')
+    modules.append('test_periphery_attribution')
+    modules.append('test_public_periphery')
+    modules.append('test_experiment_server')
     suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
     log = args.output / "tests.log"
     with log.open("w") as stream:

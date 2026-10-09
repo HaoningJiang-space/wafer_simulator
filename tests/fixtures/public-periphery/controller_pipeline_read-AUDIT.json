@@ -1,0 +1,49 @@
+{
+  "control_bytes": {
+    "read": 16
+  },
+  "execution": {
+    "application_cycles": 1704,
+    "operations": 1,
+    "passed": true,
+    "phases": 29,
+    "services": 57,
+    "source_duration_used": false
+  },
+  "hardware_calibration": false,
+  "logical_transactions": 1,
+  "max_transaction_window_chunks": 4,
+  "passed": true,
+  "payload_bytes": {
+    "read": 20481
+  },
+  "physical_kind_flits": {},
+  "service_work": [
+    {
+      "amount": 256,
+      "resource": "c0",
+      "unit": "mac"
+    },
+    {
+      "amount": 20481,
+      "resource": "controller-3/channel",
+      "unit": "bytes"
+    },
+    {
+      "amount": 16,
+      "resource": "controller-3/command",
+      "unit": "bytes"
+    },
+    {
+      "amount": 20481,
+      "resource": "dram-3-0/port",
+      "unit": "bytes"
+    },
+    {
+      "amount": 41026,
+      "resource": "sram-0/port",
+      "unit": "bytes"
+    }
+  ],
+  "whole_object_reservations": true
+}

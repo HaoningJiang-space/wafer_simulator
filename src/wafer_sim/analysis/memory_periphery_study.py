@@ -7,20 +7,21 @@ import time
 
 from wafer_sim.analysis.memory_periphery import audit_periphery
 from wafer_sim.analysis.periphery_evidence import verify_source, validate_rows, checked_row
-from wafer_sim.experiments.memory_periphery import prepare, REPO
+from wafer_sim.adapters.periphery_case import case_from_record
 from wafer_sim.io import read_json, write_json, digest, object_digest
-from wafer_sim.remote import require_active_server
 
 
 def relation(gap, tolerance):
     return 'tie' if abs(gap) <= tolerance else 'A' if gap < 0 else 'B'
 
 
-def run(source, output, tests=None):
-    require_active_server(); started = time.perf_counter()
-    if subprocess.check_output(['git','-C',str(REPO),'status','--porcelain']):
+def run(source, output, tests=None, *, repo):
+    """Read a saved study; private server authorization belongs to orchestration."""
+    source, output, repo = Path(source), Path(output), Path(repo)
+    started = time.perf_counter()
+    if subprocess.check_output(['git','-C',str(repo),'status','--porcelain']):
         raise ValueError('Clean reader source required')
-    reader_commit = subprocess.check_output(['git','-C',str(REPO),'rev-parse','HEAD'],text=True).strip()
+    reader_commit = subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip()
     reader_tests = read_json(tests) if tests is not None else None
     if reader_tests is not None and (not reader_tests['passed'] or reader_tests['source_commit'] != reader_commit or
             'test_periphery_evidence' not in reader_tests['modules'] or
@@ -33,7 +34,7 @@ def run(source, output, tests=None):
         raise ValueError('Incomplete registered study')
     for name, sha in complete['artifacts_sha256'].items():
         if digest(source/name) != sha: raise ValueError('Changed result artifact: '+name)
-    compatible_source_changes = verify_source(REPO, start)
+    compatible_source_changes = verify_source(repo, start)
     receipt = start['tests_receipt']
     if (not receipt['passed'] or receipt['source_commit'] != start['source_commit'] or
             digest(receipt['tests_log']) != receipt['tests_log_sha256']): raise ValueError('Changed tests receipt')
@@ -42,14 +43,16 @@ def run(source, output, tests=None):
     if len(rows) != 27 or not all(r['passed'] for r in rows): raise ValueError('Missing checked executions')
     output.mkdir(); rechecks = []; verified_rows = []
     for row in rows:
-        c, w, p, b, tx, policy, identity = prepare(row['condition'], row['layout'], row['component'])
-        if object_digest(identity) != row['input_sha256']: raise ValueError('Recreated another input')
+        identity = read_json(source/f"inputs/{row['directory']}.json")
+        if object_digest(identity) != row['input_sha256']: raise ValueError('Stored input differs from summary')
+        if any(identity[name] != row[name] for name in ('condition', 'layout', 'component')):
+            raise ValueError('Stored input labels differ from summary')
+        case = case_from_record(identity)
+        c, w, p, b, tx, policy = (case.compiled, case.workload, case.placement, case.binding, case.transactions, case.policy)
         result = read_json(source/row['directory']/'execution.json')
         if object_digest(result) != row['execution_sha256']: raise ValueError('Changed execution object')
         checked = audit_periphery(w, p, c, b, tx, policy, result)
         if checked != read_json(source/row['directory']/'AUDIT.json'): raise ValueError('Independent saved audit differs')
-        if object_digest(identity) != object_digest(read_json(source/f"inputs/{row['directory']}.json")):
-            raise ValueError('Recreated input differs from saved input')
         verified_rows.append(checked_row(row, read_json(source/row['directory']/'MEASURED.json'),
             read_json(source/row['directory']/'PROCESS.json'), identity, result, checked))
         windows = []
@@ -131,6 +134,7 @@ def run(source, output, tests=None):
         reader_source_commit=reader_commit, reader_tests_receipt=reader_tests,
         reader_tests_receipt_sha256=digest(tests) if tests is not None else None,
         compatible_source_changes=compatible_source_changes, table_source='reaudited events with SUMMARY/MEASURED/PROCESS cross-check',
+        input_source='saved JSON inventory/work/placement/plans, independently audited without application lowering',
         hashed_artifacts=len(complete['artifacts_sha256']), source_hashes_checked=len(start['source_hashes']),
         executions_reaudited=len(rechecks), native_replays=len(replay), rechecks=rechecks,
         v1_export_equivalence=read_json(source/'V1_EXPORT_EQUIVALENCE.json'),
@@ -193,4 +197,5 @@ def run(source, output, tests=None):
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__); p.add_argument('--source', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True); p.add_argument('--tests', type=Path)
-    args = p.parse_args(); run(args.source, args.output, args.tests)
+    p.add_argument('--repo', type=Path, required=True)
+    args = p.parse_args(); run(args.source, args.output, args.tests, repo=args.repo)

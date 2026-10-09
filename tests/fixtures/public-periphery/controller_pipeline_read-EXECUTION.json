@@ -1,0 +1,1473 @@
+{
+  "application_cycles": 1704,
+  "blocked": {},
+  "complete": true,
+  "lifecycle": [
+    {
+      "cycle": 0,
+      "event": "admit",
+      "operation": "f0",
+      "used_bytes": {
+        "controller-0/buffer": 0,
+        "controller-1/buffer": 0,
+        "controller-2/buffer": 0,
+        "controller-3/buffer": 20481,
+        "dram-0-0": 0,
+        "dram-0-1": 0,
+        "dram-1-0": 0,
+        "dram-1-1": 0,
+        "dram-2-0": 0,
+        "dram-2-1": 0,
+        "dram-3-0": 20481,
+        "dram-3-1": 0,
+        "host-controller/buffer": 0,
+        "host-memory": 0,
+        "sram-0": 20545,
+        "sram-1": 0,
+        "sram-2": 0,
+        "sram-3": 0
+      }
+    },
+    {
+      "cycle": 1704,
+      "data": "y0",
+      "event": "output_ready",
+      "operation": "f0",
+      "used_bytes": {
+        "controller-0/buffer": 0,
+        "controller-1/buffer": 0,
+        "controller-2/buffer": 0,
+        "controller-3/buffer": 20481,
+        "dram-0-0": 0,
+        "dram-0-1": 0,
+        "dram-1-0": 0,
+        "dram-1-1": 0,
+        "dram-2-0": 0,
+        "dram-2-1": 0,
+        "dram-3-0": 20481,
+        "dram-3-1": 0,
+        "host-controller/buffer": 0,
+        "host-memory": 0,
+        "sram-0": 20545,
+        "sram-1": 0,
+        "sram-2": 0,
+        "sram-3": 0
+      }
+    },
+    {
+      "cycle": 1704,
+      "event": "retire",
+      "operation": "f0",
+      "used_bytes": {
+        "controller-0/buffer": 0,
+        "controller-1/buffer": 0,
+        "controller-2/buffer": 0,
+        "controller-3/buffer": 0,
+        "dram-0-0": 0,
+        "dram-0-1": 0,
+        "dram-1-0": 0,
+        "dram-1-1": 0,
+        "dram-2-0": 0,
+        "dram-2-1": 0,
+        "dram-3-0": 0,
+        "dram-3-1": 0,
+        "host-controller/buffer": 0,
+        "host-memory": 0,
+        "sram-0": 64,
+        "sram-1": 0,
+        "sram-2": 0,
+        "sram-3": 0
+      }
+    }
+  ],
+  "operations": {
+    "f0": {
+      "admitted": 0,
+      "capacity_wait_cycles": 0,
+      "finish": 1704,
+      "ready": 0,
+      "retired": 1704
+    }
+  },
+  "output_ready": {
+    "x0": 0,
+    "y0": 1704
+  },
+  "peak_bytes": {
+    "controller-0/buffer": 0,
+    "controller-1/buffer": 0,
+    "controller-2/buffer": 0,
+    "controller-3/buffer": 20481,
+    "dram-0-0": 0,
+    "dram-0-1": 0,
+    "dram-1-0": 0,
+    "dram-1-1": 0,
+    "dram-2-0": 0,
+    "dram-2-1": 0,
+    "dram-3-0": 20481,
+    "dram-3-1": 0,
+    "host-controller/buffer": 0,
+    "host-memory": 0,
+    "sram-0": 20545,
+    "sram-1": 0,
+    "sram-2": 0,
+    "sram-3": 0
+  },
+  "phases": [
+    {
+      "action": "0:read-request",
+      "finish": 58,
+      "kind": "transfer",
+      "operation": "f0",
+      "path": [
+        0,
+        2,
+        6,
+        7
+      ],
+      "phase": 0,
+      "predecessors": [],
+      "ready": 0,
+      "transfer_bytes": 16
+    },
+    {
+      "action": "1:read-command",
+      "finish": 62,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 1,
+      "predecessors": [
+        0
+      ],
+      "ready": 58
+    },
+    {
+      "action": "2:bank-fragment",
+      "finish": 220,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 2,
+      "predecessors": [
+        1
+      ],
+      "ready": 62
+    },
+    {
+      "action": "6:bank-fragment",
+      "finish": 348,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 6,
+      "predecessors": [
+        1
+      ],
+      "ready": 62
+    },
+    {
+      "action": "10:bank-fragment",
+      "finish": 476,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 10,
+      "predecessors": [
+        1
+      ],
+      "ready": 62
+    },
+    {
+      "action": "14:bank-fragment",
+      "finish": 604,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 14,
+      "predecessors": [
+        1
+      ],
+      "ready": 62
+    },
+    {
+      "action": "3:channel-fragment",
+      "finish": 284,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 3,
+      "predecessors": [
+        2
+      ],
+      "ready": 220
+    },
+    {
+      "action": "4:response-fragment",
+      "finish": 657,
+      "kind": "transfer",
+      "operation": "f0",
+      "path": [
+        7,
+        6,
+        2,
+        0
+      ],
+      "phase": 4,
+      "predecessors": [
+        3
+      ],
+      "ready": 284,
+      "transfer_bytes": 4096
+    },
+    {
+      "action": "7:channel-fragment",
+      "finish": 412,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 7,
+      "predecessors": [
+        6
+      ],
+      "ready": 348
+    },
+    {
+      "action": "8:response-fragment",
+      "finish": 785,
+      "kind": "transfer",
+      "operation": "f0",
+      "path": [
+        7,
+        6,
+        2,
+        0
+      ],
+      "phase": 8,
+      "predecessors": [
+        7
+      ],
+      "ready": 412,
+      "transfer_bytes": 4096
+    },
+    {
+      "action": "11:channel-fragment",
+      "finish": 540,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 11,
+      "predecessors": [
+        10
+      ],
+      "ready": 476
+    },
+    {
+      "action": "12:response-fragment",
+      "finish": 913,
+      "kind": "transfer",
+      "operation": "f0",
+      "path": [
+        7,
+        6,
+        2,
+        0
+      ],
+      "phase": 12,
+      "predecessors": [
+        11
+      ],
+      "ready": 540,
+      "transfer_bytes": 4096
+    },
+    {
+      "action": "15:channel-fragment",
+      "finish": 668,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 15,
+      "predecessors": [
+        14
+      ],
+      "ready": 604
+    },
+    {
+      "action": "5:sram-fragment",
+      "finish": 721,
+      "kind": "memory_write",
+      "operation": "f0",
+      "phase": 5,
+      "predecessors": [
+        4
+      ],
+      "ready": 657
+    },
+    {
+      "action": "16:response-fragment",
+      "finish": 1041,
+      "kind": "transfer",
+      "operation": "f0",
+      "path": [
+        7,
+        6,
+        2,
+        0
+      ],
+      "phase": 16,
+      "predecessors": [
+        15
+      ],
+      "ready": 668,
+      "transfer_bytes": 4096
+    },
+    {
+      "action": "18:bank-fragment",
+      "finish": 879,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 18,
+      "predecessors": [
+        1,
+        5
+      ],
+      "ready": 721
+    },
+    {
+      "action": "9:sram-fragment",
+      "finish": 849,
+      "kind": "memory_write",
+      "operation": "f0",
+      "phase": 9,
+      "predecessors": [
+        8
+      ],
+      "ready": 785
+    },
+    {
+      "action": "22:bank-fragment",
+      "finish": 880,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 22,
+      "predecessors": [
+        1,
+        9
+      ],
+      "ready": 849
+    },
+    {
+      "action": "19:channel-fragment",
+      "finish": 943,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 19,
+      "predecessors": [
+        18
+      ],
+      "ready": 879
+    },
+    {
+      "action": "23:channel-fragment",
+      "finish": 944,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 23,
+      "predecessors": [
+        22
+      ],
+      "ready": 880
+    },
+    {
+      "action": "13:sram-fragment",
+      "finish": 977,
+      "kind": "memory_write",
+      "operation": "f0",
+      "phase": 13,
+      "predecessors": [
+        12
+      ],
+      "ready": 913
+    },
+    {
+      "action": "20:response-fragment",
+      "finish": 1316,
+      "kind": "transfer",
+      "operation": "f0",
+      "path": [
+        7,
+        6,
+        2,
+        0
+      ],
+      "phase": 20,
+      "predecessors": [
+        19
+      ],
+      "ready": 943,
+      "transfer_bytes": 4096
+    },
+    {
+      "action": "24:response-fragment",
+      "finish": 1317,
+      "kind": "transfer",
+      "operation": "f0",
+      "path": [
+        7,
+        6,
+        2,
+        0
+      ],
+      "phase": 24,
+      "predecessors": [
+        23
+      ],
+      "ready": 944,
+      "transfer_bytes": 1
+    },
+    {
+      "action": "17:sram-fragment",
+      "finish": 1105,
+      "kind": "memory_write",
+      "operation": "f0",
+      "phase": 17,
+      "predecessors": [
+        16
+      ],
+      "ready": 1041
+    },
+    {
+      "action": "21:sram-fragment",
+      "finish": 1380,
+      "kind": "memory_write",
+      "operation": "f0",
+      "phase": 21,
+      "predecessors": [
+        20
+      ],
+      "ready": 1316
+    },
+    {
+      "action": "25:sram-fragment",
+      "finish": 1381,
+      "kind": "memory_write",
+      "operation": "f0",
+      "phase": 25,
+      "predecessors": [
+        24
+      ],
+      "ready": 1317
+    },
+    {
+      "action": "26:ordinary",
+      "finish": 1702,
+      "kind": "memory_read",
+      "operation": "f0",
+      "phase": 26,
+      "predecessors": [
+        5,
+        9,
+        13,
+        17,
+        21,
+        25
+      ],
+      "ready": 1381
+    },
+    {
+      "action": "27:ordinary",
+      "finish": 1703,
+      "kind": "compute",
+      "operation": "f0",
+      "phase": 27,
+      "predecessors": [
+        26
+      ],
+      "ready": 1702
+    },
+    {
+      "action": "28:ordinary",
+      "finish": 1704,
+      "kind": "memory_write",
+      "operation": "f0",
+      "phase": 28,
+      "predecessors": [
+        27
+      ],
+      "ready": 1703
+    }
+  ],
+  "policy": {
+    "admission": "stable topological order; atomic whole-operation capacity",
+    "arbitration": "nonpreemptive FCFS at each resource; latency follows serialization",
+    "collectives": "explicit action DAG and output requirements; atomic admission; all actions precede retirement; producer outputs and staging pinned until retirement",
+    "network": "minimum-hop lexicographic route; whole-message store-and-forward",
+    "time": "integer cycles; rational rates rounded up",
+    "within_phase": "demands in declared order"
+  },
+  "resources": {
+    "c0": {
+      "busy_cycles": 1,
+      "queue_wait_cycles": 0,
+      "requests": 1,
+      "work": {
+        "mac": 256
+      }
+    },
+    "controller-3/channel": {
+      "busy_cycles": 321,
+      "queue_wait_cycles": 63,
+      "requests": 6,
+      "work": {
+        "bytes": 20481
+      }
+    },
+    "controller-3/command": {
+      "busy_cycles": 4,
+      "queue_wait_cycles": 0,
+      "requests": 1,
+      "work": {
+        "bytes": 16
+      }
+    },
+    "dram-3-0/port": {
+      "busy_cycles": 641,
+      "queue_wait_cycles": 768,
+      "requests": 6,
+      "work": {
+        "bytes": 20481
+      }
+    },
+    "eject/0": {
+      "busy_cycles": 321,
+      "queue_wait_cycles": 63,
+      "requests": 6,
+      "work": {
+        "bytes": 20481
+      }
+    },
+    "eject/7": {
+      "busy_cycles": 1,
+      "queue_wait_cycles": 0,
+      "requests": 1,
+      "work": {
+        "bytes": 16
+      }
+    },
+    "fabric/0/2": {
+      "busy_cycles": 1,
+      "queue_wait_cycles": 0,
+      "requests": 1,
+      "work": {
+        "bytes": 16
+      }
+    },
+    "fabric/2/0": {
+      "busy_cycles": 321,
+      "queue_wait_cycles": 63,
+      "requests": 6,
+      "work": {
+        "bytes": 20481
+      }
+    },
+    "fabric/2/6": {
+      "busy_cycles": 1,
+      "queue_wait_cycles": 0,
+      "requests": 1,
+      "work": {
+        "bytes": 16
+      }
+    },
+    "fabric/6/2": {
+      "busy_cycles": 321,
+      "queue_wait_cycles": 63,
+      "requests": 6,
+      "work": {
+        "bytes": 20481
+      }
+    },
+    "fabric/6/7": {
+      "busy_cycles": 1,
+      "queue_wait_cycles": 0,
+      "requests": 1,
+      "work": {
+        "bytes": 16
+      }
+    },
+    "fabric/7/6": {
+      "busy_cycles": 321,
+      "queue_wait_cycles": 63,
+      "requests": 6,
+      "work": {
+        "bytes": 20481
+      }
+    },
+    "inject/0": {
+      "busy_cycles": 1,
+      "queue_wait_cycles": 0,
+      "requests": 1,
+      "work": {
+        "bytes": 16
+      }
+    },
+    "inject/7": {
+      "busy_cycles": 321,
+      "queue_wait_cycles": 63,
+      "requests": 6,
+      "work": {
+        "bytes": 20481
+      }
+    },
+    "sram-0/port": {
+      "busy_cycles": 643,
+      "queue_wait_cycles": 63,
+      "requests": 8,
+      "work": {
+        "bytes": 41026
+      }
+    }
+  },
+  "services": [
+    {
+      "amount": 16,
+      "category": "network",
+      "finish": 2,
+      "id": 0,
+      "ready": 0,
+      "resource": "inject/0",
+      "resource_predecessor": null,
+      "resource_released": 1,
+      "start": 0,
+      "step": 0,
+      "token": "f0/phase/0",
+      "unit": "bytes"
+    },
+    {
+      "amount": 16,
+      "category": "network",
+      "finish": 24,
+      "id": 1,
+      "ready": 2,
+      "resource": "fabric/0/2",
+      "resource_predecessor": null,
+      "resource_released": 3,
+      "start": 2,
+      "step": 1,
+      "token": "f0/phase/0",
+      "unit": "bytes"
+    },
+    {
+      "amount": 16,
+      "category": "network",
+      "finish": 46,
+      "id": 2,
+      "ready": 24,
+      "resource": "fabric/2/6",
+      "resource_predecessor": null,
+      "resource_released": 25,
+      "start": 24,
+      "step": 2,
+      "token": "f0/phase/0",
+      "unit": "bytes"
+    },
+    {
+      "amount": 16,
+      "category": "network",
+      "finish": 52,
+      "id": 3,
+      "ready": 46,
+      "resource": "fabric/6/7",
+      "resource_predecessor": null,
+      "resource_released": 47,
+      "start": 46,
+      "step": 3,
+      "token": "f0/phase/0",
+      "unit": "bytes"
+    },
+    {
+      "amount": 16,
+      "category": "network",
+      "finish": 58,
+      "id": 4,
+      "ready": 52,
+      "resource": "eject/7",
+      "resource_predecessor": null,
+      "resource_released": 53,
+      "start": 52,
+      "step": 4,
+      "token": "f0/phase/0",
+      "unit": "bytes"
+    },
+    {
+      "amount": 16,
+      "category": "memory",
+      "finish": 62,
+      "id": 5,
+      "ready": 58,
+      "resource": "controller-3/command",
+      "resource_predecessor": null,
+      "resource_released": 62,
+      "start": 58,
+      "step": 0,
+      "token": "f0/phase/1",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 220,
+      "id": 6,
+      "ready": 62,
+      "resource": "dram-3-0/port",
+      "resource_predecessor": null,
+      "resource_released": 190,
+      "start": 62,
+      "step": 0,
+      "token": "f0/phase/2",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 348,
+      "id": 7,
+      "ready": 62,
+      "resource": "dram-3-0/port",
+      "resource_predecessor": 6,
+      "resource_released": 318,
+      "start": 190,
+      "step": 0,
+      "token": "f0/phase/6",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 476,
+      "id": 8,
+      "ready": 62,
+      "resource": "dram-3-0/port",
+      "resource_predecessor": 7,
+      "resource_released": 446,
+      "start": 318,
+      "step": 0,
+      "token": "f0/phase/10",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 604,
+      "id": 9,
+      "ready": 62,
+      "resource": "dram-3-0/port",
+      "resource_predecessor": 8,
+      "resource_released": 574,
+      "start": 446,
+      "step": 0,
+      "token": "f0/phase/14",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 284,
+      "id": 10,
+      "ready": 220,
+      "resource": "controller-3/channel",
+      "resource_predecessor": null,
+      "resource_released": 284,
+      "start": 220,
+      "step": 0,
+      "token": "f0/phase/3",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 349,
+      "id": 11,
+      "ready": 284,
+      "resource": "inject/7",
+      "resource_predecessor": null,
+      "resource_released": 348,
+      "start": 284,
+      "step": 0,
+      "token": "f0/phase/4",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 412,
+      "id": 12,
+      "ready": 348,
+      "resource": "controller-3/channel",
+      "resource_predecessor": null,
+      "resource_released": 412,
+      "start": 348,
+      "step": 0,
+      "token": "f0/phase/7",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 418,
+      "id": 13,
+      "ready": 349,
+      "resource": "fabric/7/6",
+      "resource_predecessor": null,
+      "resource_released": 413,
+      "start": 349,
+      "step": 1,
+      "token": "f0/phase/4",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 477,
+      "id": 14,
+      "ready": 412,
+      "resource": "inject/7",
+      "resource_predecessor": null,
+      "resource_released": 476,
+      "start": 412,
+      "step": 0,
+      "token": "f0/phase/8",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 503,
+      "id": 15,
+      "ready": 418,
+      "resource": "fabric/6/2",
+      "resource_predecessor": null,
+      "resource_released": 482,
+      "start": 418,
+      "step": 2,
+      "token": "f0/phase/4",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 540,
+      "id": 16,
+      "ready": 476,
+      "resource": "controller-3/channel",
+      "resource_predecessor": null,
+      "resource_released": 540,
+      "start": 476,
+      "step": 0,
+      "token": "f0/phase/11",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 546,
+      "id": 17,
+      "ready": 477,
+      "resource": "fabric/7/6",
+      "resource_predecessor": null,
+      "resource_released": 541,
+      "start": 477,
+      "step": 1,
+      "token": "f0/phase/8",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 588,
+      "id": 18,
+      "ready": 503,
+      "resource": "fabric/2/0",
+      "resource_predecessor": null,
+      "resource_released": 567,
+      "start": 503,
+      "step": 3,
+      "token": "f0/phase/4",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 605,
+      "id": 19,
+      "ready": 540,
+      "resource": "inject/7",
+      "resource_predecessor": null,
+      "resource_released": 604,
+      "start": 540,
+      "step": 0,
+      "token": "f0/phase/12",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 631,
+      "id": 20,
+      "ready": 546,
+      "resource": "fabric/6/2",
+      "resource_predecessor": null,
+      "resource_released": 610,
+      "start": 546,
+      "step": 2,
+      "token": "f0/phase/8",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 657,
+      "id": 21,
+      "ready": 588,
+      "resource": "eject/0",
+      "resource_predecessor": null,
+      "resource_released": 652,
+      "start": 588,
+      "step": 4,
+      "token": "f0/phase/4",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 668,
+      "id": 22,
+      "ready": 604,
+      "resource": "controller-3/channel",
+      "resource_predecessor": null,
+      "resource_released": 668,
+      "start": 604,
+      "step": 0,
+      "token": "f0/phase/15",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 674,
+      "id": 23,
+      "ready": 605,
+      "resource": "fabric/7/6",
+      "resource_predecessor": null,
+      "resource_released": 669,
+      "start": 605,
+      "step": 1,
+      "token": "f0/phase/12",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 716,
+      "id": 24,
+      "ready": 631,
+      "resource": "fabric/2/0",
+      "resource_predecessor": null,
+      "resource_released": 695,
+      "start": 631,
+      "step": 3,
+      "token": "f0/phase/8",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 721,
+      "id": 25,
+      "ready": 657,
+      "resource": "sram-0/port",
+      "resource_predecessor": null,
+      "resource_released": 721,
+      "start": 657,
+      "step": 0,
+      "token": "f0/phase/5",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 733,
+      "id": 26,
+      "ready": 668,
+      "resource": "inject/7",
+      "resource_predecessor": null,
+      "resource_released": 732,
+      "start": 668,
+      "step": 0,
+      "token": "f0/phase/16",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 759,
+      "id": 27,
+      "ready": 674,
+      "resource": "fabric/6/2",
+      "resource_predecessor": null,
+      "resource_released": 738,
+      "start": 674,
+      "step": 2,
+      "token": "f0/phase/12",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 785,
+      "id": 28,
+      "ready": 716,
+      "resource": "eject/0",
+      "resource_predecessor": null,
+      "resource_released": 780,
+      "start": 716,
+      "step": 4,
+      "token": "f0/phase/8",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 879,
+      "id": 29,
+      "ready": 721,
+      "resource": "dram-3-0/port",
+      "resource_predecessor": null,
+      "resource_released": 849,
+      "start": 721,
+      "step": 0,
+      "token": "f0/phase/18",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 802,
+      "id": 30,
+      "ready": 733,
+      "resource": "fabric/7/6",
+      "resource_predecessor": null,
+      "resource_released": 797,
+      "start": 733,
+      "step": 1,
+      "token": "f0/phase/16",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 844,
+      "id": 31,
+      "ready": 759,
+      "resource": "fabric/2/0",
+      "resource_predecessor": null,
+      "resource_released": 823,
+      "start": 759,
+      "step": 3,
+      "token": "f0/phase/12",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 849,
+      "id": 32,
+      "ready": 785,
+      "resource": "sram-0/port",
+      "resource_predecessor": null,
+      "resource_released": 849,
+      "start": 785,
+      "step": 0,
+      "token": "f0/phase/9",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 887,
+      "id": 33,
+      "ready": 802,
+      "resource": "fabric/6/2",
+      "resource_predecessor": null,
+      "resource_released": 866,
+      "start": 802,
+      "step": 2,
+      "token": "f0/phase/16",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 913,
+      "id": 34,
+      "ready": 844,
+      "resource": "eject/0",
+      "resource_predecessor": null,
+      "resource_released": 908,
+      "start": 844,
+      "step": 4,
+      "token": "f0/phase/12",
+      "unit": "bytes"
+    },
+    {
+      "amount": 1,
+      "category": "memory",
+      "finish": 880,
+      "id": 35,
+      "ready": 849,
+      "resource": "dram-3-0/port",
+      "resource_predecessor": null,
+      "resource_released": 850,
+      "start": 849,
+      "step": 0,
+      "token": "f0/phase/22",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 943,
+      "id": 36,
+      "ready": 879,
+      "resource": "controller-3/channel",
+      "resource_predecessor": null,
+      "resource_released": 943,
+      "start": 879,
+      "step": 0,
+      "token": "f0/phase/19",
+      "unit": "bytes"
+    },
+    {
+      "amount": 1,
+      "category": "memory",
+      "finish": 944,
+      "id": 37,
+      "ready": 880,
+      "resource": "controller-3/channel",
+      "resource_predecessor": 36,
+      "resource_released": 944,
+      "start": 943,
+      "step": 0,
+      "token": "f0/phase/23",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 972,
+      "id": 38,
+      "ready": 887,
+      "resource": "fabric/2/0",
+      "resource_predecessor": null,
+      "resource_released": 951,
+      "start": 887,
+      "step": 3,
+      "token": "f0/phase/16",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 977,
+      "id": 39,
+      "ready": 913,
+      "resource": "sram-0/port",
+      "resource_predecessor": null,
+      "resource_released": 977,
+      "start": 913,
+      "step": 0,
+      "token": "f0/phase/13",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 1008,
+      "id": 40,
+      "ready": 943,
+      "resource": "inject/7",
+      "resource_predecessor": null,
+      "resource_released": 1007,
+      "start": 943,
+      "step": 0,
+      "token": "f0/phase/20",
+      "unit": "bytes"
+    },
+    {
+      "amount": 1,
+      "category": "network",
+      "finish": 1009,
+      "id": 41,
+      "ready": 944,
+      "resource": "inject/7",
+      "resource_predecessor": 40,
+      "resource_released": 1008,
+      "start": 1007,
+      "step": 0,
+      "token": "f0/phase/24",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 1041,
+      "id": 42,
+      "ready": 972,
+      "resource": "eject/0",
+      "resource_predecessor": null,
+      "resource_released": 1036,
+      "start": 972,
+      "step": 4,
+      "token": "f0/phase/16",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 1077,
+      "id": 43,
+      "ready": 1008,
+      "resource": "fabric/7/6",
+      "resource_predecessor": null,
+      "resource_released": 1072,
+      "start": 1008,
+      "step": 1,
+      "token": "f0/phase/20",
+      "unit": "bytes"
+    },
+    {
+      "amount": 1,
+      "category": "network",
+      "finish": 1078,
+      "id": 44,
+      "ready": 1009,
+      "resource": "fabric/7/6",
+      "resource_predecessor": 43,
+      "resource_released": 1073,
+      "start": 1072,
+      "step": 1,
+      "token": "f0/phase/24",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 1105,
+      "id": 45,
+      "ready": 1041,
+      "resource": "sram-0/port",
+      "resource_predecessor": null,
+      "resource_released": 1105,
+      "start": 1041,
+      "step": 0,
+      "token": "f0/phase/17",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 1162,
+      "id": 46,
+      "ready": 1077,
+      "resource": "fabric/6/2",
+      "resource_predecessor": null,
+      "resource_released": 1141,
+      "start": 1077,
+      "step": 2,
+      "token": "f0/phase/20",
+      "unit": "bytes"
+    },
+    {
+      "amount": 1,
+      "category": "network",
+      "finish": 1163,
+      "id": 47,
+      "ready": 1078,
+      "resource": "fabric/6/2",
+      "resource_predecessor": 46,
+      "resource_released": 1142,
+      "start": 1141,
+      "step": 2,
+      "token": "f0/phase/24",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 1247,
+      "id": 48,
+      "ready": 1162,
+      "resource": "fabric/2/0",
+      "resource_predecessor": null,
+      "resource_released": 1226,
+      "start": 1162,
+      "step": 3,
+      "token": "f0/phase/20",
+      "unit": "bytes"
+    },
+    {
+      "amount": 1,
+      "category": "network",
+      "finish": 1248,
+      "id": 49,
+      "ready": 1163,
+      "resource": "fabric/2/0",
+      "resource_predecessor": 48,
+      "resource_released": 1227,
+      "start": 1226,
+      "step": 3,
+      "token": "f0/phase/24",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "network",
+      "finish": 1316,
+      "id": 50,
+      "ready": 1247,
+      "resource": "eject/0",
+      "resource_predecessor": null,
+      "resource_released": 1311,
+      "start": 1247,
+      "step": 4,
+      "token": "f0/phase/20",
+      "unit": "bytes"
+    },
+    {
+      "amount": 1,
+      "category": "network",
+      "finish": 1317,
+      "id": 51,
+      "ready": 1248,
+      "resource": "eject/0",
+      "resource_predecessor": 50,
+      "resource_released": 1312,
+      "start": 1311,
+      "step": 4,
+      "token": "f0/phase/24",
+      "unit": "bytes"
+    },
+    {
+      "amount": 4096,
+      "category": "memory",
+      "finish": 1380,
+      "id": 52,
+      "ready": 1316,
+      "resource": "sram-0/port",
+      "resource_predecessor": null,
+      "resource_released": 1380,
+      "start": 1316,
+      "step": 0,
+      "token": "f0/phase/21",
+      "unit": "bytes"
+    },
+    {
+      "amount": 1,
+      "category": "memory",
+      "finish": 1381,
+      "id": 53,
+      "ready": 1317,
+      "resource": "sram-0/port",
+      "resource_predecessor": 52,
+      "resource_released": 1381,
+      "start": 1380,
+      "step": 0,
+      "token": "f0/phase/25",
+      "unit": "bytes"
+    },
+    {
+      "amount": 20481,
+      "category": "memory",
+      "finish": 1702,
+      "id": 54,
+      "ready": 1381,
+      "resource": "sram-0/port",
+      "resource_predecessor": null,
+      "resource_released": 1702,
+      "start": 1381,
+      "step": 0,
+      "token": "f0/phase/26",
+      "unit": "bytes"
+    },
+    {
+      "amount": 256,
+      "category": "compute",
+      "finish": 1703,
+      "id": 55,
+      "ready": 1702,
+      "resource": "c0",
+      "resource_predecessor": null,
+      "resource_released": 1703,
+      "start": 1702,
+      "step": 0,
+      "token": "f0/phase/27",
+      "unit": "mac"
+    },
+    {
+      "amount": 64,
+      "category": "memory",
+      "finish": 1704,
+      "id": 56,
+      "ready": 1703,
+      "resource": "sram-0/port",
+      "resource_predecessor": null,
+      "resource_released": 1704,
+      "start": 1703,
+      "step": 0,
+      "token": "f0/phase/28",
+      "unit": "bytes"
+    }
+  ],
+  "stopped_cycle": 1704,
+  "storage": {
+    "active_phases": {},
+    "all_operations_completed": true,
+    "available_data": [
+      "y0"
+    ],
+    "completed": [
+      "f0"
+    ],
+    "peak_bytes": {
+      "controller-0/buffer": 0,
+      "controller-1/buffer": 0,
+      "controller-2/buffer": 0,
+      "controller-3/buffer": 20481,
+      "dram-0-0": 0,
+      "dram-0-1": 0,
+      "dram-1-0": 0,
+      "dram-1-1": 0,
+      "dram-2-0": 0,
+      "dram-2-1": 0,
+      "dram-3-0": 20481,
+      "dram-3-1": 0,
+      "host-controller/buffer": 0,
+      "host-memory": 0,
+      "sram-0": 20545,
+      "sram-1": 0,
+      "sram-2": 0,
+      "sram-3": 0
+    },
+    "used_bytes": {
+      "controller-0/buffer": 0,
+      "controller-1/buffer": 0,
+      "controller-2/buffer": 0,
+      "controller-3/buffer": 0,
+      "dram-0-0": 0,
+      "dram-0-1": 0,
+      "dram-1-0": 0,
+      "dram-1-1": 0,
+      "dram-2-0": 0,
+      "dram-2-1": 0,
+      "dram-3-0": 0,
+      "dram-3-1": 0,
+      "host-controller/buffer": 0,
+      "host-memory": 0,
+      "sram-0": 64,
+      "sram-1": 0,
+      "sram-2": 0,
+      "sram-3": 0
+    }
+  },
+  "timing_evaluated": true
+}

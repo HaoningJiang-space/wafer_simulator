@@ -15,6 +15,10 @@ COMPATIBLE_READER_FIXES = frozenset({
     'src/wafer_sim/adapters/wafer_machine.py',
     'src/wafer_sim/adapters/memory_periphery.py',
     'src/wafer_sim/experiments/memory_periphery.py',
+    # Behavioral API extraction: legacy server imports and CLI routing only.
+    'src/wafer_sim/remote.py',
+    'src/wafer_sim/cli.py',
+    'docs/MEMORY_PERIPHERY_PROTOCOL.md',
 })
 
 
