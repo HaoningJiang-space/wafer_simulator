@@ -200,3 +200,11 @@ class MemoryPeripheryTests(unittest.TestCase):
         self.assertNotEqual(c.router_ids['m3'], c.router_ids['c0'])
         # This preserves the declared idealization, not a hardware protocol.
         audit_periphery(w, p, c, b, tx, policy, actual)
+
+    def test_capacity_blocked_execution_is_rejected_before_publication_lookup(self):
+        c, w, p, policy, b, tx = fixture(64)
+        memory = dict(b.memory); memory['controller-0/buffer'] = replace(memory['controller-0/buffer'], capacity_bytes=1)
+        blocked = replace(b, memory=memory); actual = execute(blocked, c.timing)
+        self.assertFalse(actual['complete'])
+        with self.assertRaisesRegex(ValueError, 'Incomplete'):
+            audit_periphery(w, p, c, blocked, tx, policy, actual)

@@ -8,6 +8,8 @@ from wafer_sim.execution.plan import Phase, Demand, Transfer
 
 
 def audit_periphery(workload, placement, compiled, binding, transactions, policy, result):
+    if not result.get('complete') or result.get('application_cycles') is None:
+        raise ValueError('Incomplete periphery execution cannot pass acceptance')
     # Check the policy independently of the plan used by execute()/audit_timing.
     # Ordinary periphery outputs publish at retirement; collective rank-local
     # publication belongs to its separate adapter and is deliberately untouched.
