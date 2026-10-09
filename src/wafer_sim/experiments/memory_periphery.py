@@ -57,7 +57,7 @@ def prepare(condition, layout=None, component=None):
     reg, base = registration()
     if condition not in reg['conditions']: raise ValueError('Unregistered condition')
     cfg = read_json(REPO/base['machine']); cfg['array'] = [reg['side'], reg['side']]
-    machine = from_config(cfg)
+    machine = from_config(cfg, check_router_ports=condition == 'v1_whole')
     c = compile_machine(machine) if condition == 'v1_whole' else compile_periphery(machine)
     policy = TransactionPolicy('pipeline' if condition == 'shared_pipeline' else 'whole',
                                reg['chunk_bytes'], reg['window_chunks'])

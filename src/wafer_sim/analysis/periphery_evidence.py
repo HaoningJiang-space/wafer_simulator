@@ -14,6 +14,7 @@ COMPATIBLE_READER_FIXES = frozenset({
     'src/wafer_sim/architecture/wafer_machine.py',
     'src/wafer_sim/adapters/wafer_machine.py',
     'src/wafer_sim/adapters/memory_periphery.py',
+    'src/wafer_sim/experiments/memory_periphery.py',
 })
 
 

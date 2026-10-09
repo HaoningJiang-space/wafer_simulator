@@ -81,6 +81,15 @@ class MemoryPeripheryTests(unittest.TestCase):
         interfaces[1] = replace(interfaces[1], memory_regions=('dram-0-0',))
         with self.assertRaisesRegex(ValueError, 'cover'): validate(m, network_interfaces=tuple(interfaces))
 
+    def test_inventory_config_can_defer_only_ports_until_shared_nics_exist(self):
+        cfg = read_json(Path(__file__).resolve().parents[1]/'configs/wafer_machine.json')
+        cfg['array'] = [2, 2]; cfg['banks_per_tile'] = 8
+        with self.assertRaisesRegex(ValueError, 'port'): from_config(cfg)
+        m = from_config(cfg, check_router_ports=False)
+        shared = compile_periphery(m)
+        self.assertEqual(len(shared.timing.endpoints), 9)
+        self.assertEqual(validate(m, network_interfaces=shared.target.network_interfaces)['router_ports']['m0'], 2)
+
     def test_single_fragment_retains_whole_object_timing_for_read_and_write(self):
         for write in (False, True):
             c, w, p, policy, b, tx = fixture(64, write)

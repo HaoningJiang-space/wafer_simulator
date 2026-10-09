@@ -247,7 +247,7 @@ def validate(machine, *, network_interfaces=None, check_router_ports=True):
     return result
 
 
-def from_config(config):
+def from_config(config, *, check_router_ports=True):
     rows,cols=config['array']; tw,th=config['tile_um']
     natural(rows,'rows',positive=True); natural(cols,'columns',positive=True)
     natural(tw,'tile width',positive=True); natural(th,'tile height',positive=True)
@@ -280,5 +280,5 @@ def from_config(config):
         config['hb_pitch_um'],config['stitch_signals_per_boundary'],config['wire_um_per_cycle'],
         config['frequency_hz'],config['flit_bytes'],config['router_latency_cycles'],
         config['access_latency_cycles'],config['provenance'])
-    validate(m)
+    validate(m, check_router_ports=check_router_ports)
     return m
