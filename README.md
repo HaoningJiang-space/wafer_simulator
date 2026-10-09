@@ -84,17 +84,29 @@ prior calibration is separate. D0/S frozen events reproduce exactly. Both D0
 and D1 already select Local globally, with zero reference choice regret.
 This is a partial result for one fixed hypothesis, not a reason to retune it.
 
+The [source-order and local-merge diagnosis](docs/results/source-order-001/REVIEW.md)
+uses saved components/applications and four component-only Python probes. Ordering
+one head per source restores the common-source finish times, but its second head
+still starts 60 cycles after native selection. Three distinct-source flows remain
+inaccurate; a shared output records 501/501/1,002 flits from two input branches.
+All 69 saved S critical messages have zero source-generation wait, whereas
+two-plus-one local input structure occurs in 6×6/7×7 B critical responses.
+Source ordering explains the component counterexample, but is not established as
+the primary application-gap cause. The next service question is local arrival
+and input identity; no application variant or new native run is added.
+
 The [information and boundary evidence](docs/NECESSARY_INFORMATION.md) separates
 observed failures from constructed distinguishing cases. S remains the detailed
-reference under each declared machine contract. Investigate behavior-preserving
-computation using measured costs before introducing another service approximation.
-Machine organization and transaction policy remain separate research axes.
+reference under each declared machine contract. Preserve necessary boundary
+behavior before compressing repeated computation. Machine organization and
+transaction policy remain separate research axes.
 
 The [first S cost profile](docs/results/native-service-profile-001/REVIEW.md)
 covers 6×6/7×7 B: four controlled executions preserve complete events and
 native protocol bytes. Native advancement and flit/path recording both matter;
-JSON and auditing also cost time. Prioritize evidence-path work with explicit
-equivalence checks; no lightweight mode or event-compressed backend is implemented.
+JSON and auditing also cost time. Evidence-path work with explicit equivalence
+checks is independent engineering, not a prerequisite for the source/merge
+study. No lightweight mode or event-compressed backend is published.
 
 The [public periphery APIs](docs/PUBLIC_PERIPHERY_API.md) separate compilation,
 execution and supplied-event audit from private study/server orchestration.

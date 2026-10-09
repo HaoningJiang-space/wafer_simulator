@@ -1,0 +1,727 @@
+{
+  "applications": [
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 9,
+      "S_critical_multi_input_shared_outputs": 0,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 0,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "local",
+      "messages": 114,
+      "side": 4
+    },
+    {
+      "D1_same_source_active_pairs": 4,
+      "D1_same_source_pairs_on_S_critical": 1,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 1,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 1,
+      "S_max_source_wait": 35,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 1,
+      "delayed_critical_tokens": [],
+      "layout": "clustered_local",
+      "messages": 114,
+      "side": 4
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 4,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 4,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "remote_balanced",
+      "messages": 114,
+      "side": 4
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 9,
+      "S_critical_multi_input_shared_outputs": 0,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 0,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "local",
+      "messages": 254,
+      "side": 6
+    },
+    {
+      "D1_same_source_active_pairs": 4,
+      "D1_same_source_pairs_on_S_critical": 1,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 1,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 1,
+      "S_max_source_wait": 35,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 1,
+      "delayed_critical_tokens": [],
+      "layout": "clustered_local",
+      "messages": 254,
+      "side": 6
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 3,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 3,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "remote_balanced",
+      "messages": 254,
+      "side": 6
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 9,
+      "S_critical_multi_input_shared_outputs": 0,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 0,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "local",
+      "messages": 345,
+      "side": 7
+    },
+    {
+      "D1_same_source_active_pairs": 1,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 1,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 1,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "clustered_local",
+      "messages": 345,
+      "side": 7
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 2,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 3,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "remote_balanced",
+      "messages": 345,
+      "side": 7
+    }
+  ],
+  "components": [
+    {
+      "hypothesis": "one source head until D1 fluid service end; no rate/path change; not native queue-drain prediction",
+      "merges": [],
+      "messages": [
+        {
+          "D1_error": 2048,
+          "D1_finish": 4128,
+          "S_finish": 2080,
+          "S_first_eject": 33,
+          "S_first_inject": 0,
+          "S_generated": 0,
+          "S_last_eject": 2079,
+          "S_last_inject": 1987,
+          "all_native_paths_equal_D1": true,
+          "destination": 19,
+          "probe_error": 0,
+          "probe_finish": 2080,
+          "probe_service_finish": 2048,
+          "probe_source_service_begin": 0,
+          "ready": 0,
+          "source": 0,
+          "source_boundary_error": 0,
+          "token": "component-0"
+        },
+        {
+          "D1_error": 0,
+          "D1_finish": 4149,
+          "S_finish": 4149,
+          "S_first_eject": 2102,
+          "S_first_inject": 1989,
+          "S_generated": 1988,
+          "S_last_eject": 4148,
+          "S_last_inject": 4035,
+          "all_native_paths_equal_D1": true,
+          "destination": 37,
+          "probe_error": 0,
+          "probe_finish": 4149,
+          "probe_service_finish": 4096,
+          "probe_source_service_begin": 2048,
+          "ready": 0,
+          "source": 0,
+          "source_boundary_error": 60,
+          "token": "component-1"
+        }
+      ],
+      "name": "two-source-stagger-0",
+      "source_queue": [
+        {
+          "expected_generated": 0,
+          "finish": 2080,
+          "first_inject": 0,
+          "generated": 0,
+          "id": 0,
+          "last_inject": 1987,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 0,
+          "selection_boundary_matches": true,
+          "source": 0,
+          "source_wait": 0,
+          "token": "component-0"
+        },
+        {
+          "expected_generated": 1988,
+          "finish": 4149,
+          "first_inject": 1989,
+          "generated": 1988,
+          "id": 1,
+          "last_inject": 4035,
+          "previous_token": "component-0",
+          "previous_unreceived_flits_at_selection": 46,
+          "ready": 0,
+          "selection_boundary_matches": true,
+          "source": 0,
+          "source_wait": 1988,
+          "token": "component-1"
+        }
+      ]
+    },
+    {
+      "hypothesis": "one source head until D1 fluid service end; no rate/path change; not native queue-drain prediction",
+      "merges": [
+        {
+          "edge": [
+            24,
+            36
+          ],
+          "input_counts": {
+            "12": 1002,
+            "25": 1002
+          },
+          "message_counts": {
+            "component-0": 501,
+            "component-1": 501,
+            "component-2": 1002
+          },
+          "messages": [
+            {
+              "first_input_arrival": 50,
+              "first_output_sink_arrival": 94,
+              "incoming_routers": [
+                12
+              ],
+              "last_input_arrival": 6124,
+              "last_output_sink_arrival": 6170,
+              "token": "component-0"
+            },
+            {
+              "first_input_arrival": 28,
+              "first_output_sink_arrival": 50,
+              "incoming_routers": [
+                12
+              ],
+              "last_input_arrival": 6102,
+              "last_output_sink_arrival": 6148,
+              "token": "component-1"
+            },
+            {
+              "first_input_arrival": 7,
+              "first_output_sink_arrival": 28,
+              "incoming_routers": [
+                25
+              ],
+              "last_input_arrival": 3958,
+              "last_output_sink_arrival": 4100,
+              "token": "component-2"
+            }
+          ],
+          "output_arrivals": 2004,
+          "overlap_window": [
+            94,
+            4101
+          ],
+          "scope": "Sink-arrival window counts, not an arbitration/credit intervention or queue-occupancy trace"
+        }
+      ],
+      "messages": [
+        {
+          "D1_error": 42,
+          "D1_finish": 6218,
+          "S_finish": 6176,
+          "S_first_eject": 99,
+          "S_first_inject": 0,
+          "S_generated": 0,
+          "S_last_eject": 6175,
+          "S_last_inject": 5762,
+          "all_native_paths_equal_D1": true,
+          "destination": 54,
+          "probe_error": 42,
+          "probe_finish": 6218,
+          "probe_service_finish": 6144,
+          "probe_source_service_begin": 0,
+          "ready": 0,
+          "source": 1,
+          "source_boundary_error": 0,
+          "token": "component-0"
+        },
+        {
+          "D1_error": 43,
+          "D1_finish": 6218,
+          "S_finish": 6175,
+          "S_first_eject": 76,
+          "S_first_inject": 0,
+          "S_generated": 0,
+          "S_last_eject": 6174,
+          "S_last_inject": 5830,
+          "all_native_paths_equal_D1": true,
+          "destination": 72,
+          "probe_error": 43,
+          "probe_finish": 6218,
+          "probe_service_finish": 6144,
+          "probe_source_service_begin": 0,
+          "ready": 0,
+          "source": 19,
+          "source_boundary_error": 0,
+          "token": "component-1"
+        },
+        {
+          "D1_error": 2070,
+          "D1_finish": 6218,
+          "S_finish": 4148,
+          "S_first_eject": 75,
+          "S_first_inject": 0,
+          "S_generated": 0,
+          "S_last_eject": 4147,
+          "S_last_inject": 3828,
+          "all_native_paths_equal_D1": true,
+          "destination": 90,
+          "probe_error": 2070,
+          "probe_finish": 6218,
+          "probe_service_finish": 6144,
+          "probe_source_service_begin": 0,
+          "ready": 0,
+          "source": 37,
+          "source_boundary_error": 0,
+          "token": "component-2"
+        }
+      ],
+      "name": "three-shared-stagger-0",
+      "source_queue": [
+        {
+          "expected_generated": 0,
+          "finish": 6176,
+          "first_inject": 0,
+          "generated": 0,
+          "id": 0,
+          "last_inject": 5762,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 0,
+          "selection_boundary_matches": true,
+          "source": 1,
+          "source_wait": 0,
+          "token": "component-0"
+        },
+        {
+          "expected_generated": 0,
+          "finish": 6175,
+          "first_inject": 0,
+          "generated": 0,
+          "id": 1,
+          "last_inject": 5830,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 0,
+          "selection_boundary_matches": true,
+          "source": 19,
+          "source_wait": 0,
+          "token": "component-1"
+        },
+        {
+          "expected_generated": 0,
+          "finish": 4148,
+          "first_inject": 0,
+          "generated": 0,
+          "id": 2,
+          "last_inject": 3828,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 0,
+          "selection_boundary_matches": true,
+          "source": 37,
+          "source_wait": 0,
+          "token": "component-2"
+        }
+      ]
+    },
+    {
+      "hypothesis": "one source head until D1 fluid service end; no rate/path change; not native queue-drain prediction",
+      "merges": [
+        {
+          "edge": [
+            24,
+            36
+          ],
+          "input_counts": {
+            "12": 1023,
+            "25": 1024
+          },
+          "message_counts": {
+            "component-0": 511,
+            "component-1": 512,
+            "component-2": 1024
+          },
+          "messages": [
+            {
+              "first_input_arrival": 49,
+              "first_output_sink_arrival": 70,
+              "incoming_routers": [
+                12
+              ],
+              "last_input_arrival": 5678,
+              "last_output_sink_arrival": 5724,
+              "token": "component-0"
+            },
+            {
+              "first_input_arrival": 537,
+              "first_output_sink_arrival": 558,
+              "incoming_routers": [
+                12
+              ],
+              "last_input_arrival": 6166,
+              "last_output_sink_arrival": 6212,
+              "token": "component-1"
+            },
+            {
+              "first_input_arrival": 1025,
+              "first_output_sink_arrival": 1046,
+              "incoming_routers": [
+                25
+              ],
+              "last_input_arrival": 4996,
+              "last_output_sink_arrival": 5138,
+              "token": "component-2"
+            }
+          ],
+          "output_arrivals": 2047,
+          "overlap_window": [
+            1046,
+            5139
+          ],
+          "scope": "Sink-arrival window counts, not an arbitration/credit intervention or queue-occupancy trace"
+        }
+      ],
+      "messages": [
+        {
+          "D1_error": -784,
+          "D1_finish": 4946,
+          "S_finish": 5730,
+          "S_first_eject": 75,
+          "S_first_inject": 0,
+          "S_generated": 0,
+          "S_last_eject": 5729,
+          "S_last_inject": 5296,
+          "all_native_paths_equal_D1": true,
+          "destination": 54,
+          "probe_error": -784,
+          "probe_finish": 4946,
+          "probe_service_finish": 4872,
+          "probe_source_service_begin": 0,
+          "ready": 0,
+          "source": 1,
+          "source_boundary_error": 0,
+          "token": "component-0"
+        },
+        {
+          "D1_error": -275,
+          "D1_finish": 5964,
+          "S_finish": 6239,
+          "S_first_eject": 584,
+          "S_first_inject": 509,
+          "S_generated": 509,
+          "S_last_eject": 6238,
+          "S_last_inject": 6022,
+          "all_native_paths_equal_D1": true,
+          "destination": 72,
+          "probe_error": -275,
+          "probe_finish": 5964,
+          "probe_service_finish": 5890,
+          "probe_source_service_begin": 509,
+          "ready": 509,
+          "source": 19,
+          "source_boundary_error": 0,
+          "token": "component-1"
+        },
+        {
+          "D1_error": 1033,
+          "D1_finish": 6219,
+          "S_finish": 5186,
+          "S_first_eject": 1093,
+          "S_first_inject": 1018,
+          "S_generated": 1018,
+          "S_last_eject": 5185,
+          "S_last_inject": 4866,
+          "all_native_paths_equal_D1": true,
+          "destination": 90,
+          "probe_error": 1033,
+          "probe_finish": 6219,
+          "probe_service_finish": 6145,
+          "probe_source_service_begin": 1018,
+          "ready": 1018,
+          "source": 37,
+          "source_boundary_error": 0,
+          "token": "component-2"
+        }
+      ],
+      "name": "three-shared-stagger-509",
+      "source_queue": [
+        {
+          "expected_generated": 0,
+          "finish": 5730,
+          "first_inject": 0,
+          "generated": 0,
+          "id": 0,
+          "last_inject": 5296,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 0,
+          "selection_boundary_matches": true,
+          "source": 1,
+          "source_wait": 0,
+          "token": "component-0"
+        },
+        {
+          "expected_generated": 509,
+          "finish": 6239,
+          "first_inject": 509,
+          "generated": 509,
+          "id": 1,
+          "last_inject": 6022,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 509,
+          "selection_boundary_matches": true,
+          "source": 19,
+          "source_wait": 0,
+          "token": "component-1"
+        },
+        {
+          "expected_generated": 1018,
+          "finish": 5186,
+          "first_inject": 1018,
+          "generated": 1018,
+          "id": 2,
+          "last_inject": 4866,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 1018,
+          "selection_boundary_matches": true,
+          "source": 37,
+          "source_wait": 0,
+          "token": "component-2"
+        }
+      ]
+    },
+    {
+      "hypothesis": "one source head until D1 fluid service end; no rate/path change; not native queue-drain prediction",
+      "merges": [
+        {
+          "edge": [
+            24,
+            36
+          ],
+          "input_counts": {},
+          "message_counts": {},
+          "messages": [
+            {
+              "first_input_arrival": 49,
+              "first_output_sink_arrival": 70,
+              "incoming_routers": [
+                12
+              ],
+              "last_input_arrival": 2095,
+              "last_output_sink_arrival": 2116,
+              "token": "component-0"
+            },
+            {
+              "first_input_arrival": 3028,
+              "first_output_sink_arrival": 3049,
+              "incoming_routers": [
+                12
+              ],
+              "last_input_arrival": 5074,
+              "last_output_sink_arrival": 5095,
+              "token": "component-1"
+            },
+            {
+              "first_input_arrival": 6007,
+              "first_output_sink_arrival": 6028,
+              "incoming_routers": [
+                25
+              ],
+              "last_input_arrival": 8053,
+              "last_output_sink_arrival": 8074,
+              "token": "component-2"
+            }
+          ],
+          "output_arrivals": 0,
+          "overlap_window": null,
+          "scope": "Sink-arrival window counts, not an arbitration/credit intervention or queue-occupancy trace"
+        }
+      ],
+      "messages": [
+        {
+          "D1_error": 0,
+          "D1_finish": 2122,
+          "S_finish": 2122,
+          "S_first_eject": 75,
+          "S_first_inject": 0,
+          "S_generated": 0,
+          "S_last_eject": 2121,
+          "S_last_inject": 1987,
+          "all_native_paths_equal_D1": true,
+          "destination": 54,
+          "probe_error": 0,
+          "probe_finish": 2122,
+          "probe_service_finish": 2048,
+          "probe_source_service_begin": 0,
+          "ready": 0,
+          "source": 1,
+          "source_boundary_error": 0,
+          "token": "component-0"
+        },
+        {
+          "D1_error": 0,
+          "D1_finish": 5122,
+          "S_finish": 5122,
+          "S_first_eject": 3075,
+          "S_first_inject": 3000,
+          "S_generated": 3000,
+          "S_last_eject": 5121,
+          "S_last_inject": 4987,
+          "all_native_paths_equal_D1": true,
+          "destination": 72,
+          "probe_error": 0,
+          "probe_finish": 5122,
+          "probe_service_finish": 5048,
+          "probe_source_service_begin": 3000,
+          "ready": 3000,
+          "source": 19,
+          "source_boundary_error": 0,
+          "token": "component-1"
+        },
+        {
+          "D1_error": 0,
+          "D1_finish": 8122,
+          "S_finish": 8122,
+          "S_first_eject": 6075,
+          "S_first_inject": 6000,
+          "S_generated": 6000,
+          "S_last_eject": 8121,
+          "S_last_inject": 7987,
+          "all_native_paths_equal_D1": true,
+          "destination": 90,
+          "probe_error": 0,
+          "probe_finish": 8122,
+          "probe_service_finish": 8048,
+          "probe_source_service_begin": 6000,
+          "ready": 6000,
+          "source": 37,
+          "source_boundary_error": 0,
+          "token": "component-2"
+        }
+      ],
+      "name": "three-shared-stagger-3000",
+      "source_queue": [
+        {
+          "expected_generated": 0,
+          "finish": 2122,
+          "first_inject": 0,
+          "generated": 0,
+          "id": 0,
+          "last_inject": 1987,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 0,
+          "selection_boundary_matches": true,
+          "source": 1,
+          "source_wait": 0,
+          "token": "component-0"
+        },
+        {
+          "expected_generated": 3000,
+          "finish": 5122,
+          "first_inject": 3000,
+          "generated": 3000,
+          "id": 1,
+          "last_inject": 4987,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 3000,
+          "selection_boundary_matches": true,
+          "source": 19,
+          "source_wait": 0,
+          "token": "component-1"
+        },
+        {
+          "expected_generated": 6000,
+          "finish": 8122,
+          "first_inject": 6000,
+          "generated": 6000,
+          "id": 2,
+          "last_inject": 7987,
+          "previous_token": null,
+          "previous_unreceived_flits_at_selection": null,
+          "ready": 6000,
+          "selection_boundary_matches": true,
+          "source": 37,
+          "source_wait": 0,
+          "token": "component-2"
+        }
+      ]
+    }
+  ],
+  "new_application_executions": 0,
+  "new_component_only_probes": 4,
+  "new_native_executions": 0,
+  "note": "Probe finish agreement does not validate its source-release boundary. Credit/grant/VC eligibility are not recorded. Application observations use separate closed loops, not controlled inputs."
+}

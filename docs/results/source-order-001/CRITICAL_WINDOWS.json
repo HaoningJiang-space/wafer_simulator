@@ -1,0 +1,441 @@
+{
+  "applications": [
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 9,
+      "S_critical_multi_input_shared_outputs": 0,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 0,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "local",
+      "messages": 114,
+      "side": 4
+    },
+    {
+      "D1_same_source_active_pairs": 4,
+      "D1_same_source_pairs_on_S_critical": 1,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 1,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 1,
+      "S_max_source_wait": 35,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 1,
+      "delayed_critical_tokens": [],
+      "layout": "clustered_local",
+      "messages": 114,
+      "side": 4
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 4,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 4,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "remote_balanced",
+      "messages": 114,
+      "side": 4
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 9,
+      "S_critical_multi_input_shared_outputs": 0,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 0,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "local",
+      "messages": 254,
+      "side": 6
+    },
+    {
+      "D1_same_source_active_pairs": 4,
+      "D1_same_source_pairs_on_S_critical": 1,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 1,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 1,
+      "S_max_source_wait": 35,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 1,
+      "delayed_critical_tokens": [],
+      "layout": "clustered_local",
+      "messages": 254,
+      "side": 6
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 3,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 3,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "remote_balanced",
+      "messages": 254,
+      "side": 6
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 9,
+      "S_critical_multi_input_shared_outputs": 0,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 0,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "local",
+      "messages": 345,
+      "side": 7
+    },
+    {
+      "D1_same_source_active_pairs": 1,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 1,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 1,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "clustered_local",
+      "messages": 345,
+      "side": 7
+    },
+    {
+      "D1_same_source_active_pairs": 2,
+      "D1_same_source_pairs_on_S_critical": 0,
+      "S_critical_max_source_wait": 0,
+      "S_critical_messages": 7,
+      "S_critical_multi_input_shared_outputs": 2,
+      "S_critical_source_delayed": 0,
+      "S_critical_temporally_shared_outputs": 3,
+      "S_max_source_wait": 0,
+      "S_selection_boundary_mismatches": 0,
+      "S_source_delayed": 0,
+      "delayed_critical_tokens": [],
+      "layout": "remote_balanced",
+      "messages": 345,
+      "side": 7
+    }
+  ],
+  "scope": "Post-prediction sink-arrival windows; not grants, credits or queue occupancy",
+  "windows": [
+    {
+      "edge": [
+        0,
+        2
+      ],
+      "input_counts": {
+        "endpoint/0": 256,
+        "router/1": 80
+      },
+      "layout": "clustered_local",
+      "other_flits": 80,
+      "peer_counts": {
+        "second4/phase/7": 80
+      },
+      "side": 4,
+      "target_flits": 256,
+      "token": "second0/phase/1",
+      "window": [
+        16230,
+        16901
+      ]
+    },
+    {
+      "edge": [
+        14,
+        22
+      ],
+      "input_counts": {
+        "router/15": 1013,
+        "router/6": 1024
+      },
+      "layout": "remote_balanced",
+      "other_flits": 1013,
+      "peer_counts": {
+        "first15/phase/4": 1013
+      },
+      "side": 4,
+      "target_flits": 1024,
+      "token": "first11/phase/4",
+      "window": [
+        3211,
+        7284
+      ]
+    },
+    {
+      "edge": [
+        30,
+        28
+      ],
+      "input_counts": {
+        "endpoint/45": 7,
+        "router/22": 256
+      },
+      "layout": "remote_balanced",
+      "other_flits": 7,
+      "peer_counts": {
+        "second15/phase/1": 7
+      },
+      "side": 4,
+      "target_flits": 256,
+      "token": "second11/phase/1",
+      "window": [
+        12198,
+        12723
+      ]
+    },
+    {
+      "edge": [
+        16,
+        8
+      ],
+      "input_counts": {
+        "endpoint/24": 238,
+        "router/24": 256
+      },
+      "layout": "remote_balanced",
+      "other_flits": 238,
+      "peer_counts": {
+        "second7/phase/13": 238
+      },
+      "side": 4,
+      "target_flits": 256,
+      "token": "second11/phase/13",
+      "window": [
+        25242,
+        26229
+      ]
+    },
+    {
+      "edge": [
+        8,
+        16
+      ],
+      "input_counts": {
+        "router/0": 1020,
+        "router/9": 1024
+      },
+      "layout": "remote_balanced",
+      "other_flits": 1020,
+      "peer_counts": {
+        "second7/phase/7": 1020
+      },
+      "side": 4,
+      "target_flits": 1024,
+      "token": "second11/phase/7",
+      "window": [
+        16217,
+        20304
+      ]
+    },
+    {
+      "edge": [
+        0,
+        2
+      ],
+      "input_counts": {
+        "endpoint/0": 256,
+        "router/1": 80
+      },
+      "layout": "clustered_local",
+      "other_flits": 80,
+      "peer_counts": {
+        "second6/phase/7": 80
+      },
+      "side": 6,
+      "target_flits": 256,
+      "token": "second0/phase/1",
+      "window": [
+        16230,
+        16901
+      ]
+    },
+    {
+      "edge": [
+        46,
+        34
+      ],
+      "input_counts": {
+        "router/47": 1002,
+        "router/58": 2037
+      },
+      "layout": "remote_balanced",
+      "other_flits": 2015,
+      "peer_counts": {
+        "first11/phase/4": 1013,
+        "first5/phase/4": 1002
+      },
+      "side": 6,
+      "target_flits": 1024,
+      "token": "first17/phase/4",
+      "window": [
+        3276,
+        9353
+      ]
+    },
+    {
+      "edge": [
+        36,
+        24
+      ],
+      "input_counts": {
+        "endpoint/54": 256,
+        "router/48": 247
+      },
+      "layout": "remote_balanced",
+      "other_flits": 247,
+      "peer_counts": {
+        "second23/phase/13": 247
+      },
+      "side": 6,
+      "target_flits": 256,
+      "token": "second17/phase/13",
+      "window": [
+        29368,
+        30373
+      ]
+    },
+    {
+      "edge": [
+        24,
+        36
+      ],
+      "input_counts": {
+        "router/12": 2036,
+        "router/25": 998
+      },
+      "layout": "remote_balanced",
+      "other_flits": 2010,
+      "peer_counts": {
+        "second23/phase/7": 1012,
+        "second29/phase/7": 998
+      },
+      "side": 6,
+      "target_flits": 1024,
+      "token": "second17/phase/7",
+      "window": [
+        18409,
+        24476
+      ]
+    },
+    {
+      "edge": [
+        1,
+        0
+      ],
+      "input_counts": {
+        "endpoint/1": 1,
+        "endpoint/2": 1024
+      },
+      "layout": "clustered_local",
+      "other_flits": 1,
+      "peer_counts": {
+        "second6/phase/16": 1
+      },
+      "side": 7,
+      "target_flits": 1024,
+      "token": "second0/phase/7",
+      "window": [
+        20661,
+        22710
+      ]
+    },
+    {
+      "edge": [
+        56,
+        42
+      ],
+      "input_counts": {
+        "router/57": 1002,
+        "router/70": 2037
+      },
+      "layout": "remote_balanced",
+      "other_flits": 2015,
+      "peer_counts": {
+        "first14/phase/4": 1013,
+        "first7/phase/4": 1002
+      },
+      "side": 7,
+      "target_flits": 1024,
+      "token": "first21/phase/4",
+      "window": [
+        3276,
+        10533
+      ]
+    },
+    {
+      "edge": [
+        58,
+        72
+      ],
+      "input_counts": {
+        "router/44": 266
+      },
+      "layout": "remote_balanced",
+      "other_flits": 10,
+      "peer_counts": {
+        "second14/phase/13": 10
+      },
+      "side": 7,
+      "target_flits": 256,
+      "token": "second21/phase/13",
+      "window": [
+        30858,
+        31389
+      ]
+    },
+    {
+      "edge": [
+        58,
+        44
+      ],
+      "input_counts": {
+        "router/59": 472,
+        "router/72": 2293
+      },
+      "layout": "remote_balanced",
+      "other_flits": 1741,
+      "peer_counts": {
+        "second14/phase/7": 1013,
+        "second42/phase/13": 256,
+        "second7/phase/7": 472
+      },
+      "side": 7,
+      "target_flits": 1024,
+      "token": "second21/phase/7",
+      "window": [
+        19546,
+        25921
+      ]
+    }
+  ]
+}

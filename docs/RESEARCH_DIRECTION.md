@@ -205,25 +205,42 @@ credit model is part of this completed study.
 ## Necessary information and behavior-preserving computation
 
 The [evidence table](NECESSARY_INFORMATION.md) relates independent duration,
-immediate end-to-end sharing, flow fairness, supply granularity and ideal feedback
-to observed or constructed distinguishing cases. S is the detailed reference
+source ordering, immediate end-to-end sharing, flow fairness, supply granularity
+and ideal feedback to observed or constructed distinguishing cases. S is the detailed reference
 within an explicit machine contract; agreement with S is separate from hardware
 representativeness. Treat D0 and D1 as retained comparisons, not an obligation
 to build D2/D3.
 
-Profile S's native work, interface costs, recording, serialization and auditing
-before selecting an acceleration mechanism. Changes to recording must preserve
-message completion and closed execution. If repeated router work dominates,
-investigate batching between causally necessary boundaries with event equivalence;
-do not assume an unchanged active-flow count licenses a jump. No event-compressed
-network or new physical feedback protocol is implemented by the D1 milestone.
+The [saved-data source-order test](results/source-order-001/REVIEW.md) confirms
+that native selection is nonpreemptive until the current source injection queue
+drains. A source-only probe recovers common-source final times without fitting
+rates, but still releases the second head 60 cycles after native selection.
+The three-distinct-source component remains inaccurate. Its output arrivals
+count 501/501/1,002 flits from two input branches in a common window; this is
+evidence to test input identity and local arrival, not a complete arbitration law.
+
+All 69 saved S critical network messages have zero generation wait. Neither
+6×6 nor 7×7 B has a D1 same-source overlap touching the S critical chain, while
+both have actual two-plus-one input merging on critical responses. Do not
+promote the common-source repair into a primary explanation of application gap
+errors. Local competition remains relevant and deserves the next small service
+test. The source-only candidate does not pass the component gate for a new
+application backend; zero new native or application executions were needed.
+
+Changes to recording must preserve message completion and closed execution.
+If repeated router work is the relevant cost, investigate batching between
+causally necessary boundaries with event equivalence; do not assume an unchanged
+active-flow count licenses a jump. No event-compressed network or new physical
+feedback protocol is implemented by these milestones.
 
 The [two-input S cost diagnosis](results/native-service-profile-001/REVIEW.md)
 now preserves full events and protocols in four controlled profiles. Remaining
 BookSim Step work and adapter flit/path recording are both material; Python JSON
-and audit traversals add cost. First target evidence work with equivalence checks.
-S stays the detailed decision reference, D0/D1 the comparisons. Profiling waits
-are not pure IPC cost, and instrumented sections are not speedup measurements.
+and audit traversals add cost. Evidence optimization is an independent engineering
+track, not a prerequisite for testing source order and local merging. The local
+recording-mode draft is paused outside main, without validation or performance
+claims. S stays the detailed decision reference, D0/D1 the comparisons. Profiling
+waits are not pure IPC cost, and instrumented sections are not speedup measurements.
 
 ## Frozen evidence
 
