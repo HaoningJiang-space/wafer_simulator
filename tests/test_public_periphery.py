@@ -1,5 +1,6 @@
 """Portable API/readback, event equivalence and independent policy rejection."""
 import copy
+import json
 from pathlib import Path
 import os
 import subprocess
@@ -34,7 +35,7 @@ class PublicPeripheryTests(unittest.TestCase):
                 machine, work, placement, shared, kind = inputs(row['name'])
                 case = compile_case(machine, work, placement, TransactionPolicy(kind),
                                     interface_organization='controller' if shared else 'bank')
-                record = case.to_record()
+                record = json.loads(json.dumps(case.to_record(), sort_keys=True))
                 self.assertEqual(object_digest(record), row['input_sha256'])
                 result = execute(case.binding, case.compiled.timing)
                 self.assertEqual(object_digest(result), row['execution_sha256'])
@@ -57,7 +58,9 @@ class PublicPeripheryTests(unittest.TestCase):
                 patch('subprocess.Popen', side_effect=AssertionError('process'))):
             self.assertEqual(audit_input(record, result), expected)
         restored = case_from_record(record)
-        self.assertEqual(execute(restored.binding, restored.compiled.timing), result)
+        # The old JSON snapshot represents tuple-valued event fields as arrays.
+        actual = json.loads(json.dumps(execute(restored.binding, restored.compiled.timing)))
+        self.assertEqual(actual, result)
 
     def test_faulty_supplied_plan_and_self_consistent_execution_still_fail(self):
         record = read_json(FIXTURE/'controller_pipeline_read-INPUT.json')
