@@ -12,7 +12,12 @@ mkdir "$out"
 cp -a "$repo/third_party/nw-design-for-wsi" "$out/upstream"
 patch -d "$out/upstream" -p1 < "$repo/patches/booksim-wafer.patch"
 native="$out/upstream/rapidchiplet/booksim2/src"
-make -C "$native" -j4 CXX="g++ -I$root/deps/json-source/single_include" > "$out/build.log" 2>&1
+parser_tools="$root/deps/parser-tools-001"
+[[ -x "$parser_tools/usr/bin/flex" && -x "$parser_tools/usr/bin/bison" ]]
+BISON_PKGDATADIR="$parser_tools/usr/share/bison" make -C "$native" -j4 \
+    LEX="$parser_tools/usr/bin/flex" YACC="$parser_tools/usr/bin/bison -y" \
+    CXX="g++ -I$root/deps/json-source/single_include" > "$out/build.log" 2>&1
+cp "$parser_tools/PACKAGES.sha256" "$out/parser-tools.sha256"
 cp "$repo/src/wafer_sim/adapters/native/online_booksim.cpp" "$out/online_booksim.cpp"
 patch -d "$out" -p1 < "$repo/patches/online-booksim-cost-profile.patch"
 includes=(-I"$native" -I"$native/allocators" -I"$native/arbiters" -I"$native/routers"
