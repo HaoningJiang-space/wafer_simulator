@@ -16,8 +16,16 @@ def relation(gap, tolerance):
     return 'tie' if abs(gap) <= tolerance else 'A' if gap < 0 else 'B'
 
 
-def run(source, output):
+def run(source, output, tests=None):
     require_active_server(); started = time.perf_counter()
+    if subprocess.check_output(['git','-C',str(REPO),'status','--porcelain']):
+        raise ValueError('Clean reader source required')
+    reader_commit = subprocess.check_output(['git','-C',str(REPO),'rev-parse','HEAD'],text=True).strip()
+    reader_tests = read_json(tests) if tests is not None else None
+    if reader_tests is not None and (not reader_tests['passed'] or reader_tests['source_commit'] != reader_commit or
+            'test_periphery_evidence' not in reader_tests['modules'] or
+            digest(reader_tests['tests_log']) != reader_tests['tests_log_sha256']):
+        raise ValueError('Same-source reader/semantic regressions required')
     if not output.is_absolute() or output.exists(): raise ValueError('Fresh absolute output required')
     complete = read_json(source/'COMPLETE.json'); start = read_json(source/'STARTED.json')
     if (not complete['complete'] or complete['application_cells'] != 6 or
@@ -120,7 +128,8 @@ def run(source, output):
     write_json(output/'SUMMARY.json', compact_rows)
     write_json(output/'CHECKED.json', dict(passed=True, experiment_source_commit=start['source_commit'],
         source_run=str(source), completion_sha256=digest(source/'COMPLETE.json'),
-        reader_source_commit=subprocess.check_output(['git','-C',str(REPO),'rev-parse','HEAD'],text=True).strip(),
+        reader_source_commit=reader_commit, reader_tests_receipt=reader_tests,
+        reader_tests_receipt_sha256=digest(tests) if tests is not None else None,
         compatible_source_changes=compatible_source_changes, table_source='reaudited events with SUMMARY/MEASURED/PROCESS cross-check',
         hashed_artifacts=len(complete['artifacts_sha256']), source_hashes_checked=len(start['source_hashes']),
         executions_reaudited=len(rechecks), native_replays=len(replay), rechecks=rechecks,
@@ -183,4 +192,5 @@ def run(source, output):
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__); p.add_argument('--source', type=Path, required=True)
-    p.add_argument('--output', type=Path, required=True); args = p.parse_args(); run(args.source, args.output)
+    p.add_argument('--output', type=Path, required=True); p.add_argument('--tests', type=Path)
+    args = p.parse_args(); run(args.source, args.output, args.tests)

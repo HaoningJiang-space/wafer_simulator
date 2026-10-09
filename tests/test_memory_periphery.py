@@ -177,3 +177,17 @@ class MemoryPeripheryTests(unittest.TestCase):
         b = replace(b, plans={'f': plan}); actual = execute(b, c.timing)
         self.assertEqual(actual['output_ready']['y'], actual['operations']['f']['retired'])
         audit_periphery(w, p, c, b, tx, policy, actual)
+
+    def test_ideal_commit_visibility_reuses_a_remote_window_in_same_cycle(self):
+        c, w, p, policy, _, _ = fixture()
+        p = Placement(p.compute, {**p.data, 'x': 'dram-3-0'})
+        b, tx = bind_periphery(w, c, p, policy); actual = execute(b, c.timing)
+        phases = {r['phase']: r for r in actual['phases']}
+        first = tx[0]['chunks'][0]; fifth = tx[0]['chunks'][4]
+        committed = phases[first['destination_phase']]['finish']
+        self.assertEqual(phases[fifth['source_phase']]['ready'], committed)
+        bank = next(e for e in actual['services'] if e['token'] == f"f/phase/{fifth['source_phase']}")
+        self.assertEqual(bank['start'], committed)
+        self.assertNotEqual(c.router_ids['m3'], c.router_ids['c0'])
+        # This preserves the declared idealization, not a hardware protocol.
+        audit_periphery(w, p, c, b, tx, policy, actual)
