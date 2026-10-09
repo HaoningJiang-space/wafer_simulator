@@ -33,6 +33,7 @@ def main():
     modules.append('test_independent_spatial_service')
     modules.append('test_shared_spatial_service')
     modules.append('test_memory_periphery')
+    modules.append('test_periphery_evidence')
     suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
     log = args.output / "tests.log"
     with log.open("w") as stream:

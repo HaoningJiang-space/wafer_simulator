@@ -2,9 +2,11 @@
 import argparse
 from pathlib import Path
 import statistics
+import subprocess
 import time
 
 from wafer_sim.analysis.memory_periphery import audit_periphery
+from wafer_sim.analysis.periphery_evidence import verify_source, validate_rows, checked_row
 from wafer_sim.experiments.memory_periphery import prepare, REPO
 from wafer_sim.io import read_json, write_json, digest, object_digest
 from wafer_sim.remote import require_active_server
@@ -23,14 +25,14 @@ def run(source, output):
         raise ValueError('Incomplete registered study')
     for name, sha in complete['artifacts_sha256'].items():
         if digest(source/name) != sha: raise ValueError('Changed result artifact: '+name)
-    for name, sha in start['source_hashes'].items():
-        if digest(REPO/name) != sha: raise ValueError('Saved experiment source changed: '+name)
+    compatible_source_changes = verify_source(REPO, start)
     receipt = start['tests_receipt']
     if (not receipt['passed'] or receipt['source_commit'] != start['source_commit'] or
             digest(receipt['tests_log']) != receipt['tests_log_sha256']): raise ValueError('Changed tests receipt')
     rows = read_json(source/'SUMMARY.json'); reg = start['registration']
+    validate_rows(rows, reg)
     if len(rows) != 27 or not all(r['passed'] for r in rows): raise ValueError('Missing checked executions')
-    output.mkdir(); rechecks = []
+    output.mkdir(); rechecks = []; verified_rows = []
     for row in rows:
         c, w, p, b, tx, policy, identity = prepare(row['condition'], row['layout'], row['component'])
         if object_digest(identity) != row['input_sha256']: raise ValueError('Recreated another input')
@@ -38,6 +40,10 @@ def run(source, output):
         if object_digest(result) != row['execution_sha256']: raise ValueError('Changed execution object')
         checked = audit_periphery(w, p, c, b, tx, policy, result)
         if checked != read_json(source/row['directory']/'AUDIT.json'): raise ValueError('Independent saved audit differs')
+        if object_digest(identity) != object_digest(read_json(source/f"inputs/{row['directory']}.json")):
+            raise ValueError('Recreated input differs from saved input')
+        verified_rows.append(checked_row(row, read_json(source/row['directory']/'MEASURED.json'),
+            read_json(source/row['directory']/'PROCESS.json'), identity, result, checked))
         windows = []
         for t in tx:
             if 'chunks' not in t: continue
@@ -54,6 +60,7 @@ def run(source, output):
                              maximum_observed_fragment_window=max(windows, default=0)))
         print('rechecked', row['directory'], flush=True)
         del result
+    rows = verified_rows
     applications = [r for r in rows if r['component'] is None]
     table, costs = [], []
     for condition in reg['conditions']:
@@ -113,6 +120,8 @@ def run(source, output):
     write_json(output/'SUMMARY.json', compact_rows)
     write_json(output/'CHECKED.json', dict(passed=True, experiment_source_commit=start['source_commit'],
         source_run=str(source), completion_sha256=digest(source/'COMPLETE.json'),
+        reader_source_commit=subprocess.check_output(['git','-C',str(REPO),'rev-parse','HEAD'],text=True).strip(),
+        compatible_source_changes=compatible_source_changes, table_source='reaudited events with SUMMARY/MEASURED/PROCESS cross-check',
         hashed_artifacts=len(complete['artifacts_sha256']), source_hashes_checked=len(start['source_hashes']),
         executions_reaudited=len(rechecks), native_replays=len(replay), rechecks=rechecks,
         v1_export_equivalence=read_json(source/'V1_EXPORT_EQUIVALENCE.json'),
