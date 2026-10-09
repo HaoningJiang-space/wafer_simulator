@@ -1,5 +1,6 @@
 """Component readback, paired decisions and measured D0/U1/S costs."""
 import argparse
+import hashlib
 from collections import Counter, defaultdict
 from dataclasses import asdict
 from itertools import combinations
@@ -24,12 +25,26 @@ def verify_manifest(root):
     if start['registration'] != reg or start['base_registration'] != base: raise ValueError('Changed controls')
     for name,sha in done['artifacts_sha256'].items():
         if digest(root/name) != sha: raise ValueError('Changed artifact '+name)
+    corrections={}
     for name,sha in start['source_hashes'].items():
-        if digest(REPO/name) != sha: raise ValueError('Changed source '+name)
+        current=digest(REPO/name)
+        if current == sha: continue
+        # Component captures do not use critical-chain attribution. Correcting
+        # that analysis adapter or this independent reader cannot change their
+        # native service. Preserve and check the archived capture source, and
+        # explicitly report both hashes. All calibration/prediction code stays
+        # byte-identical; application runs require their current source hashes.
+        if done['kind']=='calibration' and name in {
+                'src/wafer_sim/analysis/timed_attribution.py',
+                'src/wafer_sim/analysis/independent_spatial_study.py'}:
+            archived=subprocess.check_output(['git','-C',str(REPO),'show',start['source_commit']+':'+name])
+            if hashlib.sha256(archived).hexdigest()!=sha: raise ValueError('Archived source identity differs '+name)
+            corrections[name]=dict(capture_sha256=sha,reader_sha256=current)
+        else: raise ValueError('Changed source '+name)
     receipt=start['tests_receipt']
     if not receipt['passed'] or digest(receipt['tests_log']) != receipt['tests_log_sha256']:
         raise ValueError('Invalid semantic receipt')
-    return done,start
+    return done,dict(start,readback_source_changes=corrections)
 
 
 def verify_calibration(root):
@@ -82,7 +97,7 @@ def verify_calibration(root):
     return table,dict(passed=True,component_cases=len(cases),full_probe_readbacks=count,
         supplemental_holdouts=holdouts,artifact_hashes_checked=len(done['artifacts_sha256']),
         table_sha256=digest(root/'TABLE.json'),calibration_manifest_sha256=digest(root/'COMPLETE.json'),
-        calibration_root=str(root),cost=cost)
+        calibration_root=str(root),cost=cost,analysis_source_changes=start['readback_source_changes'])
 
 
 def decisions(rows, models, tolerance, budget):

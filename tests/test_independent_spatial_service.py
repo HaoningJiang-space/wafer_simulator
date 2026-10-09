@@ -9,6 +9,7 @@ from test_wafer_machine import one_read
 from test_memory_abstraction import ClockNetwork
 from wafer_sim.adapters.independent_spatial_service import IndependentSpatialNetwork, contract, key, machine_identity
 from wafer_sim.analysis.independent_spatial_service import audit
+from wafer_sim.analysis.timed_attribution import critical_chain
 from wafer_sim.execution.timing import execute
 from wafer_sim.execution.plan import Transfer
 from wafer_sim.experiments.independent_spatial_service import component_cases
@@ -99,6 +100,15 @@ class IndependentSpatialServiceTests(unittest.TestCase):
         result=execute(b,c.timing,network=client(c,table),cycle_limit=10000);end=result['application_cycles']
         with self.assertRaises(TimeoutError):execute(b,c.timing,network=client(c,table),cycle_limit=end-1)
         self.assertTrue(execute(b,c.timing,network=client(c,table),cycle_limit=end)['complete'])
+
+    def test_d0_network_intervals_close_critical_chain(self):
+        c,b,table=fixture()
+        result=execute(b,c.timing,network=client(c,table),cycle_limit=10000)
+        chain=critical_chain(b,result)
+        self.assertEqual(sum(chain['cycles'].values()),result['application_cycles'])
+        self.assertEqual(chain['cycles']['network'],88)
+        self.assertEqual({s['token'] for s in chain['segments'] if s['category']=='network'},
+            {m['token'] for m in result['network_messages']})
 
     def test_component_design_never_reads_application_evidence(self):
         reads=[]
