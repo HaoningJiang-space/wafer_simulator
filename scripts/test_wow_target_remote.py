@@ -37,6 +37,7 @@ def main():
     modules.append('test_periphery_attribution')
     modules.append('test_public_periphery')
     modules.append('test_experiment_server')
+    modules.append('test_d1_provenance')
     suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
     log = args.output / "tests.log"
     with log.open("w") as stream:

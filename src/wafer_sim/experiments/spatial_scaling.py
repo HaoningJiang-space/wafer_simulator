@@ -11,6 +11,8 @@ import subprocess
 import sys
 
 from wafer_sim.adapters.wafer_machine import compile_machine, bind_machine, export_booksim
+from wafer_sim.adapters.periphery_case import compile_case
+from wafer_sim.adapters.memory_periphery import TransactionPolicy
 from wafer_sim.adapters.scaling_layout import place_scaled, capacity_bound
 from wafer_sim.adapters.memory_abstraction import project
 from wafer_sim.adapters.uniform_memory_network import UniformMemoryNetwork
@@ -31,9 +33,11 @@ from wafer_sim.workloads.memory_machine import build
 def prepare(side, layout, model):
     registration = read_json(REPO/'configs/spatial_scaling.json')
     cfg = read_json(REPO/registration['machine']); cfg['array'] = [side, side]
-    c = compile_machine(from_config(cfg))
+    machine = from_config(cfg)
     work, meta = build(side*side, **registration['per_worker'])
-    p = place_scaled(meta, side, layout); base, tx = bind_machine(work, c, p)
+    p = place_scaled(meta, side, layout)
+    case = compile_case(machine, work, p, TransactionPolicy('whole'), interface_organization='bank')
+    c, base, tx = case.compiled, case.binding, case.transactions
     bound = capacity_bound(base)
     b, timing, contract = project(c, base, model)
     capacity_bound(b)

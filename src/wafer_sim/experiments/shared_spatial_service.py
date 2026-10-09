@@ -22,10 +22,13 @@ from wafer_sim.experiments.independent_spatial_service import (
 from wafer_sim.experiments.isolated_response import semantic_config
 from wafer_sim.experiments.transfer_granularity import Meter, usage, native_peak
 from wafer_sim.experiments.wafer_machine import replay
+from wafer_sim.experiments.d1_provenance import verify_frozen_v1, backend_identity
+from wafer_sim.adapters.periphery_case import compile_case
+from wafer_sim.adapters.memory_periphery import TransactionPolicy
 from wafer_sim.execution.plan import Transfer
 from wafer_sim.execution.timing import execute
 from wafer_sim.io import read_json,write_json,digest,object_digest
-from wafer_sim.remote import require_active_server
+from wafer_sim.experiments.server import require_active_server
 
 REGISTRATION='configs/shared_spatial_service.json'
 FROZEN_D1=FROZEN_D0+['src/wafer_sim/architecture','src/wafer_sim/workloads',
@@ -54,8 +57,19 @@ def gate(output, tests):
     commit=subprocess.check_output(['git','-C',str(REPO),'rev-parse','HEAD'],text=True).strip();receipt=read_json(tests)
     if (not receipt['passed'] or receipt['source_commit']!=commit or 'test_shared_spatial_service' not in receipt['modules'] or
             digest(receipt['tests_log'])!=receipt['tests_log_sha256']):raise ValueError('Same-source D1 tests required')
-    if subprocess.check_output(['git','-C',str(REPO),'diff',reg['frozen_commit'],'--name-only','--',*FROZEN_D1]):
-        raise ValueError('Frozen physical/work/execution/D0/S changed')
+    source_changes=verify_frozen_v1(REPO,reg['frozen_commit'],FROZEN_D1)
+    accepted=read_json(REPO/'docs/results/independent-spatial-service-001/SUMMARY.json');input_checks=[]
+    for side in base['sides']:
+        for layout in base['layouts']:
+            for model in reg['models']:
+                prepared=prepared_model(side,layout,model)
+                old=next(r for r in accepted if (r['side'],r['layout'],r['model'])==(side,layout,model if model!='D1' else 'S'))
+                if prepared[9]['physical_input_sha256']!=old['physical_input_sha256']:
+                    raise ValueError('Changed frozen v1 physical/work/plan input')
+                if model!='D1' and prepared[9]['projection_sha256']!=old['projection_sha256']:
+                    raise ValueError('Changed accepted D0/S projection')
+                input_checks.append(dict(side=side,layout=layout,model=model,
+                    physical_input_sha256=prepared[9]['physical_input_sha256'],projection_sha256=prepared[9]['projection_sha256']))
     binary=root/'build/booksim-online/online_booksim';expected=table()['binary_sha256']
     if digest(binary)!=expected:raise ValueError('Changed accepted native reference binary')
     os.sched_setaffinity(0,sorted(os.sched_getaffinity(0))[-2:]);output.mkdir()
@@ -66,7 +80,9 @@ def gate(output, tests):
         packages=subprocess.check_output([sys.executable,'-m','pip','freeze'],text=True).splitlines(),
         affinity=sorted(os.sched_getaffinity(0)),load=os.getloadavg(),binary_sha256=expected,
         accepted_D0_table_sha256=digest(REPO/'docs/results/independent-spatial-service-001/calibration/TABLE.json'),
-        frozen_paths=FROZEN_D1,source_hashes={str(p.relative_to(REPO)):digest(p) for p in files}))
+        frozen_paths=FROZEN_D1,compatible_source_changes=source_changes,frozen_input_checks=input_checks,
+        machine_organization='v1-bank-endpoints',transaction_policy='whole',backend_selection='explicit D0/D1/S',
+        source_hashes={str(p.relative_to(REPO)):digest(p) for p in files}))
     return binary
 
 
@@ -223,6 +239,7 @@ def worker(output,side,layout,model,frozen_input):
     with meter.phase('independent_audit'):
         checked=check(prepared,result);write_json(output/'AUDIT.json',checked)
         chain=critical_chain(binding,result);write_json(output/'critical_chain.json',chain)
+        identity=backend_identity(model,spec,result)
     raw=result.get('native_network_messages',result['network_messages']) if model!='D1' else []
     write_json(output/'MEASURED.json',dict(side=side,layout=layout,model=model,application_cycles=result['application_cycles'],
         execution_sha256=object_digest(result),physical_input_sha256=prepared[9]['physical_input_sha256'],
@@ -230,16 +247,25 @@ def worker(output,side,layout,model,frozen_input):
         status=checked['status'],chain_cycles=chain['cycles'],logical_messages=len(result['network_messages']),
         native_flits=sum(len(m['flits']) for m in raw),flow_epochs=len(result.get('flow_epochs',[])),
         python_full_worker_peak_rss_kib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
-        result_bytes=(output/'execution.json').stat().st_size,affinity=sorted(os.sched_getaffinity(0)),load=os.getloadavg()))
+        result_bytes=(output/'execution.json').stat().st_size,affinity=sorted(os.sched_getaffinity(0)),load=os.getloadavg(),
+        **identity,backend_contract_sha256=object_digest(spec)))
 
 
 def run(output,tests,component_root):
     from wafer_sim.analysis.shared_spatial_study import verify_components
-    binary=gate(output,tests);reg,base=registration()
+    campaign_started=time.perf_counter()
+    binary=gate(output,tests);reg,base=registration();gate_seconds=time.perf_counter()-campaign_started;worker_seconds=0;replay_seconds=0
     try:
+        validation_started=time.perf_counter()
         checked=verify_components(component_root);write_json(output/'COMPONENTS_VERIFIED.json',checked)
+        component_revalidation_seconds=time.perf_counter()-validation_started
         for side in base['sides']:
             for layout in base['layouts']:
+                common=prepared_model(side,layout,'S')
+                # Snapshot only declared machine/work/placement and whole policy.
+                # No S timing/routes enter the public or model prediction inputs.
+                public=compile_case(common[0].physical,common[1],common[2],TransactionPolicy('whole'),interface_organization='bank')
+                write_json(output/f'public_inputs/{side}-{layout}.json',public.to_record(condition='v1_whole',layout=layout))
                 for model in reg['models']:
                     write_json(output/f'inputs/{side}-{layout}-{model}.json',input_identity(prepared_model(side,layout,model)))
         for rep in range(base['repetitions']):
@@ -251,7 +277,8 @@ def run(output,tests,component_root):
                             subprocess.run([sys.executable,'-m','wafer_sim.experiments.shared_spatial_service','--worker',
                                 '--output',str(output/f'{name}-rep-{rep}'),'--side',str(side),'--layout',layout,'--model',model,
                                 '--input',str(output/f'inputs/{name}.json')],check=True,stdout=log,stderr=subprocess.STDOUT,timeout=900)
-                        write_json(output/f'{name}-rep-{rep}/PROCESS.json',dict(wall_seconds=time.perf_counter()-started,
+                        elapsed=time.perf_counter()-started;worker_seconds+=elapsed
+                        write_json(output/f'{name}-rep-{rep}/PROCESS.json',dict(wall_seconds=elapsed,
                             scope='fresh whole worker including imports, preparation, execution, logging, serialization and audit'))
                         print(name,rep,flush=True)
         rows=[];accepted=read_json(REPO/'docs/results/independent-spatial-service-001/SUMMARY.json')
@@ -272,9 +299,14 @@ def run(output,tests,component_root):
                         if samples[0]['execution_sha256']!=old['execution_sha256']:raise ValueError('Frozen D0/S events changed')
                         d=output/f'{side}-{layout}-{model}-rep-0';meter=Meter()
                         with meter.phase('native_command_replay'):replay(c,binary,d,d/'replay',base['network_seed'])
+                        replay_seconds+=meter.rows[0]['wall_seconds']
                         write_json(d/'REPLAY_COST.json',meter.rows)
                 if len(physical)!=1:raise ValueError('Different model physical inputs')
         write_json(output/'SUMMARY.json',rows)
+        write_json(output/'COST.json',dict(total_wall_seconds=time.perf_counter()-campaign_started,
+            gate_and_input_checks_seconds=gate_seconds,fresh_worker_wall_seconds=worker_seconds,native_replay_seconds=replay_seconds,
+            reused_component_revalidation_seconds=component_revalidation_seconds,new_component_executions=0,
+            scope='Fresh whole workers, registered replay, reused evidence readback; calibration and original components separate'))
         finish(output,kind='D1_applications',cells=27,executions=len(rows),native_replays=18,
             components_root=str(component_root),components_manifest_sha256=digest(component_root/'COMPLETE.json'))
     except BaseException as exc:write_json(output/'FAILED.json',dict(type=type(exc).__name__,message=str(exc)));raise

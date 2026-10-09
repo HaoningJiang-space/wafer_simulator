@@ -15,6 +15,7 @@ from wafer_sim.experiments.shared_spatial_service import (
     REPO, registration, component_cases, prepared_model, check, input_identity, verify_d0_rule)
 from wafer_sim.experiments.spatial_scaling import prepare
 from wafer_sim.experiments.isolated_response import semantic_config
+from wafer_sim.experiments.d1_provenance import verify_saved_sources, backend_identity
 from wafer_sim.io import read_json,write_json,digest,object_digest
 from wafer_sim.remote import require_active_server
 
@@ -26,11 +27,10 @@ def verify_manifest(root):
     if start['registration']!=reg or start['base_registration']!=base:raise ValueError('Changed D1 registration')
     for name,sha in done['artifacts_sha256'].items():
         if digest(root/name)!=sha:raise ValueError('Changed D1 artifact '+name)
-    for name,sha in start['source_hashes'].items():
-        if digest(REPO/name)!=sha:raise ValueError('Changed D1 source '+name)
+    source_changes=verify_saved_sources(REPO,start)
     receipt=start['tests']
     if not receipt['passed'] or digest(receipt['tests_log'])!=receipt['tests_log_sha256']:raise ValueError('Invalid D1 semantic receipt')
-    return done,start
+    return done,dict(start,readback_source_changes=source_changes)
 
 
 def verify_components(root):
@@ -89,7 +89,8 @@ def verify_components(root):
                 predicted_path=d1['path'],native_paths=[dict(routers=list(p),flits=n) for p,n in Counter(tuple(f['router_path']) for f in s['flits']).items()]))
     return dict(passed=True,cases=len(cases),full_component_readbacks=count,solo_cases=sum(c['kind']=='single' for c in cases),
         artifact_hashes_checked=len(done['artifacts_sha256']),manifest_sha256=digest(root/'COMPLETE.json'),
-        rule=read_json(root/'D0_RULE_VERIFIED.json'),cost=read_json(root/'COST.json'),comparisons=comparisons)
+        rule=read_json(root/'D0_RULE_VERIFIED.json'),cost=read_json(root/'COST.json'),comparisons=comparisons,
+        readback_source_changes=start['readback_source_changes'],source_commit=start['source_commit'],new_component_executions=0)
 
 
 def summarize_cost(chosen):
@@ -133,6 +134,9 @@ def analyze(root,output):
                         raise ValueError('Measurement summary differs')
                     if read_json(directory/'PROCESS.json')['wall_seconds']!=sample['process_wall_seconds']:raise ValueError('Changed complete-worker cost')
                     checked=check(prepared,result);chain=critical_chain(binding,result)
+                    for key,value in backend_identity(model,prepared[6],result).items():
+                        if sample[key]!=value:raise ValueError('Changed explicit machine/policy/backend identity')
+                    if sample['backend_contract_sha256']!=object_digest(prepared[6]):raise ValueError('Changed backend contract')
                     if checked!=read_json(directory/'AUDIT.json') or object_digest(chain)!=object_digest(read_json(directory/'critical_chain.json')):
                         raise ValueError('Completion/critical-chain audit differs')
                     sha=object_digest(result);hashes.add(sha)
@@ -195,7 +199,8 @@ def analyze(root,output):
     # Per-message path diagnostics remain on the server, separate from inputs.
     write_json(output/'path_diagnostics.json',routes)
     write_json(output/'SUMMARY.json',dict(rows=rows,costs=costs,pairs=pairs,choices=choices,accuracy=accuracy,
-        components=components,route_summary=route_summary))
+        components=components,route_summary=route_summary,campaign_cost=read_json(root/'COST.json'),
+        calibration_cost=read_json(REPO/'docs/results/independent-spatial-service-001/calibration/COST.json')))
     plot(output,rows,costs)
     write_json(output/'VERIFIED.json',dict(passed=True,source_commit=subprocess.check_output(['git','-C',str(REPO),'rev-parse','HEAD'],text=True).strip(),
         run_manifest_sha256=digest(root/'COMPLETE.json'),component_manifest_sha256=digest(component_root/'COMPLETE.json'),
