@@ -66,8 +66,9 @@ policy deliberately identifies it with destination commit.
 
 ## Next method question, not an implemented backend
 
-First profile the detailed S execution: native advancement, interface work,
-recording, serialization and audits. A lighter record mode is acceptable only
+The [first detailed S profile](results/native-service-profile-001/REVIEW.md)
+measures native advancement, interface work, recording, serialization and audits.
+A lighter record mode is acceptable only
 after its message completion and application events match the detailed mode.
 If repeated service computation is the relevant cost, investigate whether a
 local service process can be advanced in a batch

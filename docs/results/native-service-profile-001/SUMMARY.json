@@ -1,0 +1,914 @@
+{
+  "all_exact_events": true,
+  "all_exact_protocol": true,
+  "baseline_costs": [
+    {
+      "execution_max_seconds": 5.59876460256055,
+      "execution_median_seconds": 5.442964371293783,
+      "execution_min_seconds": 5.440128926187754,
+      "execution_python_cpu_seconds_median": 1.2910039999999998,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.03662102157250047,
+      "graph_binding_preparation_median_seconds": 0.035589028149843216,
+      "graph_binding_preparation_min_seconds": 0.034474418964236975,
+      "independent_audit_max_seconds": 1.72092874487862,
+      "independent_audit_median_seconds": 1.7106896140612662,
+      "independent_audit_min_seconds": 1.7010440998710692,
+      "layout": "remote_balanced",
+      "logical_messages": 254,
+      "model": "S",
+      "native_flits": 92525,
+      "native_peak_rss_kib_median": 337548,
+      "native_total_cpu_seconds_median": 5.104475,
+      "network_close_serialization_max_seconds": 1.3499719039537013,
+      "network_close_serialization_median_seconds": 1.3084870288148522,
+      "network_close_serialization_min_seconds": 1.306745809968561,
+      "network_configuration_max_seconds": 0.3815477048046887,
+      "network_configuration_median_seconds": 0.37358424393460155,
+      "network_configuration_min_seconds": 0.3705112929455936,
+      "network_initialization_max_seconds": 0.024924127850681543,
+      "network_initialization_median_seconds": 0.02447773702442646,
+      "network_initialization_min_seconds": 0.02369681792333722,
+      "process_wall_seconds_median": 10.510864570736885,
+      "python_full_worker_peak_rss_kib_median": 427904,
+      "python_lifetime_peak_rss_kib_median": 245196,
+      "result_bytes_median": 90771705,
+      "result_serialization_max_seconds": 0.656163333915174,
+      "result_serialization_median_seconds": 0.6556740803644061,
+      "result_serialization_min_seconds": 0.6523624523542821,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 9.669698270969093,
+      "execution_median_seconds": 9.080965399742126,
+      "execution_min_seconds": 8.952688516117632,
+      "execution_python_cpu_seconds_median": 1.9647739999999998,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.06604729779064655,
+      "graph_binding_preparation_median_seconds": 0.04729290725663304,
+      "graph_binding_preparation_min_seconds": 0.04699932271614671,
+      "independent_audit_max_seconds": 2.1880068532191217,
+      "independent_audit_median_seconds": 2.178304900880903,
+      "independent_audit_min_seconds": 2.174974401947111,
+      "layout": "remote_balanced",
+      "logical_messages": 345,
+      "model": "S",
+      "native_flits": 125844,
+      "native_peak_rss_kib_median": 433048,
+      "native_total_cpu_seconds_median": 8.553025,
+      "network_close_serialization_max_seconds": 2.0429251631721854,
+      "network_close_serialization_median_seconds": 2.0238160928711295,
+      "network_close_serialization_min_seconds": 1.9848090251907706,
+      "network_configuration_max_seconds": 0.3904994949698448,
+      "network_configuration_median_seconds": 0.37406307738274336,
+      "network_configuration_min_seconds": 0.3668857468292117,
+      "network_initialization_max_seconds": 0.024576852098107338,
+      "network_initialization_median_seconds": 0.0242741908878088,
+      "network_initialization_min_seconds": 0.02409298438578844,
+      "process_wall_seconds_median": 16.121864444110543,
+      "python_full_worker_peak_rss_kib_median": 579788,
+      "python_lifetime_peak_rss_kib_median": 322352,
+      "result_bytes_median": 131769623,
+      "result_serialization_max_seconds": 0.9540988211520016,
+      "result_serialization_median_seconds": 0.9504470243118703,
+      "result_serialization_min_seconds": 0.9406404909677804,
+      "samples": 3,
+      "side": 7
+    }
+  ],
+  "legacy_timer_correction": "Original process_wall_seconds includes parent checked_worker readback. Retained as launch_including_parent_readback_seconds; no missing worker times reconstructed. Future launcher separates them.",
+  "rows": [
+    {
+      "application_cycles": 31303,
+      "directory": "6-python_functions",
+      "exact_reference_execution": true,
+      "exact_reference_protocol": true,
+      "execution_sha256": "759f5a46a32e8c4c85c0afb90909e5a08cbcec61e67eade525e94361c19ff1a1",
+      "launch_including_parent_readback_seconds": 14.933004727121443,
+      "mode": "python_functions",
+      "native_total_cpu_seconds": 4.789396999999999,
+      "protocol_sha256": "9ec80e9d0f139d3ee8fa46e03020877f492d5f5049289edd76bbe2b6615cb08e",
+      "python_profile": {
+        "scope": "Whole worker functions excluding initial driver imports; elapsed time includes native waits",
+        "selected_functions": [
+          {
+            "calls": 2,
+            "cumulative_seconds": 1.44635048,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/analysis/online_network.py",
+            "function": "audit_messages",
+            "line": 5,
+            "primitive_calls": 2,
+            "self_seconds": 1.063320709
+          },
+          {
+            "calls": 1063,
+            "cumulative_seconds": 5.053024745,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "_receive",
+            "line": 49,
+            "primitive_calls": 1063,
+            "self_seconds": 0.18998082000000002
+          },
+          {
+            "calls": 6,
+            "cumulative_seconds": 1.2392150100000001,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/io.py",
+            "function": "write_json",
+            "line": 11,
+            "primitive_calls": 6,
+            "self_seconds": 0.10221300000000001
+          },
+          {
+            "calls": 1062,
+            "cumulative_seconds": 5.083037780000001,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "_request",
+            "line": 66,
+            "primitive_calls": 1062,
+            "self_seconds": 0.009034066
+          },
+          {
+            "calls": 1,
+            "cumulative_seconds": 5.330956015,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/execution/timing.py",
+            "function": "execute",
+            "line": 83,
+            "primitive_calls": 1,
+            "self_seconds": 0.004572151
+          },
+          {
+            "calls": 6,
+            "cumulative_seconds": 0.496805031,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/io.py",
+            "function": "object_digest",
+            "line": 25,
+            "primitive_calls": 6,
+            "self_seconds": 0.004135967
+          },
+          {
+            "calls": 807,
+            "cumulative_seconds": 5.067506064000001,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "advance",
+            "line": 87,
+            "primitive_calls": 807,
+            "self_seconds": 0.0034058810000000004
+          },
+          {
+            "calls": 1071,
+            "cumulative_seconds": 0.546835319,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/json/__init__.py",
+            "function": "loads",
+            "line": 304,
+            "primitive_calls": 1071,
+            "self_seconds": 0.002804004
+          },
+          {
+            "calls": 724,
+            "cumulative_seconds": 0.061096899,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/execution/timing.py",
+            "function": "advance",
+            "line": 63,
+            "primitive_calls": 724,
+            "self_seconds": 0.001980869
+          },
+          {
+            "calls": 3199,
+            "cumulative_seconds": 1.7685076400000002,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/json/__init__.py",
+            "function": "dumps",
+            "line": 185,
+            "primitive_calls": 3199,
+            "self_seconds": 0.0019285320000000002
+          },
+          {
+            "calls": 1,
+            "cumulative_seconds": 1.282115393,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "close",
+            "line": 109,
+            "primitive_calls": 1,
+            "self_seconds": 3.9387e-05
+          }
+        ],
+        "top_self": [
+          {
+            "calls": 1596,
+            "cumulative_seconds": 3.920408173,
+            "file": "~",
+            "function": "<built-in method select.select>",
+            "line": 0,
+            "primitive_calls": 1596,
+            "self_seconds": 3.920408173
+          },
+          {
+            "calls": 3199,
+            "cumulative_seconds": 1.758702538,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/json/encoder.py",
+            "function": "iterencode",
+            "line": 207,
+            "primitive_calls": 3199,
+            "self_seconds": 1.758700374
+          },
+          {
+            "calls": 2,
+            "cumulative_seconds": 1.44635048,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/analysis/online_network.py",
+            "function": "audit_messages",
+            "line": 5,
+            "primitive_calls": 2,
+            "self_seconds": 1.063320709
+          },
+          {
+            "calls": 18,
+            "cumulative_seconds": 0.6644398380000001,
+            "file": "~",
+            "function": "<built-in method time.sleep>",
+            "line": 0,
+            "primitive_calls": 18,
+            "self_seconds": 0.6644398380000001
+          },
+          {
+            "calls": 1071,
+            "cumulative_seconds": 0.528693182,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/json/decoder.py",
+            "function": "raw_decode",
+            "line": 351,
+            "primitive_calls": 1071,
+            "self_seconds": 0.526090237
+          },
+          {
+            "calls": 1,
+            "cumulative_seconds": 1.5105213350000002,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/analysis/wafer_machine.py",
+            "function": "audit_machine",
+            "line": 8,
+            "primitive_calls": 1,
+            "self_seconds": 0.505610099
+          },
+          {
+            "calls": 2,
+            "cumulative_seconds": 1.776051357,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/analysis/timing.py",
+            "function": "audit",
+            "line": 10,
+            "primitive_calls": 2,
+            "self_seconds": 0.306697221
+          },
+          {
+            "calls": 1272056,
+            "cumulative_seconds": 0.20052221,
+            "file": "~",
+            "function": "<method 'add' of 'set' objects>",
+            "line": 0,
+            "primitive_calls": 1272056,
+            "self_seconds": 0.20052221
+          },
+          {
+            "calls": 3228,
+            "cumulative_seconds": 0.199208147,
+            "file": "~",
+            "function": "<method 'write' of '_io.TextIOWrapper' objects>",
+            "line": 0,
+            "primitive_calls": 3228,
+            "self_seconds": 0.199208147
+          },
+          {
+            "calls": 1063,
+            "cumulative_seconds": 5.053024745,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "_receive",
+            "line": 49,
+            "primitive_calls": 1063,
+            "self_seconds": 0.18998082000000002
+          },
+          {
+            "calls": 1,
+            "cumulative_seconds": 0.127256944,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/execution/timing.py",
+            "function": "resource_summary",
+            "line": 72,
+            "primitive_calls": 1,
+            "self_seconds": 0.127062551
+          },
+          {
+            "calls": 6,
+            "cumulative_seconds": 1.2392150100000001,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/io.py",
+            "function": "write_json",
+            "line": 11,
+            "primitive_calls": 6,
+            "self_seconds": 0.10221300000000001
+          },
+          {
+            "calls": 93991,
+            "cumulative_seconds": 0.097389609,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/collections/__init__.py",
+            "function": "__init__",
+            "line": 602,
+            "primitive_calls": 93991,
+            "self_seconds": 0.084207972
+          },
+          {
+            "calls": 8111,
+            "cumulative_seconds": 0.130121957,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/inspect.py",
+            "function": "cleandoc",
+            "line": 902,
+            "primitive_calls": 8111,
+            "self_seconds": 0.075383529
+          },
+          {
+            "calls": 776286,
+            "cumulative_seconds": 0.072888116,
+            "file": "~",
+            "function": "<built-in method builtins.len>",
+            "line": 0,
+            "primitive_calls": 775140,
+            "self_seconds": 0.072558626
+          },
+          {
+            "calls": 90737,
+            "cumulative_seconds": 0.08061816000000001,
+            "file": "~",
+            "function": "<built-in method builtins.max>",
+            "line": 0,
+            "primitive_calls": 90737,
+            "self_seconds": 0.048742194
+          },
+          {
+            "calls": 92999,
+            "cumulative_seconds": 0.078499495,
+            "file": "~",
+            "function": "<built-in method builtins.min>",
+            "line": 0,
+            "primitive_calls": 92999,
+            "self_seconds": 0.0484288
+          },
+          {
+            "calls": 273,
+            "cumulative_seconds": 0.043118469,
+            "file": "~",
+            "function": "<built-in method marshal.loads>",
+            "line": 0,
+            "primitive_calls": 273,
+            "self_seconds": 0.043118469
+          },
+          {
+            "calls": 55692,
+            "cumulative_seconds": 0.07043423700000001,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/dataclasses.py",
+            "function": "_asdict_inner",
+            "line": 1411,
+            "primitive_calls": 584,
+            "self_seconds": 0.036116265
+          },
+          {
+            "calls": 227,
+            "cumulative_seconds": 0.07650343500000001,
+            "file": "/Projects/haoning/wafer_simulator/.venv/lib/python3.13/site-packages/matplotlib/artist.py",
+            "function": "get_aliases",
+            "line": 1516,
+            "primitive_calls": 227,
+            "self_seconds": 0.025710083
+          }
+        ],
+        "total_seconds": 11.034497992999988
+      },
+      "side": 6,
+      "worker_phases": [
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "graph_binding_preparation",
+          "python_cpu_seconds": 0.09449799999999997,
+          "wall_seconds": 0.09449905483052135
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "network_configuration",
+          "python_cpu_seconds": 0.860771,
+          "wall_seconds": 0.7337806620635092
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "network_initialization",
+          "python_cpu_seconds": 0.02276200000000017,
+          "wall_seconds": 0.022935255896300077
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "execution",
+          "python_cpu_seconds": 1.4173959999999997,
+          "wall_seconds": 5.330980755388737
+        },
+        {
+          "exited_children_cpu_seconds": 4.789396999999999,
+          "phase": "network_close_serialization",
+          "python_cpu_seconds": 0.6177319999999997,
+          "wall_seconds": 1.2821433981880546
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "result_serialization",
+          "python_cpu_seconds": 0.6215970000000004,
+          "wall_seconds": 0.6216311338357627
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "independent_audit",
+          "python_cpu_seconds": 2.45702,
+          "wall_seconds": 2.4571482446044683
+        }
+      ]
+    },
+    {
+      "application_cycles": 31303,
+      "directory": "6-native_sections",
+      "exact_reference_execution": true,
+      "exact_reference_protocol": true,
+      "execution_sha256": "759f5a46a32e8c4c85c0afb90909e5a08cbcec61e67eade525e94361c19ff1a1",
+      "launch_including_parent_readback_seconds": 13.750595887191594,
+      "mode": "native_sections",
+      "native_binary_sha256": "b9b5bb0d05db0833a351b34f69191fced18641eaa10590e01be8f666c0ae3848",
+      "native_sections": {
+        "complete": true,
+        "native_step_excluding_retire_record_seconds": 1.7409380209999945,
+        "observe_calls": 22103,
+        "observe_seconds": 0.6592781899999993,
+        "reply_bytes": 36132656,
+        "reply_dump_seconds": 0.19662561999999978,
+        "reply_write_seconds": 0.18048312699999997,
+        "request_parse_seconds": 0.003044275000000002,
+        "retire_record_seconds": 0.9056741819999935,
+        "retired_record_calls": 92525,
+        "scope": "Instrumented elapsed sections; not exclusive CPU or baseline speed",
+        "step_calls": 22103,
+        "step_inclusive_seconds": 2.646612202999988
+      },
+      "native_total_cpu_seconds": 4.81223,
+      "protocol_sha256": "9ec80e9d0f139d3ee8fa46e03020877f492d5f5049289edd76bbe2b6615cb08e",
+      "side": 6,
+      "worker_phases": [
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "graph_binding_preparation",
+          "python_cpu_seconds": 0.032364000000000004,
+          "wall_seconds": 0.03236411698162556
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "network_configuration",
+          "python_cpu_seconds": 0.47470999999999997,
+          "wall_seconds": 0.3476511389017105
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "network_initialization",
+          "python_cpu_seconds": 0.017315999999999998,
+          "wall_seconds": 0.017515776678919792
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "execution",
+          "python_cpu_seconds": 1.2082689999999998,
+          "wall_seconds": 5.097416788805276
+        },
+        {
+          "exited_children_cpu_seconds": 4.81223,
+          "phase": "network_close_serialization",
+          "python_cpu_seconds": 0.6231059999999999,
+          "wall_seconds": 1.3379097701981664
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "result_serialization",
+          "python_cpu_seconds": 0.625086,
+          "wall_seconds": 0.6250921119935811
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "independent_audit",
+          "python_cpu_seconds": 1.5597590000000001,
+          "wall_seconds": 1.5598537307232618
+        }
+      ]
+    },
+    {
+      "application_cycles": 32298,
+      "directory": "7-python_functions",
+      "exact_reference_execution": true,
+      "exact_reference_protocol": true,
+      "execution_sha256": "88efd85eae92b17a9ab3e5a270aab9294449e7c97ab63f2b055efae8e44e25fb",
+      "launch_including_parent_readback_seconds": 22.74660610407591,
+      "mode": "python_functions",
+      "native_total_cpu_seconds": 7.509702,
+      "protocol_sha256": "3cacca8f3a83c4bf0e4961a1d6a2fd02e172cc1669d5a79f6fba72edd40a093e",
+      "python_profile": {
+        "scope": "Whole worker functions excluding initial driver imports; elapsed time includes native waits",
+        "selected_functions": [
+          {
+            "calls": 2,
+            "cumulative_seconds": 2.335374786,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/analysis/online_network.py",
+            "function": "audit_messages",
+            "line": 5,
+            "primitive_calls": 2,
+            "self_seconds": 1.762627927
+          },
+          {
+            "calls": 1449,
+            "cumulative_seconds": 8.117086097000001,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "_receive",
+            "line": 49,
+            "primitive_calls": 1449,
+            "self_seconds": 0.207011258
+          },
+          {
+            "calls": 6,
+            "cumulative_seconds": 1.8784412090000002,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/io.py",
+            "function": "write_json",
+            "line": 11,
+            "primitive_calls": 6,
+            "self_seconds": 0.16832509
+          },
+          {
+            "calls": 1448,
+            "cumulative_seconds": 8.175800206,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "_request",
+            "line": 66,
+            "primitive_calls": 1448,
+            "self_seconds": 0.008511656000000001
+          },
+          {
+            "calls": 1,
+            "cumulative_seconds": 8.382112053,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/execution/timing.py",
+            "function": "execute",
+            "line": 83,
+            "primitive_calls": 1,
+            "self_seconds": 0.006800143000000001
+          },
+          {
+            "calls": 6,
+            "cumulative_seconds": 0.8467948350000001,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/io.py",
+            "function": "object_digest",
+            "line": 25,
+            "primitive_calls": 6,
+            "self_seconds": 0.0054809130000000005
+          },
+          {
+            "calls": 1102,
+            "cumulative_seconds": 8.152822829,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "advance",
+            "line": 87,
+            "primitive_calls": 1102,
+            "self_seconds": 0.00509915
+          },
+          {
+            "calls": 1457,
+            "cumulative_seconds": 0.966945429,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/json/__init__.py",
+            "function": "loads",
+            "line": 304,
+            "primitive_calls": 1457,
+            "self_seconds": 0.0040943970000000005
+          },
+          {
+            "calls": 984,
+            "cumulative_seconds": 0.093777992,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/execution/timing.py",
+            "function": "advance",
+            "line": 63,
+            "primitive_calls": 984,
+            "self_seconds": 0.0031365000000000004
+          },
+          {
+            "calls": 4357,
+            "cumulative_seconds": 2.773169069,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/json/__init__.py",
+            "function": "dumps",
+            "line": 185,
+            "primitive_calls": 4357,
+            "self_seconds": 0.002689832
+          },
+          {
+            "calls": 1,
+            "cumulative_seconds": 1.8377892580000001,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "close",
+            "line": 109,
+            "primitive_calls": 1,
+            "self_seconds": 3.756e-05
+          }
+        ],
+        "top_self": [
+          {
+            "calls": 2211,
+            "cumulative_seconds": 6.348580472,
+            "file": "~",
+            "function": "<built-in method select.select>",
+            "line": 0,
+            "primitive_calls": 2211,
+            "self_seconds": 6.348580472
+          },
+          {
+            "calls": 4357,
+            "cumulative_seconds": 2.759172237,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/json/encoder.py",
+            "function": "iterencode",
+            "line": 207,
+            "primitive_calls": 4357,
+            "self_seconds": 2.759169881
+          },
+          {
+            "calls": 2,
+            "cumulative_seconds": 2.335374786,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/analysis/online_network.py",
+            "function": "audit_messages",
+            "line": 5,
+            "primitive_calls": 2,
+            "self_seconds": 1.762627927
+          },
+          {
+            "calls": 1457,
+            "cumulative_seconds": 0.942037259,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/json/decoder.py",
+            "function": "raw_decode",
+            "line": 351,
+            "primitive_calls": 1457,
+            "self_seconds": 0.9394536840000001
+          },
+          {
+            "calls": 1,
+            "cumulative_seconds": 2.396914933,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/analysis/wafer_machine.py",
+            "function": "audit_machine",
+            "line": 8,
+            "primitive_calls": 1,
+            "self_seconds": 0.916188321
+          },
+          {
+            "calls": 22,
+            "cumulative_seconds": 0.868024506,
+            "file": "~",
+            "function": "<built-in method time.sleep>",
+            "line": 0,
+            "primitive_calls": 22,
+            "self_seconds": 0.868024506
+          },
+          {
+            "calls": 2,
+            "cumulative_seconds": 2.7702720960000002,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/analysis/timing.py",
+            "function": "audit",
+            "line": 10,
+            "primitive_calls": 2,
+            "self_seconds": 0.39858283600000005
+          },
+          {
+            "calls": 1828740,
+            "cumulative_seconds": 0.302052244,
+            "file": "~",
+            "function": "<method 'add' of 'set' objects>",
+            "line": 0,
+            "primitive_calls": 1828740,
+            "self_seconds": 0.302052244
+          },
+          {
+            "calls": 4386,
+            "cumulative_seconds": 0.283450036,
+            "file": "~",
+            "function": "<method 'write' of '_io.TextIOWrapper' objects>",
+            "line": 0,
+            "primitive_calls": 4386,
+            "self_seconds": 0.283450036
+          },
+          {
+            "calls": 1449,
+            "cumulative_seconds": 8.117086097000001,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/adapters/online_booksim.py",
+            "function": "_receive",
+            "line": 49,
+            "primitive_calls": 1449,
+            "self_seconds": 0.207011258
+          },
+          {
+            "calls": 6,
+            "cumulative_seconds": 1.8784412090000002,
+            "file": "/Projects/haoning/wafer_simulator/source/src/wafer_sim/io.py",
+            "function": "write_json",
+            "line": 11,
+            "primitive_calls": 6,
+            "self_seconds": 0.16832509
+          },
+          {
+            "calls": 127830,
+            "cumulative_seconds": 0.162072653,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/collections/__init__.py",
+            "function": "__init__",
+            "line": 602,
+            "primitive_calls": 127830,
+            "self_seconds": 0.140805663
+          },
+          {
+            "calls": 981833,
+            "cumulative_seconds": 0.099011551,
+            "file": "~",
+            "function": "<built-in method builtins.len>",
+            "line": 0,
+            "primitive_calls": 980687,
+            "self_seconds": 0.098685798
+          },
+          {
+            "calls": 8111,
+            "cumulative_seconds": 0.129292077,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/inspect.py",
+            "function": "cleandoc",
+            "line": 902,
+            "primitive_calls": 8111,
+            "self_seconds": 0.074807857
+          },
+          {
+            "calls": 161432,
+            "cumulative_seconds": 0.12163522,
+            "file": "~",
+            "function": "<built-in method builtins.max>",
+            "line": 0,
+            "primitive_calls": 161432,
+            "self_seconds": 0.07424841900000001
+          },
+          {
+            "calls": 107224,
+            "cumulative_seconds": 0.113054837,
+            "file": "~",
+            "function": "<built-in method builtins.min>",
+            "line": 0,
+            "primitive_calls": 107224,
+            "self_seconds": 0.067141475
+          },
+          {
+            "calls": 75712,
+            "cumulative_seconds": 0.096170344,
+            "file": "/Projects/haoning/wafer_simulator/python-env/lib/python3.13/dataclasses.py",
+            "function": "_asdict_inner",
+            "line": 1411,
+            "primitive_calls": 792,
+            "self_seconds": 0.050752921000000006
+          },
+          {
+            "calls": 273,
+            "cumulative_seconds": 0.038740145000000004,
+            "file": "~",
+            "function": "<built-in method marshal.loads>",
+            "line": 0,
+            "primitive_calls": 273,
+            "self_seconds": 0.038740145000000004
+          },
+          {
+            "calls": 4345,
+            "cumulative_seconds": 0.037970196000000005,
+            "file": "~",
+            "function": "<method 'flush' of '_io.TextIOWrapper' objects>",
+            "line": 0,
+            "primitive_calls": 4345,
+            "self_seconds": 0.037970196000000005
+          },
+          {
+            "calls": 9105,
+            "cumulative_seconds": 0.036585371000000005,
+            "file": "~",
+            "function": "<built-in method builtins.sorted>",
+            "line": 0,
+            "primitive_calls": 9105,
+            "self_seconds": 0.035232829
+          }
+        ],
+        "total_seconds": 16.811799957999945
+      },
+      "side": 7,
+      "worker_phases": [
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "graph_binding_preparation",
+          "python_cpu_seconds": 0.13139,
+          "wall_seconds": 0.13140077330172062
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "network_configuration",
+          "python_cpu_seconds": 0.8402719999999999,
+          "wall_seconds": 0.713233906775713
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "network_initialization",
+          "python_cpu_seconds": 0.02140799999999987,
+          "wall_seconds": 0.02158018620684743
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "execution",
+          "python_cpu_seconds": 1.9851889999999996,
+          "wall_seconds": 8.382133746054024
+        },
+        {
+          "exited_children_cpu_seconds": 7.509702,
+          "phase": "network_close_serialization",
+          "python_cpu_seconds": 0.9698990000000003,
+          "wall_seconds": 1.8378151920624077
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "result_serialization",
+          "python_cpu_seconds": 0.9083599999999992,
+          "wall_seconds": 0.9083916759118438
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "independent_audit",
+          "python_cpu_seconds": 3.97865,
+          "wall_seconds": 3.9789262861013412
+        }
+      ]
+    },
+    {
+      "application_cycles": 32298,
+      "directory": "7-native_sections",
+      "exact_reference_execution": true,
+      "exact_reference_protocol": true,
+      "execution_sha256": "88efd85eae92b17a9ab3e5a270aab9294449e7c97ab63f2b055efae8e44e25fb",
+      "launch_including_parent_readback_seconds": 20.964317672885954,
+      "mode": "native_sections",
+      "native_binary_sha256": "b9b5bb0d05db0833a351b34f69191fced18641eaa10590e01be8f666c0ae3848",
+      "native_sections": {
+        "complete": true,
+        "native_step_excluding_retire_record_seconds": 3.2701020410000154,
+        "observe_calls": 26886,
+        "observe_seconds": 1.1750465050000003,
+        "reply_bytes": 51960728,
+        "reply_dump_seconds": 0.2796106440000001,
+        "reply_write_seconds": 0.20234563000000005,
+        "request_parse_seconds": 0.004824248000000001,
+        "retire_record_seconds": 1.4237628609999955,
+        "retired_record_calls": 125844,
+        "scope": "Instrumented elapsed sections; not exclusive CPU or baseline speed",
+        "step_calls": 26886,
+        "step_inclusive_seconds": 4.693864902000011
+      },
+      "native_total_cpu_seconds": 8.039629,
+      "protocol_sha256": "3cacca8f3a83c4bf0e4961a1d6a2fd02e172cc1669d5a79f6fba72edd40a093e",
+      "side": 7,
+      "worker_phases": [
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "graph_binding_preparation",
+          "python_cpu_seconds": 0.044365000000000016,
+          "wall_seconds": 0.04436553502455354
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "network_configuration",
+          "python_cpu_seconds": 0.473218,
+          "wall_seconds": 0.34643317805603147
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "network_initialization",
+          "python_cpu_seconds": 0.017290999999999945,
+          "wall_seconds": 0.017499776557087898
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "execution",
+          "python_cpu_seconds": 1.8517550000000003,
+          "wall_seconds": 8.54394610831514
+        },
+        {
+          "exited_children_cpu_seconds": 8.039629,
+          "phase": "network_close_serialization",
+          "python_cpu_seconds": 0.8860639999999997,
+          "wall_seconds": 1.9015809539705515
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "result_serialization",
+          "python_cpu_seconds": 0.902415,
+          "wall_seconds": 0.9024770488031209
+        },
+        {
+          "exited_children_cpu_seconds": 0.0,
+          "phase": "independent_audit",
+          "python_cpu_seconds": 2.058098,
+          "wall_seconds": 2.05818944144994
+        }
+      ]
+    }
+  ],
+  "scope": "Profiled timing is diagnostic; no baseline speedup is calculated"
+}

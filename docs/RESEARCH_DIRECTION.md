@@ -218,6 +218,13 @@ investigate batching between causally necessary boundaries with event equivalenc
 do not assume an unchanged active-flow count licenses a jump. No event-compressed
 network or new physical feedback protocol is implemented by the D1 milestone.
 
+The [two-input S cost diagnosis](results/native-service-profile-001/REVIEW.md)
+now preserves full events and protocols in four controlled profiles. Remaining
+BookSim Step work and adapter flit/path recording are both material; Python JSON
+and audit traversals add cost. First target evidence work with equivalence checks.
+S stays the detailed decision reference, D0/D1 the comparisons. Profiling waits
+are not pure IPC cost, and instrumented sections are not speedup measurements.
+
 ## Frozen evidence
 
 The old [boundary model choice](results/boundary-design-001/model_selection.md)

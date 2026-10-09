@@ -33,6 +33,9 @@ def run(output,binary):
     if subprocess.check_output(['git','-C',str(repo),'status','--porcelain']): raise ValueError('Clean source required')
     accepted=root/'runs/d1-applications-001'; manifest=read_json(accepted/'COMPLETE.json')
     if not manifest['complete'] or (accepted/'FAILED.json').exists(): raise ValueError('Incomplete reference')
+    published=read_json(repo/'docs/results/shared-spatial-service-001/VERIFIED.json')
+    if digest(accepted/'COMPLETE.json') != published['run_manifest_sha256']:
+        raise ValueError('Reference manifest differs from published acceptance')
     reference_start=read_json(accepted/'STARTED.json')
     expected=reference_start['binary_sha256']
     # Set the launcher before spawning workers, so import-time thread pools also

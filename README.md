@@ -86,9 +86,15 @@ This is a partial result for one fixed hypothesis, not a reason to retune it.
 
 The [information and boundary evidence](docs/NECESSARY_INFORMATION.md) separates
 observed failures from constructed distinguishing cases. S remains the detailed
-reference under each declared machine contract. Next, profile S and investigate
-behavior-preserving computation before introducing another service approximation.
+reference under each declared machine contract. Investigate behavior-preserving
+computation using measured costs before introducing another service approximation.
 Machine organization and transaction policy remain separate research axes.
+
+The [first S cost profile](docs/results/native-service-profile-001/REVIEW.md)
+covers 6×6/7×7 B: four controlled executions preserve complete events and
+native protocol bytes. Native advancement and flit/path recording both matter;
+JSON and auditing also cost time. Prioritize evidence-path work with explicit
+equivalence checks; no lightweight mode or event-compressed backend is implemented.
 
 The [public periphery APIs](docs/PUBLIC_PERIPHERY_API.md) separate compilation,
 execution and supplied-event audit from private study/server orchestration.

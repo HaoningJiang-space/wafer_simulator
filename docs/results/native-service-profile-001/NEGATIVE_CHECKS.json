@@ -1,0 +1,18 @@
+{
+  "actual_service_changes": 0,
+  "checks": [
+    {
+      "case": "native_counter",
+      "reason": "Incomplete or inconsistent native profile",
+      "rejected": true
+    },
+    {
+      "case": "early_output",
+      "reason": "Profiling changed execution events",
+      "rejected": true
+    }
+  ],
+  "passed": true,
+  "source_commit": "5b774cc",
+  "uses_completed_exploratory_profile": "s-native-profile-001/6-native_sections"
+}
