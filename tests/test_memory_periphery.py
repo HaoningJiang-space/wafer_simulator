@@ -4,7 +4,8 @@ from dataclasses import replace
 from pathlib import Path
 import unittest
 
-from wafer_sim.architecture.wafer_machine import from_config
+from wafer_sim.architecture.wafer_machine import from_config, validate, Controller
+from wafer_sim.architecture.memory_periphery import NetworkInterface
 from wafer_sim.architecture.spatial import Target
 from wafer_sim.adapters.wafer_machine import compile_machine, bind_machine
 from wafer_sim.adapters.memory_periphery import compile_periphery, bind_periphery, TransactionPolicy
@@ -56,6 +57,29 @@ class MemoryPeripheryTests(unittest.TestCase):
         new = compile_periphery(m)
         self.assertEqual(len(new.timing.endpoints), len(c.timing.endpoints))
         self.assertEqual(new.endpoints['dram-0-2'], c.endpoints['dram-0-0'])
+
+    def test_shared_two_port_boundary_passes_while_v1_and_real_extra_nic_fail(self):
+        c, *_ = fixture(); m = c.physical
+        m = replace(m, tiles=tuple(replace(t, max_ports=2) if t.id == 'm0' else t for t in m.tiles))
+        shared = compile_periphery(m)
+        self.assertEqual(validate(m, network_interfaces=shared.target.network_interfaces)['router_ports']['m0'], 2)
+        with self.assertRaisesRegex(ValueError, 'port'): compile_machine(m)
+        # A second real controller/NIC consumes an additional port, even when
+        # the total number of banks is unchanged.
+        ctrl = next(x for x in m.controllers if x.id == 'controller-0')
+        split = replace(m, controllers=(*m.controllers, replace(ctrl, id='other-controller')),
+                        stores=tuple(replace(s, controller='other-controller') if s.id == 'dram-0-1' else s for s in m.stores))
+        with self.assertRaisesRegex(ValueError, 'port'): compile_periphery(split)
+        tight = replace(m, tiles=tuple(replace(t, max_ports=1) if t.id == 'm0' else t for t in m.tiles))
+        with self.assertRaisesRegex(ValueError, 'port'): compile_periphery(tight)
+
+    def test_inventory_pass_keeps_hb_and_interface_ownership_checks(self):
+        c, *_ = fixture(); m = c.physical
+        bad = replace(m, tiles=tuple(replace(t, hb_signal_budget=1) if t.id == 'm0' else t for t in m.tiles))
+        with self.assertRaisesRegex(ValueError, 'budget'): compile_periphery(bad)
+        interfaces = list(c.target.network_interfaces)
+        interfaces[1] = replace(interfaces[1], memory_regions=('dram-0-0',))
+        with self.assertRaisesRegex(ValueError, 'cover'): validate(m, network_interfaces=tuple(interfaces))
 
     def test_single_fragment_retains_whole_object_timing_for_read_and_write(self):
         for write in (False, True):

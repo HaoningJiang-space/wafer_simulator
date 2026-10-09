@@ -29,15 +29,19 @@ class CompiledMachine:
     controller_buffers: tuple[MemoryRegion, ...]
 
 
-def compile_machine(machine):
-    validate(machine)
+def compile_machine(machine, *, network_interfaces=None):
+    validate(machine, network_interfaces=network_interfaces)
     routers={t.id:i for i,t in enumerate(machine.tiles)}
-    endpoints={s.id:i for i,s in enumerate(machine.stores)}
+    endpoints=({s.id:i for i,s in enumerate(machine.stores)} if network_interfaces is None else
+               {name:interface.endpoint for interface in network_interfaces for name in interface.memory_regions})
     memory=tuple(MemoryRegion(s.id,endpoints[s.id],s.capacity_bytes,
                  s.id+'/port',s.id+'/port',machine.provenance) for s in machine.stores)
     compute=tuple(ComputeResource(s.tile,s.id,tuple(dict(machine.compute_rates)),machine.provenance)
                   for s in machine.stores if s.kind=='sram')
-    network=Network(tuple((endpoints[s.id],routers[s.tile]) for s in machine.stores),
+    stores={s.id:s for s in machine.stores}
+    attachments=(tuple((endpoints[s.id],routers[s.tile]) for s in machine.stores) if network_interfaces is None else
+                 tuple((interface.endpoint,routers[stores[interface.memory_regions[0]].tile]) for interface in network_interfaces))
+    network=Network(attachments,
         tuple((routers[l.source],routers[l.destination]) for l in machine.connections),machine.provenance)
     services=[Service(m.id+'/port','bytes',m.bytes_per_cycle,latency_cycles=m.latency_cycles)
               for m in machine.stores]
@@ -59,8 +63,13 @@ def compile_machine(machine):
                                 latency_cycles=machine.access_latency_cycles),
                         Service(f'eject/{e}','bytes',machine.flit_bytes,
                                 latency_cycles=machine.access_latency_cycles+machine.router_latency_cycles))
-              for e in endpoints.values())
-    target=Target(memory,compute,network)
+              for e in dict.fromkeys(endpoints.values()))
+    if network_interfaces is None: target=Target(memory,compute,network)
+    else:
+        from wafer_sim.architecture.memory_periphery import PeripheryTarget
+        target=PeripheryTarget(memory,compute,network,network_interfaces)
+        from wafer_sim.adapters.spatial import validate_target
+        validate_target(target)
     return CompiledMachine(machine,target,Timing(tuple(services),links,eps,machine.provenance),
                            routers,endpoints,tuple(buffers))
 

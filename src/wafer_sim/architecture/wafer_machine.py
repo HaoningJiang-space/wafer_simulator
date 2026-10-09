@@ -7,7 +7,7 @@ not provide an undeclared lateral interconnect wafer.
 from dataclasses import dataclass
 from math import ceil
 
-from wafer_sim.workloads.spatial import natural
+from wafer_sim.workloads.spatial import natural, identifier
 
 
 @dataclass(frozen=True)
@@ -85,8 +85,14 @@ class WaferMachine:
     provenance: str
 
 
-def validate(machine):
-    """Check declared geometric legality and budgets, not physical sign-off."""
+def validate(machine, *, network_interfaces=None, check_router_ports=True):
+    """Inventory/geometry first; final router budget uses declared attachments.
+
+    With no interface organization, retain v1's one endpoint per Store. The
+    inventory-only pass defers router ports, never HB/geometric legality.
+    """
+    if type(check_router_ports) is not bool:
+        raise ValueError('Router port validation must be explicit')
     def unique(rows):
         if type(rows) is not tuple:
             raise ValueError('Physical collections must be immutable tuples')
@@ -205,16 +211,40 @@ def validate(machine):
             if m.controller not in controllers or controllers[m.controller].tile != m.tile:
                 raise ValueError('Addressable store must name its colocated controller')
         elif m.controller is not None: raise ValueError('Unexpected controller on non-DRAM store')
-        ports[m.tile] += 1; per_tile[m.tile] += 1
+        if network_interfaces is None: ports[m.tile] += 1
+        per_tile[m.tile] += 1
+    if network_interfaces is not None:
+        if type(network_interfaces) is not tuple:
+            raise ValueError('Network interface organization must be immutable')
+        owned, ids, endpoints = set(), set(), set()
+        for interface in network_interfaces:
+            identifier(interface.id, 'Network interface')
+            natural(interface.endpoint, 'Network interface endpoint')
+            if (interface.id in ids or interface.endpoint in endpoints or
+                    type(interface.memory_regions) is not tuple or not interface.memory_regions):
+                raise ValueError('Duplicate or empty physical network interface')
+            ids.add(interface.id); endpoints.add(interface.endpoint)
+            attached = set()
+            for name in interface.memory_regions:
+                if name not in stores or name in owned:
+                    raise ValueError('Network interface storage ownership mismatch')
+                owned.add(name); attached.add(stores[name].tile)
+            if len(attached) != 1:
+                raise ValueError('A physical interface must attach at exactly one tile')
+            ports[next(iter(attached))] += 1
+        if owned != set(stores): raise ValueError('Network interfaces must cover exact physical stores')
     for t in tiles.values():
-        if ports[t.id] > t.max_ports or hb[t.id] > t.hb_signal_budget:
+        if (check_router_ports and ports[t.id] > t.max_ports) or hb[t.id] > t.hb_signal_budget:
             raise ValueError('Router port or HB signal budget exceeded')
         if role(t) in {'compute','external'} and per_tile[t.id] != 1:
             raise ValueError('One local SRAM / external store per gateway required')
         if role(t) == 'memory' and (per_tile[t.id] == 0 or len(adjacency[t.id]) != 1):
             raise ValueError('Memory tile must be a populated leaf, not a transit fabric')
-    return dict(passed=True,router_ports=ports,hb_signal_usage=hb,
-                qualification='Declared geometry and resource consistency only; not PPA/yield sign-off')
+    result = dict(passed=True,router_ports=ports,hb_signal_usage=hb,
+                  qualification='Declared geometry and resource consistency only; not PPA/yield sign-off')
+    if not check_router_ports:
+        result.update(router_ports_checked=False, qualification='Inventory/geometry/HB checked; final interface port validation deferred')
+    return result
 
 
 def from_config(config):

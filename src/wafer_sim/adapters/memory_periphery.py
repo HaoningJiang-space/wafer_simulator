@@ -6,11 +6,9 @@ for admission, transactions, C2C and ordinary operation phases.
 from dataclasses import dataclass, replace
 from types import MappingProxyType
 
-from wafer_sim.architecture.memory_periphery import NetworkInterface, PeripheryTarget
-from wafer_sim.architecture.spatial import Network
-from wafer_sim.architecture.timing import Endpoint, Service
+from wafer_sim.architecture.memory_periphery import NetworkInterface
+from wafer_sim.architecture.wafer_machine import validate
 from wafer_sim.adapters.wafer_machine import compile_machine, bind_machine, CONTROL_BYTES
-from wafer_sim.adapters.spatial import validate_target
 from wafer_sim.adapters.timing import TimedTarget
 from wafer_sim.execution.plan import Demand, Phase
 from wafer_sim.workloads.spatial import natural
@@ -31,35 +29,16 @@ class TransactionPolicy:
 
 def compile_periphery(machine):
     """One endpoint per controller; SRAM retains its own interface."""
-    old = compile_machine(machine)
+    # Validate inventory/geometry without imposing v1's bank-specific ports.
+    # compile_machine below performs the final budget check on the real NICs.
+    validate(machine, check_router_ports=False)
     groups = {}
     for store in machine.stores:
         interface = (store.controller if store.kind != 'sram' else store.id) + '/nic'
         groups.setdefault(interface, []).append(store)
     interfaces = tuple(NetworkInterface(name, i, tuple(s.id for s in members), machine.provenance)
                        for i, (name, members) in enumerate(groups.items()))
-    endpoints = {s: interface.endpoint for interface in interfaces for s in interface.memory_regions}
-    stores = {s.id: s for s in machine.stores}
-    attachments = []
-    for interface in interfaces:
-        tiles = {stores[s].tile for s in interface.memory_regions}
-        if len(tiles) != 1:
-            raise ValueError('A controller interface must attach at one physical tile')
-        attachments.append((interface.endpoint, old.router_ids[next(iter(tiles))]))
-    network = Network(tuple(attachments), old.target.network.router_links, machine.provenance)
-    target = PeripheryTarget(tuple(replace(m, endpoint=endpoints[m.id]) for m in old.target.memory),
-                             old.target.compute, network, interfaces)
-    validate_target(target)
-    eps = tuple(Endpoint(i.endpoint,
-        Service(f'inject/{i.endpoint}', 'bytes', machine.flit_bytes,
-                latency_cycles=machine.access_latency_cycles),
-        Service(f'eject/{i.endpoint}', 'bytes', machine.flit_bytes,
-                latency_cycles=machine.access_latency_cycles + machine.router_latency_cycles))
-        for i in interfaces)
-    buffers = tuple(replace(m, endpoint=endpoints[next(s.id for s in machine.stores
-                    if s.controller is not None and s.controller + '/buffer' == m.id)]) for m in old.controller_buffers)
-    return replace(old, target=target, endpoints=endpoints, controller_buffers=buffers,
-                   timing=replace(old.timing, endpoints=eps))
+    return compile_machine(machine, network_interfaces=interfaces)
 
 
 def bind_periphery(workload, compiled, placement, policy):
