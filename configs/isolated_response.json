@@ -1,0 +1,18 @@
+{
+  "frozen_commit": "da54cd11d7325d95a7163746c754483501eacffd",
+  "machine": "configs/wafer_machine.json",
+  "isolated_array_side": 6,
+  "c2c_hops": [0, 1, 2, 3, 4, 5],
+  "payload_bytes": 65536,
+  "source_bank": "dram-0-0",
+  "seed": 1,
+  "cycle_budget": 100000,
+  "repetitions": 2,
+  "matched_messages": [
+    {"side": 4, "token": "first11/phase/4"},
+    {"side": 4, "token": "second11/phase/7"},
+    {"side": 6, "token": "first17/phase/4"},
+    {"side": 6, "token": "second17/phase/7"}
+  ],
+  "scope": "Complete isolated response, not an application replay. No other traffic; original network parameters and byte-identical native binary. Matched messages retain endpoints, payload and eligibility clock but remove background network state."
+}

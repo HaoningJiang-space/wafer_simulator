@@ -29,6 +29,7 @@ def main():
                "test_online_booksim", "test_wow_target", "test_model_fidelity", "test_transfer_granularity", "test_packet_pipeline", "test_memory_boundary", "test_boundary_design", "test_group_sharing", "test_wafer_machine"]
     modules.append('test_memory_abstraction')
     modules.append('test_spatial_scaling')
+    modules.append('test_isolated_response')
     suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
     log = args.output / "tests.log"
     with log.open("w") as stream:
