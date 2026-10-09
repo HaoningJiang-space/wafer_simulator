@@ -1,0 +1,68 @@
+{
+  "application_source_commit": "1c7a84aff461ef6eb60255686d70d097a9677ef4",
+  "host": "ee4e072",
+  "native_binary_sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+  "new_simulations": 0,
+  "packages": [
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "fonttools==4.66.1",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "networkx==3.7",
+    "numpy==2.5.3",
+    "packaging==26.3",
+    "pandas==3.0.6",
+    "pillow==12.3.0",
+    "pymetis==2025.2.2",
+    "pyparsing==3.3.3",
+    "python-dateutil==2.9.0.post0",
+    "scipy==1.18.1",
+    "shapely==2.1.2",
+    "six==1.17.0",
+    "typing_extensions==4.16.0"
+  ],
+  "python": "3.13.16 | packaged by conda-forge | (main, Oct  7 2026, 00:29:52) [GCC 15.3.0]",
+  "python_binary_sha256": "4d41dd95179ff96a9cf4ced37c735eb75ba50c87fef6bdaabd3b1558070a2edb",
+  "registration": {
+    "activity_bin_cycles": 256,
+    "conditions": [
+      "v1_whole",
+      "shared_whole",
+      "shared_pipeline"
+    ],
+    "controller_dma_descriptor_budget": null,
+    "controller_fragment_slot_budget": null,
+    "endpoint_rx_budget_bytes": null,
+    "frozen_commit": "014130dde70eec86b86af1b0364c9a974267eef5",
+    "layouts": [
+      "clustered_local",
+      "remote_balanced"
+    ],
+    "repetitions": 3,
+    "scope": "Observational analysis of 18 accepted applications; no new simulations, policy/model changes, parameter search or causal intervention.",
+    "source_run": "/Projects/haoning/wafer_simulator/runs/periphery-applications-001"
+  },
+  "source_commit": "1382dfeea226a6c1d08a5d046f0436a16bee28bd",
+  "source_completion_sha256": "24c1004530918645ac24f3e0bec02c203c97d4995360cac895c66cf494ab5e5d",
+  "source_hashes": {
+    "configs/memory_periphery_attribution.json": "c7ecb2c3b2a1526ebe38c9611c27d45c820bf49e8c72a4d919e833f34badbf82",
+    "docs/MEMORY_PERIPHERY_ATTRIBUTION_PROTOCOL.md": "8522424632fcf31b2adf99018a4797573e9caff496a174a9905666431bfda557",
+    "scripts/test_periphery_attribution_remote.py": "3348f86ca09696900af228eccbc5c904e69d1972317a222ae43b44b6984c7143",
+    "src/wafer_sim/analysis/periphery_attribution.py": "5919f076e47d1d27722020c38b4ea0ce542731dcf023bc2a2fd71ca89619b154",
+    "src/wafer_sim/analysis/periphery_mechanism_study.py": "67eee0051dc9b9dcc45271b03892ddceb63418cc102b576f8eac028d01ce5f3d",
+    "tests/test_periphery_attribution.py": "b58200e393222a773af0107b74b93cf2ff5a73643ea3ff77bd26376ac18f8e6b"
+  },
+  "source_run": "/Projects/haoning/wafer_simulator/runs/periphery-applications-001",
+  "tests": {
+    "modules": [
+      "test_periphery_attribution"
+    ],
+    "passed": true,
+    "source_commit": "1382dfeea226a6c1d08a5d046f0436a16bee28bd",
+    "tests": 7,
+    "tests_log": "/Projects/haoning/wafer_simulator/runs/periphery-attribution-tests-001/tests.log",
+    "tests_log_sha256": "0d826e02a8af5db82d5b3895164755c0b78053803cc18dfbfdd490da2f599c8c"
+  },
+  "tests_sha256": "6e000abca76992fe89605453fc4c11e0d71c048bf5c789450ce3adf7a475c304"
+}

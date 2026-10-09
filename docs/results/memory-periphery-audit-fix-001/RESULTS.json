@@ -1,0 +1,573 @@
+{
+  "application_table": [
+    {
+      "A_cycles": 30645,
+      "A_minus_B_cycles": -658,
+      "B_cycles": 31303,
+      "condition": "v1_whole",
+      "old_A_choice_regret_cycles": 0,
+      "preferred": "A"
+    },
+    {
+      "A_cycles": 30645,
+      "A_minus_B_cycles": -658,
+      "B_cycles": 31303,
+      "condition": "shared_whole",
+      "old_A_choice_regret_cycles": 0,
+      "preferred": "A"
+    },
+    {
+      "A_cycles": 25345,
+      "A_minus_B_cycles": 1784,
+      "B_cycles": 23561,
+      "condition": "shared_pipeline",
+      "old_A_choice_regret_cycles": 1784,
+      "preferred": "B"
+    }
+  ],
+  "campaign_cost": {
+    "application_workers_seconds": 162.91015336941928,
+    "artifact_bytes": 3716442496,
+    "calibration_seconds": 0,
+    "component_workers_seconds": 7.606702726334333,
+    "replay_seconds": 30.25176831195131,
+    "total_wall_seconds": 202.39366458309814
+  },
+  "components": [
+    {
+      "case": "read",
+      "condition": "v1_whole",
+      "cycles": 7228,
+      "execution_sha256": "058e63db1b43193a5dc22520b196f1b419a173e3ab6717b5f20d282db77e388a",
+      "native_flits": 1025,
+      "native_messages": 2,
+      "process_wall_seconds": 0.818268186878413
+    },
+    {
+      "case": "read",
+      "condition": "shared_whole",
+      "cycles": 7228,
+      "execution_sha256": "058e63db1b43193a5dc22520b196f1b419a173e3ab6717b5f20d282db77e388a",
+      "native_flits": 1025,
+      "native_messages": 2,
+      "process_wall_seconds": 0.819406908005476
+    },
+    {
+      "case": "read",
+      "condition": "shared_pipeline",
+      "cycles": 3388,
+      "execution_sha256": "4e657e21f91b637bcb55b880d109ca28ae8f35ace4e369a0b028129a3d01f63d",
+      "native_flits": 1025,
+      "native_messages": 17,
+      "process_wall_seconds": 0.8172095147892833
+    },
+    {
+      "case": "write",
+      "condition": "v1_whole",
+      "cycles": 7228,
+      "execution_sha256": "60cde9c9315639d2cef2d487afc860f0a12c4aea8aaa2caa1cb636bf5202ada3",
+      "native_flits": 1025,
+      "native_messages": 2,
+      "process_wall_seconds": 0.8163254940882325
+    },
+    {
+      "case": "write",
+      "condition": "shared_whole",
+      "cycles": 7228,
+      "execution_sha256": "60cde9c9315639d2cef2d487afc860f0a12c4aea8aaa2caa1cb636bf5202ada3",
+      "native_flits": 1025,
+      "native_messages": 2,
+      "process_wall_seconds": 0.8181897290050983
+    },
+    {
+      "case": "write",
+      "condition": "shared_pipeline",
+      "cycles": 3388,
+      "execution_sha256": "8e41fac04f88707e5c139d715cc0cb25a8b9279affcab5831044ccd4ed508d09",
+      "native_flits": 1025,
+      "native_messages": 17,
+      "process_wall_seconds": 0.8170906407758594
+    },
+    {
+      "case": "two_banks",
+      "condition": "v1_whole",
+      "cycles": 9297,
+      "execution_sha256": "c3c91c5b40d65bfb318a8fa3690c554e309c76dddd5077d4a2e6fdc7658c5df1",
+      "native_flits": 2050,
+      "native_messages": 4,
+      "process_wall_seconds": 0.9182966346852481
+    },
+    {
+      "case": "two_banks",
+      "condition": "shared_whole",
+      "cycles": 9297,
+      "execution_sha256": "b27038c476ff5e28c8cd6682715a0a78560272d4f801caf9c6f4d2810ea94497",
+      "native_flits": 2050,
+      "native_messages": 4,
+      "process_wall_seconds": 0.8657983471639454
+    },
+    {
+      "case": "two_banks",
+      "condition": "shared_pipeline",
+      "cycles": 5457,
+      "execution_sha256": "fab0c25418f59be841c366706af87e0572ae8139d6d6b0d5016f8b30f1975fd9",
+      "native_flits": 2050,
+      "native_messages": 34,
+      "process_wall_seconds": 0.9161172709427774
+    }
+  ],
+  "costs": [
+    {
+      "artifact_bytes_range": [
+        158447920,
+        158447920
+      ],
+      "condition": "v1_whole",
+      "control_bytes": {
+        "read": 1168,
+        "write": 576
+      },
+      "layout": "clustered_local",
+      "native_cpu_median_seconds": 2.594949,
+      "native_flits": 92525,
+      "native_messages": 254,
+      "native_rss_range_kib": [
+        222552,
+        222628
+      ],
+      "payload_bytes": {
+        "c2c": 589824,
+        "read": 4734976,
+        "write": 589824
+      },
+      "phase_wall_median_seconds": {
+        "execution": 3.067058205138892,
+        "graph_binding_preparation": 0.019745707046240568,
+        "independent_audit": 2.2743633473291993,
+        "network_close_serialization": 0.6535983891226351,
+        "network_configuration": 0.3300517606548965,
+        "network_initialization": 0.021690419875085354,
+        "result_serialization": 0.4518251633271575
+      },
+      "process_wall_median_seconds": 7.489939054008573,
+      "process_wall_range_seconds": [
+        7.486221577040851,
+        7.58801188506186
+      ],
+      "python_cpu_median_seconds": 4.882887574,
+      "python_rss_range_kib": [
+        386444,
+        389036
+      ]
+    },
+    {
+      "artifact_bytes_range": [
+        221585374,
+        221585374
+      ],
+      "condition": "v1_whole",
+      "control_bytes": {
+        "read": 1168,
+        "write": 576
+      },
+      "layout": "remote_balanced",
+      "native_cpu_median_seconds": 4.279017,
+      "native_flits": 92525,
+      "native_messages": 254,
+      "native_rss_range_kib": [
+        337416,
+        337572
+      ],
+      "payload_bytes": {
+        "c2c": 589824,
+        "read": 4734976,
+        "write": 589824
+      },
+      "phase_wall_median_seconds": {
+        "execution": 4.787477001082152,
+        "graph_binding_preparation": 0.020371591206640005,
+        "independent_audit": 3.070430806837976,
+        "network_close_serialization": 1.0729612167924643,
+        "network_configuration": 0.3302243282087147,
+        "network_initialization": 0.021657554898411036,
+        "result_serialization": 0.6173639050684869
+      },
+      "process_wall_median_seconds": 10.75091744074598,
+      "process_wall_range_seconds": [
+        10.695708760991693,
+        10.793387131299824
+      ],
+      "python_cpu_median_seconds": 6.452874989,
+      "python_rss_range_kib": [
+        495524,
+        504004
+      ]
+    },
+    {
+      "artifact_bytes_range": [
+        158390912,
+        158390912
+      ],
+      "condition": "shared_whole",
+      "control_bytes": {
+        "read": 1168,
+        "write": 576
+      },
+      "layout": "clustered_local",
+      "native_cpu_median_seconds": 2.496204,
+      "native_flits": 92525,
+      "native_messages": 254,
+      "native_rss_range_kib": [
+        221608,
+        221684
+      ],
+      "payload_bytes": {
+        "c2c": 589824,
+        "read": 4734976,
+        "write": 589824
+      },
+      "phase_wall_median_seconds": {
+        "execution": 2.960052669979632,
+        "graph_binding_preparation": 0.020599203649908304,
+        "independent_audit": 1.933602293021977,
+        "network_close_serialization": 0.709530632942915,
+        "network_configuration": 0.33098016399890184,
+        "network_initialization": 0.022759411949664354,
+        "result_serialization": 0.45250230142846704
+      },
+      "process_wall_median_seconds": 7.133131179958582,
+      "process_wall_range_seconds": [
+        7.089330034330487,
+        7.134923993144184
+      ],
+      "python_cpu_median_seconds": 4.554966554,
+      "python_rss_range_kib": [
+        387524,
+        388544
+      ]
+    },
+    {
+      "artifact_bytes_range": [
+        221521299,
+        221521299
+      ],
+      "condition": "shared_whole",
+      "control_bytes": {
+        "read": 1168,
+        "write": 576
+      },
+      "layout": "remote_balanced",
+      "native_cpu_median_seconds": 4.1402470000000005,
+      "native_flits": 92525,
+      "native_messages": 254,
+      "native_rss_range_kib": [
+        336480,
+        336628
+      ],
+      "payload_bytes": {
+        "c2c": 589824,
+        "read": 4734976,
+        "write": 589824
+      },
+      "phase_wall_median_seconds": {
+        "execution": 4.644477253779769,
+        "graph_binding_preparation": 0.021011889912188053,
+        "independent_audit": 2.5831343573518097,
+        "network_close_serialization": 1.0685117137618363,
+        "network_configuration": 0.3308869958855212,
+        "network_initialization": 0.02238558791577816,
+        "result_serialization": 0.623709611594677
+      },
+      "process_wall_median_seconds": 10.099883770104498,
+      "process_wall_range_seconds": [
+        10.091745195910335,
+        10.139865709003061
+      ],
+      "python_cpu_median_seconds": 5.992435565999999,
+      "python_rss_range_kib": [
+        491816,
+        503944
+      ]
+    },
+    {
+      "artifact_bytes_range": [
+        162899556,
+        162899556
+      ],
+      "condition": "shared_pipeline",
+      "control_bytes": {
+        "read": 1168,
+        "write": 576
+      },
+      "layout": "clustered_local",
+      "native_cpu_median_seconds": 2.577019,
+      "native_flits": 92525,
+      "native_messages": 1445,
+      "native_rss_range_kib": [
+        213772,
+        213932
+      ],
+      "payload_bytes": {
+        "c2c": 589824,
+        "read": 4734976,
+        "write": 589824
+      },
+      "phase_wall_median_seconds": {
+        "execution": 4.1066223960369825,
+        "graph_binding_preparation": 0.06298876088112593,
+        "independent_audit": 1.4909761040471494,
+        "network_close_serialization": 0.6602500630542636,
+        "network_configuration": 0.32956024585291743,
+        "network_initialization": 0.021110705099999905,
+        "result_serialization": 0.4771859240718186
+      },
+      "process_wall_median_seconds": 7.933076735120267,
+      "process_wall_range_seconds": [
+        7.882274242583662,
+        7.9331196579150856
+      ],
+      "python_cpu_median_seconds": 5.280851146,
+      "python_rss_range_kib": [
+        411364,
+        412268
+      ]
+    },
+    {
+      "artifact_bytes_range": [
+        225923768,
+        225923768
+      ],
+      "condition": "shared_pipeline",
+      "control_bytes": {
+        "read": 1168,
+        "write": 576
+      },
+      "layout": "remote_balanced",
+      "native_cpu_median_seconds": 4.38737,
+      "native_flits": 92525,
+      "native_messages": 1445,
+      "native_rss_range_kib": [
+        291400,
+        291404
+      ],
+      "payload_bytes": {
+        "c2c": 589824,
+        "read": 4734976,
+        "write": 589824
+      },
+      "phase_wall_median_seconds": {
+        "execution": 6.0380738181993365,
+        "graph_binding_preparation": 0.06559045193716884,
+        "independent_audit": 1.9049104223959148,
+        "network_close_serialization": 0.9791132691316307,
+        "network_configuration": 0.33226423617452383,
+        "network_initialization": 0.021150769200176,
+        "result_serialization": 0.6498893452808261
+      },
+      "process_wall_median_seconds": 10.89149489812553,
+      "process_wall_range_seconds": [
+        10.839203134179115,
+        10.93791896989569
+      ],
+      "python_cpu_median_seconds": 6.455563621,
+      "python_rss_range_kib": [
+        516192,
+        516280
+      ]
+    }
+  ],
+  "effects": {
+    "interface_at_whole": {
+      "clustered_local": 0,
+      "remote_balanced": 0
+    },
+    "pipeline_at_shared": {
+      "clustered_local": -5300,
+      "remote_balanced": -7742
+    },
+    "pipeline_gap_change_cycles": 2442
+  },
+  "transaction_timing": {
+    "shared_pipeline/clustered_local": {
+      "c2c/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 539.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 1051.0,
+        "transactions": 36
+      },
+      "read/dram": {
+        "first_payload_offset_median_cycles": 867.5,
+        "payload_envelope_median_cycles": 6560.0,
+        "payload_ready_span_median_cycles": 6400.0,
+        "transaction_duration_median_cycles": 7241.5,
+        "transactions": 72
+      },
+      "read/external": {
+        "first_payload_offset_median_cycles": 312,
+        "payload_envelope_median_cycles": 543,
+        "payload_ready_span_median_cycles": 384,
+        "transaction_duration_median_cycles": 919,
+        "transactions": 1
+      },
+      "write/sram": {
+        "first_payload_offset_median_cycles": 64.0,
+        "payload_envelope_median_cycles": 554.5,
+        "payload_ready_span_median_cycles": 192.0,
+        "transaction_duration_median_cycles": 889.0,
+        "transactions": 36
+      }
+    },
+    "shared_pipeline/remote_balanced": {
+      "c2c/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 541.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 1053.0,
+        "transactions": 36
+      },
+      "read/dram": {
+        "first_payload_offset_median_cycles": 302.0,
+        "payload_envelope_median_cycles": 4249.0,
+        "payload_ready_span_median_cycles": 3434.0,
+        "transaction_duration_median_cycles": 4616.0,
+        "transactions": 72
+      },
+      "read/external": {
+        "first_payload_offset_median_cycles": 312,
+        "payload_envelope_median_cycles": 543,
+        "payload_ready_span_median_cycles": 384,
+        "transaction_duration_median_cycles": 919,
+        "transactions": 1
+      },
+      "write/sram": {
+        "first_payload_offset_median_cycles": 64.0,
+        "payload_envelope_median_cycles": 961.0,
+        "payload_ready_span_median_cycles": 192.0,
+        "transaction_duration_median_cycles": 1369.5,
+        "transactions": 36
+      }
+    },
+    "shared_whole/clustered_local": {
+      "c2c/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 539.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 1051.0,
+        "transactions": 36
+      },
+      "read/dram": {
+        "first_payload_offset_median_cycles": 3296.0,
+        "payload_envelope_median_cycles": 2080.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 6421.0,
+        "transactions": 72
+      },
+      "read/external": {
+        "first_payload_offset_median_cycles": 888,
+        "payload_envelope_median_cycles": 542,
+        "payload_ready_span_median_cycles": 0,
+        "transaction_duration_median_cycles": 1686,
+        "transactions": 1
+      },
+      "write/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 544.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 1636.0,
+        "transactions": 36
+      }
+    },
+    "shared_whole/remote_balanced": {
+      "c2c/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 540.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 1052.0,
+        "transactions": 36
+      },
+      "read/dram": {
+        "first_payload_offset_median_cycles": 3182.0,
+        "payload_envelope_median_cycles": 4149.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 8355.0,
+        "transactions": 72
+      },
+      "read/external": {
+        "first_payload_offset_median_cycles": 888,
+        "payload_envelope_median_cycles": 542,
+        "payload_ready_span_median_cycles": 0,
+        "transaction_duration_median_cycles": 1686,
+        "transactions": 1
+      },
+      "write/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 1080.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 2214.0,
+        "transactions": 36
+      }
+    },
+    "v1_whole/clustered_local": {
+      "c2c/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 539.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 1051.0,
+        "transactions": 36
+      },
+      "read/dram": {
+        "first_payload_offset_median_cycles": 3296.0,
+        "payload_envelope_median_cycles": 2080.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 6421.0,
+        "transactions": 72
+      },
+      "read/external": {
+        "first_payload_offset_median_cycles": 888,
+        "payload_envelope_median_cycles": 542,
+        "payload_ready_span_median_cycles": 0,
+        "transaction_duration_median_cycles": 1686,
+        "transactions": 1
+      },
+      "write/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 544.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 1636.0,
+        "transactions": 36
+      }
+    },
+    "v1_whole/remote_balanced": {
+      "c2c/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 540.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 1052.0,
+        "transactions": 36
+      },
+      "read/dram": {
+        "first_payload_offset_median_cycles": 3182.0,
+        "payload_envelope_median_cycles": 4149.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 8355.0,
+        "transactions": 72
+      },
+      "read/external": {
+        "first_payload_offset_median_cycles": 888,
+        "payload_envelope_median_cycles": 542,
+        "payload_ready_span_median_cycles": 0,
+        "transaction_duration_median_cycles": 1686,
+        "transactions": 1
+      },
+      "write/sram": {
+        "first_payload_offset_median_cycles": 256.0,
+        "payload_envelope_median_cycles": 1080.0,
+        "payload_ready_span_median_cycles": 0.0,
+        "transaction_duration_median_cycles": 2214.0,
+        "transactions": 36
+      }
+    }
+  },
+  "validation_seconds": 45.12049057288095
+}

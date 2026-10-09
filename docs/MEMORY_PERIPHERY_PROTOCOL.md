@@ -1,5 +1,11 @@
 # Memory-periphery organization and transaction policy
 
+Post-run clarification: the unchanged window feedback is
+[ideal_commit_visibility](MEMORY_WINDOW_CONTRACT.md). The contrast changes
+service/request granularity and latency instances as well as overlap. The
+original registration below remains the campaign record; its results have
+since passed [stronger acceptance checks](results/memory-periphery-audit-fix-001/REVIEW.md).
+
 Register before applications against v1 source `2c4ed6b`. Preserve old machine,
 results and D1 candidate. Run new tests/components/applications only on hn072.
 D1 application validation is deferred; its completed component captures remain

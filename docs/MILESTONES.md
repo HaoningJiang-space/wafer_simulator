@@ -6,6 +6,8 @@ in [README](../README.md) and [RESEARCH_DIRECTION](RESEARCH_DIRECTION.md).
 
 | Area | Status | Accepted evidence / scope |
 |---|---|---|
+| Periphery acceptance and actual interface ports | Repaired; original evidence revalidated | [239 regressions and 27 saved executions](results/memory-periphery-audit-fix-001/REVIEW.md); tables/counts unchanged, zero new application simulations; independent plan publication, semantic summary checks and final NIC port counting |
+| Periphery critical chain and DMA contract | Existing-trace analysis complete; hardware budgets unavailable | [18 traces and seven analysis regressions](results/memory-periphery-attribution-001/INTERPRETATION.md); earlier supply and changing chain exposure; [ideal commit visibility](MEMORY_WINDOW_CONTRACT.md) explicitly retained, no physical DMA/RX certification or principal-machine selection |
 | Memory-periphery organization/policy | Complete under declared assumptions | [Six 6×6 A/B cells, 18 applications, nine components, 15 replays](results/memory-periphery-001/REVIEW.md); shared-interface whole matches v1, bounded pipeline changes A/B preference; 228 tests; no hardware calibration |
 | Shared spatial service D1 | Registered v1 candidate; components complete, applications deferred | [Fixed hypothesis and limits](SHARED_SPATIAL_SERVICE_PROTOCOL.md); raw components remain on hn072 at `runs/d1-components-001`; no application-accuracy acceptance |
 | Independent spatial service D0 | Complete under v1 policy | [1,700 component conditions and 81 U1/D0/S applications](results/independent-spatial-service-001/REVIEW.md); Local timing/global choice recovered, but A/B direction still wrong at 6×6/7×7; 100-cycle gap budget fails |

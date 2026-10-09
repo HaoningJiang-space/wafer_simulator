@@ -7,8 +7,16 @@ The distinct controller-shared organization and bounded policy are described in
 [checked six-cell comparison](results/memory-periphery-001/REVIEW.md). They do not
 retroactively change v1 or provide hardware calibration.
 
-Current task: define the machine independently of one network generator, compile
-it into the accepted target execution interfaces, and verify actual data paths.
+The [acceptance repairs](results/memory-periphery-audit-fix-001/REVIEW.md)
+revalidate the original evidence without changing its timings. Shared-interface
+ports are checked after actual NIC attachments exist; v1 retains one port per
+Store. The pipeline's [window contract](MEMORY_WINDOW_CONTRACT.md) explicitly
+uses ideal remote-commit visibility and has no controller-wide hardware DMA
+budget or certified RX capacity. Both policies remain declared candidates.
+
+The integration defines the machine independently of one network generator,
+compiles it into the accepted target execution interfaces and verifies actual
+data paths. Hardware organization and numerical rates remain declared.
 `nw-design-for-wsi` remains a pinned **Logic-on-Interconnect network baseline**.
 Its Baseline/Rotated results and all accepted evidence stay unchanged.
 The uncommitted benchmark-envelope draft was superseded before any run.

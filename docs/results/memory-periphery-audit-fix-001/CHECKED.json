@@ -1,0 +1,277 @@
+{
+  "binary_sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+  "compatible_source_changes": {
+    "src/wafer_sim/adapters/memory_periphery.py": {
+      "archived_sha256": "0a172170b787010a05867c08698d403b7cfb618c3da985e7a6103e9f02679c88",
+      "current_sha256": "5ba8e0dbfa576ab91077ca617c22797f61bbe40cb4676fd435c44004fb3afd6a"
+    },
+    "src/wafer_sim/adapters/wafer_machine.py": {
+      "archived_sha256": "3873dd690fa569efe55c6418d9166598dc6a6236d4be40c825e3ac3dba118158",
+      "current_sha256": "87f148c10338d85c319d21be55921c4189e5176b234d69c4ae13d8395d3b9b72"
+    },
+    "src/wafer_sim/analysis/memory_periphery.py": {
+      "archived_sha256": "74f7243475aa87591f9f7a43d1e5c6a1175aed526f51be9be6d021e8678f32d3",
+      "current_sha256": "40f90f6fc55bbee8a5ce470cd388e505a29f15ea24b0e2b158bb12ea1cc15f41"
+    },
+    "src/wafer_sim/architecture/wafer_machine.py": {
+      "archived_sha256": "8b07afd2e1e8457ee435a93180a3a65c5118391c8320d51e45922746b9ebfb7a",
+      "current_sha256": "48a1ff214f09bc6e15876ad3398a77ae2599c340803375af4b6ba75de5873202"
+    },
+    "src/wafer_sim/experiments/memory_periphery.py": {
+      "archived_sha256": "4477aae288f30068d16e0b1417db170af1b14df741968405bb690cd0a0feb5d3",
+      "current_sha256": "4e076b1065df0f8413354e9570229dccd04a0740aa861dec83790f942026ddb7"
+    }
+  },
+  "completion_sha256": "24c1004530918645ac24f3e0bec02c203c97d4995360cac895c66cf494ab5e5d",
+  "executions_reaudited": 27,
+  "experiment_source_commit": "1c7a84aff461ef6eb60255686d70d097a9677ef4",
+  "hashed_artifacts": 562,
+  "native_replays": 15,
+  "passed": true,
+  "reader_source_commit": "cdc322e88a77d09559a715e8095cb28320cab7c2",
+  "reader_tests_receipt": {
+    "host": "ee4e072",
+    "modules": [
+      "test_spatial",
+      "test_collectives",
+      "test_collective_values",
+      "test_timed_execution",
+      "test_transformer",
+      "test_collective_timing",
+      "test_tree_collective",
+      "test_spatial_traffic",
+      "test_online_booksim",
+      "test_wow_target",
+      "test_model_fidelity",
+      "test_transfer_granularity",
+      "test_packet_pipeline",
+      "test_memory_boundary",
+      "test_boundary_design",
+      "test_group_sharing",
+      "test_wafer_machine",
+      "test_memory_abstraction",
+      "test_spatial_scaling",
+      "test_isolated_response",
+      "test_independent_spatial_service",
+      "test_shared_spatial_service",
+      "test_memory_periphery",
+      "test_periphery_evidence"
+    ],
+    "passed": true,
+    "python": "3.13.16 | packaged by conda-forge | (main, Oct  7 2026, 00:29:52) [GCC 15.3.0]",
+    "source_commit": "cdc322e88a77d09559a715e8095cb28320cab7c2",
+    "tests": 239,
+    "tests_log": "/Projects/haoning/wafer_simulator/runs/periphery-audit-fix-tests-002/tests.log",
+    "tests_log_sha256": "b24093c642860c51e650b22694b4f5e8c110250c33225d6fb4af42628f16e3af"
+  },
+  "reader_tests_receipt_sha256": "8866389d6d8289fb35b9b478ecdc93412a3f7f1db572863594ace2fb405672c4",
+  "rechecks": [
+    {
+      "directory": "component-read-v1_whole",
+      "execution_sha256": "058e63db1b43193a5dc22520b196f1b419a173e3ab6717b5f20d282db77e388a",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "component-read-shared_whole",
+      "execution_sha256": "058e63db1b43193a5dc22520b196f1b419a173e3ab6717b5f20d282db77e388a",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "component-read-shared_pipeline",
+      "execution_sha256": "4e657e21f91b637bcb55b880d109ca28ae8f35ace4e369a0b028129a3d01f63d",
+      "maximum_observed_fragment_window": 4,
+      "passed": true
+    },
+    {
+      "directory": "component-write-v1_whole",
+      "execution_sha256": "60cde9c9315639d2cef2d487afc860f0a12c4aea8aaa2caa1cb636bf5202ada3",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "component-write-shared_whole",
+      "execution_sha256": "60cde9c9315639d2cef2d487afc860f0a12c4aea8aaa2caa1cb636bf5202ada3",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "component-write-shared_pipeline",
+      "execution_sha256": "8e41fac04f88707e5c139d715cc0cb25a8b9279affcab5831044ccd4ed508d09",
+      "maximum_observed_fragment_window": 4,
+      "passed": true
+    },
+    {
+      "directory": "component-two_banks-v1_whole",
+      "execution_sha256": "c3c91c5b40d65bfb318a8fa3690c554e309c76dddd5077d4a2e6fdc7658c5df1",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "component-two_banks-shared_whole",
+      "execution_sha256": "b27038c476ff5e28c8cd6682715a0a78560272d4f801caf9c6f4d2810ea94497",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "component-two_banks-shared_pipeline",
+      "execution_sha256": "fab0c25418f59be841c366706af87e0572ae8139d6d6b0d5016f8b30f1975fd9",
+      "maximum_observed_fragment_window": 4,
+      "passed": true
+    },
+    {
+      "directory": "clustered_local-v1_whole-rep-0",
+      "execution_sha256": "672cf7db7a05a0dd0c83a396fa3878e2c37a3b8421269955c202c39c4081984e",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "clustered_local-shared_whole-rep-0",
+      "execution_sha256": "1c26b86f951cee002586a0f0fd2aef67a8b677e082e2b8932ea98c8d839beed7",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "clustered_local-shared_pipeline-rep-0",
+      "execution_sha256": "3373e2e29241a5005fe9dbcad92e928e0ec803b9d5301c9125352a6c8fad2c63",
+      "maximum_observed_fragment_window": 4,
+      "passed": true
+    },
+    {
+      "directory": "remote_balanced-v1_whole-rep-0",
+      "execution_sha256": "759f5a46a32e8c4c85c0afb90909e5a08cbcec61e67eade525e94361c19ff1a1",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "remote_balanced-shared_whole-rep-0",
+      "execution_sha256": "f7556773cb2592bdc994fcddc23a8fc65a7169dc536ceadb1073bd355bda497f",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "remote_balanced-shared_pipeline-rep-0",
+      "execution_sha256": "29fc1f620f691a1710b5f29cad6c0e66da5a228c5db5874b090ce1aa30f8b81b",
+      "maximum_observed_fragment_window": 4,
+      "passed": true
+    },
+    {
+      "directory": "remote_balanced-shared_whole-rep-1",
+      "execution_sha256": "f7556773cb2592bdc994fcddc23a8fc65a7169dc536ceadb1073bd355bda497f",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "remote_balanced-shared_pipeline-rep-1",
+      "execution_sha256": "29fc1f620f691a1710b5f29cad6c0e66da5a228c5db5874b090ce1aa30f8b81b",
+      "maximum_observed_fragment_window": 4,
+      "passed": true
+    },
+    {
+      "directory": "remote_balanced-v1_whole-rep-1",
+      "execution_sha256": "759f5a46a32e8c4c85c0afb90909e5a08cbcec61e67eade525e94361c19ff1a1",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "clustered_local-shared_whole-rep-1",
+      "execution_sha256": "1c26b86f951cee002586a0f0fd2aef67a8b677e082e2b8932ea98c8d839beed7",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "clustered_local-shared_pipeline-rep-1",
+      "execution_sha256": "3373e2e29241a5005fe9dbcad92e928e0ec803b9d5301c9125352a6c8fad2c63",
+      "maximum_observed_fragment_window": 4,
+      "passed": true
+    },
+    {
+      "directory": "clustered_local-v1_whole-rep-1",
+      "execution_sha256": "672cf7db7a05a0dd0c83a396fa3878e2c37a3b8421269955c202c39c4081984e",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "clustered_local-shared_pipeline-rep-2",
+      "execution_sha256": "3373e2e29241a5005fe9dbcad92e928e0ec803b9d5301c9125352a6c8fad2c63",
+      "maximum_observed_fragment_window": 4,
+      "passed": true
+    },
+    {
+      "directory": "clustered_local-v1_whole-rep-2",
+      "execution_sha256": "672cf7db7a05a0dd0c83a396fa3878e2c37a3b8421269955c202c39c4081984e",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "clustered_local-shared_whole-rep-2",
+      "execution_sha256": "1c26b86f951cee002586a0f0fd2aef67a8b677e082e2b8932ea98c8d839beed7",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "remote_balanced-shared_pipeline-rep-2",
+      "execution_sha256": "29fc1f620f691a1710b5f29cad6c0e66da5a228c5db5874b090ce1aa30f8b81b",
+      "maximum_observed_fragment_window": 4,
+      "passed": true
+    },
+    {
+      "directory": "remote_balanced-v1_whole-rep-2",
+      "execution_sha256": "759f5a46a32e8c4c85c0afb90909e5a08cbcec61e67eade525e94361c19ff1a1",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    },
+    {
+      "directory": "remote_balanced-shared_whole-rep-2",
+      "execution_sha256": "f7556773cb2592bdc994fcddc23a8fc65a7169dc536ceadb1073bd355bda497f",
+      "maximum_observed_fragment_window": 0,
+      "passed": true
+    }
+  ],
+  "source_hashes_checked": 140,
+  "source_run": "/Projects/haoning/wafer_simulator/runs/periphery-applications-001",
+  "table_source": "reaudited events with SUMMARY/MEASURED/PROCESS cross-check",
+  "tests": 228,
+  "tests_receipt_sha256": "6d39f2e1dbed81375ed993023a27f635a7f55ad5855207c28036561c03fa7d54",
+  "v1_export_equivalence": {
+    "archived_source_sha256": "e042fd248c079b6d8cd91509c822c98659f4a8518c5356519244293e518b26b8",
+    "config": "6fc69acf414f6487c019e6535ed3fc38048302cb9b90578b9ce2aeb787f2afe1",
+    "passed": true,
+    "semantics": {
+      "credit_delay": "0",
+      "deadlock_warn_timeout": "200000",
+      "ignore_cycles": "0",
+      "injection_rate": "1.0",
+      "injection_rate_uses_flits": "1",
+      "input_speedup": "1",
+      "internal_speedup": "1.0",
+      "mode": "trace",
+      "modular_routing_function": "simple_cycle_breaking_set",
+      "modular_selection_function": "adaptive",
+      "network_file": "rapidchiplet/booksim2/src/rc_topologies/network.anynet",
+      "num_vcs": "1",
+      "output_speedup": "1",
+      "packet_size": "1",
+      "path_for_stats": "rapidchiplet/booksim2/src/rc_stats/network_1.000000.csv",
+      "path_for_xy_info": "rapidchiplet/booksim2/src/rc_xy_info/network.csv",
+      "routing_delay": "0",
+      "routing_function": "modular_routing",
+      "sample_period": "1000000000",
+      "seed": "1",
+      "sim_count": "1",
+      "st_final_delay": "2",
+      "sw_alloc_delay": "1",
+      "topology": "anynet",
+      "trace_skip_idle": "0",
+      "trace_time_out": "60",
+      "traffic": "uniform",
+      "use_read_write": "0",
+      "vc_alloc_delay": "1",
+      "vc_buf_size": "32",
+      "wait_for_tail_credit": "0",
+      "warmup_periods": "0"
+    },
+    "topology": "af9efe8b7823c084a3de834f3f7e2f081910d5606fc90a60768574706912d5c9"
+  }
+}

@@ -144,6 +144,31 @@ Every observed transaction window is within four fragments. The policy changes
 both DRAM and external-controller supply scheduling; C2C stays whole-object.
 This shows why zero capacity waiting did not establish policy independence.
 
+The [acceptance repairs](results/memory-periphery-audit-fix-001/REVIEW.md) reject
+early-publication plans independently of execution, derive summaries from
+audited events and validate router ports after declaring actual NICs. All 27
+old executions reproduce the accepted tables and counts under these checks;
+239 remote regressions pass. Original artifacts and execution/storage semantics
+remain unchanged, with no new application runs.
+
+The [existing-trace analysis](results/memory-periphery-attribution-001/INTERPRETATION.md)
+records earlier supply, bank/channel/network overlap and changed critical-chain
+exposure. B has no observed packet-order or route changes; its critical W read
+payload envelope stays 6,177 cycles and V's increases from 6,171 to 6,674.
+Earlier transaction completion therefore does not imply faster network service.
+These observations constrain explanations without uniquely assigning causal
+cycle counts to overlap, service interleaving or feedback.
+
+The [window contract](MEMORY_WINDOW_CONTRACT.md) explicitly retains
+ideal_commit_visibility: four end-to-end positions per transaction, remote
+commit visible globally without notification propagation. No target controller
+descriptor, total-fragment or RX budget is available. A can demand 16
+controller-associated positions despite the per-transaction bound of four;
+this is a demand envelope, not certified resident storage. Retain both declared
+contracts without choosing a principal machine from their rankings. Defining a
+physical controller requires ownership/lifetime, aggregate issue limits,
+receive storage and a completion notification protocol.
+
 The old shared-network findings and D0 errors remain valid under v1. They do not
 establish layout-choice robustness across storage/DMA policies. The reticle-region
 compute rate, bank serializer and controller channel still have declared rather

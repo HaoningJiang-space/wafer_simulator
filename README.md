@@ -63,6 +63,18 @@ of this restricted layout judgment; it does not replace the accepted v1 results
 or validate hardware. The pipeline includes external-controller traffic and
 keeps full-object reservations, operand order and retirement rules.
 
+The [acceptance repair and revalidation](docs/results/memory-periphery-audit-fix-001/REVIEW.md)
+now rejects incorrect publication plans, semantically inconsistent summaries
+and invalid actual NIC port budgets. All 27 saved executions pass the stronger
+reader and reproduce the original results; 239 remote regressions pass.
+No new application simulation was needed. The window is explicitly
+[ideal_commit_visibility](docs/MEMORY_WINDOW_CONTRACT.md), with no remote
+notification delay and no controller-wide DMA or certified RX budget.
+The [saved-trace analysis](docs/results/memory-periphery-attribution-001/INTERPRETATION.md)
+finds earlier supply and changed critical chains; B improves without observed
+source packet-order or route changes, and its critical payload envelopes do
+not uniformly improve. Neither declared contract is selected as hardware truth.
+
 The [registered D1 candidate](docs/SHARED_SPATIAL_SERVICE_PROTOCOL.md) is retained
 under v1. Its component study completed; its application matrix has not run.
 The active priority is explicit machine organization and transaction policy,
@@ -79,19 +91,21 @@ cd /Projects/haoning/wafer_simulator/source
 export PYTHONPATH=src
 ../.venv/bin/python scripts/test_wow_target_remote.py \
   /Projects/haoning/wafer_simulator/runs/periphery-tests-NEW
-../.venv/bin/python -m wafer_sim.experiments.memory_periphery \
-  --tests /Projects/haoning/wafer_simulator/runs/periphery-tests-NEW/SEMANTICS.json \
-  --output /Projects/haoning/wafer_simulator/runs/periphery-applications-NEW
 ../.venv/bin/python -m wafer_sim.analysis.memory_periphery_study \
-  --source /Projects/haoning/wafer_simulator/runs/periphery-applications-NEW \
-  --output /Projects/haoning/wafer_simulator/runs/periphery-analysis-NEW
+  --source /Projects/haoning/wafer_simulator/runs/periphery-applications-001 \
+  --output /Projects/haoning/wafer_simulator/runs/periphery-revalidation-NEW \
+  --tests /Projects/haoning/wafer_simulator/runs/periphery-tests-NEW/SEMANTICS.json
 ```
 
-This reproduces the [registered periphery comparison](docs/MEMORY_PERIPHERY_PROTOCOL.md).
+This revalidates the saved [periphery comparison](docs/MEMORY_PERIPHERY_PROTOCOL.md)
+with current semantic checks. Its original native campaign enforces exact frozen
+source files; reproduce it at pinned `1c7a84a` in an isolated checkout, with that
+checkout's own same-source test receipt. Do not relax that gate to rerun on main.
 Historical D0 orchestration enforces exact frozen source files; reproduce that
 study from pinned `dc18ed1` in an isolated checkout. Current main preserves v1
-behavior through regression, export equivalence and accepted A/B event hashes,
-while explicitly adding shared interface declarations.
+behavior through regression, export equivalence and accepted A/B event hashes.
+The repaired reader records its own source, archived source compatibility,
+same-source tests and event-derived values separately from old receipts.
 The [D0 contract](docs/INDEPENDENT_SPATIAL_SERVICE.md) explains calibration,
 bounded lookup and independent audits. No timeout or truncated response can
 produce a completion receipt. Future approximation comparisons must fix the
