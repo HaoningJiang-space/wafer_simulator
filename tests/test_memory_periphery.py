@@ -121,3 +121,35 @@ class MemoryPeripheryTests(unittest.TestCase):
     def test_invalid_policy_rejected_before_execution(self):
         for kwargs in ({'kind': 'magic'}, {'chunk_bytes': 0}, {'window_chunks': True}):
             with self.assertRaises(ValueError): TransactionPolicy(**kwargs)
+
+    def test_wrong_publication_plan_and_real_consumer_execution_are_rejected(self):
+        c, w, p, policy, _, _ = fixture()
+        w = replace(w, data=(*w.data, DataObject('z', 64, 'g', True, 'consumer')),
+                    operations=(*w.operations, Operation('g', ('y',), ('z',),
+                        (('mac', 2560000),), 0, (), 'consumer')))
+        p = Placement({'f': 'c0', 'g': 'c0'}, {**p.data, 'z': 'sram-0'})
+        b, tx = bind_periphery(w, c, p, policy); normal = execute(b, c.timing)
+        bad_plan = replace(b.plans['f'], output_requirements=(('y', (0,)),))
+        bad = replace(b, plans={**b.plans, 'f': bad_plan}); actual = execute(bad, c.timing)
+        compute = next(r for r in actual['phases'] if r['operation'] == 'f' and r['kind'] == 'compute')
+        self.assertLess(actual['output_ready']['y'], compute['ready'])
+        self.assertLess(actual['operations']['g']['admitted'], normal['operations']['f']['retired'])
+        self.assertLess(actual['application_cycles'], normal['application_cycles'])
+        audit_periphery(w, p, c, b, tx, policy, normal)
+        with self.assertRaisesRegex(ValueError, 'publication'):
+            audit_periphery(w, p, c, bad, tx, policy, actual)
+
+    def test_write_plan_cannot_publish_before_final_ack(self):
+        c, w, p, policy, b, tx = fixture(write=True)
+        plan = replace(b.plans['f'], output_requirements=(('y', (tx[0]['chunks'][-1]['destination_phase'],)),))
+        bad = replace(b, plans={'f': plan}); actual = execute(bad, c.timing)
+        self.assertLess(actual['output_ready']['y'], actual['operations']['f']['retired'])
+        with self.assertRaisesRegex(ValueError, 'publication'):
+            audit_periphery(w, p, c, bad, tx, policy, actual)
+
+    def test_explicit_all_phase_publication_is_equivalent_to_retirement(self):
+        c, w, p, policy, b, tx = fixture()
+        plan = b.plans['f']; plan = replace(plan, output_requirements=(('y', tuple(range(len(plan.phases)))),))
+        b = replace(b, plans={'f': plan}); actual = execute(b, c.timing)
+        self.assertEqual(actual['output_ready']['y'], actual['operations']['f']['retired'])
+        audit_periphery(w, p, c, b, tx, policy, actual)

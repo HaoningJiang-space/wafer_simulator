@@ -8,6 +8,20 @@ from wafer_sim.execution.plan import Phase, Demand, Transfer
 
 
 def audit_periphery(workload, placement, compiled, binding, transactions, policy, result):
+    # Check the policy independently of the plan used by execute()/audit_timing.
+    # Ordinary periphery outputs publish at retirement; collective rank-local
+    # publication belongs to its separate adapter and is deliberately untouched.
+    for op in workload.operations:
+        if op.collective is not None:
+            raise ValueError('Periphery audit accepts ordinary operations only')
+        plan = binding.plans[op.id]
+        required = tuple(range(len(plan.phases)))
+        if plan.output_requirements and (len(plan.output_requirements) != len(op.outputs) or
+                dict(plan.output_requirements) != {name: required for name in op.outputs}):
+            raise ValueError('Periphery output publication requires whole-operation retirement')
+        for name in op.outputs:
+            if result['output_ready'][name] != result['operations'][op.id]['retired']:
+                raise ValueError('Periphery output published before retirement')
     checked = audit_timing(binding, compiled.timing, result)
     stores = {s.id: s for s in compiled.physical.stores}
     objects = {d.id: d for d in workload.data}
