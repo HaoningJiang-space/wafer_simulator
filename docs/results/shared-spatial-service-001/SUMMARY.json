@@ -1,0 +1,3927 @@
+{
+  "accuracy": {
+    "D0": {
+      "application_budget_passes": 6,
+      "mape_percent": 6.723516565449978,
+      "worst_error_percent": 24.821970400644
+    },
+    "D1": {
+      "application_budget_passes": 8,
+      "mape_percent": 1.2012473588959578,
+      "worst_error_percent": 2.0030029070696065
+    },
+    "S": {
+      "application_budget_passes": 9,
+      "mape_percent": 0.0,
+      "worst_error_percent": 0.0
+    }
+  },
+  "calibration_cost": {
+    "component_cases": 1700,
+    "probe_executions": 3460,
+    "python_peak_rss_kib": 93868,
+    "supplemental_holdouts": 60,
+    "table_bytes": 1694921,
+    "wall_seconds": 628.0307303490117
+  },
+  "campaign_cost": {
+    "fresh_worker_wall_seconds": 273.2071959376335,
+    "gate_and_input_checks_seconds": 1.6164144119247794,
+    "native_replay_seconds": 47.67441438417882,
+    "new_component_executions": 0,
+    "reused_component_revalidation_seconds": 4.305456064175814,
+    "scope": "Fresh whole workers, registered replay, reused evidence readback; calibration and original components separate",
+    "total_wall_seconds": 328.7756656780839
+  },
+  "choices": [
+    {
+      "candidates": [
+        "local"
+      ],
+      "model": "D0",
+      "reference_regret_max_cycles": 0,
+      "reference_regret_min_cycles": 0,
+      "side": 4
+    },
+    {
+      "candidates": [
+        "local"
+      ],
+      "model": "D1",
+      "reference_regret_max_cycles": 0,
+      "reference_regret_min_cycles": 0,
+      "side": 4
+    },
+    {
+      "candidates": [
+        "local"
+      ],
+      "model": "S",
+      "reference_regret_max_cycles": 0,
+      "reference_regret_min_cycles": 0,
+      "side": 4
+    },
+    {
+      "candidates": [
+        "local"
+      ],
+      "model": "D0",
+      "reference_regret_max_cycles": 0,
+      "reference_regret_min_cycles": 0,
+      "side": 6
+    },
+    {
+      "candidates": [
+        "local"
+      ],
+      "model": "D1",
+      "reference_regret_max_cycles": 0,
+      "reference_regret_min_cycles": 0,
+      "side": 6
+    },
+    {
+      "candidates": [
+        "local"
+      ],
+      "model": "S",
+      "reference_regret_max_cycles": 0,
+      "reference_regret_min_cycles": 0,
+      "side": 6
+    },
+    {
+      "candidates": [
+        "local"
+      ],
+      "model": "D0",
+      "reference_regret_max_cycles": 0,
+      "reference_regret_min_cycles": 0,
+      "side": 7
+    },
+    {
+      "candidates": [
+        "local"
+      ],
+      "model": "D1",
+      "reference_regret_max_cycles": 0,
+      "reference_regret_min_cycles": 0,
+      "side": 7
+    },
+    {
+      "candidates": [
+        "local"
+      ],
+      "model": "S",
+      "reference_regret_max_cycles": 0,
+      "reference_regret_min_cycles": 0,
+      "side": 7
+    }
+  ],
+  "components": {
+    "artifact_hashes_checked": 1297,
+    "cases": 38,
+    "comparisons": [
+      {
+        "D1_cycles": 13,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 13,
+        "bytes": 16,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 13,
+        "kind": "single",
+        "name": "single-hb0-16",
+        "native_paths": [
+          {
+            "flits": 1,
+            "routers": [
+              1,
+              0
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 15,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 15,
+        "bytes": 65,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 15,
+        "kind": "single",
+        "name": "single-hb0-65",
+        "native_paths": [
+          {
+            "flits": 2,
+            "routers": [
+              1,
+              0
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 523,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 523,
+        "bytes": 16384,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 523,
+        "kind": "single",
+        "name": "single-hb0-16384",
+        "native_paths": [
+          {
+            "flits": 256,
+            "routers": [
+              1,
+              0
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2059,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2059,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2059,
+        "kind": "single",
+        "name": "single-hb0-65536",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 76,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 76,
+        "bytes": 16,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 76,
+        "kind": "single",
+        "name": "single-dram3-16",
+        "native_paths": [
+          {
+            "flits": 1,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 78,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 78,
+        "bytes": 65,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 78,
+        "kind": "single",
+        "name": "single-dram3-65",
+        "native_paths": [
+          {
+            "flits": 2,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 586,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 586,
+        "bytes": 16384,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 586,
+        "kind": "single",
+        "name": "single-dram3-16384",
+        "native_paths": [
+          {
+            "flits": 256,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "single",
+        "name": "single-dram3-65536",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 71,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 71,
+        "bytes": 16,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 71,
+        "kind": "single",
+        "name": "single-c2c3-16",
+        "native_paths": [
+          {
+            "flits": 1,
+            "routers": [
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 73,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 73,
+        "bytes": 65,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 73,
+        "kind": "single",
+        "name": "single-c2c3-65",
+        "native_paths": [
+          {
+            "flits": 2,
+            "routers": [
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 581,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 581,
+        "bytes": 16384,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 581,
+        "kind": "single",
+        "name": "single-c2c3-16384",
+        "native_paths": [
+          {
+            "flits": 256,
+            "routers": [
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2117,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2117,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2117,
+        "kind": "single",
+        "name": "single-c2c3-65536",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 95,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 95,
+        "bytes": 16,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 95,
+        "kind": "single",
+        "name": "single-io-in-16",
+        "native_paths": [
+          {
+            "flits": 1,
+            "routers": [
+              72,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          72,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 97,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 97,
+        "bytes": 65,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 97,
+        "kind": "single",
+        "name": "single-io-in-65",
+        "native_paths": [
+          {
+            "flits": 2,
+            "routers": [
+              72,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          72,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 605,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 605,
+        "bytes": 16384,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 605,
+        "kind": "single",
+        "name": "single-io-in-16384",
+        "native_paths": [
+          {
+            "flits": 256,
+            "routers": [
+              72,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          72,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2141,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2141,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2141,
+        "kind": "single",
+        "name": "single-io-in-65536",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              72,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          72,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 95,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 95,
+        "bytes": 16,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 95,
+        "kind": "single",
+        "name": "single-io-out-16",
+        "native_paths": [
+          {
+            "flits": 1,
+            "routers": [
+              36,
+              24,
+              12,
+              0,
+              72
+            ]
+          }
+        ],
+        "predicted_path": [
+          36,
+          24,
+          12,
+          0,
+          72
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 97,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 97,
+        "bytes": 65,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 97,
+        "kind": "single",
+        "name": "single-io-out-65",
+        "native_paths": [
+          {
+            "flits": 2,
+            "routers": [
+              36,
+              24,
+              12,
+              0,
+              72
+            ]
+          }
+        ],
+        "predicted_path": [
+          36,
+          24,
+          12,
+          0,
+          72
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 605,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 605,
+        "bytes": 16384,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 605,
+        "kind": "single",
+        "name": "single-io-out-16384",
+        "native_paths": [
+          {
+            "flits": 256,
+            "routers": [
+              36,
+              24,
+              12,
+              0,
+              72
+            ]
+          }
+        ],
+        "predicted_path": [
+          36,
+          24,
+          12,
+          0,
+          72
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2141,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2141,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2141,
+        "kind": "single",
+        "name": "single-io-out-65536",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              36,
+              24,
+              12,
+              0,
+              72
+            ]
+          }
+        ],
+        "predicted_path": [
+          36,
+          24,
+          12,
+          0,
+          72
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 4170,
+        "D1_sharing_excess_cycles": 2048,
+        "S_cycles": 4149,
+        "bytes": 65536,
+        "error_cycles": 21,
+        "error_percent": 0.5061460592914013,
+        "independent_D1_cycles": 2122,
+        "kind": "two-shared",
+        "name": "two-shared-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 4170,
+        "D1_sharing_excess_cycles": 2048,
+        "S_cycles": 4148,
+        "bytes": 65536,
+        "error_cycles": 22,
+        "error_percent": 0.5303760848601735,
+        "independent_D1_cycles": 2122,
+        "kind": "two-shared",
+        "name": "two-shared-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              13,
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          13,
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 0,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 3661,
+        "D1_sharing_excess_cycles": 1539,
+        "S_cycles": 3682,
+        "bytes": 65536,
+        "error_cycles": -21,
+        "error_percent": -0.5703422053231932,
+        "independent_D1_cycles": 2122,
+        "kind": "two-shared",
+        "name": "two-shared-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 3661,
+        "D1_sharing_excess_cycles": 1539,
+        "S_cycles": 3682,
+        "bytes": 65536,
+        "error_cycles": -21,
+        "error_percent": -0.5703422053231932,
+        "independent_D1_cycles": 2122,
+        "kind": "two-shared",
+        "name": "two-shared-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              13,
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          13,
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 509,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "two-shared",
+        "name": "two-shared-stagger-3000",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "two-shared",
+        "name": "two-shared-stagger-3000",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              13,
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          13,
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 3000,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 6218,
+        "D1_sharing_excess_cycles": 4096,
+        "S_cycles": 6176,
+        "bytes": 65536,
+        "error_cycles": 42,
+        "error_percent": 0.680051813471505,
+        "independent_D1_cycles": 2122,
+        "kind": "three-shared",
+        "name": "three-shared-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 6218,
+        "D1_sharing_excess_cycles": 4096,
+        "S_cycles": 6175,
+        "bytes": 65536,
+        "error_cycles": 43,
+        "error_percent": 0.6963562753036445,
+        "independent_D1_cycles": 2122,
+        "kind": "three-shared",
+        "name": "three-shared-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              13,
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          13,
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 0,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 6218,
+        "D1_sharing_excess_cycles": 4096,
+        "S_cycles": 4148,
+        "bytes": 65536,
+        "error_cycles": 2070,
+        "error_percent": 49.90356798457087,
+        "independent_D1_cycles": 2122,
+        "kind": "three-shared",
+        "name": "three-shared-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              25,
+              24,
+              36,
+              48,
+              60
+            ]
+          }
+        ],
+        "predicted_path": [
+          25,
+          24,
+          36,
+          48,
+          60
+        ],
+        "ready": 0,
+        "token": "component-2"
+      },
+      {
+        "D1_cycles": 4946,
+        "D1_sharing_excess_cycles": 2824,
+        "S_cycles": 5730,
+        "bytes": 65536,
+        "error_cycles": -784,
+        "error_percent": -13.682373472949394,
+        "independent_D1_cycles": 2122,
+        "kind": "three-shared",
+        "name": "three-shared-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 5455,
+        "D1_sharing_excess_cycles": 3333,
+        "S_cycles": 5730,
+        "bytes": 65536,
+        "error_cycles": -275,
+        "error_percent": -4.799301919720767,
+        "independent_D1_cycles": 2122,
+        "kind": "three-shared",
+        "name": "three-shared-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              13,
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          13,
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 509,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 5201,
+        "D1_sharing_excess_cycles": 3079,
+        "S_cycles": 4168,
+        "bytes": 65536,
+        "error_cycles": 1033,
+        "error_percent": 24.784069097888683,
+        "independent_D1_cycles": 2122,
+        "kind": "three-shared",
+        "name": "three-shared-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              25,
+              24,
+              36,
+              48,
+              60
+            ]
+          }
+        ],
+        "predicted_path": [
+          25,
+          24,
+          36,
+          48,
+          60
+        ],
+        "ready": 1018,
+        "token": "component-2"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "three-shared",
+        "name": "three-shared-stagger-3000",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "three-shared",
+        "name": "three-shared-stagger-3000",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              13,
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          13,
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 3000,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "three-shared",
+        "name": "three-shared-stagger-3000",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              25,
+              24,
+              36,
+              48,
+              60
+            ]
+          }
+        ],
+        "predicted_path": [
+          25,
+          24,
+          36,
+          48,
+          60
+        ],
+        "ready": 6000,
+        "token": "component-2"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "two-disjoint",
+        "name": "two-disjoint-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "two-disjoint",
+        "name": "two-disjoint-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              3,
+              2,
+              14,
+              26,
+              38
+            ]
+          }
+        ],
+        "predicted_path": [
+          3,
+          2,
+          14,
+          26,
+          38
+        ],
+        "ready": 0,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "two-disjoint",
+        "name": "two-disjoint-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "two-disjoint",
+        "name": "two-disjoint-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              3,
+              2,
+              14,
+              26,
+              38
+            ]
+          }
+        ],
+        "predicted_path": [
+          3,
+          2,
+          14,
+          26,
+          38
+        ],
+        "ready": 509,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2123,
+        "bytes": 65536,
+        "error_cycles": -1,
+        "error_percent": -0.047103155911443206,
+        "independent_D1_cycles": 2122,
+        "kind": "two-reverse",
+        "name": "two-reverse-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2123,
+        "bytes": 65536,
+        "error_cycles": -1,
+        "error_percent": -0.047103155911443206,
+        "independent_D1_cycles": 2122,
+        "kind": "two-reverse",
+        "name": "two-reverse-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              37,
+              36,
+              24,
+              12,
+              0
+            ]
+          }
+        ],
+        "predicted_path": [
+          37,
+          36,
+          24,
+          12,
+          0
+        ],
+        "ready": 0,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 4170,
+        "D1_sharing_excess_cycles": 2048,
+        "S_cycles": 4144,
+        "bytes": 65536,
+        "error_cycles": 26,
+        "error_percent": 0.6274131274131234,
+        "independent_D1_cycles": 2122,
+        "kind": "two-dram-c2c",
+        "name": "two-dram-c2c-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 4165,
+        "D1_sharing_excess_cycles": 2048,
+        "S_cycles": 4139,
+        "bytes": 65536,
+        "error_cycles": 26,
+        "error_percent": 0.6281710558105891,
+        "independent_D1_cycles": 2117,
+        "kind": "two-dram-c2c",
+        "name": "two-dram-c2c-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 0,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 3661,
+        "D1_sharing_excess_cycles": 1539,
+        "S_cycles": 3686,
+        "bytes": 65536,
+        "error_cycles": -25,
+        "error_percent": -0.6782419967444331,
+        "independent_D1_cycles": 2122,
+        "kind": "two-dram-c2c",
+        "name": "two-dram-c2c-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 3656,
+        "D1_sharing_excess_cycles": 1539,
+        "S_cycles": 3682,
+        "bytes": 65536,
+        "error_cycles": -26,
+        "error_percent": -0.7061379684953795,
+        "independent_D1_cycles": 2117,
+        "kind": "two-dram-c2c",
+        "name": "two-dram-c2c-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 509,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "two-dram-c2c",
+        "name": "two-dram-c2c-stagger-3000",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2117,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2117,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2117,
+        "kind": "two-dram-c2c",
+        "name": "two-dram-c2c-stagger-3000",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 3000,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 4170,
+        "D1_sharing_excess_cycles": 2048,
+        "S_cycles": 4130,
+        "bytes": 65536,
+        "error_cycles": 40,
+        "error_percent": 0.9685230024213176,
+        "independent_D1_cycles": 2122,
+        "kind": "two-dram-io",
+        "name": "two-dram-io-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              13,
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          13,
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 4189,
+        "D1_sharing_excess_cycles": 2048,
+        "S_cycles": 4149,
+        "bytes": 65536,
+        "error_cycles": 40,
+        "error_percent": 0.9640877319836205,
+        "independent_D1_cycles": 2141,
+        "kind": "two-dram-io",
+        "name": "two-dram-io-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              72,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          72,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 3661,
+        "D1_sharing_excess_cycles": 1539,
+        "S_cycles": 3620,
+        "bytes": 65536,
+        "error_cycles": 41,
+        "error_percent": 1.1325966850828761,
+        "independent_D1_cycles": 2122,
+        "kind": "two-dram-io",
+        "name": "two-dram-io-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              13,
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          13,
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 3680,
+        "D1_sharing_excess_cycles": 1539,
+        "S_cycles": 3640,
+        "bytes": 65536,
+        "error_cycles": 40,
+        "error_percent": 1.098901098901095,
+        "independent_D1_cycles": 2141,
+        "kind": "two-dram-io",
+        "name": "two-dram-io-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              72,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          72,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 509,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 2122,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2122,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2122,
+        "kind": "two-dram-io",
+        "name": "two-dram-io-stagger-3000",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              13,
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          13,
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 2141,
+        "D1_sharing_excess_cycles": 0,
+        "S_cycles": 2141,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2141,
+        "kind": "two-dram-io",
+        "name": "two-dram-io-stagger-3000",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              72,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          72,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 3000,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 6218,
+        "D1_sharing_excess_cycles": 4096,
+        "S_cycles": 6172,
+        "bytes": 65536,
+        "error_cycles": 46,
+        "error_percent": 0.7453013609850956,
+        "independent_D1_cycles": 2122,
+        "kind": "three-mixed",
+        "name": "three-mixed-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 6213,
+        "D1_sharing_excess_cycles": 4096,
+        "S_cycles": 4139,
+        "bytes": 65536,
+        "error_cycles": 2074,
+        "error_percent": 50.10872191350568,
+        "independent_D1_cycles": 2117,
+        "kind": "three-mixed",
+        "name": "three-mixed-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 0,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 6279,
+        "D1_sharing_excess_cycles": 4096,
+        "S_cycles": 6234,
+        "bytes": 65536,
+        "error_cycles": 45,
+        "error_percent": 0.7218479307026016,
+        "independent_D1_cycles": 2183,
+        "kind": "three-mixed",
+        "name": "three-mixed-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              72,
+              0,
+              12,
+              24,
+              36,
+              48,
+              60
+            ]
+          }
+        ],
+        "predicted_path": [
+          72,
+          0,
+          12,
+          24,
+          36,
+          48,
+          60
+        ],
+        "ready": 0,
+        "token": "component-2"
+      },
+      {
+        "D1_cycles": 4946,
+        "D1_sharing_excess_cycles": 2824,
+        "S_cycles": 5412,
+        "bytes": 65536,
+        "error_cycles": -466,
+        "error_percent": -8.610495195861045,
+        "independent_D1_cycles": 2122,
+        "kind": "three-mixed",
+        "name": "three-mixed-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              1,
+              0,
+              12,
+              24,
+              36
+            ]
+          }
+        ],
+        "predicted_path": [
+          1,
+          0,
+          12,
+          24,
+          36
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 5450,
+        "D1_sharing_excess_cycles": 3333,
+        "S_cycles": 4164,
+        "bytes": 65536,
+        "error_cycles": 1286,
+        "error_percent": 30.883765609990398,
+        "independent_D1_cycles": 2117,
+        "kind": "three-mixed",
+        "name": "three-mixed-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              12,
+              24,
+              36,
+              48
+            ]
+          }
+        ],
+        "predicted_path": [
+          12,
+          24,
+          36,
+          48
+        ],
+        "ready": 509,
+        "token": "component-1"
+      },
+      {
+        "D1_cycles": 5262,
+        "D1_sharing_excess_cycles": 3079,
+        "S_cycles": 5242,
+        "bytes": 65536,
+        "error_cycles": 20,
+        "error_percent": 0.38153376573826225,
+        "independent_D1_cycles": 2183,
+        "kind": "three-mixed",
+        "name": "three-mixed-stagger-509",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              72,
+              0,
+              12,
+              24,
+              36,
+              48,
+              60
+            ]
+          }
+        ],
+        "predicted_path": [
+          72,
+          0,
+          12,
+          24,
+          36,
+          48,
+          60
+        ],
+        "ready": 1018,
+        "token": "component-2"
+      },
+      {
+        "D1_cycles": 4128,
+        "D1_sharing_excess_cycles": 2048,
+        "S_cycles": 2080,
+        "bytes": 65536,
+        "error_cycles": 2048,
+        "error_percent": 98.46153846153847,
+        "independent_D1_cycles": 2080,
+        "kind": "two-source",
+        "name": "two-source-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              0,
+              12,
+              13
+            ]
+          }
+        ],
+        "predicted_path": [
+          0,
+          12,
+          13
+        ],
+        "ready": 0,
+        "token": "component-0"
+      },
+      {
+        "D1_cycles": 4149,
+        "D1_sharing_excess_cycles": 2048,
+        "S_cycles": 4149,
+        "bytes": 65536,
+        "error_cycles": 0,
+        "error_percent": 0.0,
+        "independent_D1_cycles": 2101,
+        "kind": "two-source",
+        "name": "two-source-stagger-0",
+        "native_paths": [
+          {
+            "flits": 1024,
+            "routers": [
+              0,
+              12,
+              24,
+              25
+            ]
+          }
+        ],
+        "predicted_path": [
+          0,
+          12,
+          24,
+          25
+        ],
+        "ready": 0,
+        "token": "component-1"
+      }
+    ],
+    "cost": {
+      "cases": 38,
+      "executions": 152,
+      "python_peak_rss_kib": 99140,
+      "scope": "incremental components; existing D0 calibration reused",
+      "wall_seconds": 24.77451213588938
+    },
+    "full_component_readbacks": 152,
+    "manifest_sha256": "44ca1ce850c3e47e536bed18929d76f0dd0feedd0f90bec800f2823c637ccc93",
+    "new_component_executions": 0,
+    "passed": true,
+    "readback_source_changes": {
+      "src/wafer_sim/adapters/spatial.py": {
+        "archived_sha256": "fdeb56bf27754efa8fdd46169ac33f47d6004f3d67d30a0346248c0ae6c189c7",
+        "current_sha256": "5f9b5581b2bc41a34d97d8a5c0eb3ccb748d6a0cbdbc85a3f561e976326993de"
+      },
+      "src/wafer_sim/adapters/wafer_machine.py": {
+        "archived_sha256": "23bb4f39318372858f9323378a663a6feec1e486f608adef54377c4df002d906",
+        "current_sha256": "87f148c10338d85c319d21be55921c4189e5176b234d69c4ae13d8395d3b9b72"
+      },
+      "src/wafer_sim/analysis/shared_spatial_study.py": {
+        "archived_sha256": "30690071041322dccb84b1f7f473ce0da3dd1892439a0142b814f26c00173143",
+        "current_sha256": "d26df67ee7591770b5dba7a591ac9bb1672c3db7e4347b965639a776e18372b8"
+      },
+      "src/wafer_sim/architecture/wafer_machine.py": {
+        "archived_sha256": "8b07afd2e1e8457ee435a93180a3a65c5118391c8320d51e45922746b9ebfb7a",
+        "current_sha256": "48a1ff214f09bc6e15876ad3398a77ae2599c340803375af4b6ba75de5873202"
+      },
+      "src/wafer_sim/cli.py": {
+        "archived_sha256": "c17da906b5b118276d648cc8ca3c8998f4c61b05214b077a6d70a4948add3576",
+        "current_sha256": "4aff971066d5471a62a4e6237184d2f624fc274460f80bcc28bc237adc127a0b"
+      },
+      "src/wafer_sim/experiments/shared_spatial_service.py": {
+        "archived_sha256": "30e8a3f148cf39ea6c582923b3eef80e64e5b8318ed725386d53cdbb7e3d6e9c",
+        "current_sha256": "bb796a294b99882456eab4d1bf723f43b92026d6c24c9a85dbc4b6267ead6706"
+      },
+      "src/wafer_sim/experiments/spatial_scaling.py": {
+        "archived_sha256": "466537141992c745ea74024418123570b66907cdcc9e5c9c66ad672463739941",
+        "current_sha256": "d1599c77fcda186b06ce74641ba59ffd459234bd082c6663300f0ce3b60d2d70"
+      },
+      "src/wafer_sim/remote.py": {
+        "archived_sha256": "3f0325ef839e3100e1747dccb6cd6168774a19378ba06699867944385841c517",
+        "current_sha256": "f4e7be881f57f3ff8d95121852938280d5695ad4b90a04e45602046a4b722e23"
+      }
+    },
+    "rule": {
+      "component_conditions": 1700,
+      "isolated_route_choices_differ": 66,
+      "no_full_application_input": true,
+      "passed": true,
+      "solo_service_mismatches": 0,
+      "table_sha256": "eaa168298030c3e29c38c2a96e56d6e6d61978ea20f7742e9722b5dd491cd5e2"
+    },
+    "solo_cases": 20,
+    "source_commit": "2c4ed6b4540e1e307a1c45e4a48d9d1ad266ceb3"
+  },
+  "costs": [
+    {
+      "execution_max_seconds": 0.1897328058257699,
+      "execution_median_seconds": 0.18004929786548018,
+      "execution_min_seconds": 0.1760536078363657,
+      "execution_python_cpu_seconds_median": 0.069793,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.04016178101301193,
+      "graph_binding_preparation_median_seconds": 0.04003438679501414,
+      "graph_binding_preparation_min_seconds": 0.03915202524513006,
+      "independent_audit_max_seconds": 0.027095291763544083,
+      "independent_audit_median_seconds": 0.025799358263611794,
+      "independent_audit_min_seconds": 0.02517459774389863,
+      "layout": "local",
+      "logical_messages": 114,
+      "model": "D0",
+      "native_flits": 4353,
+      "native_peak_rss_kib_median": 25920,
+      "native_total_cpu_seconds_median": 0.13283199999999998,
+      "network_close_serialization_max_seconds": 0.0529574709944427,
+      "network_close_serialization_median_seconds": 0.034260442946106195,
+      "network_close_serialization_min_seconds": 0.03406046610325575,
+      "network_configuration_max_seconds": 0.3665049821138382,
+      "network_configuration_median_seconds": 0.35924150701612234,
+      "network_configuration_min_seconds": 0.34609560715034604,
+      "network_initialization_max_seconds": 0.025646549183875322,
+      "network_initialization_median_seconds": 0.023541308008134365,
+      "network_initialization_min_seconds": 0.02239092718809843,
+      "process_wall_seconds_median": 1.067492691334337,
+      "python_full_worker_peak_rss_kib_median": 98952,
+      "python_lifetime_peak_rss_kib_median": 92056,
+      "result_bytes_median": 3510553,
+      "result_serialization_max_seconds": 0.027197477873414755,
+      "result_serialization_median_seconds": 0.026062577962875366,
+      "result_serialization_min_seconds": 0.025434073992073536,
+      "samples": 3,
+      "side": 4
+    },
+    {
+      "execution_max_seconds": 0.05334175890311599,
+      "execution_median_seconds": 0.04604333499446511,
+      "execution_min_seconds": 0.045333835296332836,
+      "execution_python_cpu_seconds_median": 0.046047000000000005,
+      "flow_epochs": 38,
+      "graph_binding_preparation_max_seconds": 0.01826936099678278,
+      "graph_binding_preparation_median_seconds": 0.017089744098484516,
+      "graph_binding_preparation_min_seconds": 0.0163490348495543,
+      "independent_audit_max_seconds": 0.02262524887919426,
+      "independent_audit_median_seconds": 0.020057719200849533,
+      "independent_audit_min_seconds": 0.019993348978459835,
+      "layout": "local",
+      "logical_messages": 114,
+      "model": "D1",
+      "native_flits": 0,
+      "native_peak_rss_kib_median": 0,
+      "native_total_cpu_seconds_median": 0.0,
+      "network_close_serialization_max_seconds": 0.0002958080731332302,
+      "network_close_serialization_median_seconds": 0.00025446293875575066,
+      "network_close_serialization_min_seconds": 0.00024915440008044243,
+      "network_configuration_max_seconds": 0.0004328358918428421,
+      "network_configuration_median_seconds": 0.00040496978908777237,
+      "network_configuration_min_seconds": 0.0003703129477798939,
+      "network_initialization_max_seconds": 0.001494287047535181,
+      "network_initialization_median_seconds": 0.001431846059858799,
+      "network_initialization_min_seconds": 0.0013446388766169548,
+      "process_wall_seconds_median": 0.3649122337810695,
+      "python_full_worker_peak_rss_kib_median": 62324,
+      "python_lifetime_peak_rss_kib_median": 62324,
+      "result_bytes_median": 504256,
+      "result_serialization_max_seconds": 0.004854906816035509,
+      "result_serialization_median_seconds": 0.004306885879486799,
+      "result_serialization_min_seconds": 0.004304307047277689,
+      "samples": 3,
+      "side": 4
+    },
+    {
+      "execution_max_seconds": 1.3488927902653813,
+      "execution_median_seconds": 1.0795757342129946,
+      "execution_min_seconds": 1.0756212822161615,
+      "execution_python_cpu_seconds_median": 0.34848500000000004,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.016201599966734648,
+      "graph_binding_preparation_median_seconds": 0.014423256739974022,
+      "graph_binding_preparation_min_seconds": 0.01429743878543377,
+      "independent_audit_max_seconds": 0.5643676458857954,
+      "independent_audit_median_seconds": 0.5597592070698738,
+      "independent_audit_min_seconds": 0.5582495220005512,
+      "layout": "local",
+      "logical_messages": 114,
+      "model": "S",
+      "native_flits": 41265,
+      "native_peak_rss_kib_median": 118592,
+      "native_total_cpu_seconds_median": 0.915585,
+      "network_close_serialization_max_seconds": 0.2947377860546112,
+      "network_close_serialization_median_seconds": 0.27518132515251637,
+      "network_close_serialization_min_seconds": 0.2751802052371204,
+      "network_configuration_max_seconds": 0.46862123580649495,
+      "network_configuration_median_seconds": 0.3657400547526777,
+      "network_configuration_min_seconds": 0.3586931056343019,
+      "network_initialization_max_seconds": 0.02571644401177764,
+      "network_initialization_median_seconds": 0.024405387695878744,
+      "network_initialization_min_seconds": 0.024239819962531328,
+      "process_wall_seconds_median": 2.9296445548534393,
+      "python_full_worker_peak_rss_kib_median": 196300,
+      "python_lifetime_peak_rss_kib_median": 136196,
+      "result_bytes_median": 22637676,
+      "result_serialization_max_seconds": 0.16845911694690585,
+      "result_serialization_median_seconds": 0.1590907140634954,
+      "result_serialization_min_seconds": 0.15877313632518053,
+      "samples": 3,
+      "side": 4
+    },
+    {
+      "execution_max_seconds": 0.20397102693095803,
+      "execution_median_seconds": 0.18712165812030435,
+      "execution_min_seconds": 0.18558173207566142,
+      "execution_python_cpu_seconds_median": 0.07393199999999989,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.04835062567144632,
+      "graph_binding_preparation_median_seconds": 0.03864164091646671,
+      "graph_binding_preparation_min_seconds": 0.03861970128491521,
+      "independent_audit_max_seconds": 0.030055494979023933,
+      "independent_audit_median_seconds": 0.027823901269584894,
+      "independent_audit_min_seconds": 0.027224252000451088,
+      "layout": "clustered_local",
+      "logical_messages": 114,
+      "model": "D0",
+      "native_flits": 4353,
+      "native_peak_rss_kib_median": 17860,
+      "native_total_cpu_seconds_median": 0.13272699999999998,
+      "network_close_serialization_max_seconds": 0.03760584630072117,
+      "network_close_serialization_median_seconds": 0.03607597202062607,
+      "network_close_serialization_min_seconds": 0.03599800309166312,
+      "network_configuration_max_seconds": 0.4006043882109225,
+      "network_configuration_median_seconds": 0.36930771823972464,
+      "network_configuration_min_seconds": 0.3682448142208159,
+      "network_initialization_max_seconds": 0.025333185214549303,
+      "network_initialization_median_seconds": 0.02388454880565405,
+      "network_initialization_min_seconds": 0.023669603280723095,
+      "process_wall_seconds_median": 1.0697356308810413,
+      "python_full_worker_peak_rss_kib_median": 98976,
+      "python_lifetime_peak_rss_kib_median": 91200,
+      "result_bytes_median": 3492403,
+      "result_serialization_max_seconds": 0.02846986474469304,
+      "result_serialization_median_seconds": 0.025868956930935383,
+      "result_serialization_min_seconds": 0.025783387944102287,
+      "samples": 3,
+      "side": 4
+    },
+    {
+      "execution_max_seconds": 0.050528245978057384,
+      "execution_median_seconds": 0.05024627782404423,
+      "execution_min_seconds": 0.050112093798816204,
+      "execution_python_cpu_seconds_median": 0.050249000000000016,
+      "flow_epochs": 111,
+      "graph_binding_preparation_max_seconds": 0.01691114716231823,
+      "graph_binding_preparation_median_seconds": 0.016842410899698734,
+      "graph_binding_preparation_min_seconds": 0.01680272538214922,
+      "independent_audit_max_seconds": 0.02895419206470251,
+      "independent_audit_median_seconds": 0.028750260826200247,
+      "independent_audit_min_seconds": 0.028586256317794323,
+      "layout": "clustered_local",
+      "logical_messages": 114,
+      "model": "D1",
+      "native_flits": 0,
+      "native_peak_rss_kib_median": 0,
+      "native_total_cpu_seconds_median": 0.0,
+      "network_close_serialization_max_seconds": 0.00026543810963630676,
+      "network_close_serialization_median_seconds": 0.00026377616450190544,
+      "network_close_serialization_min_seconds": 0.00026071304455399513,
+      "network_configuration_max_seconds": 0.0004094666801393032,
+      "network_configuration_median_seconds": 0.00040544988587498665,
+      "network_configuration_min_seconds": 0.00039177900180220604,
+      "network_initialization_max_seconds": 0.0015061949379742146,
+      "network_initialization_median_seconds": 0.0014948127791285515,
+      "network_initialization_min_seconds": 0.0014720167964696884,
+      "process_wall_seconds_median": 0.3650353751145303,
+      "python_full_worker_peak_rss_kib_median": 62324,
+      "python_lifetime_peak_rss_kib_median": 62324,
+      "result_bytes_median": 506281,
+      "result_serialization_max_seconds": 0.004569236654788256,
+      "result_serialization_median_seconds": 0.004515448119491339,
+      "result_serialization_min_seconds": 0.004490806721150875,
+      "samples": 3,
+      "side": 4
+    },
+    {
+      "execution_max_seconds": 1.3655567271634936,
+      "execution_median_seconds": 1.3651853180490434,
+      "execution_min_seconds": 1.3611376830376685,
+      "execution_python_cpu_seconds_median": 0.3808140000000001,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.014971478842198849,
+      "graph_binding_preparation_median_seconds": 0.014796707779169083,
+      "graph_binding_preparation_min_seconds": 0.0147819840349257,
+      "independent_audit_max_seconds": 0.532569482922554,
+      "independent_audit_median_seconds": 0.5320903118699789,
+      "independent_audit_min_seconds": 0.5290043340064585,
+      "layout": "clustered_local",
+      "logical_messages": 114,
+      "model": "S",
+      "native_flits": 41265,
+      "native_peak_rss_kib_median": 99056,
+      "native_total_cpu_seconds_median": 1.152179,
+      "network_close_serialization_max_seconds": 0.318813499994576,
+      "network_close_serialization_median_seconds": 0.31699874717742205,
+      "network_close_serialization_min_seconds": 0.31667426880449057,
+      "network_configuration_max_seconds": 0.3690594262443483,
+      "network_configuration_median_seconds": 0.3682086346670985,
+      "network_configuration_min_seconds": 0.3674205979332328,
+      "network_initialization_max_seconds": 0.025142927188426256,
+      "network_initialization_median_seconds": 0.024965446908026934,
+      "network_initialization_min_seconds": 0.024717698339372873,
+      "process_wall_seconds_median": 3.326128277927637,
+      "python_full_worker_peak_rss_kib_median": 218448,
+      "python_lifetime_peak_rss_kib_median": 136720,
+      "result_bytes_median": 28373556,
+      "result_serialization_max_seconds": 0.1997652119025588,
+      "result_serialization_median_seconds": 0.19815090019255877,
+      "result_serialization_min_seconds": 0.1973200859501958,
+      "samples": 3,
+      "side": 4
+    },
+    {
+      "execution_max_seconds": 0.1806679437868297,
+      "execution_median_seconds": 0.1800124030560255,
+      "execution_min_seconds": 0.176687384955585,
+      "execution_python_cpu_seconds_median": 0.0693220000000001,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.039078980684280396,
+      "graph_binding_preparation_median_seconds": 0.038618947844952345,
+      "graph_binding_preparation_min_seconds": 0.03826410323381424,
+      "independent_audit_max_seconds": 0.026476765051484108,
+      "independent_audit_median_seconds": 0.026381516363471746,
+      "independent_audit_min_seconds": 0.026141750626266003,
+      "layout": "remote_balanced",
+      "logical_messages": 114,
+      "model": "D0",
+      "native_flits": 4353,
+      "native_peak_rss_kib_median": 25920,
+      "native_total_cpu_seconds_median": 0.133182,
+      "network_close_serialization_max_seconds": 0.034443844109773636,
+      "network_close_serialization_median_seconds": 0.03436922002583742,
+      "network_close_serialization_min_seconds": 0.034360132180154324,
+      "network_configuration_max_seconds": 0.36794508108869195,
+      "network_configuration_median_seconds": 0.36660446086898446,
+      "network_configuration_min_seconds": 0.3524373029358685,
+      "network_initialization_max_seconds": 0.025353169068694115,
+      "network_initialization_median_seconds": 0.02442617015913129,
+      "network_initialization_min_seconds": 0.022560417652130127,
+      "process_wall_seconds_median": 1.0684768939390779,
+      "python_full_worker_peak_rss_kib_median": 98960,
+      "python_lifetime_peak_rss_kib_median": 92140,
+      "result_bytes_median": 3510553,
+      "result_serialization_max_seconds": 0.02596013993024826,
+      "result_serialization_median_seconds": 0.02589122485369444,
+      "result_serialization_min_seconds": 0.02570068184286356,
+      "samples": 3,
+      "side": 4
+    },
+    {
+      "execution_max_seconds": 0.07274091430008411,
+      "execution_median_seconds": 0.0663214041851461,
+      "execution_min_seconds": 0.06596402311697602,
+      "execution_python_cpu_seconds_median": 0.066325,
+      "flow_epochs": 56,
+      "graph_binding_preparation_max_seconds": 0.018389754928648472,
+      "graph_binding_preparation_median_seconds": 0.016997598111629486,
+      "graph_binding_preparation_min_seconds": 0.016957090701907873,
+      "independent_audit_max_seconds": 0.029255881905555725,
+      "independent_audit_median_seconds": 0.027106978930532932,
+      "independent_audit_min_seconds": 0.02708730287849903,
+      "layout": "remote_balanced",
+      "logical_messages": 114,
+      "model": "D1",
+      "native_flits": 0,
+      "native_peak_rss_kib_median": 0,
+      "native_total_cpu_seconds_median": 0.0,
+      "network_close_serialization_max_seconds": 0.00027892086654901505,
+      "network_close_serialization_median_seconds": 0.0002667228691279888,
+      "network_close_serialization_min_seconds": 0.00025765690952539444,
+      "network_configuration_max_seconds": 0.00041893403977155685,
+      "network_configuration_median_seconds": 0.0004170052707195282,
+      "network_configuration_min_seconds": 0.0003984603099524975,
+      "network_initialization_max_seconds": 0.0017513693310320377,
+      "network_initialization_median_seconds": 0.00164520600810647,
+      "network_initialization_min_seconds": 0.0016254950314760208,
+      "process_wall_seconds_median": 0.36497779889032245,
+      "python_full_worker_peak_rss_kib_median": 62324,
+      "python_lifetime_peak_rss_kib_median": 62324,
+      "result_bytes_median": 525471,
+      "result_serialization_max_seconds": 0.0049934182316064835,
+      "result_serialization_median_seconds": 0.004803788848221302,
+      "result_serialization_min_seconds": 0.004586826078593731,
+      "samples": 3,
+      "side": 4
+    },
+    {
+      "execution_max_seconds": 1.8871114780195057,
+      "execution_median_seconds": 1.7362075177952647,
+      "execution_min_seconds": 1.7072593099437654,
+      "execution_python_cpu_seconds_median": 0.44151299999999993,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.01560982409864664,
+      "graph_binding_preparation_median_seconds": 0.015122238080948591,
+      "graph_binding_preparation_min_seconds": 0.015041281003504992,
+      "independent_audit_max_seconds": 0.8285500770434737,
+      "independent_audit_median_seconds": 0.8250840259715915,
+      "independent_audit_min_seconds": 0.775218928232789,
+      "layout": "remote_balanced",
+      "logical_messages": 114,
+      "model": "S",
+      "native_flits": 41265,
+      "native_peak_rss_kib_median": 136144,
+      "native_total_cpu_seconds_median": 1.611315,
+      "network_close_serialization_max_seconds": 0.5262388619594276,
+      "network_close_serialization_median_seconds": 0.5120529890991747,
+      "network_close_serialization_min_seconds": 0.4684150889515877,
+      "network_configuration_max_seconds": 0.36811618600040674,
+      "network_configuration_median_seconds": 0.36717080185189843,
+      "network_configuration_min_seconds": 0.3653115169145167,
+      "network_initialization_max_seconds": 0.024746102280914783,
+      "network_initialization_median_seconds": 0.024566160049289465,
+      "network_initialization_min_seconds": 0.024097389075905085,
+      "process_wall_seconds_median": 4.280618191231042,
+      "python_full_worker_peak_rss_kib_median": 214192,
+      "python_lifetime_peak_rss_kib_median": 145232,
+      "result_bytes_median": 34220435,
+      "result_serialization_max_seconds": 0.2613703431561589,
+      "result_serialization_median_seconds": 0.25535911321640015,
+      "result_serialization_min_seconds": 0.2499210936948657,
+      "samples": 3,
+      "side": 4
+    },
+    {
+      "execution_max_seconds": 0.5155986226163805,
+      "execution_median_seconds": 0.5058333920314908,
+      "execution_min_seconds": 0.5051640174351633,
+      "execution_python_cpu_seconds_median": 0.17110499999999995,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.09627491002902389,
+      "graph_binding_preparation_median_seconds": 0.06203812174499035,
+      "graph_binding_preparation_min_seconds": 0.06173761188983917,
+      "independent_audit_max_seconds": 0.06528359884396195,
+      "independent_audit_median_seconds": 0.06522124260663986,
+      "independent_audit_min_seconds": 0.0650147208943963,
+      "layout": "local",
+      "logical_messages": 254,
+      "model": "D0",
+      "native_flits": 9473,
+      "native_peak_rss_kib_median": 57540,
+      "native_total_cpu_seconds_median": 0.39391299999999996,
+      "network_close_serialization_max_seconds": 0.1125269839540124,
+      "network_close_serialization_median_seconds": 0.1102631981484592,
+      "network_close_serialization_min_seconds": 0.07821997161954641,
+      "network_configuration_max_seconds": 0.4707505367696285,
+      "network_configuration_median_seconds": 0.3709506122395396,
+      "network_configuration_min_seconds": 0.368909633718431,
+      "network_initialization_max_seconds": 0.04051396297290921,
+      "network_initialization_median_seconds": 0.023808998987078667,
+      "network_initialization_min_seconds": 0.023589645978063345,
+      "process_wall_seconds_median": 1.6206994471140206,
+      "python_full_worker_peak_rss_kib_median": 122916,
+      "python_lifetime_peak_rss_kib_median": 101908,
+      "result_bytes_median": 8420910,
+      "result_serialization_max_seconds": 0.06652730517089367,
+      "result_serialization_median_seconds": 0.062441575806587934,
+      "result_serialization_min_seconds": 0.06228499207645655,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 0.23050383618101478,
+      "execution_median_seconds": 0.21529666986316442,
+      "execution_min_seconds": 0.2139487168751657,
+      "execution_python_cpu_seconds_median": 0.215298,
+      "flow_epochs": 39,
+      "graph_binding_preparation_max_seconds": 0.038705640938133,
+      "graph_binding_preparation_median_seconds": 0.037756895646452904,
+      "graph_binding_preparation_min_seconds": 0.03774580918252468,
+      "independent_audit_max_seconds": 0.04868434276431799,
+      "independent_audit_median_seconds": 0.0461175967939198,
+      "independent_audit_min_seconds": 0.04571692133322358,
+      "layout": "local",
+      "logical_messages": 254,
+      "model": "D1",
+      "native_flits": 0,
+      "native_peak_rss_kib_median": 0,
+      "native_total_cpu_seconds_median": 0.0,
+      "network_close_serialization_max_seconds": 0.0006816121749579906,
+      "network_close_serialization_median_seconds": 0.0006325640715658665,
+      "network_close_serialization_min_seconds": 0.0005873767659068108,
+      "network_configuration_max_seconds": 0.0005111969076097012,
+      "network_configuration_median_seconds": 0.0004908349364995956,
+      "network_configuration_min_seconds": 0.0004863138310611248,
+      "network_initialization_max_seconds": 0.0031217061914503574,
+      "network_initialization_median_seconds": 0.002956666052341461,
+      "network_initialization_min_seconds": 0.002930272836238146,
+      "process_wall_seconds_median": 0.6155409039929509,
+      "python_full_worker_peak_rss_kib_median": 62324,
+      "python_lifetime_peak_rss_kib_median": 62324,
+      "result_bytes_median": 1643915,
+      "result_serialization_max_seconds": 0.016500723082572222,
+      "result_serialization_median_seconds": 0.015362838748842478,
+      "result_serialization_min_seconds": 0.01534366188570857,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 3.0679831858724356,
+      "execution_median_seconds": 3.063599354121834,
+      "execution_min_seconds": 3.045013361144811,
+      "execution_python_cpu_seconds_median": 1.121438,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.03498273389413953,
+      "graph_binding_preparation_median_seconds": 0.03353712800890207,
+      "graph_binding_preparation_min_seconds": 0.03325409395620227,
+      "independent_audit_max_seconds": 0.9932707399129868,
+      "independent_audit_median_seconds": 0.9599302029237151,
+      "independent_audit_min_seconds": 0.9511834681034088,
+      "layout": "local",
+      "logical_messages": 254,
+      "model": "S",
+      "native_flits": 92525,
+      "native_peak_rss_kib_median": 279232,
+      "native_total_cpu_seconds_median": 2.421029,
+      "network_close_serialization_max_seconds": 0.7500921972095966,
+      "network_close_serialization_median_seconds": 0.6958650629967451,
+      "network_close_serialization_min_seconds": 0.6388568682596087,
+      "network_configuration_max_seconds": 0.37714494299143553,
+      "network_configuration_median_seconds": 0.37022700998932123,
+      "network_configuration_min_seconds": 0.3691955520771444,
+      "network_initialization_max_seconds": 0.025435911025851965,
+      "network_initialization_median_seconds": 0.025087119080126286,
+      "network_initialization_min_seconds": 0.023420132230967283,
+      "process_wall_seconds_median": 6.236995984334499,
+      "python_full_worker_peak_rss_kib_median": 306072,
+      "python_lifetime_peak_rss_kib_median": 202776,
+      "result_bytes_median": 51547021,
+      "result_serialization_max_seconds": 0.3991433558985591,
+      "result_serialization_median_seconds": 0.3863402372226119,
+      "result_serialization_min_seconds": 0.3836621050722897,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 0.5942261191084981,
+      "execution_median_seconds": 0.5001383125782013,
+      "execution_min_seconds": 0.4961470919661224,
+      "execution_python_cpu_seconds_median": 0.17298800000000014,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.06215871684253216,
+      "graph_binding_preparation_median_seconds": 0.062106403056532145,
+      "graph_binding_preparation_min_seconds": 0.0616818112321198,
+      "independent_audit_max_seconds": 0.07126403227448463,
+      "independent_audit_median_seconds": 0.06349590281024575,
+      "independent_audit_min_seconds": 0.06229426804929972,
+      "layout": "clustered_local",
+      "logical_messages": 254,
+      "model": "D0",
+      "native_flits": 9473,
+      "native_peak_rss_kib_median": 34688,
+      "native_total_cpu_seconds_median": 0.37258399999999997,
+      "network_close_serialization_max_seconds": 0.09002659004181623,
+      "network_close_serialization_median_seconds": 0.07922843284904957,
+      "network_close_serialization_min_seconds": 0.07763866102322936,
+      "network_configuration_max_seconds": 0.37571290507912636,
+      "network_configuration_median_seconds": 0.36981013836339116,
+      "network_configuration_min_seconds": 0.3674405049532652,
+      "network_initialization_max_seconds": 0.024288129061460495,
+      "network_initialization_median_seconds": 0.02382081001996994,
+      "network_initialization_min_seconds": 0.023786668200045824,
+      "process_wall_seconds_median": 1.5701080821454525,
+      "python_full_worker_peak_rss_kib_median": 122100,
+      "python_lifetime_peak_rss_kib_median": 100872,
+      "result_bytes_median": 8347201,
+      "result_serialization_max_seconds": 0.07751171104609966,
+      "result_serialization_median_seconds": 0.06996827386319637,
+      "result_serialization_min_seconds": 0.06777977524325252,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 0.23365130508318543,
+      "execution_median_seconds": 0.19164704717695713,
+      "execution_min_seconds": 0.18786820117384195,
+      "execution_python_cpu_seconds_median": 0.19163699999999995,
+      "flow_epochs": 113,
+      "graph_binding_preparation_max_seconds": 0.052308036014437675,
+      "graph_binding_preparation_median_seconds": 0.039263103157281876,
+      "graph_binding_preparation_min_seconds": 0.03778026299551129,
+      "independent_audit_max_seconds": 0.08203693898394704,
+      "independent_audit_median_seconds": 0.06467678304761648,
+      "independent_audit_min_seconds": 0.06283614365383983,
+      "layout": "clustered_local",
+      "logical_messages": 254,
+      "model": "D1",
+      "native_flits": 0,
+      "native_peak_rss_kib_median": 0,
+      "native_total_cpu_seconds_median": 0.0,
+      "network_close_serialization_max_seconds": 0.0007843407802283764,
+      "network_close_serialization_median_seconds": 0.000738644041121006,
+      "network_close_serialization_min_seconds": 0.0007082261145114899,
+      "network_configuration_max_seconds": 0.0006283740513026714,
+      "network_configuration_median_seconds": 0.0005065291188657284,
+      "network_configuration_min_seconds": 0.0004799659363925457,
+      "network_initialization_max_seconds": 0.00381750101223588,
+      "network_initialization_median_seconds": 0.0032355361618101597,
+      "network_initialization_min_seconds": 0.003186797723174095,
+      "process_wall_seconds_median": 0.6155926738865674,
+      "python_full_worker_peak_rss_kib_median": 62324,
+      "python_lifetime_peak_rss_kib_median": 62324,
+      "result_bytes_median": 1610687,
+      "result_serialization_max_seconds": 0.020984509959816933,
+      "result_serialization_median_seconds": 0.016004107892513275,
+      "result_serialization_min_seconds": 0.01532575860619545,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 4.349229707848281,
+      "execution_median_seconds": 3.3930949848145247,
+      "execution_min_seconds": 3.385099350940436,
+      "execution_python_cpu_seconds_median": 0.9212660000000001,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.04373348178341985,
+      "graph_binding_preparation_median_seconds": 0.03379224892705679,
+      "graph_binding_preparation_min_seconds": 0.03378512617200613,
+      "independent_audit_max_seconds": 1.2276103356853127,
+      "independent_audit_median_seconds": 1.220572660677135,
+      "independent_audit_min_seconds": 1.1907510221935809,
+      "layout": "clustered_local",
+      "logical_messages": 254,
+      "model": "S",
+      "native_flits": 92525,
+      "native_peak_rss_kib_median": 222632,
+      "native_total_cpu_seconds_median": 2.989606,
+      "network_close_serialization_max_seconds": 1.1905880952253938,
+      "network_close_serialization_median_seconds": 0.8332251319661736,
+      "network_close_serialization_min_seconds": 0.8258122517727315,
+      "network_configuration_max_seconds": 0.3803546270355582,
+      "network_configuration_median_seconds": 0.37162796035408974,
+      "network_configuration_min_seconds": 0.37098236894235015,
+      "network_initialization_max_seconds": 0.027817701920866966,
+      "network_initialization_median_seconds": 0.023974699899554253,
+      "network_initialization_min_seconds": 0.023695943877100945,
+      "process_wall_seconds_median": 7.099473856855184,
+      "python_full_worker_peak_rss_kib_median": 334860,
+      "python_lifetime_peak_rss_kib_median": 208868,
+      "result_bytes_median": 64475395,
+      "result_serialization_max_seconds": 0.48904396360740066,
+      "result_serialization_median_seconds": 0.4776961887255311,
+      "result_serialization_min_seconds": 0.47724134800955653,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 0.5097148269414902,
+      "execution_median_seconds": 0.5082628251984715,
+      "execution_min_seconds": 0.5073948032222688,
+      "execution_python_cpu_seconds_median": 0.17220800000000003,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.06424908805638552,
+      "graph_binding_preparation_median_seconds": 0.06338545819744468,
+      "graph_binding_preparation_min_seconds": 0.0626639979891479,
+      "independent_audit_max_seconds": 0.06976335309445858,
+      "independent_audit_median_seconds": 0.06601263862103224,
+      "independent_audit_min_seconds": 0.06562928995117545,
+      "layout": "remote_balanced",
+      "logical_messages": 254,
+      "model": "D0",
+      "native_flits": 9473,
+      "native_peak_rss_kib_median": 57596,
+      "native_total_cpu_seconds_median": 0.394124,
+      "network_close_serialization_max_seconds": 0.11074460484087467,
+      "network_close_serialization_median_seconds": 0.11065864935517311,
+      "network_close_serialization_min_seconds": 0.07815041393041611,
+      "network_configuration_max_seconds": 0.3712553777731955,
+      "network_configuration_median_seconds": 0.3694721288047731,
+      "network_configuration_min_seconds": 0.36899345833808184,
+      "network_initialization_max_seconds": 0.027631910052150488,
+      "network_initialization_median_seconds": 0.023908177390694618,
+      "network_initialization_min_seconds": 0.023731525987386703,
+      "process_wall_seconds_median": 1.6186306532472372,
+      "python_full_worker_peak_rss_kib_median": 122860,
+      "python_lifetime_peak_rss_kib_median": 101904,
+      "result_bytes_median": 8420910,
+      "result_serialization_max_seconds": 0.06353686423972249,
+      "result_serialization_median_seconds": 0.06248302524909377,
+      "result_serialization_min_seconds": 0.06235683569684625,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 0.4596615913324058,
+      "execution_median_seconds": 0.4169043651781976,
+      "execution_min_seconds": 0.41280693421140313,
+      "execution_python_cpu_seconds_median": 0.41687699999999994,
+      "flow_epochs": 85,
+      "graph_binding_preparation_max_seconds": 0.045266719069331884,
+      "graph_binding_preparation_median_seconds": 0.0387695929966867,
+      "graph_binding_preparation_min_seconds": 0.038732274901121855,
+      "independent_audit_max_seconds": 0.08845238899812102,
+      "independent_audit_median_seconds": 0.08346858294680715,
+      "independent_audit_min_seconds": 0.0834098937921226,
+      "layout": "remote_balanced",
+      "logical_messages": 254,
+      "model": "D1",
+      "native_flits": 0,
+      "native_peak_rss_kib_median": 0,
+      "native_total_cpu_seconds_median": 0.0,
+      "network_close_serialization_max_seconds": 0.0006422679871320724,
+      "network_close_serialization_median_seconds": 0.0006408551707863808,
+      "network_close_serialization_min_seconds": 0.0006187320686876774,
+      "network_configuration_max_seconds": 0.0005132281221449375,
+      "network_configuration_median_seconds": 0.00048598088324069977,
+      "network_configuration_min_seconds": 0.0004519098438322544,
+      "network_initialization_max_seconds": 0.004492003936320543,
+      "network_initialization_median_seconds": 0.003999457228928804,
+      "network_initialization_min_seconds": 0.00396475987508893,
+      "process_wall_seconds_median": 0.8662366173230112,
+      "python_full_worker_peak_rss_kib_median": 62324,
+      "python_lifetime_peak_rss_kib_median": 62324,
+      "result_bytes_median": 1743988,
+      "result_serialization_max_seconds": 0.016717188991606236,
+      "result_serialization_median_seconds": 0.016200799960643053,
+      "result_serialization_min_seconds": 0.016069235745817423,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 5.59876460256055,
+      "execution_median_seconds": 5.442964371293783,
+      "execution_min_seconds": 5.440128926187754,
+      "execution_python_cpu_seconds_median": 1.2910039999999998,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.03662102157250047,
+      "graph_binding_preparation_median_seconds": 0.035589028149843216,
+      "graph_binding_preparation_min_seconds": 0.034474418964236975,
+      "independent_audit_max_seconds": 1.72092874487862,
+      "independent_audit_median_seconds": 1.7106896140612662,
+      "independent_audit_min_seconds": 1.7010440998710692,
+      "layout": "remote_balanced",
+      "logical_messages": 254,
+      "model": "S",
+      "native_flits": 92525,
+      "native_peak_rss_kib_median": 337548,
+      "native_total_cpu_seconds_median": 5.104475,
+      "network_close_serialization_max_seconds": 1.3499719039537013,
+      "network_close_serialization_median_seconds": 1.3084870288148522,
+      "network_close_serialization_min_seconds": 1.306745809968561,
+      "network_configuration_max_seconds": 0.3815477048046887,
+      "network_configuration_median_seconds": 0.37358424393460155,
+      "network_configuration_min_seconds": 0.3705112929455936,
+      "network_initialization_max_seconds": 0.024924127850681543,
+      "network_initialization_median_seconds": 0.02447773702442646,
+      "network_initialization_min_seconds": 0.02369681792333722,
+      "process_wall_seconds_median": 10.510864570736885,
+      "python_full_worker_peak_rss_kib_median": 427904,
+      "python_lifetime_peak_rss_kib_median": 245196,
+      "result_bytes_median": 90771705,
+      "result_serialization_max_seconds": 0.656163333915174,
+      "result_serialization_median_seconds": 0.6556740803644061,
+      "result_serialization_min_seconds": 0.6523624523542821,
+      "samples": 3,
+      "side": 6
+    },
+    {
+      "execution_max_seconds": 0.9563327990472317,
+      "execution_median_seconds": 0.8681146278977394,
+      "execution_min_seconds": 0.8483698768541217,
+      "execution_python_cpu_seconds_median": 0.2795980000000001,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.07664192793890834,
+      "graph_binding_preparation_median_seconds": 0.07547589996829629,
+      "graph_binding_preparation_min_seconds": 0.07526933820918202,
+      "independent_audit_max_seconds": 0.09643952129408717,
+      "independent_audit_median_seconds": 0.08828440913930535,
+      "independent_audit_min_seconds": 0.08655557595193386,
+      "layout": "local",
+      "logical_messages": 345,
+      "model": "D0",
+      "native_flits": 12801,
+      "native_peak_rss_kib_median": 80232,
+      "native_total_cpu_seconds_median": 0.676604,
+      "network_close_serialization_max_seconds": 0.13084245566278696,
+      "network_close_serialization_median_seconds": 0.12715531419962645,
+      "network_close_serialization_min_seconds": 0.12618556385859847,
+      "network_configuration_max_seconds": 0.37617920711636543,
+      "network_configuration_median_seconds": 0.3682820117101073,
+      "network_configuration_min_seconds": 0.3677841341122985,
+      "network_initialization_max_seconds": 0.031082096975296736,
+      "network_initialization_median_seconds": 0.023853247985243797,
+      "network_initialization_min_seconds": 0.023765200283378363,
+      "process_wall_seconds_median": 2.125710966065526,
+      "python_full_worker_peak_rss_kib_median": 139444,
+      "python_lifetime_peak_rss_kib_median": 110620,
+      "result_bytes_median": 11819092,
+      "result_serialization_max_seconds": 0.09554787119850516,
+      "result_serialization_median_seconds": 0.09062294894829392,
+      "result_serialization_min_seconds": 0.08942042896524072,
+      "samples": 3,
+      "side": 7
+    },
+    {
+      "execution_max_seconds": 0.42749828612431884,
+      "execution_median_seconds": 0.4248307328671217,
+      "execution_min_seconds": 0.40774320904165506,
+      "execution_python_cpu_seconds_median": 0.42481599999999997,
+      "flow_epochs": 40,
+      "graph_binding_preparation_max_seconds": 0.05350554408505559,
+      "graph_binding_preparation_median_seconds": 0.05155040184035897,
+      "graph_binding_preparation_min_seconds": 0.0514600551687181,
+      "independent_audit_max_seconds": 0.06880374113097787,
+      "independent_audit_median_seconds": 0.06473135109990835,
+      "independent_audit_min_seconds": 0.06377981882542372,
+      "layout": "local",
+      "logical_messages": 345,
+      "model": "D1",
+      "native_flits": 0,
+      "native_peak_rss_kib_median": 0,
+      "native_total_cpu_seconds_median": 0.0,
+      "network_close_serialization_max_seconds": 0.0008383430540561676,
+      "network_close_serialization_median_seconds": 0.0008090450428426266,
+      "network_close_serialization_min_seconds": 0.0007969117723405361,
+      "network_configuration_max_seconds": 0.0005720970220863819,
+      "network_configuration_median_seconds": 0.0005647270008921623,
+      "network_configuration_min_seconds": 0.0005058329552412033,
+      "network_initialization_max_seconds": 0.0041147987358272076,
+      "network_initialization_median_seconds": 0.003934670705348253,
+      "network_initialization_min_seconds": 0.0038884575478732586,
+      "process_wall_seconds_median": 0.8662199033424258,
+      "python_full_worker_peak_rss_kib_median": 62324,
+      "python_lifetime_peak_rss_kib_median": 62324,
+      "result_bytes_median": 2693655,
+      "result_serialization_max_seconds": 0.025906415656208992,
+      "result_serialization_median_seconds": 0.025820333044975996,
+      "result_serialization_min_seconds": 0.025715266354382038,
+      "samples": 3,
+      "side": 7
+    },
+    {
+      "execution_max_seconds": 4.81063268519938,
+      "execution_median_seconds": 4.703336050268263,
+      "execution_min_seconds": 4.686106195207685,
+      "execution_python_cpu_seconds_median": 1.7666619999999997,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.04552636807784438,
+      "graph_binding_preparation_median_seconds": 0.04550379188731313,
+      "graph_binding_preparation_min_seconds": 0.045289717614650726,
+      "independent_audit_max_seconds": 1.3309411001391709,
+      "independent_audit_median_seconds": 1.3092559147626162,
+      "independent_audit_min_seconds": 1.2998635959811509,
+      "layout": "local",
+      "logical_messages": 345,
+      "model": "S",
+      "native_flits": 125844,
+      "native_peak_rss_kib_median": 390532,
+      "native_total_cpu_seconds_median": 3.6768330000000002,
+      "network_close_serialization_max_seconds": 1.0309088020585477,
+      "network_close_serialization_median_seconds": 1.0164615018293262,
+      "network_close_serialization_min_seconds": 0.9411537232808769,
+      "network_configuration_max_seconds": 0.37256489833816886,
+      "network_configuration_median_seconds": 0.37038940796628594,
+      "network_configuration_min_seconds": 0.3703433587215841,
+      "network_initialization_max_seconds": 0.023859663866460323,
+      "network_initialization_median_seconds": 0.0237751342356205,
+      "network_initialization_min_seconds": 0.023628567811101675,
+      "process_wall_seconds_median": 8.843801486771554,
+      "python_full_worker_peak_rss_kib_median": 387168,
+      "python_lifetime_peak_rss_kib_median": 249908,
+      "result_bytes_median": 70726216,
+      "result_serialization_max_seconds": 0.5447104224003851,
+      "result_serialization_median_seconds": 0.5297240689396858,
+      "result_serialization_min_seconds": 0.5192546811886132,
+      "samples": 3,
+      "side": 7
+    },
+    {
+      "execution_max_seconds": 0.8942589783109725,
+      "execution_median_seconds": 0.8263694527558982,
+      "execution_min_seconds": 0.8226967379450798,
+      "execution_python_cpu_seconds_median": 0.26882499999999987,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.07557289814576507,
+      "graph_binding_preparation_median_seconds": 0.07549889711663127,
+      "graph_binding_preparation_min_seconds": 0.07453640410676599,
+      "independent_audit_max_seconds": 0.0891943252645433,
+      "independent_audit_median_seconds": 0.08838871121406555,
+      "independent_audit_min_seconds": 0.08683343091979623,
+      "layout": "clustered_local",
+      "logical_messages": 345,
+      "model": "D0",
+      "native_flits": 12801,
+      "native_peak_rss_kib_median": 48732,
+      "native_total_cpu_seconds_median": 0.6269119999999999,
+      "network_close_serialization_max_seconds": 0.13496665516868234,
+      "network_close_serialization_median_seconds": 0.12630358897149563,
+      "network_close_serialization_min_seconds": 0.12622774811461568,
+      "network_configuration_max_seconds": 0.3694467260502279,
+      "network_configuration_median_seconds": 0.3694466510787606,
+      "network_configuration_min_seconds": 0.36835621017962694,
+      "network_initialization_max_seconds": 0.02491640020161867,
+      "network_initialization_median_seconds": 0.023749975953251123,
+      "network_initialization_min_seconds": 0.022882873192429543,
+      "process_wall_seconds_median": 2.0764526263810694,
+      "python_full_worker_peak_rss_kib_median": 137864,
+      "python_lifetime_peak_rss_kib_median": 108504,
+      "result_bytes_median": 11705775,
+      "result_serialization_max_seconds": 0.09411544306203723,
+      "result_serialization_median_seconds": 0.08819808391854167,
+      "result_serialization_min_seconds": 0.08802005415782332,
+      "samples": 3,
+      "side": 7
+    },
+    {
+      "execution_max_seconds": 0.41897764801979065,
+      "execution_median_seconds": 0.34158392110839486,
+      "execution_min_seconds": 0.3410695646889508,
+      "execution_python_cpu_seconds_median": 0.341583,
+      "flow_epochs": 143,
+      "graph_binding_preparation_max_seconds": 0.052181417122483253,
+      "graph_binding_preparation_median_seconds": 0.05213807104155421,
+      "graph_binding_preparation_min_seconds": 0.051949016749858856,
+      "independent_audit_max_seconds": 0.1285339118912816,
+      "independent_audit_median_seconds": 0.09843750204890966,
+      "independent_audit_min_seconds": 0.09758338984102011,
+      "layout": "clustered_local",
+      "logical_messages": 345,
+      "model": "D1",
+      "native_flits": 0,
+      "native_peak_rss_kib_median": 0,
+      "native_total_cpu_seconds_median": 0.0,
+      "network_close_serialization_max_seconds": 0.0009636292234063148,
+      "network_close_serialization_median_seconds": 0.0008369339630007744,
+      "network_close_serialization_min_seconds": 0.0007949299179017544,
+      "network_configuration_max_seconds": 0.0005955821834504604,
+      "network_configuration_median_seconds": 0.0005708630196750164,
+      "network_configuration_min_seconds": 0.0005438830703496933,
+      "network_initialization_max_seconds": 0.004435066133737564,
+      "network_initialization_median_seconds": 0.004268050193786621,
+      "network_initialization_min_seconds": 0.00420781597495079,
+      "process_wall_seconds_median": 0.816181399859488,
+      "python_full_worker_peak_rss_kib_median": 62324,
+      "python_lifetime_peak_rss_kib_median": 62324,
+      "result_bytes_median": 2650962,
+      "result_serialization_max_seconds": 0.03692594263702631,
+      "result_serialization_median_seconds": 0.026536205783486366,
+      "result_serialization_min_seconds": 0.026513330172747374,
+      "samples": 3,
+      "side": 7
+    },
+    {
+      "execution_max_seconds": 5.599424977786839,
+      "execution_median_seconds": 5.068098179064691,
+      "execution_min_seconds": 5.012876765802503,
+      "execution_python_cpu_seconds_median": 1.442756,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.045760630164295435,
+      "graph_binding_preparation_median_seconds": 0.04564141994342208,
+      "graph_binding_preparation_min_seconds": 0.04546786705031991,
+      "independent_audit_max_seconds": 1.4405194972641766,
+      "independent_audit_median_seconds": 1.4301959900185466,
+      "independent_audit_min_seconds": 1.4068604363128543,
+      "layout": "clustered_local",
+      "logical_messages": 345,
+      "model": "S",
+      "native_flits": 125844,
+      "native_peak_rss_kib_median": 289728,
+      "native_total_cpu_seconds_median": 4.398639999999999,
+      "network_close_serialization_max_seconds": 1.865273186005652,
+      "network_close_serialization_median_seconds": 1.13207703595981,
+      "network_close_serialization_min_seconds": 1.1236975509673357,
+      "network_configuration_max_seconds": 0.3765659569762647,
+      "network_configuration_median_seconds": 0.3725623222999275,
+      "network_configuration_min_seconds": 0.36952868197113276,
+      "network_initialization_max_seconds": 0.023779364302754402,
+      "network_initialization_median_seconds": 0.023775947745889425,
+      "network_initialization_min_seconds": 0.022758309729397297,
+      "process_wall_seconds_median": 9.760062499903142,
+      "python_full_worker_peak_rss_kib_median": 419664,
+      "python_lifetime_peak_rss_kib_median": 252116,
+      "result_bytes_median": 85784328,
+      "result_serialization_max_seconds": 0.6551480195485055,
+      "result_serialization_median_seconds": 0.6328068790026009,
+      "result_serialization_min_seconds": 0.6304241218604147,
+      "samples": 3,
+      "side": 7
+    },
+    {
+      "execution_max_seconds": 0.8683093530125916,
+      "execution_median_seconds": 0.8655160581693053,
+      "execution_min_seconds": 0.8596495762467384,
+      "execution_python_cpu_seconds_median": 0.2741239999999998,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.08122990373522043,
+      "graph_binding_preparation_median_seconds": 0.07774847093969584,
+      "graph_binding_preparation_min_seconds": 0.0772210587747395,
+      "independent_audit_max_seconds": 0.08877657959237695,
+      "independent_audit_median_seconds": 0.08745226263999939,
+      "independent_audit_min_seconds": 0.08743437007069588,
+      "layout": "remote_balanced",
+      "logical_messages": 345,
+      "model": "D0",
+      "native_flits": 12801,
+      "native_peak_rss_kib_median": 61464,
+      "native_total_cpu_seconds_median": 0.672677,
+      "network_close_serialization_max_seconds": 0.1289921780116856,
+      "network_close_serialization_median_seconds": 0.12847323389723897,
+      "network_close_serialization_min_seconds": 0.1283865151926875,
+      "network_configuration_max_seconds": 0.3745085899718106,
+      "network_configuration_median_seconds": 0.3672751151025295,
+      "network_configuration_min_seconds": 0.36707384092733264,
+      "network_initialization_max_seconds": 0.025238046888262033,
+      "network_initialization_median_seconds": 0.02468924503773451,
+      "network_initialization_min_seconds": 0.02377078589051962,
+      "process_wall_seconds_median": 2.1214084667153656,
+      "python_full_worker_peak_rss_kib_median": 139192,
+      "python_lifetime_peak_rss_kib_median": 109868,
+      "result_bytes_median": 11819326,
+      "result_serialization_max_seconds": 0.09202502900734544,
+      "result_serialization_median_seconds": 0.09075883403420448,
+      "result_serialization_min_seconds": 0.08942839317023754,
+      "samples": 3,
+      "side": 7
+    },
+    {
+      "execution_max_seconds": 0.6757751200348139,
+      "execution_median_seconds": 0.6527280230075121,
+      "execution_min_seconds": 0.6377159487456083,
+      "execution_python_cpu_seconds_median": 0.6526810000000001,
+      "flow_epochs": 73,
+      "graph_binding_preparation_max_seconds": 0.054627060890197754,
+      "graph_binding_preparation_median_seconds": 0.05337213119491935,
+      "graph_binding_preparation_min_seconds": 0.05178403714671731,
+      "independent_audit_max_seconds": 0.10290993098169565,
+      "independent_audit_median_seconds": 0.10043173003941774,
+      "independent_audit_min_seconds": 0.10022697923704982,
+      "layout": "remote_balanced",
+      "logical_messages": 345,
+      "model": "D1",
+      "native_flits": 0,
+      "native_peak_rss_kib_median": 0,
+      "native_total_cpu_seconds_median": 0.0,
+      "network_close_serialization_max_seconds": 0.000876144040375948,
+      "network_close_serialization_median_seconds": 0.000831197015941143,
+      "network_close_serialization_min_seconds": 0.0008188770152628422,
+      "network_configuration_max_seconds": 0.0006026690825819969,
+      "network_configuration_median_seconds": 0.0005616857670247555,
+      "network_configuration_min_seconds": 0.0005506761372089386,
+      "network_initialization_max_seconds": 0.005788899026811123,
+      "network_initialization_median_seconds": 0.005636143963783979,
+      "network_initialization_min_seconds": 0.005502593237906694,
+      "process_wall_seconds_median": 1.16704011708498,
+      "python_full_worker_peak_rss_kib_median": 62324,
+      "python_lifetime_peak_rss_kib_median": 62324,
+      "result_bytes_median": 2807297,
+      "result_serialization_max_seconds": 0.027485443744808435,
+      "result_serialization_median_seconds": 0.02688063681125641,
+      "result_serialization_min_seconds": 0.026826550718396902,
+      "samples": 3,
+      "side": 7
+    },
+    {
+      "execution_max_seconds": 9.669698270969093,
+      "execution_median_seconds": 9.080965399742126,
+      "execution_min_seconds": 8.952688516117632,
+      "execution_python_cpu_seconds_median": 1.9647739999999998,
+      "flow_epochs": 0,
+      "graph_binding_preparation_max_seconds": 0.06604729779064655,
+      "graph_binding_preparation_median_seconds": 0.04729290725663304,
+      "graph_binding_preparation_min_seconds": 0.04699932271614671,
+      "independent_audit_max_seconds": 2.1880068532191217,
+      "independent_audit_median_seconds": 2.178304900880903,
+      "independent_audit_min_seconds": 2.174974401947111,
+      "layout": "remote_balanced",
+      "logical_messages": 345,
+      "model": "S",
+      "native_flits": 125844,
+      "native_peak_rss_kib_median": 433048,
+      "native_total_cpu_seconds_median": 8.553025,
+      "network_close_serialization_max_seconds": 2.0429251631721854,
+      "network_close_serialization_median_seconds": 2.0238160928711295,
+      "network_close_serialization_min_seconds": 1.9848090251907706,
+      "network_configuration_max_seconds": 0.3904994949698448,
+      "network_configuration_median_seconds": 0.37406307738274336,
+      "network_configuration_min_seconds": 0.3668857468292117,
+      "network_initialization_max_seconds": 0.024576852098107338,
+      "network_initialization_median_seconds": 0.0242741908878088,
+      "network_initialization_min_seconds": 0.02409298438578844,
+      "process_wall_seconds_median": 16.121864444110543,
+      "python_full_worker_peak_rss_kib_median": 579788,
+      "python_lifetime_peak_rss_kib_median": 322352,
+      "result_bytes_median": 131769623,
+      "result_serialization_max_seconds": 0.9540988211520016,
+      "result_serialization_median_seconds": 0.9504470243118703,
+      "result_serialization_min_seconds": 0.9406404909677804,
+      "samples": 3,
+      "side": 7
+    }
+  ],
+  "pairs": [
+    {
+      "first": "clustered_local",
+      "gap_cycles": 6590,
+      "gap_error_cycles": -152,
+      "model": "D0",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 6742,
+      "reference_relation": "second",
+      "second": "local",
+      "selection_disagreement": false,
+      "side": 4,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 6338,
+      "gap_error_cycles": 2789,
+      "model": "D0",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 3549,
+      "reference_relation": "second",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 4,
+      "within_gap_budget": false
+    },
+    {
+      "first": "local",
+      "gap_cycles": -252,
+      "gap_error_cycles": 2941,
+      "model": "D0",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -3193,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 4,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 6868,
+      "gap_error_cycles": 126,
+      "model": "D1",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 6742,
+      "reference_relation": "second",
+      "second": "local",
+      "selection_disagreement": false,
+      "side": 4,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 3401,
+      "gap_error_cycles": -148,
+      "model": "D1",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 3549,
+      "reference_relation": "second",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 4,
+      "within_gap_budget": false
+    },
+    {
+      "first": "local",
+      "gap_cycles": -3467,
+      "gap_error_cycles": -274,
+      "model": "D1",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -3193,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 4,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 6742,
+      "gap_error_cycles": 0,
+      "model": "S",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 6742,
+      "reference_relation": "second",
+      "second": "local",
+      "selection_disagreement": false,
+      "side": 4,
+      "within_gap_budget": true
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 3549,
+      "gap_error_cycles": 0,
+      "model": "S",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 3549,
+      "reference_relation": "second",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 4,
+      "within_gap_budget": true
+    },
+    {
+      "first": "local",
+      "gap_cycles": -3193,
+      "gap_error_cycles": 0,
+      "model": "S",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -3193,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 4,
+      "within_gap_budget": true
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 6590,
+      "gap_error_cycles": -152,
+      "model": "D0",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 6742,
+      "reference_relation": "second",
+      "second": "local",
+      "selection_disagreement": false,
+      "side": 6,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 6212,
+      "gap_error_cycles": 6870,
+      "model": "D0",
+      "predicted_relation": "second",
+      "reference_gap_cycles": -658,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": true,
+      "side": 6,
+      "within_gap_budget": false
+    },
+    {
+      "first": "local",
+      "gap_cycles": -378,
+      "gap_error_cycles": 7022,
+      "model": "D0",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -7400,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 6,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 6850,
+      "gap_error_cycles": 108,
+      "model": "D1",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 6742,
+      "reference_relation": "second",
+      "second": "local",
+      "selection_disagreement": false,
+      "side": 6,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": -921,
+      "gap_error_cycles": -263,
+      "model": "D1",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -658,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 6,
+      "within_gap_budget": false
+    },
+    {
+      "first": "local",
+      "gap_cycles": -7771,
+      "gap_error_cycles": -371,
+      "model": "D1",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -7400,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 6,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 6742,
+      "gap_error_cycles": 0,
+      "model": "S",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 6742,
+      "reference_relation": "second",
+      "second": "local",
+      "selection_disagreement": false,
+      "side": 6,
+      "within_gap_budget": true
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": -658,
+      "gap_error_cycles": 0,
+      "model": "S",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -658,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 6,
+      "within_gap_budget": true
+    },
+    {
+      "first": "local",
+      "gap_cycles": -7400,
+      "gap_error_cycles": 0,
+      "model": "S",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -7400,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 6,
+      "within_gap_budget": true
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 4668,
+      "gap_error_cycles": -409,
+      "model": "D0",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 5077,
+      "reference_relation": "second",
+      "second": "local",
+      "selection_disagreement": false,
+      "side": 7,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 4290,
+      "gap_error_cycles": 7608,
+      "model": "D0",
+      "predicted_relation": "second",
+      "reference_gap_cycles": -3318,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": true,
+      "side": 7,
+      "within_gap_budget": false
+    },
+    {
+      "first": "local",
+      "gap_cycles": -378,
+      "gap_error_cycles": 8017,
+      "model": "D0",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -8395,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 7,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 4925,
+      "gap_error_cycles": -152,
+      "model": "D1",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 5077,
+      "reference_relation": "second",
+      "second": "local",
+      "selection_disagreement": false,
+      "side": 7,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": -2876,
+      "gap_error_cycles": 442,
+      "model": "D1",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -3318,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 7,
+      "within_gap_budget": false
+    },
+    {
+      "first": "local",
+      "gap_cycles": -7801,
+      "gap_error_cycles": 594,
+      "model": "D1",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -8395,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 7,
+      "within_gap_budget": false
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": 5077,
+      "gap_error_cycles": 0,
+      "model": "S",
+      "predicted_relation": "second",
+      "reference_gap_cycles": 5077,
+      "reference_relation": "second",
+      "second": "local",
+      "selection_disagreement": false,
+      "side": 7,
+      "within_gap_budget": true
+    },
+    {
+      "first": "clustered_local",
+      "gap_cycles": -3318,
+      "gap_error_cycles": 0,
+      "model": "S",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -3318,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 7,
+      "within_gap_budget": true
+    },
+    {
+      "first": "local",
+      "gap_cycles": -8395,
+      "gap_error_cycles": 0,
+      "model": "S",
+      "predicted_relation": "first",
+      "reference_gap_cycles": -8395,
+      "reference_relation": "first",
+      "second": "remote_balanced",
+      "selection_disagreement": false,
+      "side": 7,
+      "within_gap_budget": true
+    }
+  ],
+  "route_summary": [
+    {
+      "all_path_matches": 110,
+      "layout": "local",
+      "messages": 114,
+      "reference_flits": 41265,
+      "reference_flits_matching": 40476,
+      "side": 4
+    },
+    {
+      "all_path_matches": 98,
+      "layout": "clustered_local",
+      "messages": 114,
+      "reference_flits": 41265,
+      "reference_flits_matching": 35527,
+      "side": 4
+    },
+    {
+      "all_path_matches": 110,
+      "layout": "remote_balanced",
+      "messages": 114,
+      "reference_flits": 41265,
+      "reference_flits_matching": 40476,
+      "side": 4
+    },
+    {
+      "all_path_matches": 248,
+      "layout": "local",
+      "messages": 254,
+      "reference_flits": 92525,
+      "reference_flits_matching": 91202,
+      "side": 6
+    },
+    {
+      "all_path_matches": 221,
+      "layout": "clustered_local",
+      "messages": 254,
+      "reference_flits": 92525,
+      "reference_flits_matching": 80254,
+      "side": 6
+    },
+    {
+      "all_path_matches": 248,
+      "layout": "remote_balanced",
+      "messages": 254,
+      "reference_flits": 92525,
+      "reference_flits_matching": 91028,
+      "side": 6
+    },
+    {
+      "all_path_matches": 338,
+      "layout": "local",
+      "messages": 345,
+      "reference_flits": 125844,
+      "reference_flits_matching": 124254,
+      "side": 7
+    },
+    {
+      "all_path_matches": 311,
+      "layout": "clustered_local",
+      "messages": 345,
+      "reference_flits": 125844,
+      "reference_flits_matching": 113345,
+      "side": 7
+    },
+    {
+      "all_path_matches": 338,
+      "layout": "remote_balanced",
+      "messages": 345,
+      "reference_flits": 125844,
+      "reference_flits_matching": 124090,
+      "side": 7
+    }
+  ],
+  "rows": [
+    {
+      "application_cycles": 23903,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "local",
+      "memory": 14014,
+      "model": "D0",
+      "network": 5793,
+      "reference_cycles": 23903,
+      "side": 4,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 24141,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 238,
+      "error_percent": 0.9956909174580586,
+      "layout": "local",
+      "memory": 13670,
+      "model": "D1",
+      "network": 6375,
+      "reference_cycles": 23903,
+      "side": 4,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 23903,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "local",
+      "memory": 14014,
+      "model": "S",
+      "network": 5793,
+      "reference_cycles": 23903,
+      "side": 4,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 30493,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": -152,
+      "error_percent": -0.49600261054005834,
+      "layout": "clustered_local",
+      "memory": 21094,
+      "model": "D0",
+      "network": 5303,
+      "reference_cycles": 30645,
+      "side": 4,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 31009,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 364,
+      "error_percent": 1.187795725240659,
+      "layout": "clustered_local",
+      "memory": 21094,
+      "model": "D1",
+      "network": 5819,
+      "reference_cycles": 30645,
+      "side": 4,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 30645,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "clustered_local",
+      "memory": 21094,
+      "model": "S",
+      "network": 5455,
+      "reference_cycles": 30645,
+      "side": 4,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 24155,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": -2941,
+      "error_percent": -10.854000590493062,
+      "layout": "remote_balanced",
+      "memory": 14014,
+      "model": "D0",
+      "network": 6045,
+      "reference_cycles": 27096,
+      "side": 4,
+      "within_application_budget": false
+    },
+    {
+      "application_cycles": 27608,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 512,
+      "error_percent": 1.889577797460884,
+      "layout": "remote_balanced",
+      "memory": 12902,
+      "model": "D1",
+      "network": 10610,
+      "reference_cycles": 27096,
+      "side": 4,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 27096,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "remote_balanced",
+      "memory": 12902,
+      "model": "S",
+      "network": 10098,
+      "reference_cycles": 27096,
+      "side": 4,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 23903,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "local",
+      "memory": 14014,
+      "model": "D0",
+      "network": 5793,
+      "reference_cycles": 23903,
+      "side": 6,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 24159,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 256,
+      "error_percent": 1.070995272559938,
+      "layout": "local",
+      "memory": 14270,
+      "model": "D1",
+      "network": 5793,
+      "reference_cycles": 23903,
+      "side": 6,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 23903,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "local",
+      "memory": 14014,
+      "model": "S",
+      "network": 5793,
+      "reference_cycles": 23903,
+      "side": 6,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 30493,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": -152,
+      "error_percent": -0.49600261054005834,
+      "layout": "clustered_local",
+      "memory": 21094,
+      "model": "D0",
+      "network": 5303,
+      "reference_cycles": 30645,
+      "side": 6,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 31009,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 364,
+      "error_percent": 1.187795725240659,
+      "layout": "clustered_local",
+      "memory": 21094,
+      "model": "D1",
+      "network": 5819,
+      "reference_cycles": 30645,
+      "side": 6,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 30645,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "clustered_local",
+      "memory": 21094,
+      "model": "S",
+      "network": 5455,
+      "reference_cycles": 30645,
+      "side": 6,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 24281,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": -7022,
+      "error_percent": -22.43235472638405,
+      "layout": "remote_balanced",
+      "memory": 14014,
+      "model": "D0",
+      "network": 6171,
+      "reference_cycles": 31303,
+      "side": 6,
+      "within_application_budget": false
+    },
+    {
+      "application_cycles": 31930,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 627,
+      "error_percent": 2.0030029070696065,
+      "layout": "remote_balanced",
+      "memory": 12902,
+      "model": "D1",
+      "network": 14932,
+      "reference_cycles": 31303,
+      "side": 6,
+      "within_application_budget": false
+    },
+    {
+      "application_cycles": 31303,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "remote_balanced",
+      "memory": 12902,
+      "model": "S",
+      "network": 14305,
+      "reference_cycles": 31303,
+      "side": 6,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 23903,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "local",
+      "memory": 14014,
+      "model": "D0",
+      "network": 5793,
+      "reference_cycles": 23903,
+      "side": 7,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 24159,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 256,
+      "error_percent": 1.070995272559938,
+      "layout": "local",
+      "memory": 14270,
+      "model": "D1",
+      "network": 5793,
+      "reference_cycles": 23903,
+      "side": 7,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 23903,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "local",
+      "memory": 14014,
+      "model": "S",
+      "network": 5793,
+      "reference_cycles": 23903,
+      "side": 7,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 28571,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": -409,
+      "error_percent": -1.4113181504485817,
+      "layout": "clustered_local",
+      "memory": 19046,
+      "model": "D0",
+      "network": 5429,
+      "reference_cycles": 28980,
+      "side": 7,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 29084,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 104,
+      "error_percent": 0.35886818495514117,
+      "layout": "clustered_local",
+      "memory": 19046,
+      "model": "D1",
+      "network": 5942,
+      "reference_cycles": 28980,
+      "side": 7,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 28980,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "clustered_local",
+      "memory": 19046,
+      "model": "S",
+      "network": 5838,
+      "reference_cycles": 28980,
+      "side": 7,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 24281,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": -8017,
+      "error_percent": -24.821970400644,
+      "layout": "remote_balanced",
+      "memory": 14014,
+      "model": "D0",
+      "network": 6171,
+      "reference_cycles": 32298,
+      "side": 7,
+      "within_application_budget": false
+    },
+    {
+      "application_cycles": 31960,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": -338,
+      "error_percent": -1.0465044275187352,
+      "layout": "remote_balanced",
+      "memory": 12902,
+      "model": "D1",
+      "network": 14962,
+      "reference_cycles": 32298,
+      "side": 7,
+      "within_application_budget": true
+    },
+    {
+      "application_cycles": 32298,
+      "capacity": 0,
+      "capacity_wait_sum_cycles": 0,
+      "compute": 4096,
+      "error_cycles": 0,
+      "error_percent": 0.0,
+      "layout": "remote_balanced",
+      "memory": 12902,
+      "model": "S",
+      "network": 15300,
+      "reference_cycles": 32298,
+      "side": 7,
+      "within_application_budget": true
+    }
+  ]
+}

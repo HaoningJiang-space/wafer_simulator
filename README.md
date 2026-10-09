@@ -75,10 +75,20 @@ finds earlier supply and changed critical chains; B improves without observed
 source packet-order or route changes, and its critical payload envelopes do
 not uniformly improve. Neither declared contract is selected as hardware truth.
 
-The [registered D1 candidate](docs/SHARED_SPATIAL_SERVICE_PROTOCOL.md) is retained
-under v1. Its component study completed; its application matrix has not run.
-Machine organization and transaction policy remain explicit declared contracts;
-their accepted comparison and repair rounds are closed.
+The [registered v1 D1 comparison](docs/results/shared-spatial-service-001/REVIEW.md)
+is complete: 81 applications, 18 native replays and 256 tests; 152 existing
+component records revalidated. D1 recovers all layout-pair directions and lowers
+application MAPE to 1.201%, but passes only 8/9 application points and 0/9
+100-cycle gap budgets. Complete fresh workers are 8.03–13.81× faster than S;
+prior calibration is separate. D0/S frozen events reproduce exactly. Both D0
+and D1 already select Local globally, with zero reference choice regret.
+This is a partial result for one fixed hypothesis, not a reason to retune it.
+
+The [information and boundary evidence](docs/NECESSARY_INFORMATION.md) separates
+observed failures from constructed distinguishing cases. S remains the detailed
+reference under each declared machine contract. Next, profile S and investigate
+behavior-preserving computation before introducing another service approximation.
+Machine organization and transaction policy remain separate research axes.
 
 The [public periphery APIs](docs/PUBLIC_PERIPHERY_API.md) separate compilation,
 execution and supplied-event audit from private study/server orchestration.

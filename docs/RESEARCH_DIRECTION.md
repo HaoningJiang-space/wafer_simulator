@@ -189,13 +189,34 @@ compute rate, bank serializer and controller channel still have declared rather
 than product-derived values. This comparison clarifies their service roles; it
 does not qualify a physical memory-periphery implementation or equal cost.
 
-The D1 max-min candidate and its completed component evidence remain registered
-under v1; the application matrix is deferred. Flow fairness and instant whole-path
-occupancy are hypotheses, not inferred native policies. Before extending accuracy
-studies, fix the organization and policy that the approximation is intended to
-represent. Do not interpret old D0 numbers as predictions for the new pipeline.
+The [D1 max-min comparison](results/shared-spatial-service-001/REVIEW.md) is now
+complete under v1: 81 applications and 18 replays, all frozen D0/S event hashes
+equal. D1 restores all nine pair directions and reduces MAPE to 1.201%, with
+8/9 application-budget passes. None of the nine signed gap errors passes the
+100-cycle budget. Local remains the unique global choice for D0, D1 and S.
+Fresh-worker recurring cost is 8.03–13.81× lower than S, with existing calibration
+reported separately. This is a partial result; close this candidate without
+adjusting effective rates, fairness or mappings. Flow fairness and instant
+whole-path occupancy remain hypotheses, not inferred native policies.
+Do not interpret these v1 numbers as predictions for the new pipeline.
 No new holdout workload, parameter sweep, hardware calibration or more detailed
 credit model is part of this completed study.
+
+## Necessary information and behavior-preserving computation
+
+The [evidence table](NECESSARY_INFORMATION.md) relates independent duration,
+immediate end-to-end sharing, flow fairness, supply granularity and ideal feedback
+to observed or constructed distinguishing cases. S is the detailed reference
+within an explicit machine contract; agreement with S is separate from hardware
+representativeness. Treat D0 and D1 as retained comparisons, not an obligation
+to build D2/D3.
+
+Profile S's native work, interface costs, recording, serialization and auditing
+before selecting an acceleration mechanism. Changes to recording must preserve
+message completion and closed execution. If repeated router work dominates,
+investigate batching between causally necessary boundaries with event equivalence;
+do not assume an unchanged active-flow count licenses a jump. No event-compressed
+network or new physical feedback protocol is implemented by the D1 milestone.
 
 ## Frozen evidence
 
