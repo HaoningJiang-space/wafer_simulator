@@ -1,0 +1,12 @@
+{
+  "frozen_commit": "e3a1592db4fda1427858edbf08e83b6730f567c0",
+  "base_registration": "configs/spatial_scaling.json",
+  "models": ["U1", "D0", "S"],
+  "calibration_ready_cycles": [0, 137],
+  "validation_ready_cycle": 509,
+  "component_cycle_budget": 100000,
+  "supplemental_sizes_bytes": [1, 16, 63, 64, 65, 128, 256, 4096, 16384, 65536],
+  "supplemental_side": 6,
+  "supplemental_c2c_hops": [0, 1, 2, 3, 4, 5],
+  "scope": "D0 retains U1 bank/controller services and live native C2C/IO. Every DRAM message uses an exact endpoint/size isolated component cost on the declared physical machine, without shared-network state. No full-S timing, readiness, route or overlap is a prediction input; no interpolation or fitted bandwidth."
+}
