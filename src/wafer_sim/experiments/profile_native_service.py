@@ -70,8 +70,11 @@ def run(output,binary):
                 start=time.perf_counter()
                 with (output/f'{side}-{mode}.log').open('w') as log:
                     subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=600)
+                worker_seconds=time.perf_counter()-start
+                readback_started=time.perf_counter()
                 row=checked_worker(dest,reference,manifest,mode)
-                row.update(side=side,process_wall_seconds=time.perf_counter()-start,directory=dest.name)
+                row.update(side=side,process_wall_seconds=worker_seconds,
+                    readback_wall_seconds=time.perf_counter()-readback_started,directory=dest.name)
                 write_json(dest/'CHECKED.json',row);rows.append(row)
                 print(side,mode,'exact events/protocol',flush=True)
         if digest(baseline)!=expected: raise ValueError('Baseline binary changed')
