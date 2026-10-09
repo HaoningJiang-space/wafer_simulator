@@ -124,6 +124,40 @@ bank/controller policy, characterize that component rather than declaring the
 whole wafer validated. If a simple abstraction is adequate, retain it. A new
 machine graph alone does not establish a simulator research contribution.
 
+## Completed memory-periphery policy sensitivity
+
+The [registered six-cell study](MEMORY_PERIPHERY_PROTOCOL.md) is
+[checked](results/memory-periphery-001/REVIEW.md). The original v1 retains one
+endpoint per bank. A distinct organization has one interface per controller,
+with storage partition/port identity separate from endpoint identity. At the
+whole-object policy both organizations give A=30,645 and B=31,303 cycles at 6×6.
+Under the same shared-interface organization, a fixed 4 KiB/four-slot pipeline
+gives A=25,345 and B=23,561. Thus the preferred member changes from A to B.
+The interface contrast and policy contrast are separate; no pipeline arm under
+bank-specific endpoints was run, so their interaction is not identified.
+
+All 18 applications reproduce across three fresh processes, nine components
+complete and 15 native command streams replay. All 27 saved executions were
+reaudited; 562 artifact and 140 source hashes were checked. Bank/channel work,
+payload/control bytes, capacities, operand order and retirement remain fixed.
+Every observed transaction window is within four fragments. The policy changes
+both DRAM and external-controller supply scheduling; C2C stays whole-object.
+This shows why zero capacity waiting did not establish policy independence.
+
+The old shared-network findings and D0 errors remain valid under v1. They do not
+establish layout-choice robustness across storage/DMA policies. The reticle-region
+compute rate, bank serializer and controller channel still have declared rather
+than product-derived values. This comparison clarifies their service roles; it
+does not qualify a physical memory-periphery implementation or equal cost.
+
+The D1 max-min candidate and its completed component evidence remain registered
+under v1; the application matrix is deferred. Flow fairness and instant whole-path
+occupancy are hypotheses, not inferred native policies. Before extending accuracy
+studies, fix the organization and policy that the approximation is intended to
+represent. Do not interpret old D0 numbers as predictions for the new pipeline.
+No new holdout workload, parameter sweep, hardware calibration or more detailed
+credit model is part of this completed study.
+
 ## Frozen evidence
 
 The old [boundary model choice](results/boundary-design-001/model_selection.md)

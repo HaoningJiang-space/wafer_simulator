@@ -1,5 +1,12 @@
 # A declared compute-wafer / memory-wafer machine
 
+This document records the original **v1** integration contract. Its bank-specific
+endpoints and whole-object policy remain available and its evidence is preserved.
+The distinct controller-shared organization and bounded policy are described in
+[MEMORY_PERIPHERY_PROTOCOL](MEMORY_PERIPHERY_PROTOCOL.md), with the
+[checked six-cell comparison](results/memory-periphery-001/REVIEW.md). They do not
+retroactively change v1 or provide hardware calibration.
+
 Current task: define the machine independently of one network generator, compile
 it into the accepted target execution interfaces, and verify actual data paths.
 `nw-design-for-wsi` remains a pinned **Logic-on-Interconnect network baseline**.

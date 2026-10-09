@@ -6,7 +6,9 @@ in [README](../README.md) and [RESEARCH_DIRECTION](RESEARCH_DIRECTION.md).
 
 | Area | Status | Accepted evidence / scope |
 |---|---|---|
-| Independent spatial service D0 | Complete; shared model remains unimplemented | [1,700 component conditions and 81 U1/D0/S applications](results/independent-spatial-service-001/REVIEW.md); Local timing/global choice recovered, but A/B direction still wrong at 6×6/7×7; 100-cycle gap budget fails |
+| Memory-periphery organization/policy | Complete under declared assumptions | [Six 6×6 A/B cells, 18 applications, nine components, 15 replays](results/memory-periphery-001/REVIEW.md); shared-interface whole matches v1, bounded pipeline changes A/B preference; 228 tests; no hardware calibration |
+| Shared spatial service D1 | Registered v1 candidate; components complete, applications deferred | [Fixed hypothesis and limits](SHARED_SPATIAL_SERVICE_PROTOCOL.md); raw components remain on hn072 at `runs/d1-components-001`; no application-accuracy acceptance |
+| Independent spatial service D0 | Complete under v1 policy | [1,700 component conditions and 81 U1/D0/S applications](results/independent-spatial-service-001/REVIEW.md); Local timing/global choice recovered, but A/B direction still wrong at 6×6/7×7; 100-cycle gap budget fails |
 | Long-response mechanism discrimination | Complete; no U2 or kernel change | [20 isolated responses, 10 native replays](results/isolated-response-001/REVIEW.md); constant isolated injection span across 0–5 C2C hops, temporally shared critical outputs with workload background |
 | Spatial scaling / locality–load tradeoff | Complete; models frozen | [27 cells, 81 executions, three array sizes](results/spatial-scaling-001/REVIEW.md); U1 misses the A–B decision at 6×6/7×7; zero staging-capacity waits |
 | Runtime relocation to hn072 | Complete; old evidence cold-archived | [Verified archive and cleanup](results/server-migration-001/REVIEW.md); 50,072 entries verified, 26.5 GB observed free-space increase; current native binary unchanged |

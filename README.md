@@ -53,6 +53,21 @@ budget. Correct single-flow/path service is useful but insufficient for that
 tradeoff. Calibration uses no full-S timings, routes or overlaps. Prediction
 is cheaper, with its 628-second calibration cost reported separately.
 
+The [memory-periphery policy comparison](docs/results/memory-periphery-001/REVIEW.md)
+now completes six 6×6 A/B cells, 18 applications, nine components and 15 native
+replays. Giving each controller one shared interface leaves whole-object times
+at A=30,645 / B=31,303 cycles. At that same organization, fixed 4 KiB fragments
+and a four-fragment window give A=25,345 / B=23,561: the preferred member changes
+from A to B. Original v1 events reproduce exactly. This shows policy sensitivity
+of this restricted layout judgment; it does not replace the accepted v1 results
+or validate hardware. The pipeline includes external-controller traffic and
+keeps full-object reservations, operand order and retirement rules.
+
+The [registered D1 candidate](docs/SHARED_SPATIAL_SERVICE_PROTOCOL.md) is retained
+under v1. Its component study completed; its application matrix has not run.
+The active priority is explicit machine organization and transaction policy,
+before further approximation accuracy against a particular S reference.
+
 ## Current entry point (hn072 only)
 
 Local work is source inspection, editing and Git. Builds, tests and execution
@@ -63,26 +78,24 @@ Use fresh output directories and existing pinned native binaries.
 cd /Projects/haoning/wafer_simulator/source
 export PYTHONPATH=src
 ../.venv/bin/python scripts/test_wow_target_remote.py \
-  /Projects/haoning/wafer_simulator/runs/d0-tests-NEW
-../.venv/bin/python -m wafer_sim.experiments.independent_spatial_service \
-  --calibrate --tests /Projects/haoning/wafer_simulator/runs/d0-tests-NEW/SEMANTICS.json \
-  --output /Projects/haoning/wafer_simulator/runs/d0-calibration-NEW
-../.venv/bin/python -m wafer_sim.experiments.independent_spatial_service \
-  --tests /Projects/haoning/wafer_simulator/runs/d0-tests-NEW/SEMANTICS.json \
-  --calibration /Projects/haoning/wafer_simulator/runs/d0-calibration-NEW \
-  --output /Projects/haoning/wafer_simulator/runs/d0-applications-NEW
-../.venv/bin/python -m wafer_sim.analysis.independent_spatial_study \
-  /Projects/haoning/wafer_simulator/runs/d0-applications-NEW \
-  /Projects/haoning/wafer_simulator/runs/d0-analysis-NEW
+  /Projects/haoning/wafer_simulator/runs/periphery-tests-NEW
+../.venv/bin/python -m wafer_sim.experiments.memory_periphery \
+  --tests /Projects/haoning/wafer_simulator/runs/periphery-tests-NEW/SEMANTICS.json \
+  --output /Projects/haoning/wafer_simulator/runs/periphery-applications-NEW
+../.venv/bin/python -m wafer_sim.analysis.memory_periphery_study \
+  --source /Projects/haoning/wafer_simulator/runs/periphery-applications-NEW \
+  --output /Projects/haoning/wafer_simulator/runs/periphery-analysis-NEW
 ```
 
-This reproduces the [registered D0 comparison](docs/INDEPENDENT_SPATIAL_SERVICE_PROTOCOL.md).
+This reproduces the [registered periphery comparison](docs/MEMORY_PERIPHERY_PROTOCOL.md).
+Historical D0 orchestration enforces exact frozen source files; reproduce that
+study from pinned `dc18ed1` in an isolated checkout. Current main preserves v1
+behavior through regression, export equivalence and accepted A/B event hashes,
+while explicitly adding shared interface declarations.
 The [D0 contract](docs/INDEPENDENT_SPATIAL_SERVICE.md) explains calibration,
 bounded lookup and independent audits. No timeout or truncated response can
-produce a completion receipt. All U1/S event hashes must match the accepted
-scaling evidence. The next method question is whether a cheaper model of
-time-dependent shared spatial service recovers the frozen A/B decisions.
-No shared-path model or native buffer/credit intervention is preselected.
+produce a completion receipt. Future approximation comparisons must fix the
+organization and policy first. This study adds no native buffer/credit intervention.
 
 ## Retained model-selection evidence
 
