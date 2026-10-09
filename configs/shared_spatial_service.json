@@ -1,0 +1,15 @@
+{
+  "frozen_commit": "dc18ed1fc15d65c4dd4376804aa6f6b48ebb2013",
+  "base_registration": "configs/spatial_scaling.json",
+  "models": ["D0", "D1", "S"],
+  "routing": "minimum-hop lexicographic, from physical topology",
+  "sharing": "equal-weight max-min progressive filling across entire active paths",
+  "packet_service_cycles": 2,
+  "propagation": "fixed physical endpoint/router/link latency after shared serialization",
+  "component_side": 6,
+  "component_repetitions": 2,
+  "component_cycle_limit": 100000,
+  "single_sizes_bytes": [16, 65, 16384, 65536],
+  "stagger_cycles": [0, 509, 3000],
+  "scope": "One preregistered D1 hypothesis. All DRAM/C2C/IO share one fluid network; no native process or flit, VC, buffer or credit state in D1. Component service uses the D0-validated packet rounding rule. No full-S routes, readiness or overlap enter prediction; no application-driven parameter or mapping changes."
+}

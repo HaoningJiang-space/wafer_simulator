@@ -16,6 +16,10 @@ def audit(binding, timing, result):
         *(s for e in timing.endpoints for s in (e.injection,e.ejection)))}
     records,by_resource,by_token = result["services"],defaultdict(list),defaultdict(list)
     native_messages = None
+    if result.get('network_backend') == 'shared_spatial_service':
+        from wafer_sim.analysis.shared_spatial_service import audit_network
+        audit_network(binding.network, result)
+        native_messages = {m['token']: m for m in result['network_messages']}
     if result.get('network_backend') == 'independent_spatial_service':
         from wafer_sim.analysis.independent_spatial_service import audit_network
         audit_network(binding.network, result)
