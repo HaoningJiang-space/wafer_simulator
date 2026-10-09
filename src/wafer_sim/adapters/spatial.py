@@ -58,13 +58,33 @@ def validate_target(target):
     if (type(target.memory) is not tuple or type(target.compute) is not tuple or
             not memory or not compute or len(memory) != len(target.memory) or len(compute) != len(target.compute)):
         raise ValueError("Target needs unique, immutable resource collections")
+    interfaces = getattr(target, 'network_interfaces', ())
+    declared = {}
+    if interfaces:
+        if type(interfaces) is not tuple:
+            raise ValueError('Network interfaces must be immutable')
+        interface_ids, interface_endpoints = set(), set()
+        for interface in interfaces:
+            identifier(interface.id, 'Network interface')
+            identifier(interface.provenance, 'Network interface provenance')
+            natural(interface.endpoint, 'Network interface endpoint')
+            if (interface.id in interface_ids or interface.endpoint in interface_endpoints or
+                    type(interface.memory_regions) is not tuple or not interface.memory_regions):
+                raise ValueError('Duplicate or empty network interface')
+            interface_ids.add(interface.id); interface_endpoints.add(interface.endpoint)
+            for region in interface.memory_regions:
+                if region in declared or region not in memory or memory[region].endpoint != interface.endpoint:
+                    raise ValueError('Network interface ownership disagrees with memory attachment')
+                declared[region] = interface.endpoint
+        if set(declared) != set(memory) or interface_endpoints != set(attachments):
+            raise ValueError('Interfaces must cover exact memory regions and physical endpoints')
     endpoints, ports = set(), set()
     for m in memory.values():
         for value in (m.id, m.read_port, m.write_port, m.provenance):
             identifier(value, "Memory resource/provenance")
         natural(m.endpoint, "network endpoint")
         natural(m.capacity_bytes, "regional capacity", positive=True)
-        if m.endpoint in endpoints:
+        if m.endpoint in endpoints and not interfaces:
             raise ValueError("One memory region per endpoint in v1; local DMA needs a separate model")
         endpoints.add(m.endpoint)
         if m.endpoint not in attachments:

@@ -136,8 +136,8 @@ def export_booksim(compiled, directory, seed=1):
     rows=[]
     for tile,router in compiled.router_ids.items():
         row=f'router {router}'
-        for s in m.stores:
-            if s.tile==tile: row+=f' node {compiled.endpoints[s.id]} {m.access_latency_cycles}'
+        for endpoint, attached in compiled.target.network.endpoint_routers:
+            if attached==router: row+=f' node {endpoint} {m.access_latency_cycles}'
         for link in m.connections:
             if tile in (link.source,link.destination):
                 other=link.destination if link.source==tile else link.source

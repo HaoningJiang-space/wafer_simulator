@@ -1,0 +1,14 @@
+{
+  "reference_commit": "2c4ed6b4540e1e307a1c45e4a48d9d1ad266ceb3",
+  "base_registration": "configs/spatial_scaling.json",
+  "side": 6,
+  "layouts": ["clustered_local", "remote_balanced"],
+  "conditions": ["v1_whole", "shared_whole", "shared_pipeline"],
+  "repetitions": 3,
+  "chunk_bytes": 4096,
+  "window_chunks": 4,
+  "component_bytes": 65536,
+  "component_cases": ["read", "write", "two_banks"],
+  "tie_tolerance_cycles": 100,
+  "scope": "Declared controller-shared NIC organization and bounded DMA policy sensitivity; unchanged rates/capacities/work/placement. Native S is a solver reference, not hardware validation."
+}
