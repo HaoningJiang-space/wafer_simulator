@@ -89,12 +89,35 @@ overlapping peer traffic, yet injection is slowed. This supports downstream
 sharing/feedback as the cause class. It does not establish nominal saturation
 or uniquely separate allocation, finite buffering, credits and traffic history.
 
-The next method question is whether effective single-flow service plus limited
-shared spatial state can preserve the accepted application/layout judgments
-at lower cost. A distance-only independent message cost does not explain these
-observations. No U2 is implemented or preselected, and the result does not
-prove all native router states necessary. Freeze these probes and the 27-cell
-results; do not respond by resuming general scaling or hardware-parameter search.
+These probes and the original 27-cell results remain frozen. They motivated
+testing independently calibrated spatial service before introducing shared
+state; no native buffer/credit intervention or hardware-parameter search follows.
+
+## Completed independent spatial service baseline
+
+The [D0 protocol](INDEPENDENT_SPATIAL_SERVICE_PROTOCOL.md) is
+[accepted](results/independent-spatial-service-001/REVIEW.md): 1,700 physical
+endpoint/payload conditions, 3,460 empty-network captures and 81 complete
+U1/D0/S runs. Calibration is generated from machine/input plans without full-S
+timings, routes, eligibility clocks or overlaps. D0 retains U1 bank/controller
+services and predicts each DRAM message independently from its own ready clock.
+All original U1/S execution hashes reproduce; no execution-kernel change.
+
+D0 restores Local's exact 23,903-cycle time at all three sizes and selects
+Local alone globally, removing U1's Local/B false tie. Application MAPE falls
+from 15.517% to 6.724%. But its primary A−B gaps are +6,338 / +6,212 / +4,290
+cycles versus S's +3,549 / −658 / −3,318. It still selects B wrongly at 6×6/7×7
+and fails the 100-cycle magnitude budget for every layout pair. Accurate
+independent service helps absolute timing and some choices; it is insufficient
+for the registered locality-versus-load tradeoff.
+
+The model executes with lower recurring cost and RSS, while calibration took
+628 seconds and the exact table is 1.7 MB. That cost is reported separately;
+there is no end-to-end one-off speedup claim or unseen-size/path validation.
+These results justify studying a lightweight, time-dependent shared-path
+service model for the frozen decisions. They do not identify the minimum state,
+prove every BookSim detail necessary or establish hardware accuracy or novelty.
+No U2 is implemented or preselected. Preserve the frozen controls and gap budget.
 
 Parameter uncertainty must remain visible. If results depend on an uncalibrated
 bank/controller policy, characterize that component rather than declaring the

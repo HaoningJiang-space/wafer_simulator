@@ -1,0 +1,47 @@
+{
+  "artifact_hashes_checked": 1247,
+  "artifacts_sha256": {
+    "SUMMARY.json": "7dde098cf0844da8c83d37a50fa6cd3e517a4d3b2ccc24a39c44773895e06699",
+    "application.csv": "91a8983dda7b8fd73f71f97ba7bf0ff2e22972b307ad8924b2402f5275399c65",
+    "application.svg": "8142901a3d53401b5d120d73e12617ec34f891513fc588239b502d0d88dfe899",
+    "components.csv": "f0d0df6ad8dfbe93542acb7d37b8765322a7e2e5982a90753ada221260fd46a4",
+    "costs.csv": "521700ba74bc78f9c04f08775786974ddfa29ae1946599902c0759c97cd4e926",
+    "critical_messages.csv": "9af3e0e9a625e6eb5a5c1c9d83acf4b9ed27a16b79867002635d6561a8c3e9de",
+    "design_gaps.csv": "93f160396af2b6e7ead9b1c765460557e89278c7eea100c7dbffdb3f734270f7",
+    "tradeoff_cost.svg": "3bf74779e2835a85041304f157489f7bfcc8614f561970f2b8208beaed3a14f4"
+  },
+  "component_verification": {
+    "analysis_source_changes": {
+      "src/wafer_sim/analysis/independent_spatial_study.py": {
+        "capture_sha256": "1d4ac49a2d8e4b968cacbd0464e5f0530d0ae5cd15bd71d0f41fcc810576220b",
+        "reader_sha256": "21d8891dd5be441c30eda6c7c2faa2f02b21f2753dc74d06ca8bcdc24b1a8515"
+      },
+      "src/wafer_sim/analysis/timed_attribution.py": {
+        "capture_sha256": "1b3364c42125346754a2659bb118a591af6d5507ff2f30db6e448fdbd3fa5973",
+        "reader_sha256": "89319d33e81c006772d948b0cf0e8e3533022e4d96e054b743d9b3e35c4ff46b"
+      }
+    },
+    "artifact_hashes_checked": 41524,
+    "calibration_manifest_sha256": "a706ddf528e865c9d4caddd4e272e48bad578fef1be11c84d7351760f6e440ac",
+    "calibration_root": "/Projects/haoning/wafer_simulator/runs/d0-calibration-001",
+    "component_cases": 1700,
+    "cost": {
+      "component_cases": 1700,
+      "probe_executions": 3460,
+      "python_peak_rss_kib": 93868,
+      "supplemental_holdouts": 60,
+      "table_bytes": 1694921,
+      "wall_seconds": 628.0307303490117
+    },
+    "full_probe_readbacks": 3460,
+    "passed": true,
+    "supplemental_holdouts": 60,
+    "table_sha256": "a4aa0c6f68b4043c72fca75f7d66189891f4edaf567ee7b948f73a1dcc2fe1f3"
+  },
+  "frozen_U1_S_event_hashes_equal": true,
+  "full_execution_readbacks": 81,
+  "native_replays": 27,
+  "passed": true,
+  "run_manifest_sha256": "8e1383dd0772c52806b81a17c9654c4b1d15da0da92565f984d00759560406cd",
+  "source_commit": "fb90869761a4f3bb08655589bb2c7f5b65a1600d"
+}

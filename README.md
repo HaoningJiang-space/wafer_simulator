@@ -40,9 +40,18 @@ is complete. With the same graph and 65,536-byte response, zero to five C2C
 hops leave injection span fixed at 1,987 cycles; each hop adds 21 cycles to
 completion. Matched original-work responses instead exhibit much longer
 injection spans and temporally shared outputs. Distance alone does not explain
-their extra service time. Any future lightweight candidate must address shared
-paths and overlapping demand as well as effective single-flow service. This
-test adds no U2 and does not establish a minimal queue/credit model.
+their extra service time. This test adds no U2 and does not establish a minimal
+queue/credit model.
+
+The [independent spatial service baseline D0](docs/results/independent-spatial-service-001/REVIEW.md)
+is now accepted: 1,700 independently calibrated endpoint/size conditions,
+3,460 component captures, 81 U1/D0/S application executions and 209 tests.
+D0 restores Local's 23,903 cycles and selects Local globally at every size;
+application MAPE falls to 6.724%. It still chooses the wrong A/B layout at
+6×6/7×7, with gap errors of 6,870 / 7,608 cycles versus the unchanged 100-cycle
+budget. Correct single-flow/path service is useful but insufficient for that
+tradeoff. Calibration uses no full-S timings, routes or overlaps. Prediction
+is cheaper, with its 628-second calibration cost reported separately.
 
 ## Current entry point (hn072 only)
 
@@ -54,23 +63,26 @@ Use fresh output directories and existing pinned native binaries.
 cd /Projects/haoning/wafer_simulator/source
 export PYTHONPATH=src
 ../.venv/bin/python scripts/test_wow_target_remote.py \
-  /Projects/haoning/wafer_simulator/runs/isolated-response-tests-NEW
-../.venv/bin/python -m wafer_sim.experiments.isolated_response \
-  --tests /Projects/haoning/wafer_simulator/runs/isolated-response-tests-NEW/SEMANTICS.json \
-  --accepted /Projects/haoning/wafer_simulator/runs/spatial-scaling-001 \
-  --output /Projects/haoning/wafer_simulator/runs/isolated-response-NEW
-../.venv/bin/python -m wafer_sim.analysis.isolated_response \
-  /Projects/haoning/wafer_simulator/runs/isolated-response-NEW \
-  /Projects/haoning/wafer_simulator/runs/isolated-response-analysis-NEW
+  /Projects/haoning/wafer_simulator/runs/d0-tests-NEW
+../.venv/bin/python -m wafer_sim.experiments.independent_spatial_service \
+  --calibrate --tests /Projects/haoning/wafer_simulator/runs/d0-tests-NEW/SEMANTICS.json \
+  --output /Projects/haoning/wafer_simulator/runs/d0-calibration-NEW
+../.venv/bin/python -m wafer_sim.experiments.independent_spatial_service \
+  --tests /Projects/haoning/wafer_simulator/runs/d0-tests-NEW/SEMANTICS.json \
+  --calibration /Projects/haoning/wafer_simulator/runs/d0-calibration-NEW \
+  --output /Projects/haoning/wafer_simulator/runs/d0-applications-NEW
+../.venv/bin/python -m wafer_sim.analysis.independent_spatial_study \
+  /Projects/haoning/wafer_simulator/runs/d0-applications-NEW \
+  /Projects/haoning/wafer_simulator/runs/d0-analysis-NEW
 ```
 
-This reproduces the [registered isolation protocol](docs/ISOLATED_RESPONSE_PROTOCOL.md):
-ten conditions, two fresh processes each, one native command replay per condition.
-It reuses the accepted scaling evidence without rerunning applications. No
-timeout or truncated response can produce a completion receipt. General scaling
-and model enhancement remain closed. The next method question is whether a
-cheaper shared spatial service approximation preserves the frozen layout
-decisions; the present mechanism evidence does not preselect its implementation.
+This reproduces the [registered D0 comparison](docs/INDEPENDENT_SPATIAL_SERVICE_PROTOCOL.md).
+The [D0 contract](docs/INDEPENDENT_SPATIAL_SERVICE.md) explains calibration,
+bounded lookup and independent audits. No timeout or truncated response can
+produce a completion receipt. All U1/S event hashes must match the accepted
+scaling evidence. The next method question is whether a cheaper model of
+time-dependent shared spatial service recovers the frozen A/B decisions.
+No shared-path model or native buffer/credit intervention is preselected.
 
 ## Retained model-selection evidence
 
