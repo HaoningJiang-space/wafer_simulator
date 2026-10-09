@@ -73,6 +73,29 @@ decisions. The current results do not select a unique omitted mechanism or
 prove all detailed BookSim states necessary. No new model is committed by this
 milestone; retain the registered controls and the negative saturation result.
 
+## Completed response-service mechanism discrimination
+
+The [registered isolation test](ISOLATED_RESPONSE_PROTOCOL.md) is
+[accepted](results/isolated-response-001/REVIEW.md): 20 complete long responses,
+10 native replays, unchanged graph/router/link settings. On one 6×6 graph,
+0–5 C2C hops keep injection span at 1,987 cycles and middle-half injection rate
+at 32 B/cycle. Each hop adds 21 cycles to first receive and completion, without
+reducing this isolated sustained rate.
+
+The four matched critical responses become much slower with the original
+workload background. Actual critical outputs carry the target plus one peer
+at 4×4, and the target plus two peers at 6×6. Their source HB links have no
+overlapping peer traffic, yet injection is slowed. This supports downstream
+sharing/feedback as the cause class. It does not establish nominal saturation
+or uniquely separate allocation, finite buffering, credits and traffic history.
+
+The next method question is whether effective single-flow service plus limited
+shared spatial state can preserve the accepted application/layout judgments
+at lower cost. A distance-only independent message cost does not explain these
+observations. No U2 is implemented or preselected, and the result does not
+prove all native router states necessary. Freeze these probes and the 27-cell
+results; do not respond by resuming general scaling or hardware-parameter search.
+
 Parameter uncertainty must remain visible. If results depend on an uncalibrated
 bank/controller policy, characterize that component rather than declaring the
 whole wafer validated. If a simple abstraction is adequate, retain it. A new

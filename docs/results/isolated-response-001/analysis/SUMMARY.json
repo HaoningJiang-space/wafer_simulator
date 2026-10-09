@@ -1,0 +1,613 @@
+{
+  "comparisons": [
+    {
+      "background_duration_excess": 2028,
+      "background_injection_span_excess": 1773,
+      "isolated_duration": 2101,
+      "isolated_first_wait": 0,
+      "isolated_injection_span": 1987,
+      "isolated_middle_half_rate": 32.0,
+      "isolated_tail": 114,
+      "name": "matched-4-first11",
+      "original_duration": 4129,
+      "original_first_wait": 0,
+      "original_injection_span": 3760,
+      "original_middle_half_rate": 16.0,
+      "original_tail": 369,
+      "side": 4,
+      "token": "first11/phase/4"
+    },
+    {
+      "background_duration_excess": 2041,
+      "background_injection_span_excess": 1855,
+      "isolated_duration": 2101,
+      "isolated_first_wait": 0,
+      "isolated_injection_span": 1987,
+      "isolated_middle_half_rate": 32.0,
+      "isolated_tail": 114,
+      "name": "matched-4-second11",
+      "original_duration": 4142,
+      "original_first_wait": 0,
+      "original_injection_span": 3842,
+      "original_middle_half_rate": 16.0,
+      "original_tail": 300,
+      "side": 4,
+      "token": "second11/phase/7"
+    },
+    {
+      "background_duration_excess": 4055,
+      "background_injection_span_excess": 3775,
+      "isolated_duration": 2122,
+      "isolated_first_wait": 0,
+      "isolated_injection_span": 1987,
+      "isolated_middle_half_rate": 32.0,
+      "isolated_tail": 135,
+      "name": "matched-6-first17",
+      "original_duration": 6177,
+      "original_first_wait": 0,
+      "original_injection_span": 5762,
+      "original_middle_half_rate": 9.42692750287687,
+      "original_tail": 415,
+      "side": 6,
+      "token": "first17/phase/4"
+    },
+    {
+      "background_duration_excess": 4049,
+      "background_injection_span_excess": 3771,
+      "isolated_duration": 2122,
+      "isolated_first_wait": 0,
+      "isolated_injection_span": 1987,
+      "isolated_middle_half_rate": 32.0,
+      "isolated_tail": 135,
+      "name": "matched-6-second17",
+      "original_duration": 6171,
+      "original_first_wait": 0,
+      "original_injection_span": 5758,
+      "original_middle_half_rate": 9.448673587081892,
+      "original_tail": 413,
+      "side": 6,
+      "token": "second17/phase/7"
+    }
+  ],
+  "rows": [
+    {
+      "bytes": 65536,
+      "c2c_hops": 0,
+      "completion_bytes_per_cycle": 31.82904322486644,
+      "duration": 2059,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 13,
+      "first_receive_latency": 13,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "distance",
+      "last_receive_boundary": 2059,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "distance-0",
+      "ready": 0,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            1,
+            0
+          ]
+        }
+      ],
+      "side": 6,
+      "tail_after_last_inject": 72,
+      "unused_injection_slots": 964
+    },
+    {
+      "bytes": 65536,
+      "c2c_hops": 1,
+      "completion_bytes_per_cycle": 31.50769230769231,
+      "duration": 2080,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 34,
+      "first_receive_latency": 34,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "distance",
+      "last_receive_boundary": 2080,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "distance-1",
+      "ready": 0,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            1,
+            0,
+            12
+          ]
+        }
+      ],
+      "side": 6,
+      "tail_after_last_inject": 93,
+      "unused_injection_slots": 964
+    },
+    {
+      "bytes": 65536,
+      "c2c_hops": 2,
+      "completion_bytes_per_cycle": 31.19276534983341,
+      "duration": 2101,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 55,
+      "first_receive_latency": 55,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "distance",
+      "last_receive_boundary": 2101,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "distance-2",
+      "ready": 0,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            1,
+            0,
+            12,
+            24
+          ]
+        }
+      ],
+      "side": 6,
+      "tail_after_last_inject": 114,
+      "unused_injection_slots": 964
+    },
+    {
+      "bytes": 65536,
+      "c2c_hops": 3,
+      "completion_bytes_per_cycle": 30.88407163053723,
+      "duration": 2122,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 76,
+      "first_receive_latency": 76,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "distance",
+      "last_receive_boundary": 2122,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "distance-3",
+      "ready": 0,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            1,
+            0,
+            12,
+            24,
+            36
+          ]
+        }
+      ],
+      "side": 6,
+      "tail_after_last_inject": 135,
+      "unused_injection_slots": 964
+    },
+    {
+      "bytes": 65536,
+      "c2c_hops": 4,
+      "completion_bytes_per_cycle": 30.581427904806347,
+      "duration": 2143,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 97,
+      "first_receive_latency": 97,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "distance",
+      "last_receive_boundary": 2143,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "distance-4",
+      "ready": 0,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            1,
+            0,
+            12,
+            24,
+            36,
+            48
+          ]
+        }
+      ],
+      "side": 6,
+      "tail_after_last_inject": 156,
+      "unused_injection_slots": 964
+    },
+    {
+      "bytes": 65536,
+      "c2c_hops": 5,
+      "completion_bytes_per_cycle": 30.284658040665434,
+      "duration": 2164,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 118,
+      "first_receive_latency": 118,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "distance",
+      "last_receive_boundary": 2164,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "distance-5",
+      "ready": 0,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            1,
+            0,
+            12,
+            24,
+            36,
+            48,
+            60
+          ]
+        }
+      ],
+      "side": 6,
+      "tail_after_last_inject": 177,
+      "unused_injection_slots": 964
+    },
+    {
+      "bytes": 65536,
+      "c2c_hops": 2,
+      "completion_bytes_per_cycle": 31.19276534983341,
+      "duration": 2101,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 3216,
+      "first_receive_latency": 55,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "matched",
+      "last_receive_boundary": 5262,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "matched-4-first11",
+      "ready": 3161,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            7,
+            6,
+            14,
+            22
+          ]
+        }
+      ],
+      "side": 4,
+      "tail_after_last_inject": 114,
+      "unused_injection_slots": 964
+    },
+    {
+      "bytes": 65536,
+      "c2c_hops": 2,
+      "completion_bytes_per_cycle": 31.19276534983341,
+      "duration": 2101,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 16244,
+      "first_receive_latency": 55,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "matched",
+      "last_receive_boundary": 18290,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "matched-4-second11",
+      "ready": 16189,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            9,
+            8,
+            16,
+            24
+          ]
+        }
+      ],
+      "side": 4,
+      "tail_after_last_inject": 114,
+      "unused_injection_slots": 964
+    },
+    {
+      "bytes": 65536,
+      "c2c_hops": 3,
+      "completion_bytes_per_cycle": 30.88407163053723,
+      "duration": 2122,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 3258,
+      "first_receive_latency": 76,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "matched",
+      "last_receive_boundary": 5304,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "matched-6-first17",
+      "ready": 3182,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            71,
+            70,
+            58,
+            46,
+            34
+          ]
+        }
+      ],
+      "side": 6,
+      "tail_after_last_inject": 135,
+      "unused_injection_slots": 964
+    },
+    {
+      "bytes": 65536,
+      "c2c_hops": 3,
+      "completion_bytes_per_cycle": 30.88407163053723,
+      "duration": 2122,
+      "first_inject_wait": 0,
+      "first_receive_boundary": 18386,
+      "first_receive_latency": 76,
+      "flits": 1024,
+      "injection_bytes_per_cycle": 32.96579476861167,
+      "injection_gap_histogram": {
+        "1": 59,
+        "2": 964
+      },
+      "injection_span": 1987,
+      "kind": "matched",
+      "last_receive_boundary": 20432,
+      "middle_half_injection_bytes_per_cycle": 32.0,
+      "name": "matched-6-second17",
+      "ready": 18310,
+      "routes": [
+        {
+          "flits": 1024,
+          "routers": [
+            1,
+            0,
+            12,
+            24,
+            36
+          ]
+        }
+      ],
+      "side": 6,
+      "tail_after_last_inject": 135,
+      "unused_injection_slots": 964
+    }
+  ],
+  "shared_windows": [
+    {
+      "destination": 14,
+      "first_arrival": 3189,
+      "last_arrival": 7194,
+      "name": "matched-4-first11",
+      "other_flits": 0,
+      "own_flits": 1024,
+      "peer_messages": {},
+      "side": 4,
+      "source": 6,
+      "window_flits_per_cycle": 0.2556165751372941
+    },
+    {
+      "destination": 6,
+      "first_arrival": 3168,
+      "last_arrival": 7051,
+      "name": "matched-4-first11",
+      "other_flits": 0,
+      "own_flits": 1024,
+      "peer_messages": {},
+      "side": 4,
+      "source": 7,
+      "window_flits_per_cycle": 0.26364572605561276
+    },
+    {
+      "destination": 22,
+      "first_arrival": 3211,
+      "last_arrival": 7283,
+      "name": "matched-4-first11",
+      "other_flits": 1013,
+      "own_flits": 1024,
+      "peer_messages": {
+        "first15/phase/4": 1013
+      },
+      "side": 4,
+      "source": 14,
+      "window_flits_per_cycle": 0.5001227596366314
+    },
+    {
+      "destination": 16,
+      "first_arrival": 16217,
+      "last_arrival": 20303,
+      "name": "matched-4-second11",
+      "other_flits": 1020,
+      "own_flits": 1024,
+      "peer_messages": {
+        "second7/phase/7": 1020
+      },
+      "side": 4,
+      "source": 8,
+      "window_flits_per_cycle": 0.5001223391240519
+    },
+    {
+      "destination": 8,
+      "first_arrival": 16196,
+      "last_arrival": 20161,
+      "name": "matched-4-second11",
+      "other_flits": 0,
+      "own_flits": 1024,
+      "peer_messages": {},
+      "side": 4,
+      "source": 9,
+      "window_flits_per_cycle": 0.25819465456379226
+    },
+    {
+      "destination": 24,
+      "first_arrival": 16239,
+      "last_arrival": 20325,
+      "name": "matched-4-second11",
+      "other_flits": 0,
+      "own_flits": 1024,
+      "peer_messages": {},
+      "side": 4,
+      "source": 16,
+      "window_flits_per_cycle": 0.2505505260582334
+    },
+    {
+      "destination": 34,
+      "first_arrival": 3276,
+      "last_arrival": 9352,
+      "name": "matched-6-first17",
+      "other_flits": 2015,
+      "own_flits": 1024,
+      "peer_messages": {
+        "first11/phase/4": 1013,
+        "first5/phase/4": 1002
+      },
+      "side": 6,
+      "source": 46,
+      "window_flits_per_cycle": 0.500082277439526
+    },
+    {
+      "destination": 46,
+      "first_arrival": 3232,
+      "last_arrival": 9307,
+      "name": "matched-6-first17",
+      "other_flits": 1013,
+      "own_flits": 1024,
+      "peer_messages": {
+        "first11/phase/4": 1013
+      },
+      "side": 6,
+      "source": 58,
+      "window_flits_per_cycle": 0.3352534562211982
+    },
+    {
+      "destination": 58,
+      "first_arrival": 3210,
+      "last_arrival": 9216,
+      "name": "matched-6-first17",
+      "other_flits": 0,
+      "own_flits": 1024,
+      "peer_messages": {},
+      "side": 6,
+      "source": 70,
+      "window_flits_per_cycle": 0.17046778758115533
+    },
+    {
+      "destination": 70,
+      "first_arrival": 3189,
+      "last_arrival": 9074,
+      "name": "matched-6-first17",
+      "other_flits": 0,
+      "own_flits": 1024,
+      "peer_messages": {},
+      "side": 6,
+      "source": 71,
+      "window_flits_per_cycle": 0.17397213727488958
+    },
+    {
+      "destination": 12,
+      "first_arrival": 18339,
+      "last_arrival": 24340,
+      "name": "matched-6-second17",
+      "other_flits": 0,
+      "own_flits": 1024,
+      "peer_messages": {},
+      "side": 6,
+      "source": 0,
+      "window_flits_per_cycle": 0.17060979673442186
+    },
+    {
+      "destination": 0,
+      "first_arrival": 18317,
+      "last_arrival": 24198,
+      "name": "matched-6-second17",
+      "other_flits": 0,
+      "own_flits": 1024,
+      "peer_messages": {},
+      "side": 6,
+      "source": 1,
+      "window_flits_per_cycle": 0.1740904454267256
+    },
+    {
+      "destination": 24,
+      "first_arrival": 18362,
+      "last_arrival": 24428,
+      "name": "matched-6-second17",
+      "other_flits": 1012,
+      "own_flits": 1024,
+      "peer_messages": {
+        "second23/phase/7": 1012
+      },
+      "side": 6,
+      "source": 12,
+      "window_flits_per_cycle": 0.3355859568155596
+    },
+    {
+      "destination": 36,
+      "first_arrival": 18409,
+      "last_arrival": 24475,
+      "name": "matched-6-second17",
+      "other_flits": 2010,
+      "own_flits": 1024,
+      "peer_messages": {
+        "second23/phase/7": 1012,
+        "second29/phase/7": 998
+      },
+      "side": 6,
+      "source": 24,
+      "window_flits_per_cycle": 0.5000824130542277
+    }
+  ]
+}

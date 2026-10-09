@@ -1,0 +1,177 @@
+[
+  {
+    "c2c_hops": 0,
+    "data": "response",
+    "destination_memory": "sram-0",
+    "kind": "distance",
+    "name": "distance-0",
+    "path": [
+      1,
+      0
+    ],
+    "ready": 0,
+    "side": 6,
+    "source_memory": "dram-0-0",
+    "token": "response"
+  },
+  {
+    "c2c_hops": 1,
+    "data": "response",
+    "destination_memory": "sram-6",
+    "kind": "distance",
+    "name": "distance-1",
+    "path": [
+      1,
+      0,
+      12
+    ],
+    "ready": 0,
+    "side": 6,
+    "source_memory": "dram-0-0",
+    "token": "response"
+  },
+  {
+    "c2c_hops": 2,
+    "data": "response",
+    "destination_memory": "sram-12",
+    "kind": "distance",
+    "name": "distance-2",
+    "path": [
+      1,
+      0,
+      12,
+      24
+    ],
+    "ready": 0,
+    "side": 6,
+    "source_memory": "dram-0-0",
+    "token": "response"
+  },
+  {
+    "c2c_hops": 3,
+    "data": "response",
+    "destination_memory": "sram-18",
+    "kind": "distance",
+    "name": "distance-3",
+    "path": [
+      1,
+      0,
+      12,
+      24,
+      36
+    ],
+    "ready": 0,
+    "side": 6,
+    "source_memory": "dram-0-0",
+    "token": "response"
+  },
+  {
+    "c2c_hops": 4,
+    "data": "response",
+    "destination_memory": "sram-24",
+    "kind": "distance",
+    "name": "distance-4",
+    "path": [
+      1,
+      0,
+      12,
+      24,
+      36,
+      48
+    ],
+    "ready": 0,
+    "side": 6,
+    "source_memory": "dram-0-0",
+    "token": "response"
+  },
+  {
+    "c2c_hops": 5,
+    "data": "response",
+    "destination_memory": "sram-30",
+    "kind": "distance",
+    "name": "distance-5",
+    "path": [
+      1,
+      0,
+      12,
+      24,
+      36,
+      48,
+      60
+    ],
+    "ready": 0,
+    "side": 6,
+    "source_memory": "dram-0-0",
+    "token": "response"
+  },
+  {
+    "c2c_hops": 2,
+    "data": "w11",
+    "destination_memory": "sram-11",
+    "kind": "matched",
+    "name": "matched-4-first11",
+    "path": [
+      7,
+      6,
+      14,
+      22
+    ],
+    "ready": 3161,
+    "side": 4,
+    "source_memory": "dram-3-0",
+    "token": "first11/phase/4"
+  },
+  {
+    "c2c_hops": 2,
+    "data": "v11",
+    "destination_memory": "sram-12",
+    "kind": "matched",
+    "name": "matched-4-second11",
+    "path": [
+      9,
+      8,
+      16,
+      24
+    ],
+    "ready": 16189,
+    "side": 4,
+    "source_memory": "dram-4-1",
+    "token": "second11/phase/7"
+  },
+  {
+    "c2c_hops": 3,
+    "data": "w17",
+    "destination_memory": "sram-17",
+    "kind": "matched",
+    "name": "matched-6-first17",
+    "path": [
+      71,
+      70,
+      58,
+      46,
+      34
+    ],
+    "ready": 3182,
+    "side": 6,
+    "source_memory": "dram-35-0",
+    "token": "first17/phase/4"
+  },
+  {
+    "c2c_hops": 3,
+    "data": "v17",
+    "destination_memory": "sram-18",
+    "kind": "matched",
+    "name": "matched-6-second17",
+    "path": [
+      1,
+      0,
+      12,
+      24,
+      36
+    ],
+    "ready": 18310,
+    "side": 6,
+    "source_memory": "dram-0-1",
+    "token": "second17/phase/7"
+  }
+]

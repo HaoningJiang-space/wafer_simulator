@@ -35,6 +35,15 @@ at those two larger sizes; gap errors are 7,164 / 7,902 cycles. Capacity waits
 are zero. This identifies a spatial service limitation in the uniform model,
 not proof of network saturation or of a minimum required flit-level model.
 
+The [isolated-response mechanism test](docs/results/isolated-response-001/REVIEW.md)
+is complete. With the same graph and 65,536-byte response, zero to five C2C
+hops leave injection span fixed at 1,987 cycles; each hop adds 21 cycles to
+completion. Matched original-work responses instead exhibit much longer
+injection spans and temporally shared outputs. Distance alone does not explain
+their extra service time. Any future lightweight candidate must address shared
+paths and overlapping demand as well as effective single-flow service. This
+test adds no U2 and does not establish a minimal queue/credit model.
+
 ## Current entry point (hn072 only)
 
 Local work is source inspection, editing and Git. Builds, tests and execution
@@ -45,24 +54,23 @@ Use fresh output directories and existing pinned native binaries.
 cd /Projects/haoning/wafer_simulator/source
 export PYTHONPATH=src
 ../.venv/bin/python scripts/test_wow_target_remote.py \
-  /Projects/haoning/wafer_simulator/runs/scaling-tests-NEW
-../.venv/bin/python -m wafer_sim.experiments.spatial_scaling \
-  --tests /Projects/haoning/wafer_simulator/runs/scaling-tests-NEW/SEMANTICS.json \
-  --output /Projects/haoning/wafer_simulator/runs/spatial-scaling-NEW
-../.venv/bin/python -m wafer_sim.analysis.spatial_scaling \
-  /Projects/haoning/wafer_simulator/runs/spatial-scaling-NEW \
-  /Projects/haoning/wafer_simulator/runs/spatial-scaling-analysis-NEW
+  /Projects/haoning/wafer_simulator/runs/isolated-response-tests-NEW
+../.venv/bin/python -m wafer_sim.experiments.isolated_response \
+  --tests /Projects/haoning/wafer_simulator/runs/isolated-response-tests-NEW/SEMANTICS.json \
+  --accepted /Projects/haoning/wafer_simulator/runs/spatial-scaling-001 \
+  --output /Projects/haoning/wafer_simulator/runs/isolated-response-NEW
+../.venv/bin/python -m wafer_sim.analysis.isolated_response \
+  /Projects/haoning/wafer_simulator/runs/isolated-response-NEW \
+  /Projects/haoning/wafer_simulator/runs/isolated-response-analysis-NEW
 ```
 
-This runs the [registered locality–controller balance study](docs/SPATIAL_SCALING_PROTOCOL.md).
-U0 pools DRAM service/capacity while retaining physical staging guards; U1
-retains controllers/banks but simplifies communication; S uses the physical
-paths. No timeout or truncated work can produce a completion receipt.
-The 4×4, 6×6 and 7×7 candidates keep per-tile work/resources fixed. Two predefined
-layouts trade shorter distance against controller balance. Capacity upper bounds
-exclude staging exhaustion before execution. Other model features remain frozen.
-The registered milestone is closed; a cheaper spatial approximation, if pursued,
-must be tested against these fixed decisions rather than selected for a reversal.
+This reproduces the [registered isolation protocol](docs/ISOLATED_RESPONSE_PROTOCOL.md):
+ten conditions, two fresh processes each, one native command replay per condition.
+It reuses the accepted scaling evidence without rerunning applications. No
+timeout or truncated response can produce a completion receipt. General scaling
+and model enhancement remain closed. The next method question is whether a
+cheaper shared spatial service approximation preserves the frozen layout
+decisions; the present mechanism evidence does not preselect its implementation.
 
 ## Retained model-selection evidence
 

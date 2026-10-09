@@ -6,6 +6,7 @@ in [README](../README.md) and [RESEARCH_DIRECTION](RESEARCH_DIRECTION.md).
 
 | Area | Status | Accepted evidence / scope |
 |---|---|---|
+| Long-response mechanism discrimination | Complete; no U2 or kernel change | [20 isolated responses, 10 native replays](results/isolated-response-001/REVIEW.md); constant isolated injection span across 0–5 C2C hops, temporally shared critical outputs with workload background |
 | Spatial scaling / locality–load tradeoff | Complete; models frozen | [27 cells, 81 executions, three array sizes](results/spatial-scaling-001/REVIEW.md); U1 misses the A–B decision at 6×6/7×7; zero staging-capacity waits |
 | Runtime relocation to hn072 | Complete; old evidence cold-archived | [Verified archive and cleanup](results/server-migration-001/REVIEW.md); 50,072 entries verified, 26.5 GB observed free-space increase; current native binary unchanged |
 | Spatial storage abstraction U0/U1/S | Complete; machine and execution kernel frozen | [9 cells, 54 executions, layout-selection error and cost](results/memory-abstraction-001/REVIEW.md); aggregate communication misses the 3,193-cycle near/remote gap |
