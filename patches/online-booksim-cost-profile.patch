@@ -1,0 +1,99 @@
+--- a/online_booksim.cpp
++++ b/online_booksim.cpp
+@@ -1,6 +1,8 @@
+ // Online adapter around the unchanged, patched author TrafficManager.
+ // No router, VC, credit, arbitration or packet-generation implementation is copied.
+ #include <fstream>
++#include <chrono>
++#include <cstdlib>
+ #include <iostream>
+ #include <limits>
+ #include <map>
+@@ -20,6 +22,15 @@
+ extern TrafficManager *trafficManager;
+ extern long global_current_cycle;
+ 
++// Cost-only copy: counters never enter the network protocol or service state.
++using CostClock = std::chrono::steady_clock;
++static double observe_seconds=0, retire_record_seconds=0, step_inclusive_seconds=0;
++static double parse_seconds=0, dump_seconds=0, reply_write_seconds=0;
++static long observe_calls=0, retired_record_calls=0, step_calls=0, reply_bytes=0;
++static double cost_elapsed(CostClock::time_point start) {
++    return std::chrono::duration<double>(CostClock::now()-start).count();
++}
++
+ class OnlineTrafficManager : public TrafficManager {
+ protected:
+     std::vector<json> finished;
+@@ -51,6 +62,7 @@
+     }
+ 
+     void _RetireFlit(Flit *f, int dest) override {
++        const auto cost_start=CostClock::now();
+         const int mid = f->mid;
+         message_flits.at(mid).push_back({{"id", f->id}, {"message", mid},
+             {"source", f->src}, {"destination", dest}, {"generated", f->ctime},
+@@ -67,13 +79,20 @@
+                 // Cycle t is the interval [t,t+1). Publish at its end boundary.
+                 {"finish", global_current_cycle+1}, {"flits", message_flits.at(mid)}});
+         }
++        retire_record_seconds += cost_elapsed(cost_start);
++        ++retired_record_calls;
+         TrafficManager::_RetireFlit(f, dest);
+     }
+ 
+     virtual void Step() {
+         global_current_cycle = _time;
++        auto cost_start=CostClock::now();
+         ObserveChannels();
+-        if (_Step() != 0) throw std::runtime_error("Native network failed/deadlocked");
++        observe_seconds += cost_elapsed(cost_start); ++observe_calls;
++        cost_start=CostClock::now();
++        const int cost_status=_Step();
++        step_inclusive_seconds += cost_elapsed(cost_start); ++step_calls;
++        if (cost_status != 0) throw std::runtime_error("Native network failed/deadlocked");
+         ++steps;
+         global_current_cycle = _time;
+     }
+@@ -173,7 +192,9 @@
+         std::string line;
+         bool closed=false;
+         while (std::getline(std::cin,line)) {
++            auto cost_start=CostClock::now();
+             const auto request=json::parse(line);
++            parse_seconds += cost_elapsed(cost_start);
+             const std::string command=request.at("command");
+             json reply;
+             if (command == "submit") reply=manager->Submit(request);
+@@ -184,12 +205,30 @@
+                 reply=manager->BoundaryCommand(request);
+ #endif
+             else throw std::runtime_error("Unknown online command");
+-            replies << reply.dump() << std::endl;
++            cost_start=CostClock::now();
++            const auto cost_bytes=reply.dump();
++            dump_seconds += cost_elapsed(cost_start); reply_bytes += cost_bytes.size()+1;
++            cost_start=CostClock::now();
++            replies << cost_bytes << std::endl;
++            reply_write_seconds += cost_elapsed(cost_start);
+             if (closed) break;
+         }
+         if (!closed) throw std::runtime_error("EOF before checked close");
+         delete manager; trafficManager=nullptr;
+         for (auto *network : networks) delete network;
++        const char *cost_path=std::getenv("WAFER_COST_PROFILE_OUTPUT");
++        if (!cost_path) throw std::runtime_error("Cost-only binary requires a profile output path");
++        std::ofstream cost_out(cost_path);
++        if (!cost_out) throw std::runtime_error("Cannot write native cost profile");
++        cost_out << json({{"complete",true},{"observe_seconds",observe_seconds},
++            {"retire_record_seconds",retire_record_seconds},
++            {"step_inclusive_seconds",step_inclusive_seconds},
++            {"native_step_excluding_retire_record_seconds",step_inclusive_seconds-retire_record_seconds},
++            {"request_parse_seconds",parse_seconds},{"reply_dump_seconds",dump_seconds},
++            {"reply_write_seconds",reply_write_seconds},{"observe_calls",observe_calls},
++            {"retired_record_calls",retired_record_calls},{"step_calls",step_calls},
++            {"reply_bytes",reply_bytes},
++            {"scope","Instrumented elapsed sections; not exclusive CPU or baseline speed"}}).dump(2) << std::endl;
+     } catch (const std::exception &error) {
+         replies << json({{"ok",false},{"error",error.what()}}).dump() << std::endl;
+         std::cerr << error.what() << std::endl;
