@@ -161,7 +161,7 @@ def run(output, binary, tests):
             raise ValueError('Reference binary changed')
         write_json(output/'SUMMARY.json', dict(rows=rows, native_component_executions=3,
             application_executions=0, conditional_replay_only=True,
-            independent_component_model_gate='not attempted; eligibility and feedback supplied by native'))
+            independent_component_model_gate='not attempted; surrounding arrival/credit boundaries supplied by native'))
         write_json(output/'COMPLETE.json', dict(complete=True, source_commit=commit,
             exact_reference_events=True, native_component_executions=3, application_executions=0,
             artifacts_sha256={str(p.relative_to(output)): digest(p) for p in output.rglob('*') if p.is_file()}))
