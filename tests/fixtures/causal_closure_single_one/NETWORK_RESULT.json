@@ -1,0 +1,71 @@
+{
+  "complete": true,
+  "final": {
+    "cycle": 64,
+    "drained": true,
+    "flits": 1,
+    "idle_skipped_cycles": 0,
+    "messages": 1,
+    "ok": true,
+    "steps": 64
+  },
+  "identity": {
+    "binary_sha256": "f2a421a8e872079604e266430ed08d42c56c513bde281ab16da99e10482f9d25",
+    "clock": "submit before cycle t; receive at end boundary c+1",
+    "config_sha256": "efd2b1da49b5c6f105129a0d0af672baeab48729c22eec8672de7af13a87a1ce",
+    "flit_bytes": 64
+  },
+  "messages": [
+    {
+      "bytes": 64,
+      "data": "0",
+      "destination": 3,
+      "destination_memory": "destination",
+      "expected_flits": 1,
+      "finish": 50,
+      "first_eject": 49,
+      "first_inject": 0,
+      "flit_bytes": 64,
+      "flits": [
+        {
+          "destination": 3,
+          "ejected": 49,
+          "generated": 0,
+          "hops": 3,
+          "id": 0,
+          "injected": 0,
+          "injection_router_arrival": 2,
+          "link_arrivals": [
+            {
+              "cycle": 23,
+              "destination": 2,
+              "source": 0,
+              "vc": 0
+            },
+            {
+              "cycle": 44,
+              "destination": 3,
+              "source": 2,
+              "vc": 0
+            }
+          ],
+          "message": 0,
+          "router_path": [
+            0,
+            2,
+            3
+          ],
+          "source": 0
+        }
+      ],
+      "generated": 0,
+      "id": 0,
+      "last_eject": 49,
+      "last_inject": 0,
+      "ready": 0,
+      "source": 0,
+      "source_memory": "source",
+      "token": "0"
+    }
+  ]
+}

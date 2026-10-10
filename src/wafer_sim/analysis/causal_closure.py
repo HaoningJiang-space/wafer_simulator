@@ -119,7 +119,7 @@ def read_observation(path):
 def compare(contract, prediction, native, observations):
     c=validate(contract)
     validate_observation(observations)
-    expected, points = prediction_indexes(prediction)
+    expected_service, points = prediction_indexes(prediction)
     if not prediction['complete'] or not prediction['drained'] or not native['complete'] or not native['final']['drained']:
         raise ValueError('Incomplete network evidence')
     if prediction['native_boundary_inputs']: raise ValueError('Native boundary leakage')
@@ -162,8 +162,8 @@ def compare(contract, prediction, native, observations):
             key=(r['kind'],r['router'],r['flit'])
             if key in actual: raise ValueError('Repeated local service evidence')
             actual[key]=r
-    if set(expected)!=set(actual): raise ValueError('Missing/unmatched local service')
-    for key,p in expected.items():
+    if set(expected_service)!=set(actual): raise ValueError('Missing/unmatched local service')
+    for key,p in expected_service.items():
         n=actual[key];eq('service_clocks',str(key),p['cycle'],n['cycle'])
         if p['kind']!='output_send': eq('service_input_identity',str(key),p['input'],n['input'])
     def credit_counts(rows, fields):
@@ -207,7 +207,7 @@ def compare(contract, prediction, native, observations):
             eq('allocation_grant',str((key,stage)),grant,r['grant_input'])
             eq('allocation_next_pointer',str((key,stage)),(grant+1)%r['input_count'] if grant>=0 else pointer,r['grant_pointer'])
     return dict(passed=not errors,mismatches=len(errors),first_discrepancies=errors[:12],checks=dict(checked),
-        messages=len(messages),flits=total_flits,local_services=len(expected),native_boundary_inputs=False,
+        messages=len(messages),flits=total_flits,local_services=len(expected_service),native_boundary_inputs=False,
         credit_returns=sum(p_returns.values()),credit_sends=sum(p_sends.values()),
         source_stall_cycles=prediction['source_stall_cycles'],router_credit_stall_cycles=prediction['router_credit_stall_cycles'],
         predicted_finishes=[p['finish'] for p in prediction['messages']],

@@ -6,7 +6,7 @@ import tempfile
 import json
 from wafer_sim.analysis.causal_closure import (read_observation, validate_observation,
     prediction_indexes, compare, verify_sources)
-from wafer_sim.io import read_json
+from wafer_sim.io import read_json, digest
 from wafer_sim.adapters.causal_merge import simulate
 from wafer_sim.architecture.causal_merge import validate, topology
 
@@ -104,6 +104,19 @@ class CausalClosureTests(unittest.TestCase):
 
 
 class CausalClosureAuditTests(unittest.TestCase):
+    def test_unmodified_native_one_flit_evidence_passes_complete_comparison(self):
+        directory=REPO/'tests/fixtures/causal_closure_single_one'
+        provenance=read_json(directory/'PROVENANCE.json')
+        for name,record in provenance['files'].items():
+            self.assertEqual(digest(directory/name),record['sha256'])
+        source=read_json(directory/'INPUT.json')
+        prediction=simulate(source['contract'],source['messages'])
+        checked=compare(source['contract'],prediction,read_json(directory/'NETWORK_RESULT.json'),
+            read_observation(directory/'OBSERVATION.jsonl'))
+        self.assertTrue(checked['passed'],checked['first_discrepancies'])
+        self.assertEqual(checked['flits'],1)
+        self.assertEqual(checked['checks']['service_clocks'],9)
+
     def observation(self):
         # Schema-3 snapshot of router 0's first allocation: two endpoint inputs
         # and the reverse router port. This is format evidence, not an oracle

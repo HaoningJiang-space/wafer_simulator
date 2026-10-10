@@ -1,0 +1,67 @@
+{
+  "contract": {
+    "alloc_iters": 1,
+    "buffer_policy": "private",
+    "capacity_flits": 32,
+    "credit_delay": 0,
+    "crossbar_delay": 2,
+    "endpoint_link_latency": 1,
+    "endpoint_routers": [
+      0,
+      0,
+      1,
+      3
+    ],
+    "flit_bytes": 64,
+    "forward_outputs": [
+      2,
+      1,
+      2,
+      0
+    ],
+    "hold_switch_for_packet": 0,
+    "input_speedup": 1,
+    "internal_speedup": 1.0,
+    "num_vcs": 1,
+    "output_buffer_size": -1,
+    "output_speedup": 1,
+    "packet_size": 1,
+    "router_link_latency": 17,
+    "routers": [
+      [
+        "endpoint/0",
+        "endpoint/1",
+        "router/2"
+      ],
+      [
+        "endpoint/2",
+        "router/2"
+      ],
+      [
+        "router/0",
+        "router/1",
+        "router/3"
+      ],
+      [
+        "endpoint/3",
+        "router/2"
+      ]
+    ],
+    "routing_delay": 0,
+    "speculative": 0,
+    "sw_alloc_delay": 1,
+    "sw_allocator": "islip",
+    "vc_alloc_delay": 1,
+    "vc_allocator": "islip",
+    "vc_busy_when_full": 0,
+    "wait_for_tail_credit": 0
+  },
+  "messages": [
+    {
+      "destination": 3,
+      "flits": 1,
+      "ready": 0,
+      "source": 0
+    }
+  ]
+}
