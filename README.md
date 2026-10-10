@@ -103,6 +103,14 @@ observed arrivals and credit returns, matching all 36,864 service-clock comparis
 and 22,506 allocator-call checks. This is conditional diagnosis, not independent
 network prediction, an application-gap result or a speedup claim.
 
+The [G1 causal-closure test](docs/results/causal-closure-001/REVIEW.md) now
+composes four local routers without Native arrival or credit inputs. Seven cases,
+including staggered/queued sources and tight credits, match full flit/message,
+service and drainage events. Fourteen completed Native component runs preserve
+observer equivalence; 13 regressions and seven negative probes pass. This closes
+independent prediction in the registered tree domain, with no application
+integration or service-compression result.
+
 The [information and boundary evidence](docs/NECESSARY_INFORMATION.md) separates
 observed failures from constructed distinguishing cases. S remains the detailed
 reference under each declared machine contract. Preserve necessary boundary

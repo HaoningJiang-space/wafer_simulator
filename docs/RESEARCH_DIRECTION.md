@@ -242,6 +242,19 @@ No new application backend or matrix is started. A next method experiment should
 retain these established causal boundaries while separately testing independent
 boundary generation or compression, without fitting flow weights or bandwidth.
 
+The [G1 experiment](results/causal-closure-001/REVIEW.md) now closes those
+external boundaries on an explicit four-router merge tree. Given only the
+external ready/source/destination/flit counts and declared service contract,
+local states generate upstream arrivals and all downstream credit returns.
+Seven cases match source generation/injection, flit arrivals, VC/switch/send
+clocks, allocator/FIFO/ownership state, credit sequences, message finishes and
+final drainage. The tight-credit diagnostic exercises actual blocking at all
+three upstream routers. The observer preserves full S events/protocols.
+This is independent component prediction, beyond conditional reconstruction;
+it remains limited to unique routes, single VC/packets and one used output per
+router. No closed application, general backend or minimum-state proof follows.
+The implementation advances cycles/flits; G2 compression is still unimplemented.
+
 Changes to recording must preserve message completion and closed execution.
 If repeated router work is the relevant cost, investigate batching between
 causally necessary boundaries with event equivalence; do not assume an unchanged

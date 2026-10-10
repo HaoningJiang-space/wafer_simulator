@@ -97,8 +97,11 @@ application timestamps can supply offline diagnostic inputs, but cannot be used
 as prediction inputs in the independent closed-loop comparison. Track the first
 different boundary as well as the final critical chain. A bounded local
 FIFO/ownership/credit replay now exists with Native arrivals and credit returns
-as external inputs. No independent network or event-compressed
-backend, runtime fidelity switch or new workload is implemented by these milestones.
+as external inputs. The subsequent [G1 component](results/causal-closure-001/REVIEW.md)
+independently generates arrivals and credits on a bounded merge tree, matching
+all local and end-to-end boundaries. This closes its component loop, not a
+wafer application or general network. No event-compressed backend, runtime
+fidelity switch or new workload is implemented by these milestones.
 
 Timing error, signed design-gap error and reference choice regret remain separate.
 D0's A/B misselection at 6×6 costs 658 reference cycles, despite its 6,870-cycle

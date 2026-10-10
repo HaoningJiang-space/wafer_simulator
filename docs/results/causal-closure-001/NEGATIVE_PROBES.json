@@ -1,0 +1,54 @@
+{
+  "campaign_manifest_sha256": "e4d3165abf196a327bf7c0d9f5a8c71a04927cef947029bebf81ab4b31cdcd15",
+  "inputs_sha256": {
+    "INPUT.json": "04b8a4578b608c0c2ce82c332e2841a5a21abcf348a7eda29715e61f5490f04c",
+    "PREDICTION.json": "a7fde2355fd542af6f7e0ac64520eaf2c27e2b8aeb1ad402df263460e18550ab",
+    "observed/NETWORK_RESULT.json": "5e9339320e81994e8c2881b904ec197fdf7f52ad976f265daf848c1786ed68d5",
+    "observed/OBSERVATION.jsonl": "ecae948e9bec7fc03727c7c3b37f0373b60d0fba5e41a5a466ba7eb3807fb928"
+  },
+  "passed": true,
+  "probes": [
+    {
+      "first_kind": "flit_fields",
+      "mismatches": 1,
+      "name": "wrong_upstream_arrival",
+      "rejected": true
+    },
+    {
+      "first_kind": "credit_return_sequence",
+      "mismatches": 1,
+      "name": "wrong_credit_return",
+      "rejected": true
+    },
+    {
+      "first_kind": "message_fields",
+      "mismatches": 1,
+      "name": "premature_source_generation",
+      "rejected": true
+    },
+    {
+      "first_kind": "allocation_call_inventory",
+      "mismatches": 1,
+      "name": "missing_allocation_snapshot_with_consistent_footer",
+      "rejected": true
+    },
+    {
+      "first_kind": "vc_owner",
+      "mismatches": 1,
+      "name": "wrong_vc_ownership",
+      "rejected": true
+    },
+    {
+      "name": "duplicated_native_flit",
+      "reason": "Repeated Native flit",
+      "rejected": true
+    },
+    {
+      "name": "declared_native_boundary_leak",
+      "reason": "Native boundary leakage",
+      "rejected": true
+    }
+  ],
+  "script_sha256": "b107b726f9833308ae89b03261ea1b13039ca29eae14467ac1c526fa6215464d",
+  "source_commit": "f75dc5f04dd30ff51514f0818335fee3ed4fc7cd"
+}

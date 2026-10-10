@@ -1,0 +1,27 @@
+test_credit_feedback_actually_blocks_service (test_causal_closure.CausalClosureTests.test_credit_feedback_actually_blocks_service) ... ok
+test_demand_is_immutable_and_native_fields_rejected (test_causal_closure.CausalClosureTests.test_demand_is_immutable_and_native_fields_rejected) ... ok
+test_drains_every_credit_including_receiver_return (test_causal_closure.CausalClosureTests.test_drains_every_credit_including_receiver_return) ... FAIL
+test_late_release_not_shifted_to_zero (test_causal_closure.CausalClosureTests.test_late_release_not_shifted_to_zero) ... ok
+test_no_future_source_can_create_early_data (test_causal_closure.CausalClosureTests.test_no_future_source_can_create_early_data) ... ok
+test_no_service_before_own_arrival (test_causal_closure.CausalClosureTests.test_no_service_before_own_arrival) ... ok
+test_one_flit_keeps_service_and_propagation_boundaries (test_causal_closure.CausalClosureTests.test_one_flit_keeps_service_and_propagation_boundaries) ... ok
+test_partial_observation_cannot_be_complete (test_causal_closure.CausalClosureTests.test_partial_observation_cannot_be_complete) ... ok
+test_source_switches_after_injection_not_destination (test_causal_closure.CausalClosureTests.test_source_switches_after_injection_not_destination) ... ok
+test_timeout_is_incomplete (test_causal_closure.CausalClosureTests.test_timeout_is_incomplete) ... ok
+test_topology_keeps_reverse_credit_latency_and_two_endpoints (test_causal_closure.CausalClosureTests.test_topology_keeps_reverse_credit_latency_and_two_endpoints) ... ok
+test_unsupported_state_is_not_silently_approximated (test_causal_closure.CausalClosureTests.test_unsupported_state_is_not_silently_approximated) ... ok
+test_vc_ownership_excludes_other_requests_until_send (test_causal_closure.CausalClosureTests.test_vc_ownership_excludes_other_requests_until_send) ... ok
+
+======================================================================
+FAIL: test_drains_every_credit_including_receiver_return (test_causal_closure.CausalClosureTests.test_drains_every_credit_including_receiver_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Projects/haoning/wafer_simulator/source/tests/test_causal_closure.py", line 31, in test_drains_every_credit_including_receiver_return
+    self.assertEqual(r['final_cycle'],52)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 64 != 52
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.413s
+
+FAILED (failures=1)

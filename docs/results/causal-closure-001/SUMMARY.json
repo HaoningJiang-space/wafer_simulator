@@ -1,0 +1,393 @@
+{
+  "application_executions": 0,
+  "compression_implemented": false,
+  "g1_accuracy_passed": true,
+  "independent_prediction": true,
+  "native_executions": 14,
+  "rows": [
+    {
+      "capacity_flits": 32,
+      "checks": {
+        "allocation_call_inventory": 2,
+        "allocation_grant": 6,
+        "allocation_next_pointer": 6,
+        "allocation_pointer": 6,
+        "allocation_requests": 6,
+        "credit_balance": 6,
+        "credit_return_sequence": 1,
+        "credit_send_sequence": 1,
+        "drain_clock": 1,
+        "fifo_head": 16,
+        "fifo_occupancy": 16,
+        "flit_fields": 10,
+        "message_fields": 9,
+        "service_clocks": 9,
+        "service_input_identity": 6,
+        "vc_owner": 6
+      },
+      "credit_returns": 4,
+      "credit_sends": 3,
+      "exact_observer_events": true,
+      "first_discrepancies": [],
+      "flits": 1,
+      "input_sha256": "095c804dc668b113b1208b2ee2294e189aea0df8818d01c9e87288a3350830e3",
+      "local_services": 9,
+      "messages": 1,
+      "mismatches": 0,
+      "name": "single-one",
+      "native_boundary_inputs": false,
+      "native_finishes": [
+        50
+      ],
+      "passed": true,
+      "predicted_finishes": [
+        50
+      ],
+      "prediction_sha256": "4e1b18e2a1041c02eb836ad68ac82366a306a37eb4fbb04cdbac6e1044ed3627",
+      "router_credit_stall_cycles": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "scope": "Independent four-router causal closure, no compression/application claim",
+      "source_stall_cycles": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "capacity_flits": 32,
+      "checks": {
+        "allocation_call_inventory": 2,
+        "allocation_grant": 6144,
+        "allocation_next_pointer": 6144,
+        "allocation_pointer": 6144,
+        "allocation_requests": 6144,
+        "credit_balance": 6144,
+        "credit_return_sequence": 1,
+        "credit_send_sequence": 1,
+        "drain_clock": 1,
+        "fifo_head": 16384,
+        "fifo_occupancy": 16384,
+        "flit_fields": 10240,
+        "message_fields": 9,
+        "service_clocks": 9216,
+        "service_input_identity": 6144,
+        "vc_owner": 6144
+      },
+      "credit_returns": 4096,
+      "credit_sends": 3072,
+      "exact_observer_events": true,
+      "first_discrepancies": [],
+      "flits": 1024,
+      "input_sha256": "2fa8d92f6534160182d05dd7d1c8816b988b4d14c2daedff791c2558657ba6e6",
+      "local_services": 9216,
+      "messages": 1,
+      "mismatches": 0,
+      "name": "single-long",
+      "native_boundary_inputs": false,
+      "native_finishes": [
+        2096
+      ],
+      "passed": true,
+      "predicted_finishes": [
+        2096
+      ],
+      "prediction_sha256": "82cfc743c26f7d924bc42f74106baf67279d55d3164882a71947f2a6e95727b1",
+      "router_credit_stall_cycles": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "scope": "Independent four-router causal closure, no compression/application claim",
+      "source_stall_cycles": [
+        964,
+        0,
+        0
+      ]
+    },
+    {
+      "capacity_flits": 32,
+      "checks": {
+        "allocation_call_inventory": 2,
+        "allocation_grant": 28532,
+        "allocation_next_pointer": 28532,
+        "allocation_pointer": 28532,
+        "allocation_requests": 28532,
+        "credit_balance": 28532,
+        "credit_return_sequence": 1,
+        "credit_send_sequence": 1,
+        "drain_clock": 1,
+        "fifo_head": 75445,
+        "fifo_occupancy": 75445,
+        "flit_fields": 30720,
+        "message_fields": 27,
+        "service_clocks": 27648,
+        "service_input_identity": 18432,
+        "vc_owner": 28532
+      },
+      "credit_returns": 12288,
+      "credit_sends": 9216,
+      "exact_observer_events": true,
+      "first_discrepancies": [],
+      "flits": 3072,
+      "input_sha256": "56de91fd85dc5895c0fc37c771b9229e18c6fc8f5fa520fdabfd83ebaa870ebc",
+      "local_services": 27648,
+      "messages": 3,
+      "mismatches": 0,
+      "name": "merge-0",
+      "native_boundary_inputs": false,
+      "native_finishes": [
+        6190,
+        6192,
+        4144
+      ],
+      "passed": true,
+      "predicted_finishes": [
+        6190,
+        6192,
+        4144
+      ],
+      "prediction_sha256": "c48ceb99a583c25479b0a507ac93ed595406c6351fcb062f2fd6692a4ae92211",
+      "router_credit_stall_cycles": [
+        2023,
+        1959,
+        0,
+        0
+      ],
+      "scope": "Independent four-router causal closure, no compression/application claim",
+      "source_stall_cycles": [
+        4969,
+        4971,
+        2859
+      ]
+    },
+    {
+      "capacity_flits": 32,
+      "checks": {
+        "allocation_call_inventory": 2,
+        "allocation_grant": 28021,
+        "allocation_next_pointer": 28021,
+        "allocation_pointer": 28021,
+        "allocation_requests": 28021,
+        "credit_balance": 28021,
+        "credit_return_sequence": 1,
+        "credit_send_sequence": 1,
+        "drain_clock": 1,
+        "fifo_head": 73914,
+        "fifo_occupancy": 73914,
+        "flit_fields": 30720,
+        "message_fields": 27,
+        "service_clocks": 27648,
+        "service_input_identity": 18432,
+        "vc_owner": 28021
+      },
+      "credit_returns": 12288,
+      "credit_sends": 9216,
+      "exact_observer_events": true,
+      "first_discrepancies": [],
+      "flits": 3072,
+      "input_sha256": "0cda7977519671d27d9268ff5b11b53129ad6b59185850d4a7d2a9c729c31bd3",
+      "local_services": 27648,
+      "messages": 3,
+      "mismatches": 0,
+      "name": "merge-509",
+      "native_boundary_inputs": false,
+      "native_finishes": [
+        5682,
+        6192,
+        5160
+      ],
+      "passed": true,
+      "predicted_finishes": [
+        5682,
+        6192,
+        5160
+      ],
+      "prediction_sha256": "2b337dff1aec6827ce24dda02d34c7770f640cb394a7416c1242a7fbce1a6e36",
+      "router_credit_stall_cycles": [
+        2023,
+        1957,
+        0,
+        0
+      ],
+      "scope": "Independent four-router causal closure, no compression/application claim",
+      "source_stall_cycles": [
+        4461,
+        4526,
+        2857
+      ]
+    },
+    {
+      "capacity_flits": 32,
+      "checks": {
+        "allocation_call_inventory": 2,
+        "allocation_grant": 18432,
+        "allocation_next_pointer": 18432,
+        "allocation_pointer": 18432,
+        "allocation_requests": 18432,
+        "credit_balance": 18432,
+        "credit_return_sequence": 1,
+        "credit_send_sequence": 1,
+        "drain_clock": 1,
+        "fifo_head": 47104,
+        "fifo_occupancy": 47104,
+        "flit_fields": 30720,
+        "message_fields": 27,
+        "service_clocks": 27648,
+        "service_input_identity": 18432,
+        "vc_owner": 18432
+      },
+      "credit_returns": 12288,
+      "credit_sends": 9216,
+      "exact_observer_events": true,
+      "first_discrepancies": [],
+      "flits": 3072,
+      "input_sha256": "13c49e3bdeca3c079951e4fbc8153c7d3b6dd97199517760dd942bc919293f18",
+      "local_services": 27648,
+      "messages": 3,
+      "mismatches": 0,
+      "name": "merge-3000",
+      "native_boundary_inputs": false,
+      "native_finishes": [
+        2096,
+        5096,
+        8096
+      ],
+      "passed": true,
+      "predicted_finishes": [
+        2096,
+        5096,
+        8096
+      ],
+      "prediction_sha256": "3746ec39678c85608daca4f6b37c56f77460105d9c40eb889e7e10228af2eef9",
+      "router_credit_stall_cycles": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "scope": "Independent four-router causal closure, no compression/application claim",
+      "source_stall_cycles": [
+        964,
+        964,
+        964
+      ]
+    },
+    {
+      "capacity_flits": 32,
+      "checks": {
+        "allocation_call_inventory": 2,
+        "allocation_grant": 1277,
+        "allocation_next_pointer": 1277,
+        "allocation_pointer": 1277,
+        "allocation_requests": 1277,
+        "credit_balance": 1277,
+        "credit_return_sequence": 1,
+        "credit_send_sequence": 1,
+        "drain_clock": 1,
+        "fifo_head": 3272,
+        "fifo_occupancy": 3272,
+        "flit_fields": 1620,
+        "message_fields": 27,
+        "service_clocks": 1458,
+        "service_input_identity": 972,
+        "vc_owner": 1277
+      },
+      "credit_returns": 648,
+      "credit_sends": 486,
+      "exact_observer_events": true,
+      "first_discrepancies": [],
+      "flits": 162,
+      "input_sha256": "04b8a4578b608c0c2ce82c332e2841a5a21abcf348a7eda29715e61f5490f04c",
+      "local_services": 1458,
+      "messages": 3,
+      "mismatches": 0,
+      "name": "queued-source",
+      "native_boundary_inputs": false,
+      "native_finishes": [
+        302,
+        370,
+        372
+      ],
+      "passed": true,
+      "predicted_finishes": [
+        302,
+        370,
+        372
+      ],
+      "prediction_sha256": "a7fde2355fd542af6f7e0ac64520eaf2c27e2b8aeb1ad402df263460e18550ab",
+      "router_credit_stall_cycles": [
+        71,
+        73,
+        0,
+        0
+      ],
+      "scope": "Independent four-router causal closure, no compression/application claim",
+      "source_stall_cycles": [
+        28,
+        0,
+        30
+      ]
+    },
+    {
+      "capacity_flits": 2,
+      "checks": {
+        "allocation_call_inventory": 2,
+        "allocation_grant": 30283,
+        "allocation_next_pointer": 30283,
+        "allocation_pointer": 30283,
+        "allocation_requests": 30283,
+        "credit_balance": 30283,
+        "credit_return_sequence": 1,
+        "credit_send_sequence": 1,
+        "drain_clock": 1,
+        "fifo_head": 85164,
+        "fifo_occupancy": 85164,
+        "flit_fields": 3840,
+        "message_fields": 27,
+        "service_clocks": 3456,
+        "service_input_identity": 2304,
+        "vc_owner": 30283
+      },
+      "credit_returns": 1536,
+      "credit_sends": 1152,
+      "exact_observer_events": true,
+      "first_discrepancies": [],
+      "flits": 384,
+      "input_sha256": "f9b5bce7e6d8bfd2289e06528ad0913109b7c7060873454aa7b5ea97603ba142",
+      "local_services": 3456,
+      "messages": 3,
+      "mismatches": 0,
+      "name": "tight-credit",
+      "native_boundary_inputs": false,
+      "native_finishes": [
+        7499,
+        7501,
+        5005
+      ],
+      "passed": true,
+      "predicted_finishes": [
+        7499,
+        7501,
+        5005
+      ],
+      "prediction_sha256": "276ab013c55d118233339eb28b99990f65a1512f1c10424fdb7c36166ca4b070",
+      "router_credit_stall_cycles": [
+        6941,
+        4661,
+        4480,
+        0
+      ],
+      "scope": "Independent four-router causal closure, no compression/application claim",
+      "source_stall_cycles": [
+        7249,
+        7251,
+        4716
+      ]
+    }
+  ]
+}

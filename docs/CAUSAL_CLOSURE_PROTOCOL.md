@@ -1,6 +1,7 @@
 # G1: independent causal closure on a bounded merge network
 
-Status: registered implementation, not an accuracy receipt. This experiment
+Status: G1 complete in the registered bounded domain. See
+[checked results](results/causal-closure-001/REVIEW.md). This experiment
 composes the established local single-VC transitions before testing compression.
 S/D0/D1, all accepted events and wafer application controls remain unchanged.
 No application or G2 performance experiment is authorized by this protocol.
@@ -80,3 +81,15 @@ PYTHONPATH=src ../.venv/bin/python -m wafer_sim.analysis.causal_closure \
 The reader regenerates every prediction from the registered external demand,
 then compares raw Native flits/sidecars and checks saved summaries. A readback
 can succeed while G1 accuracy fails; these statuses must remain separate.
+
+Accepted artifacts: `runs/causal-closure-002`, `runs/causal-closure-tests-003`,
+`build/booksim-causal-closure-002`, `runs/causal-closure-readback-003`.
+The 14 completed Native component runs and 13 regressions pass; the earlier
+failed assertion and initialization attempt remain archived. No G2 or
+application experiment is included. For real-data negative checks:
+
+```bash
+PYTHONPATH=src ../.venv/bin/python scripts/check_causal_closure_negative_remote.py \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-002 \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-negative-NEW
+```

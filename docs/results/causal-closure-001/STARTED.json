@@ -1,0 +1,63 @@
+{
+  "affinity": [
+    18,
+    19
+  ],
+  "application_executions": 0,
+  "baseline_binary_sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+  "build_manifest_sha256": "ae8d1949ca77be93c44fa2f4ce8fe16de6b090272f2946d5fe6e629fae4ef9d8",
+  "compiler_sha256": "2492f521845dd536aad96475a9c2fd8299b960a29d0821dcab0bbe0e1668717b",
+  "compression_implemented": false,
+  "executable_sha256": "4d41dd95179ff96a9cf4ced37c735eb75ba50c87fef6bdaabd3b1558070a2edb",
+  "host": "ee4e072",
+  "observed_binary_sha256": "f2a421a8e872079604e266430ed08d42c56c513bde281ab16da99e10482f9d25",
+  "packages": [
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "fonttools==4.66.1",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "networkx==3.7",
+    "numpy==2.5.3",
+    "packaging==26.3",
+    "pandas==3.0.6",
+    "pillow==12.3.0",
+    "pymetis==2025.2.2",
+    "pyparsing==3.3.3",
+    "python-dateutil==2.9.0.post0",
+    "scipy==1.18.1",
+    "shapely==2.1.2",
+    "six==1.17.0",
+    "typing_extensions==4.16.0"
+  ],
+  "python": "3.13.16 | packaged by conda-forge | (main, Oct  7 2026, 00:29:52) [GCC 15.3.0]",
+  "registration_sha256": "5216c7dd7e89046ea98b328bc280e198d5f1712f11d2f52516b69b0579713b0c",
+  "source_commit": "b150be72c6978d9a0f24ef350147043dbd04448b",
+  "source_hashes": {
+    "configs/causal_closure.json": "5216c7dd7e89046ea98b328bc280e198d5f1712f11d2f52516b69b0579713b0c",
+    "patches/booksim-causal-closure-observation.patch": "90c83e851890ad94baa32895da66e60d8d0d8fa7716c14a6b621809d853e29d0",
+    "patches/booksim-local-service-observation.patch": "a5a4244d19ffa0e90cff548133ad8f29cd6bc11d308f554ee4306ff85545efff",
+    "patches/booksim-wafer.patch": "2e44498b90fd5f06c6ff58a09141d38c6dd1979d477a6d7fcb93118ff9f40344",
+    "patches/online-booksim-local-service.patch": "1daa08d3f392866dda7b02c31cc8d565c9224816e250b08d87f4f7d3eceea0b1",
+    "src/wafer_sim/adapters/causal_merge.py": "24831579b2d0c49d11ab1003daef490754dba5d92e80b68c30da0fdbd1e9cf41",
+    "src/wafer_sim/adapters/native/online_booksim.cpp": "552485a3882629462f35d6cd4592ccaacbade2c303cbaa895a5abbb36e30cde6",
+    "src/wafer_sim/adapters/native/wafer_causal_service.hpp": "18162e9fbd74592dafc68e99005dff22fd4193310ee15139723a03b4219539c1",
+    "src/wafer_sim/adapters/native/wafer_causal_service.inc": "3dc3e8e531dcc20bf6c6544796f998fee6deabd733b6f717ce675b8e5ffe70ea",
+    "src/wafer_sim/adapters/online_booksim.py": "842c2fd01ae9bc245a332a6c6ce656ddae87d377dc00a2da84d3ab717bc44869",
+    "src/wafer_sim/analysis/causal_closure.py": "dbaaf5a8043e7d52ba883c8e3d437d671448e453d80b41bcedf4563c73f7c9a1",
+    "src/wafer_sim/architecture/causal_merge.py": "138dad9a546977d2b6a6f6918489658369aee54ac2038418324624ae3f4f5c91",
+    "src/wafer_sim/experiments/causal_closure.py": "b379b7b66c627680335aaa906fd0d4fb2883e011fb3921b82507ac7bfb9f1899"
+  },
+  "tests": {
+    "executable_sha256": "4d41dd95179ff96a9cf4ced37c735eb75ba50c87fef6bdaabd3b1558070a2edb",
+    "modules": [
+      "test_causal_closure"
+    ],
+    "passed": true,
+    "python": "3.13.16 | packaged by conda-forge | (main, Oct  7 2026, 00:29:52) [GCC 15.3.0]",
+    "source_commit": "b150be72c6978d9a0f24ef350147043dbd04448b",
+    "tests": 13,
+    "tests_log": "/Projects/haoning/wafer_simulator/runs/causal-closure-tests-003/tests.log",
+    "tests_log_sha256": "7c1690debf2400a9ea07ad5dd8339b8fe30f1790a815eda09c3a076e7cc2340f"
+  }
+}
