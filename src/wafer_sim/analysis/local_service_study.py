@@ -5,7 +5,7 @@ import hashlib
 from pathlib import Path
 import subprocess
 
-from wafer_sim.analysis.local_service import read_observation, conditional_replay
+from wafer_sim.analysis.local_service import read_observation, conditional_replay, output_events
 from wafer_sim.analysis.local_service_state import reconstruct_state, compare_state
 from wafer_sim.io import digest, object_digest, read_json, write_json
 
@@ -18,6 +18,35 @@ def verify_tree(root):
         if digest(root/name) != expected:
             raise ValueError('Changed saved artifact: '+str(root/name))
     return manifest
+
+
+def rebuild_boundaries(network, observations):
+    """Rebuild comparison targets from raw flits/sidecar, not saved BOUNDARIES."""
+    events = output_events(network['messages'], 24, 36)
+    stages = {}; ports = {}
+    for row in observations:
+        if row['kind'] == 'allocate_pre':
+            for inp in row['inputs']:
+                if inp['input'] in ports and ports[inp['input']] != inp['upstream_router']:
+                    raise ValueError('Changed observed attachment')
+                ports[inp['input']] = inp['upstream_router']
+        if row['kind'] in ('vc_commit', 'sw_commit', 'output_send'):
+            key = (row['kind'], row['flit'])
+            if key in stages: raise ValueError('Repeated service event')
+            stages[key] = row
+    if len(stages) != 3*len(events): raise ValueError('Unmatched local service event')
+    rebuilt = []
+    for event in events:
+        vc, sw, sent = (stages[(k,event['flit'])] for k in ('vc_commit','sw_commit','output_send'))
+        if (vc['input'] != sw['input'] or
+                any(r['message'] != event['message'] for r in (vc,sw,sent)) or
+                not event['local_arrival'] <= vc['cycle'] <= sw['cycle'] <= sent['cycle'] <= event['cycle'] or
+                event['input_identity'] != f"router/{ports[sw['input']]}"):
+            raise ValueError('Invalid local service identity/causality')
+        rebuilt.append(dict(flit=event['flit'], input_port=sw['input'], input_identity=event['input_identity'],
+            local_arrival=event['local_arrival'], vc_commit=vc['cycle'], sw_commit=sw['cycle'],
+            output_send=sent['cycle'], output_sink_arrival=event['cycle']))
+    return rebuilt
 
 
 def analyze(components, curves, reference, acceptance, output):
@@ -46,6 +75,8 @@ def analyze(components, curves, reference, acceptance, output):
         observations = read_observation(directory/'LOCAL_SERVICE.jsonl')
         network = read_json(directory/'NETWORK_RESULT.json')
         boundary = read_json(directory/'BOUNDARIES.json')
+        if object_digest(boundary) != object_digest(rebuild_boundaries(network, observations)):
+            raise ValueError('Stored boundaries differ from raw local evidence')
         original = reference/(row['name']+'-S-rep-0')
         for name in ('NETWORK_RESULT.json', 'INPUT.json', 'online_protocol.jsonl'):
             key = str((original/name).relative_to(reference))
