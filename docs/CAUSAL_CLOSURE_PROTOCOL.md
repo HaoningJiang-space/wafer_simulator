@@ -5,6 +5,8 @@ Status: G1 complete in the registered bounded domain. See
 composes the established local single-VC transitions before testing compression.
 S/D0/D1, all accepted events and wafer application controls remain unchanged.
 No application or G2 performance experiment is authorized by this protocol.
+The [stricter audit receipt](results/causal-closure-audit-fix-001/REVIEW.md)
+revalidates these saved results without new Native executions.
 
 The explicit [contract and seven cases](../configs/causal_closure.json) use four
 routers: endpoints 0/1 enter router 0, endpoint 2 enters router 1; both feed

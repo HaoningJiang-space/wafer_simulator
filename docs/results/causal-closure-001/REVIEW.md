@@ -1,5 +1,9 @@
 # G1 passed: independent causal closure on a four-router merge
 
+Subsequent [audit repairs and strict re-readback](../causal-closure-audit-fix-001/REVIEW.md)
+preserve every result below: seven saved cases pass, 19 real-data faults are
+rejected, and the regenerated result bytes match this receipt.
+
 The bounded G1 experiment is complete on hn072 (`ee4e072`). All seven cases
 match the unchanged Native S executable without using its internal arrivals,
 eligibility, grants, routes or credit timestamps as predictor inputs. Neighboring

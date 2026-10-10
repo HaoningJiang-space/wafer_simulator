@@ -1,0 +1,118 @@
+{
+  "auditor_sha256": "57ebaf93a281ea4eb74fa551a3a19f71870fd32543e67d75eb38e4285c8fb236",
+  "campaign_manifest_sha256": "e4d3165abf196a327bf7c0d9f5a8c71a04927cef947029bebf81ab4b31cdcd15",
+  "inputs_sha256": {
+    "INPUT.json": "04b8a4578b608c0c2ce82c332e2841a5a21abcf348a7eda29715e61f5490f04c",
+    "PREDICTION.json": "a7fde2355fd542af6f7e0ac64520eaf2c27e2b8aeb1ad402df263460e18550ab",
+    "observed/NETWORK_RESULT.json": "5e9339320e81994e8c2881b904ec197fdf7f52ad976f265daf848c1786ed68d5",
+    "observed/OBSERVATION.jsonl": "ecae948e9bec7fc03727c7c3b37f0373b60d0fba5e41a5a466ba7eb3807fb928"
+  },
+  "native_executions": 0,
+  "passed": true,
+  "probes": [
+    {
+      "first_kind": "flit_fields",
+      "mismatches": 1,
+      "name": "wrong_upstream_arrival",
+      "rejected": true
+    },
+    {
+      "first_kind": "credit_return_sequence",
+      "mismatches": 1,
+      "name": "wrong_credit_return",
+      "rejected": true
+    },
+    {
+      "first_kind": "message_fields",
+      "mismatches": 1,
+      "name": "premature_source_generation",
+      "rejected": true
+    },
+    {
+      "first_kind": "allocation_call_inventory",
+      "mismatches": 1,
+      "name": "missing_allocation_snapshot_with_consistent_footer",
+      "rejected": true
+    },
+    {
+      "first_kind": "vc_owner",
+      "mismatches": 1,
+      "name": "wrong_vc_ownership",
+      "rejected": true
+    },
+    {
+      "name": "duplicated_native_flit",
+      "reason": "Repeated Native flit",
+      "rejected": true
+    },
+    {
+      "name": "declared_native_boundary_leak",
+      "reason": "Native boundary leakage",
+      "rejected": true
+    },
+    {
+      "name": "duplicated_predicted_service",
+      "reason": "Repeated predicted service identity",
+      "rejected": true
+    },
+    {
+      "name": "duplicated_predicted_allocation",
+      "reason": "Repeated predicted allocation identity",
+      "rejected": true
+    },
+    {
+      "name": "duplicated_predicted_message",
+      "reason": "Repeated predicted message identity",
+      "rejected": true
+    },
+    {
+      "name": "duplicated_predicted_flit",
+      "reason": "Repeated predicted flit identity",
+      "rejected": true
+    },
+    {
+      "name": "unknown_observation_event_with_consistent_footer",
+      "reason": "Unknown causal observation event",
+      "rejected": true
+    },
+    {
+      "name": "repeated_begin_with_consistent_footer",
+      "reason": "Repeated observation begin",
+      "rejected": true
+    },
+    {
+      "name": "repeated_end_with_consistent_footer",
+      "reason": "Repeated observation end",
+      "rejected": true
+    },
+    {
+      "name": "missing_observation_field",
+      "reason": "Invalid causal observation fields",
+      "rejected": true
+    },
+    {
+      "name": "extra_observation_field",
+      "reason": "Invalid causal observation fields",
+      "rejected": true
+    },
+    {
+      "name": "invalid_observation_boolean",
+      "reason": "Invalid observation boolean: credit_available",
+      "rejected": true
+    },
+    {
+      "name": "unknown_allocation_stage",
+      "reason": "Unknown allocation stage",
+      "rejected": true
+    },
+    {
+      "name": "duplicated_observed_input_identity",
+      "reason": "Repeated/unordered observed input identity",
+      "rejected": true
+    }
+  ],
+  "readback_receipt_sha256": "da05572bc71a86520a97fb5158a6dc36931e620088ead70bbf54ac9f799e6b02",
+  "readback_result_sha256": "15ff25e4c359200e74bde67d3dc2b89c2e1a617a53ea6adbf76b8b34adfb9ae3",
+  "script_sha256": "6369a3780a7731effac7823ea8e6b0e235123ebfde697d5a03a09797c56dd05f",
+  "source_commit": "ad752f33cfdc81db7eb72352b3c56b6360ee0a94"
+}
