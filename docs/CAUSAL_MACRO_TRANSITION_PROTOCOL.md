@@ -5,6 +5,11 @@ the accepted AST G2.1 prototype as unchanged independent references. The new
 runner is `execution.causal.macro.run`; it imports neither reference, analysis,
 AST nor dynamic compilation. There is one ordinary `step_one_cycle()` body.
 
+The migration has now passed its registered gate; the pinned execution source,
+independent readback and actual cost results are in
+[the R3 report](results/causal-macro-transition-001/REVIEW.md). This protocol
+defines its restricted single-flow scope and does not certify a system backend.
+
 Only the existing primary four-router/source-0 homogeneous message is allowed.
 No merge or tight-credit macro and no full-system backend substitution. Eager
 source storage stays the ordinary default. The bounded macro runner alone uses
