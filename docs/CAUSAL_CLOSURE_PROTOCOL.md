@@ -57,3 +57,26 @@ single-flit packets and no competing other outputs. It makes no general NoC,
 wafer hardware, application-gap, speedup or novelty claim. G2 is deferred even
 if G1 succeeds. A failure is localized to its earliest boundary, with fixes
 required to follow pinned service semantics rather than tuned rates or delays.
+
+## Remote entry points
+
+On a clean synchronized main, use fresh directories:
+
+```bash
+cd /Projects/haoning/wafer_simulator/source
+PYTHONPATH=src ../.venv/bin/python scripts/test_causal_closure_remote.py \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-tests-NEW
+bash scripts/build_causal_closure_remote.sh \
+  /Projects/haoning/wafer_simulator/build/booksim-causal-closure-NEW
+PYTHONPATH=src ../.venv/bin/python -m wafer_sim.experiments.causal_closure \
+  --output /Projects/haoning/wafer_simulator/runs/causal-closure-NEW \
+  --binary /Projects/haoning/wafer_simulator/build/booksim-causal-closure-NEW/online_booksim \
+  --tests /Projects/haoning/wafer_simulator/runs/causal-closure-tests-NEW/TESTS.json
+PYTHONPATH=src ../.venv/bin/python -m wafer_sim.analysis.causal_closure \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-NEW \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-readback-NEW
+```
+
+The reader regenerates every prediction from the registered external demand,
+then compares raw Native flits/sidecars and checks saved summaries. A readback
+can succeed while G1 accuracy fails; these statuses must remain separate.

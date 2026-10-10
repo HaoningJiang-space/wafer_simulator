@@ -2,6 +2,9 @@
 from copy import deepcopy
 from pathlib import Path
 import unittest
+import tempfile
+import json
+from wafer_sim.analysis.causal_closure import read_observation
 from wafer_sim.io import read_json
 from wafer_sim.adapters.causal_merge import simulate
 from wafer_sim.architecture.causal_merge import validate, topology
@@ -77,3 +80,19 @@ class CausalClosureTests(unittest.TestCase):
         s=topology(REG['contract'])
         self.assertIn('router 0 node 0 1 node 1 1 router 2 17',s)
         self.assertIn('router 2 router 0 17 router 1 17 router 3 17',s)
+
+    def test_partial_observation_cannot_be_complete(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'observation.jsonl'
+            rows=[dict(kind='begin',schema=3),dict(kind='contract')]
+            path.write_text(''.join(json.dumps(r)+'\n' for r in rows))
+            with self.assertRaises(ValueError): read_observation(path)
+            rows.append(dict(kind='end',complete=True,rows_before_end=17))
+            path.write_text(''.join(json.dumps(r)+'\n' for r in rows))
+            with self.assertRaises(ValueError): read_observation(path)
+
+    def test_no_future_source_can_create_early_data(self):
+        r=simulate(REG['contract'],[dict(source=0,destination=3,flits=1,ready=100)])
+        self.assertEqual(r['messages'][0]['generated'],100)
+        self.assertEqual(r['messages'][0]['first_inject'],100)
+        self.assertTrue(all(e['cycle']>=102 for e in r['input_arrivals']))

@@ -99,3 +99,55 @@ def compare(contract, prediction, native, observations):
         predicted_finishes=[p['finish'] for p in prediction['messages']],
         native_finishes=[messages[p['id']]['finish'] for p in prediction['messages']],
         scope='Independent four-router causal closure, no compression/application claim')
+
+
+def analyze(root, output):
+    """Fresh authenticated readback; regenerate predictions from external input."""
+    from pathlib import Path
+    import subprocess
+    from wafer_sim.adapters.causal_merge import simulate
+    from wafer_sim.io import read_json,write_json,digest,object_digest
+    repo=Path(__file__).resolve().parents[3]
+    if not output.is_absolute() or output.exists(): raise ValueError('Fresh absolute readback required')
+    manifest=read_json(root/'COMPLETE.json')
+    if not manifest['complete'] or (root/'FAILED.json').exists(): raise ValueError('Incomplete campaign')
+    for name,expected in manifest['artifacts_sha256'].items():
+        if digest(root/name)!=expected: raise ValueError('Changed campaign artifact: '+name)
+    start=read_json(root/'STARTED.json')
+    for name,expected in start['source_hashes'].items():
+        if digest(repo/name)!=expected: raise ValueError('Changed predictor/observer/comparator source: '+name)
+    reg=read_json(repo/'configs/causal_closure.json')
+    if digest(repo/'configs/causal_closure.json')!=start['registration_sha256']: raise ValueError('Changed registered contract')
+    summary=read_json(root/'SUMMARY.json');rows=[]
+    if [r['name'] for r in summary['rows']]!=[c['name'] for c in reg['cases']]: raise ValueError('Missing/duplicated cases')
+    for case,stored in zip(reg['cases'],summary['rows']):
+        directory=root/case['name'];c=dict(reg['contract'],capacity_flits=case.get('capacity_flits',reg['contract']['capacity_flits']))
+        expected_input=dict(contract=c,messages=case['messages'])
+        if read_json(directory/'INPUT.json')!=expected_input: raise ValueError('Changed external demand/contract')
+        prediction=simulate(c,case['messages'],reg['cycle_limit'])
+        if object_digest(prediction)!=object_digest(read_json(directory/'PREDICTION.json')): raise ValueError('Stored prediction differs from independent regeneration')
+        observed=read_json(directory/'observed/NETWORK_RESULT.json');reference=read_json(directory/'reference/NETWORK_RESULT.json')
+        if (object_digest(reference['messages'])!=object_digest(observed['messages']) or reference['final']!=observed['final'] or
+                digest(directory/'reference/online_protocol.jsonl')!=digest(directory/'observed/online_protocol.jsonl')):
+            raise ValueError('Observer changed complete Native events/protocol')
+        checked=compare(c,prediction,observed,read_observation(directory/'observed/OBSERVATION.jsonl'))
+        checked.update(name=case['name'],capacity_flits=c['capacity_flits'],exact_observer_events=True,
+                       input_sha256=digest(directory/'INPUT.json'),prediction_sha256=digest(directory/'PREDICTION.json'))
+        if checked!=stored or checked!=read_json(directory/'CHECKED.json'): raise ValueError('Stored comparison differs from raw evidence')
+        rows.append(checked)
+    passed=all(r['passed'] for r in rows)
+    if summary['g1_accuracy_passed']!=passed or manifest['accuracy_passed']!=passed: raise ValueError('Incorrect accuracy status')
+    output.mkdir();write_json(output/'RESULTS.json',dict(rows=rows,g1_accuracy_passed=passed,native_executions=2*len(rows),
+        application_executions=0,independent_prediction=True,compression_implemented=False))
+    write_json(output/'VERIFIED.json',dict(readback_passed=True,g1_accuracy_passed=passed,
+        source_commit=subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip(),
+        campaign_manifest_sha256=digest(root/'COMPLETE.json'),observation_source_commit=start['source_commit'],
+        artifacts_checked=len(manifest['artifacts_sha256']),result_sha256=digest(output/'RESULTS.json')))
+
+
+if __name__=='__main__':
+    import argparse
+    from pathlib import Path
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('campaign',type=Path);parser.add_argument('output',type=Path)
+    args=parser.parse_args();analyze(args.campaign,args.output)
