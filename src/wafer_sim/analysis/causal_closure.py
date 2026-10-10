@@ -18,7 +18,9 @@ def compare(contract, prediction, native, observations):
     if not prediction['complete'] or not prediction['drained'] or not native['complete'] or not native['final']['drained']:
         raise ValueError('Incomplete network evidence')
     if prediction['native_boundary_inputs']: raise ValueError('Native boundary leakage')
-    contracts={r['router']:r for r in observations if r['kind']=='contract'}
+    contract_rows=[r for r in observations if r['kind']=='contract']
+    contracts={r['router']:r for r in contract_rows}
+    if len(contracts)!=len(contract_rows): raise ValueError('Repeated observed contract')
     visited={e['router'] for e in prediction['service']}
     if set(contracts)!=visited: raise ValueError('Missing/duplicate observed contract')
     for router,r in contracts.items():
@@ -32,6 +34,7 @@ def compare(contract, prediction, native, observations):
         checked[kind]+=1
         if a!=b: errors.append(dict(kind=kind,identity=key,expected=a,native=b))
     messages={r['id']:r for r in native['messages']}
+    if len(messages)!=len(native['messages']): raise ValueError('Repeated Native message')
     if set(messages)!={r['id'] for r in prediction['messages']}: raise ValueError('Different message inventory')
     message_fields=('source','destination','ready','generated','first_inject','last_inject','first_eject','last_eject','finish')
     flit_fields=('message','source','destination','generated','injected','ejected','hops','router_path','injection_router_arrival','link_arrivals')
@@ -40,6 +43,7 @@ def compare(contract, prediction, native, observations):
         n=messages[p['id']]
         for k in message_fields: eq('message_fields',f"{p['id']}/{k}",p[k],n[k])
         nf={f['id']:f for f in n['flits']}; pf={f['id']:f for f in p['flits']}
+        if len(nf)!=len(n['flits']): raise ValueError('Repeated Native flit')
         if set(nf)!=set(pf): raise ValueError('Different generated flit inventory')
         total_flits+=len(pf)
         for fid,f in pf.items():
@@ -70,6 +74,14 @@ def compare(contract, prediction, native, observations):
     n_sends=credit_counts([r for r in observations if r['kind']=='credit_send'],('router','input','cycle'))
     eq('credit_send_sequence','all',sorted(p_sends.items()),sorted(n_sends.items()))
     points={(p['router'],p['cycle']):p for p in prediction['allocations']}
+    required_calls=set()
+    for key,p in points.items():
+        if any(f>=0 and i!=p['owner'] for i,f in enumerate(p['heads'])): required_calls.add((*key,'vc'))
+        if p['owner'] is not None: required_calls.add((*key,'sw'))
+    for kind in ('allocate_pre','allocate_post'):
+        calls=[(r['router'],r['cycle'],r['stage']) for r in observations if r['kind']==kind]
+        if len(calls)!=len(set(calls)): raise ValueError('Repeated allocation snapshot')
+        eq('allocation_call_inventory',kind,sorted(required_calls),sorted(calls))
     for r in observations:
         if r['kind'] not in ('allocate_pre','allocate_post'):continue
         key=(r['router'],r['cycle']);stage=r['stage'];p=points.get(key)
