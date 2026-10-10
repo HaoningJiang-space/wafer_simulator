@@ -76,20 +76,47 @@ PYTHONPATH=src ../.venv/bin/python -m wafer_sim.experiments.causal_closure \
 PYTHONPATH=src ../.venv/bin/python -m wafer_sim.analysis.causal_closure \
   /Projects/haoning/wafer_simulator/runs/causal-closure-NEW \
   /Projects/haoning/wafer_simulator/runs/causal-closure-readback-NEW
+# Run only after that readback reports readback_passed AND g1_accuracy_passed.
+PYTHONPATH=src ../.venv/bin/python scripts/check_causal_closure_negative_remote.py \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-NEW \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-negative-NEW \
+  --readback /Projects/haoning/wafer_simulator/runs/causal-closure-readback-NEW
 ```
 
 The reader regenerates every prediction from the registered external demand,
 then compares raw Native flits/sidecars and checks saved summaries. A readback
 can succeed while G1 accuracy fails; these statuses must remain separate.
+The final fault-injection step is a separate mandatory audit receipt after
+accuracy acceptance, not a unit-test or Native execution count. It authenticates
+the successful same-auditor readback and verifies unmodified evidence first.
 
 Accepted artifacts: `runs/causal-closure-002`, `runs/causal-closure-tests-003`,
 `build/booksim-causal-closure-002`, `runs/causal-closure-readback-003`.
 The 14 completed Native component runs and 13 regressions pass; the earlier
 failed assertion and initialization attempt remain archived. No G2 or
-application experiment is included. For real-data negative checks:
+application experiment is included. Stronger audit revisions can re-read this
+accepted campaign without new Native runs. The explicit flag below permits only
+replacement of the exact published `b150be7` comparator; every predictor,
+Native observer/client, orchestration and registration hash must still match.
+The old comparator is checked against its pinned Git source and both identities
+are written to the new receipt. Previous evidence and receipts remain intact.
+Use fresh test, readback and negative-check directories:
 
 ```bash
+PYTHONPATH=src ../.venv/bin/python scripts/test_causal_closure_remote.py \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-audit-tests-NEW
+PYTHONPATH=src ../.venv/bin/python -m wafer_sim.analysis.causal_closure \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-002 \
+  /Projects/haoning/wafer_simulator/runs/causal-closure-audit-readback-NEW \
+  --audit-revision
 PYTHONPATH=src ../.venv/bin/python scripts/check_causal_closure_negative_remote.py \
   /Projects/haoning/wafer_simulator/runs/causal-closure-002 \
-  /Projects/haoning/wafer_simulator/runs/causal-closure-negative-NEW
+  /Projects/haoning/wafer_simulator/runs/causal-closure-audit-negative-NEW \
+  --readback /Projects/haoning/wafer_simulator/runs/causal-closure-audit-readback-NEW
 ```
+
+The comparator rejects duplicate predicted service/allocation/message/flit
+identities before indexing. Schema-3 observation is closed: unknown/missing/
+extra fields, invalid types and port identities, repeated JSON keys and
+begin/end markers are errors, including a footer with a self-consistent count.
+The comparison metrics and independent predictor are unchanged.

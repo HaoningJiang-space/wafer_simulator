@@ -4,17 +4,122 @@ import json
 from wafer_sim.architecture.causal_merge import validate, PORTS, FORWARD
 
 
-def read_observation(path):
-    rows=[json.loads(line) for line in path.read_text().splitlines()]
-    if (not rows or rows[0].get('kind')!='begin' or rows[0].get('schema')!=3 or
-            rows[-1].get('kind')!='end' or not rows[-1].get('complete') or
-            rows[-1]['rows_before_end']!=len(rows)-1):
+SERVICE_KINDS = ('vc_commit', 'sw_commit', 'output_send')
+OBSERVATION_FIELDS = {
+    'begin': 'kind schema scope',
+    'end': 'kind complete rows_before_end',
+    'contract': 'kind router output input_count crossbar_delay channel_latency downstream_capacity vc_busy_when_full output_buffer_limit routing_delay vc_alloc_delay sw_alloc_delay',
+    'allocate_pre': 'kind stage cycle router output destination input_count grant_pointer grant_input vc_available vc_owner vc_busy_when_full credit_available credit_slots downstream_occupancy output_buffer_occupancy output_buffer_limit inputs',
+    'credit_return': 'kind cycle amount output router',
+    'credit_send': 'kind cycle router input amount',
+    'endpoint_credit': 'kind cycle endpoint amount',
+}
+OBSERVATION_FIELDS['allocate_post'] = OBSERVATION_FIELDS['allocate_pre']
+for _kind in SERVICE_KINDS:
+    OBSERVATION_FIELDS[_kind] = 'kind cycle router output destination input flit message'
+OBSERVATION_FIELDS = {k: frozenset(v.split()) for k, v in OBSERVATION_FIELDS.items()}
+INPUT_FIELDS = frozenset('input upstream_router upstream_endpoint occupancy state head_flit head_message target_in_route vc_evaluate_pending sw_evaluate_pending requested other_output_requests'.split())
+BOOL_FIELDS = frozenset('complete vc_available vc_busy_when_full credit_available target_in_route vc_evaluate_pending sw_evaluate_pending requested'.split())
+NON_INTEGER_FIELDS = BOOL_FIELDS | {'kind', 'scope', 'stage', 'inputs', 'state', 'other_output_requests'}
+SENTINEL_FIELDS = frozenset('destination grant_input vc_owner output_buffer_limit input upstream_router upstream_endpoint head_flit head_message'.split())
+
+
+def _fields(record, fields):
+    if not isinstance(record, dict) or set(record) != fields:
+        raise ValueError('Invalid causal observation fields')
+    for key, value in record.items():
+        if key in BOOL_FIELDS:
+            if type(value) is not bool: raise ValueError('Invalid observation boolean: '+key)
+        elif key not in NON_INTEGER_FIELDS:
+            if type(value) is not int or value < (-1 if key in SENTINEL_FIELDS else 0):
+                raise ValueError('Invalid observation integer: '+key)
+
+
+def validate_observation(rows):
+    """Closed schema 3, including in-memory inputs to the independent comparator."""
+    if (not isinstance(rows, list) or len(rows) < 2 or
+            not isinstance(rows[0], dict) or rows[0].get('kind') != 'begin' or
+            not isinstance(rows[-1], dict) or rows[-1].get('kind') != 'end'):
         raise ValueError('Incomplete causal observation')
+    for ordinal, row in enumerate(rows):
+        if not isinstance(row, dict) or type(row.get('kind')) is not str or row['kind'] not in OBSERVATION_FIELDS:
+            raise ValueError('Unknown causal observation event')
+        kind = row['kind']; _fields(row, OBSERVATION_FIELDS[kind])
+        if kind == 'begin':
+            if ordinal != 0: raise ValueError('Repeated observation begin')
+            if row['schema'] != 3 or row['scope'] != 'four-router causal closure observation':
+                raise ValueError('Unsupported causal observation schema/scope')
+        elif kind == 'end':
+            if ordinal != len(rows)-1: raise ValueError('Repeated observation end')
+            if row['complete'] is not True or row['rows_before_end'] != ordinal:
+                raise ValueError('Incomplete causal observation')
+        else:
+            if 'amount' in row and row['amount'] <= 0: raise ValueError('Invalid credit amount')
+            if kind == 'endpoint_credit':
+                if row['endpoint'] not in range(4): raise ValueError('Invalid observed endpoint')
+                continue
+            router = row['router']
+            if router not in range(4): raise ValueError('Invalid observed router')
+            inputs = len(PORTS[router])
+            if 'output' in row and row['output'] != FORWARD[router]: raise ValueError('Invalid observed output')
+            if 'input_count' in row and row['input_count'] != inputs: raise ValueError('Invalid observed input count')
+            if 'destination' in row and row['destination'] != (-1 if router == 3 else 3 if router == 2 else 2):
+                raise ValueError('Invalid observed destination')
+            if 'input' in row and row['input'] not in (range(-1, inputs) if kind == 'output_send' else range(inputs)):
+                raise ValueError('Invalid observed input')
+            if kind in ('allocate_pre', 'allocate_post'):
+                if row['stage'] not in ('vc', 'sw'): raise ValueError('Unknown allocation stage')
+                if row['grant_pointer'] not in range(inputs) or row['grant_input'] not in range(-1, inputs) or row['vc_owner'] not in range(-1, inputs):
+                    raise ValueError('Invalid observed allocation identity')
+                if kind == 'allocate_pre' and row['grant_input'] != -1: raise ValueError('Premature observed grant')
+                if not isinstance(row['inputs'], list) or len(row['inputs']) != inputs:
+                    raise ValueError('Invalid observed input inventory')
+                for number, inp in enumerate(row['inputs']):
+                    _fields(inp, INPUT_FIELDS)
+                    if inp['input'] != number: raise ValueError('Repeated/unordered observed input identity')
+                    peer_kind, peer_number = PORTS[router][number].split('/')
+                    if (inp['upstream_router'] != (int(peer_number) if peer_kind == 'router' else -1) or
+                            inp['upstream_endpoint'] != (int(peer_number) if peer_kind == 'endpoint' else -1)):
+                        raise ValueError('Wrong observed physical attachment')
+                    if inp['state'] not in ('idle', 'routing', 'vc_alloc', 'active'):
+                        raise ValueError('Unknown observed VC state')
+                    others = inp['other_output_requests']
+                    if (not isinstance(others, list) or any(type(i) is not int or i not in range(inputs) or i == FORWARD[router] for i in others) or len(others) != len(set(others))):
+                        raise ValueError('Invalid other-output request inventory')
     return rows
+
+
+def _unique_index(rows, key, label):
+    indexed = {key(row): row for row in rows}
+    if len(indexed) != len(rows): raise ValueError('Repeated '+label+' identity')
+    return indexed
+
+
+def prediction_indexes(prediction):
+    """Reject multiplicity before dictionaries can hide predicted work."""
+    if any(e['kind'] not in SERVICE_KINDS for e in prediction['service']):
+        raise ValueError('Unknown predicted service kind')
+    service = _unique_index(prediction['service'], lambda e: (e['kind'],e['router'],e['flit']), 'predicted service')
+    allocations = _unique_index(prediction['allocations'], lambda e: (e['router'],e['cycle']), 'predicted allocation')
+    _unique_index(prediction['messages'], lambda e: e['id'], 'predicted message')
+    _unique_index([f for m in prediction['messages'] for f in m['flits']], lambda e: e['id'], 'predicted flit')
+    return service, allocations
+
+
+def _json_object(pairs):
+    result = dict(pairs)
+    if len(result) != len(pairs): raise ValueError('Repeated observation JSON field')
+    return result
+
+
+def read_observation(path):
+    return validate_observation([json.loads(line, object_pairs_hook=_json_object) for line in path.read_text().splitlines()])
 
 
 def compare(contract, prediction, native, observations):
     c=validate(contract)
+    validate_observation(observations)
+    expected, points = prediction_indexes(prediction)
     if not prediction['complete'] or not prediction['drained'] or not native['complete'] or not native['final']['drained']:
         raise ValueError('Incomplete network evidence')
     if prediction['native_boundary_inputs']: raise ValueError('Native boundary leakage')
@@ -51,11 +156,9 @@ def compare(contract, prediction, native, observations):
     eq('drain_clock','final',prediction['final_cycle'],native['final']['cycle'])
     # Each comparison target is independently indexed from raw observation;
     # a stored derived boundary/summary is not an authoritative target.
-    kinds=('vc_commit','sw_commit','output_send')
-    expected={(e['kind'],e['router'],e['flit']):e for e in prediction['service']}
     actual={}
     for r in observations:
-        if r['kind'] in kinds:
+        if r['kind'] in SERVICE_KINDS:
             key=(r['kind'],r['router'],r['flit'])
             if key in actual: raise ValueError('Repeated local service evidence')
             actual[key]=r
@@ -73,7 +176,6 @@ def compare(contract, prediction, native, observations):
     p_sends=credit_counts(prediction['credit_sends'],('router','input','cycle'))
     n_sends=credit_counts([r for r in observations if r['kind']=='credit_send'],('router','input','cycle'))
     eq('credit_send_sequence','all',sorted(p_sends.items()),sorted(n_sends.items()))
-    points={(p['router'],p['cycle']):p for p in prediction['allocations']}
     required_calls=set()
     for key,p in points.items():
         if any(f>=0 and i!=p['owner'] for i,f in enumerate(p['heads'])): required_calls.add((*key,'vc'))
@@ -113,7 +215,33 @@ def compare(contract, prediction, native, observations):
         scope='Independent four-router causal closure, no compression/application claim')
 
 
-def analyze(root, output):
+# Only the published G1 comparator may be replaced during an explicit re-audit.
+# Predictor, observer, client, registration and orchestration remain byte-pinned.
+ARCHIVED_AUDITOR_COMMIT = 'b150be72c6978d9a0f24ef350147043dbd04448b'
+ARCHIVED_AUDITOR_SHA256 = 'dbaaf5a8043e7d52ba883c8e3d437d671448e453d80b41bcedf4563c73f7c9a1'
+AUDITOR_PATH = 'src/wafer_sim/analysis/causal_closure.py'
+
+
+def verify_sources(repo, start, audit_revision=False):
+    import hashlib
+    import subprocess
+    from wafer_sim.io import digest
+    revisions = []
+    for name, expected in start['source_hashes'].items():
+        current = digest(repo/name)
+        if current == expected: continue
+        if (not audit_revision or name != AUDITOR_PATH or
+                expected != ARCHIVED_AUDITOR_SHA256 or start['source_commit'] != ARCHIVED_AUDITOR_COMMIT):
+            raise ValueError('Changed predictor/observer/comparator source: '+name)
+        archived = subprocess.check_output(['git','-C',str(repo),'show',ARCHIVED_AUDITOR_COMMIT+':'+name])
+        if hashlib.sha256(archived).hexdigest() != expected:
+            raise ValueError('Archived auditor source identity differs')
+        revisions.append(dict(path=name,archived_sha256=expected,current_sha256=current,
+            archived_commit=ARCHIVED_AUDITOR_COMMIT,scope='Explicit stricter audit; simulation sources unchanged'))
+    return revisions
+
+
+def analyze(root, output, audit_revision=False):
     """Fresh authenticated readback; regenerate predictions from external input."""
     from pathlib import Path
     import subprocess
@@ -126,8 +254,7 @@ def analyze(root, output):
     for name,expected in manifest['artifacts_sha256'].items():
         if digest(root/name)!=expected: raise ValueError('Changed campaign artifact: '+name)
     start=read_json(root/'STARTED.json')
-    for name,expected in start['source_hashes'].items():
-        if digest(repo/name)!=expected: raise ValueError('Changed predictor/observer/comparator source: '+name)
+    revisions=verify_sources(repo,start,audit_revision)
     reg=read_json(repo/'configs/causal_closure.json')
     if digest(repo/'configs/causal_closure.json')!=start['registration_sha256']: raise ValueError('Changed registered contract')
     summary=read_json(root/'SUMMARY.json');rows=[]
@@ -154,7 +281,8 @@ def analyze(root, output):
     write_json(output/'VERIFIED.json',dict(readback_passed=True,g1_accuracy_passed=passed,
         source_commit=subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip(),
         campaign_manifest_sha256=digest(root/'COMPLETE.json'),observation_source_commit=start['source_commit'],
-        artifacts_checked=len(manifest['artifacts_sha256']),result_sha256=digest(output/'RESULTS.json')))
+        artifacts_checked=len(manifest['artifacts_sha256']),result_sha256=digest(output/'RESULTS.json'),
+        auditor_sha256=digest(repo/AUDITOR_PATH),audit_revisions=revisions))
 
 
 if __name__=='__main__':
@@ -162,4 +290,5 @@ if __name__=='__main__':
     from pathlib import Path
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('campaign',type=Path);parser.add_argument('output',type=Path)
-    args=parser.parse_args();analyze(args.campaign,args.output)
+    parser.add_argument('--audit-revision',action='store_true',help='Re-audit the pinned b150be7 campaign with the revised comparator only')
+    args=parser.parse_args();analyze(args.campaign,args.output,args.audit_revision)
