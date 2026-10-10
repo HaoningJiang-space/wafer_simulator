@@ -102,13 +102,14 @@ class CausalTransitionTests(unittest.TestCase):
 
     def test_queued_packet_metadata_is_checked_before_it_is_injected(self):
         messages = [dict(ONE[0], flits=8)]
-        def change(state):
-            if state.now == 1:
-                state.work[7]['message'] = 99
-        with self.assertRaises(StateDivergence) as raised:
-            compare_cycles(REG['contract'], messages, perturb=change)
-        self.assertEqual(raised.exception.record['cycle'], 1)
-        self.assertIn('issuing_work', raised.exception.record['field'])
+        for field in ('message', 'source', 'generated', 'id'):
+            def change(state):
+                if state.now == 1:
+                    state.work[4][field] = 99
+            with self.subTest(field=field), self.assertRaises(StateDivergence) as raised:
+                compare_cycles(REG['contract'], messages, perturb=change)
+            self.assertEqual(raised.exception.record['cycle'], 1)
+            self.assertIn('issuing_work', raised.exception.record['field'])
 
     def test_same_source_queued_and_tight_credit_small_cases(self):
         messages = [dict(source=0, destination=3, flits=8, ready=0),

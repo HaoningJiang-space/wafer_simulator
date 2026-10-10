@@ -44,7 +44,7 @@ def issuing_work(queue, work):
     for flit in queue:
         row = work[flit]
         if expected is not None:
-            expected['id'] = flit
+            expected['id'] = flit+segments[-1][2]
         if expected is not None and row == expected and flit == segments[-1][1]:
             segments[-1][1] += 1
         else:
