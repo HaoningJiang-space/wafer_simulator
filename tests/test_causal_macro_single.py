@@ -4,7 +4,7 @@ from pathlib import Path
 import unittest
 from wafer_sim.adapters.causal_macro import run,RangeQueue,expand_record
 from wafer_sim.adapters.causal_merge import simulate
-from wafer_sim.analysis.causal_macro_single import reference_boundaries,check_run,check_checkpoints
+from wafer_sim.analysis.causal_macro_single import reference_boundaries,check_run,check_checkpoints,process_fields
 from wafer_sim.io import read_json
 
 REG=read_json(Path(__file__).resolve().parents[1]/'configs/causal_closure.json')
@@ -80,3 +80,8 @@ class MacroSingleTests(unittest.TestCase):
         with self.assertRaises(ValueError):expand_record(bad)
         bad=deepcopy(candidate.record());bad['evidence']['injections'][0]['rows'][0]+=1
         with self.assertRaisesRegex(ValueError,'time evidence differs'):expand_record(bad)
+
+    def test_full_process_fields_are_parsed_and_failed_process_rejected(self):
+        text='User time (seconds): 0.12\nSystem time (seconds): 0.03\nElapsed (wall clock) time (h:mm:ss or m:ss): 1:02.34\nMaximum resident set size (kbytes): 12345\nExit status: 0\n'
+        self.assertEqual(process_fields(text),dict(user_seconds=.12,system_seconds=.03,elapsed_seconds=62.34,peak_rss_kib=12345,exit_status=0))
+        with self.assertRaises(ValueError):process_fields(text.replace('Exit status: 0','Exit status: 1'))

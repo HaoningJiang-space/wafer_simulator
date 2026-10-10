@@ -3,11 +3,14 @@ import argparse
 from pathlib import Path
 import platform
 import random
+import os
+import signal
 import subprocess
 import sys
+import threading
 import time
 from wafer_sim.adapters.causal_macro import run,derived_source
-from wafer_sim.analysis.causal_macro_single import reference_boundaries,check_run,compact_reference
+from wafer_sim.analysis.causal_macro_single import reference_boundaries,check_run,process_fields
 from wafer_sim.experiments.server import require_active_server
 from wafer_sim.io import read_json,write_json,digest,object_digest
 
@@ -63,11 +66,24 @@ def main():
             write_json(directory/'INPUT.json',inp)
             command=['taskset','-c',','.join(map(str,reg['affinity'])),'/usr/bin/time','-v','-o',str(directory/'PROCESS.time'),
                 sys.executable,'-m','wafer_sim.experiments.causal_macro_worker',str(directory/'INPUT.json'),str(directory/'WORKER.json'),'--mode',mode]
-            before=time.perf_counter()
-            with (directory/'worker.log').open('w') as log:subprocess.run(command,cwd=repo,check=True,stdout=log,stderr=subprocess.STDOUT,timeout=180)
-            wall=time.perf_counter()-before;measured=read_json(directory/'WORKER.json')
+            before=time.perf_counter();timed_out=[False]
+            with (directory/'worker.log').open('w') as log:
+                process=subprocess.Popen(command,cwd=repo,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+                def expire():
+                    if process.poll() is None:
+                        timed_out[0]=True;os.killpg(process.pid,signal.SIGKILL)
+                watchdog=threading.Timer(reg['process_deadline_seconds'],expire);watchdog.start()
+                try:exit_status=process.wait()  # Blocking waitpid; no timeout polling floor.
+                finally:watchdog.cancel();watchdog.join()
+            after=time.perf_counter();wall=after-before
+            if timed_out[0] or exit_status!=0:raise RuntimeError('Timed-out/failed cost worker')
+            measured=read_json(directory/'WORKER.json');gnu_time=process_fields((directory/'PROCESS.time').read_text())
+            write_json(directory/'PROCESS.json',dict(started_counter=before,finished_counter=after,exit_status=exit_status,
+                timed_out=timed_out[0],command=command,gnu_time=gnu_time,
+                input_sha256=digest(directory/'INPUT.json'),worker_sha256=digest(directory/'WORKER.json')))
             if not measured['complete']:raise ValueError('Incomplete cost worker')
-            measured.update(flits=n,repetition=repetition,worker_wall_seconds=wall,process_sha256=digest(directory/'PROCESS.time'))
+            measured.update(flits=n,repetition=repetition,worker_wall_seconds=wall,process_sha256=digest(directory/'PROCESS.time'),
+                process_record_sha256=digest(directory/'PROCESS.json'),process=gnu_time)
             write_json(directory/'CHECKED.json',measured);costs.append(measured)
             print('cost',n,repetition,mode,round(wall,4),flush=True)
         for n in reg['benchmark_flits']:

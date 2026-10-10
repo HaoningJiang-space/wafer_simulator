@@ -62,6 +62,23 @@ def compact_reference(reference):
         queue_peaks=reference['queue_peaks'],native_boundary_inputs=False)
 
 
+def process_fields(text):
+    """GNU time full-process counters, separate from prediction timers."""
+    result={}
+    for line in text.splitlines():
+        if 'User time (seconds):' in line:result['user_seconds']=float(line.rsplit(':',1)[1])
+        elif 'System time (seconds):' in line:result['system_seconds']=float(line.rsplit(':',1)[1])
+        elif 'Maximum resident set size (kbytes):' in line:result['peak_rss_kib']=int(line.rsplit(':',1)[1])
+        elif 'Elapsed (wall clock) time' in line:
+            value=line.split('):',1)[1].strip();seconds=0.
+            for part in value.split(':'):seconds=seconds*60+float(part)
+            result['elapsed_seconds']=seconds
+        elif 'Exit status:' in line:result['exit_status']=int(line.rsplit(':',1)[1])
+    if set(result)!={'user_seconds','system_seconds','peak_rss_kib','elapsed_seconds','exit_status'} or result['exit_status']!=0:
+        raise ValueError('Incomplete/failed GNU time receipt')
+    return result
+
+
 class PersistedRun:
     def __init__(self,record):self.record=record
     def expand(self):
@@ -113,10 +130,16 @@ def analyze(root,output):
         if identity in identities:raise ValueError('Repeated cost worker identity')
         identities.add(identity);n,repetition,mode=identity;directory=root/f'cost-{n}-{repetition}-{mode}'
         worker=read_json(directory/'WORKER.json')
-        if {k:v for k,v in stored.items() if k not in ('flits','repetition','worker_wall_seconds','process_sha256')}!=worker:
+        if {k:v for k,v in stored.items() if k not in ('flits','repetition','worker_wall_seconds','process_sha256','process_record_sha256','process')}!=worker:
             raise ValueError('Cost summary differs from worker')
         if digest(directory/'PROCESS.time')!=stored['process_sha256'] or read_json(directory/'CHECKED.json')!=stored:
             raise ValueError('Cost process receipt differs')
+        process=read_json(directory/'PROCESS.json')
+        if (digest(directory/'PROCESS.json')!=stored['process_record_sha256'] or process['timed_out'] or process['exit_status']!=0 or
+                process['finished_counter']-process['started_counter']!=stored['worker_wall_seconds'] or
+                process['gnu_time']!=process_fields((directory/'PROCESS.time').read_text()) or process['gnu_time']!=stored['process'] or
+                process['worker_sha256']!=digest(directory/'WORKER.json') or process['input_sha256']!=digest(directory/'INPUT.json')):
+            raise ValueError('Cost fields differ from raw process receipt')
         expected=dict(contract=g1['contract'],messages=[dict(source=0,destination=3,flits=n,ready=0)],cycle_limit=reg['cycle_limit'])
         if read_json(directory/'INPUT.json')!=expected:raise ValueError('Changed cost demand/contract')
         costs.append(stored)
@@ -125,11 +148,15 @@ def analyze(root,output):
     for n in reg['benchmark_flits']:
         selected=[r for r in costs if r['flits']==n]
         if len({object_digest(r['compact']) for r in selected})!=1:raise ValueError('Unequal cost-mode logical output')
+        expected_compact=compact_reference(simulate(g1['contract'],[dict(source=0,destination=3,flits=n,ready=0)],reg['cycle_limit']))
+        if selected[0]['compact']!=expected_compact:raise ValueError('Cost result differs from fresh independent G1')
         by_mode={m:[r for r in selected if r['mode']==m] for m in ('g1','macro_off','macro_on')}
         aggregate={m:dict(prediction_seconds_median=statistics.median(r['prediction_seconds'] for r in records),
             worker_wall_seconds_median=statistics.median(r['worker_wall_seconds'] for r in records),
             worker_wall_seconds_range=[min(r['worker_wall_seconds'] for r in records),max(r['worker_wall_seconds'] for r in records)],
-            process_peak_rss_kib_median=statistics.median(r['process_peak_rss_kib'] for r in records),
+            process_peak_rss_kib_median=statistics.median(r['process']['peak_rss_kib'] for r in records),
+            worker_cpu_seconds_median=statistics.median(r['process']['user_seconds']+r['process']['system_seconds'] for r in records),
+            gnu_worker_elapsed_seconds_median=statistics.median(r['process']['elapsed_seconds'] for r in records),
             prediction_cpu_seconds_median=statistics.median(r['prediction_cpu_seconds'] for r in records),
             physical_cycle_updates=records[0]['metrics']['physical_cycle_updates'],skipped_cycles=records[0]['metrics']['skipped_cycles'])
             for m,records in by_mode.items()}

@@ -62,6 +62,10 @@ cycle updates, skipped logical cycles, macro count, prediction wall time,
 complete worker wall time, CPU and peak RSS. Report source/recording benefits
 separately from macro off/on acceleration. Compact evidence and full expansion
 have separate costs; counters-only execution is not a full flit audit.
+Worker wall time uses blocking waitpid with a separate 180-second process-group
+watchdog, avoiding timeout-polling latency. Persist start/end monotonic counters,
+exit status, command/input/worker identities and parsed GNU time CPU/RSS/elapsed
+fields. Readback cross-checks these raw receipts before computing medians.
 
 Use fresh directories, clean main, same-source tests, source/interpreter/input/
 environment/result hashes. Preserve all failed attempts and large evidence on
