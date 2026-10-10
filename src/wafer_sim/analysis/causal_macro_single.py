@@ -93,7 +93,7 @@ def analyze(root,output):
     import hashlib
     import statistics
     import subprocess
-    from wafer_sim.adapters.causal_macro import derived_source
+    from wafer_sim.adapters.causal_macro import derived_source,expand_record
     from wafer_sim.io import read_json,write_json,digest
     repo=Path(__file__).resolve().parents[3]
     if not output.is_absolute() or output.exists():raise ValueError('Fresh absolute readback required')
@@ -143,14 +143,20 @@ def analyze(root,output):
         expected=dict(contract=g1['contract'],messages=[dict(source=0,destination=3,flits=n,ready=0)],cycle_limit=reg['cycle_limit'])
         if read_json(directory/'INPUT.json')!=expected:raise ValueError('Changed cost demand/contract')
         costs.append(stored)
-    required={(n,r,m) for n in reg['benchmark_flits'] for r in range(reg['repetitions']) for m in ('g1','macro_off','macro_on')}
+    required={(n,r,m) for n in reg['benchmark_flits'] for r in range(reg['repetitions']) for m in reg['cost_modes']}
     if identities!=required:raise ValueError('Incomplete cost coverage')
     for n in reg['benchmark_flits']:
         selected=[r for r in costs if r['flits']==n]
         if len({object_digest(r['compact']) for r in selected})!=1:raise ValueError('Unequal cost-mode logical output')
-        expected_compact=compact_reference(simulate(g1['contract'],[dict(source=0,destination=3,flits=n,ready=0)],reg['cycle_limit']))
+        independent=simulate(g1['contract'],[dict(source=0,destination=3,flits=n,ready=0)],reg['cycle_limit'])
+        expected_compact=compact_reference(independent)
         if selected[0]['compact']!=expected_compact:raise ValueError('Cost result differs from fresh independent G1')
-        by_mode={m:[r for r in selected if r['mode']==m] for m in ('g1','macro_off','macro_on')}
+        for measured in selected:
+            if measured['mode']=='macro_compact':
+                path=root/f"cost-{n}-{measured['repetition']}-macro_compact"/'COMPACT_EVIDENCE.json'
+                if digest(path)!=measured['evidence_sha256'] or path.stat().st_size!=measured['evidence_bytes'] or expand_record(read_json(path))!=independent:
+                    raise ValueError('Production compact evidence differs from independent G1')
+        by_mode={m:[r for r in selected if r['mode']==m] for m in reg['cost_modes']}
         aggregate={m:dict(prediction_seconds_median=statistics.median(r['prediction_seconds'] for r in records),
             worker_wall_seconds_median=statistics.median(r['worker_wall_seconds'] for r in records),
             worker_wall_seconds_range=[min(r['worker_wall_seconds'] for r in records),max(r['worker_wall_seconds'] for r in records)],

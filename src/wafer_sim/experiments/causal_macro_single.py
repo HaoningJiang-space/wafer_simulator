@@ -58,7 +58,7 @@ def main():
             checked.update(flits=n,ready=ready,macro_disabled_exact=True,compact_sha256=object_digest(candidate.compact()))
             write_json(directory/'CHECKED.json',checked);rows.append(checked)
             print('accuracy',n,ready,'updates',checked['physical_cycle_updates'],'skipped',checked['skipped_cycles'],flush=True)
-        jobs=[(n,r,mode) for n in reg['benchmark_flits'] for r in range(reg['repetitions']) for mode in ('g1','macro_off','macro_on')]
+        jobs=[(n,r,mode) for n in reg['benchmark_flits'] for r in range(reg['repetitions']) for mode in reg['cost_modes']]
         random.Random(reg['order_seed']).shuffle(jobs)
         for n,repetition,mode in jobs:
             directory=args.output/f'cost-{n}-{repetition}-{mode}';directory.mkdir()

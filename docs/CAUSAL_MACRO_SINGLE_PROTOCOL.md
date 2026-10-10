@@ -66,6 +66,10 @@ Worker wall time uses blocking waitpid with a separate 180-second process-group
 watchdog, avoiding timeout-polling latency. Persist start/end monotonic counters,
 exit status, command/input/worker identities and parsed GNU time CPU/RSS/elapsed
 fields. Readback cross-checks these raw receipts before computing medians.
+A separately labelled `macro_compact` worker saves reconstructable prefix,
+repeat and tail evidence. Its complete-worker cost includes that serialization;
+its saved evidence is fully expanded and compared with fresh G1 on readback.
+The primary macro-off/on ratio continues to use identical counters-only output.
 
 Use fresh directories, clean main, same-source tests, source/interpreter/input/
 environment/result hashes. Preserve all failed attempts and large evidence on
