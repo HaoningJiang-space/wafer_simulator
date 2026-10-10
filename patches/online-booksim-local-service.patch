@@ -1,0 +1,18 @@
+--- a/online_booksim.cpp
++++ b/online_booksim.cpp
+@@ -15,6 +15,7 @@
+ #include "flitchannel.hpp"
+ #include "credit.hpp"
+ #include "routefunc.hpp"
++#include "wafer_local_service.hpp"
+ 
+ using json = nlohmann::json;
+ extern TrafficManager *trafficManager;
+@@ -192,6 +193,7 @@
+         if (!closed) throw std::runtime_error("EOF before checked close");
+         delete manager; trafficManager=nullptr;
+         for (auto *network : networks) delete network;
++        WaferLocalServiceFinish();
+     } catch (const std::exception &error) {
+         replies << json({{"ok",false},{"error",error.what()}}).dump() << std::endl;
+         std::cerr << error.what() << std::endl;
