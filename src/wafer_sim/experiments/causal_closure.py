@@ -31,7 +31,7 @@ def configuration(contract,directory):
         mode='trace',trace_file=str(directory/'empty.json'),trace_report=str(directory/'trace_report.json'),
         trace_skip_idle=0,ignore_cycles=0,classes=1,subnets=1,traffic='uniform',seed=1,
         injection_rate=1.0,injection_rate_uses_flits=1,use_read_write=0,sample_period=1000000000,
-        warmup_periods=0,sim_count=1,trace_time_out=60,time_limit=60,deadlock_warn_timeout=200000,
+        warmup_periods=0,sim_count=1,trace_time_out=60,deadlock_warn_timeout=200000,
         path_for_stats=str(directory/'link_stats.csv'))
     path=directory/'network.conf';path.write_text(''.join(f'{k} = {v};\n' for k,v in settings.items()));return path
 
