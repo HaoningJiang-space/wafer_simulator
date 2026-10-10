@@ -1,0 +1,28 @@
+{
+  "audit_manifest_sha256": "dc8178f996bb93928f888a6de3bfc519731ad99f8a0039956569d57a290ea7b0",
+  "native_executions": 0,
+  "passed": true,
+  "probes": [
+    {
+      "hashes_recomputed": true,
+      "name": "wrong_remaining_guard",
+      "reason": "Inconsistent finite-work guards",
+      "rejected": true
+    },
+    {
+      "hashes_recomputed": true,
+      "name": "duplicated_boundary",
+      "reason": "Missing/repeated state boundary",
+      "rejected": true
+    },
+    {
+      "hashes_recomputed": true,
+      "name": "wrong_coverage_summary",
+      "reason": "Stored opportunity summary differs",
+      "rejected": true
+    }
+  ],
+  "readback_receipt_sha256": "3277d15c244c8928502aff8123f26f76f5b88782ac2792cc00f690450d38d725",
+  "script_sha256": "55bcb8c4990ce08a8048e816eb218fea8d05a364dc3ada7a8072f5b7d56694d9",
+  "source_commit": "6a5b8d64a4c4d757f8439ad4e799df21d1a954b8"
+}

@@ -1,5 +1,9 @@
 # G2 prerequisite: read-only causal-state compressibility audit
 
+Status: [three-case audit complete](results/causal-compressibility-001/REVIEW.md).
+Repeated parametric kernels and ordered outputs are observed; batch execution
+and any speedup remain unimplemented.
+
 Scope: inspect `single-long`, `merge-0` and `tight-credit` from the accepted G1
 registration. No new Native run, application matrix, rate change, backend or
 batching implementation. The [fixed controls](../configs/causal_compressibility.json)

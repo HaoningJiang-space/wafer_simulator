@@ -111,6 +111,14 @@ observer equivalence; 13 regressions and seven negative probes pass. This closes
 independent prediction in the registered tree domain, with no application
 integration or service-compression result.
 
+The [stricter G1 audit](docs/results/causal-closure-audit-fix-001/REVIEW.md)
+revalidates all seven saved cases with identical result bytes; 29 regressions
+and 19 real-data negative probes pass without new Native runs. The subsequent
+[read-only compressibility audit](docs/results/causal-compressibility-001/REVIEW.md)
+finds repeated causal kernels and emitted boundaries in three fixed cases,
+including credit-blocked service. Remaining work stays explicit: no cycle is
+skipped, no batching backend is implemented and no speedup is established.
+
 The [information and boundary evidence](docs/NECESSARY_INFORMATION.md) separates
 observed failures from constructed distinguishing cases. S remains the detailed
 reference under each declared machine contract. Preserve necessary boundary

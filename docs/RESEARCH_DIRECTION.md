@@ -255,6 +255,15 @@ it remains limited to unique routes, single VC/packets and one used output per
 router. No closed application, general backend or minimum-state proof follows.
 The implementation advances cycles/flits; G2 compression is still unimplemented.
 
+The [compressibility audit](results/causal-compressibility-001/REVIEW.md) now
+tests the repeated-state hypothesis without changing that predictor. Single
+flow, simultaneous merge and tight-credit cases show recurring 2, 8/4 and
+78/39-cycle causal kernels plus ordered service/credit outputs. Their finite
+remaining counts are unequal and stay explicit guards. This supports testing
+a bounded batch update; it is not a completed compression algorithm or speedup.
+The saved states and opportunity summaries have independent readback and
+hash-consistent negative checks. No Native or application matrix was rerun.
+
 Changes to recording must preserve message completion and closed execution.
 If repeated router work is the relevant cost, investigate batching between
 causally necessary boundaries with event equivalence; do not assume an unchanged
