@@ -1,0 +1,32 @@
+--- a/rapidchiplet/booksim2/src/routers/iq_router.hpp
++++ b/rapidchiplet/booksim2/src/routers/iq_router.hpp
+@@ -131,6 +131,7 @@
+   void _WaferLocalAllocation(const char *stage, bool after) const;
+   void _WaferLocalFlit(const char *kind, int input, int output, const Flit *flit) const;
+   void _WaferLocalCredit(int output, int amount) const;
++  void _WaferCausalCreditSend(int input, int amount) const;
+ 
+   void _InputQueuing( );
+ 
+--- a/rapidchiplet/booksim2/src/routers/iq_router.cpp
++++ b/rapidchiplet/booksim2/src/routers/iq_router.cpp
+@@ -2284,6 +2284,7 @@
+       Credit * const c = _credit_buffer[input].front( );
+       assert(c);
+       _credit_buffer[input].pop( );
++      _WaferCausalCreditSend(input, static_cast<int>(c->vc.size()));
+       _input_credits[input]->Send( c );
+     }
+   }
+--- a/rapidchiplet/booksim2/src/trafficmanager.cpp
++++ b/rapidchiplet/booksim2/src/trafficmanager.cpp
+@@ -40,1 +40,2 @@
+ #include "booksim.hpp"
++#include "wafer_local_service.hpp"
+@@ -1451,5 +1452,6 @@
+                 }
+ #endif
++                WaferCausalEndpointCredit(n, GetSimTime(), static_cast<int>(c->vc.size()));
+                 _buf_states[n][subnet]->ProcessCredit(c);
+                 c->Free();
+             }
