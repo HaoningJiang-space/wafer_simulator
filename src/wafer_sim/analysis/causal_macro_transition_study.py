@@ -14,10 +14,11 @@ def check_worker(directory, stored, inp, reference, environment, reg):
     worker = read_json(directory/'WORKER.json'); process = read_json(directory/'PROCESS.json')
     mode = stored['mode']
     command = ['taskset', '-c', ','.join(map(str, reg['affinity'])), '/usr/bin/time', '-v', '-o',
-        str(directory/'PROCESS.time'), environment['executable'], '-m',
+        str(directory/'PROCESS.time'), environment['launcher_executable'], '-m',
         'wafer_sim.experiments.causal_macro_transition', str(directory/'WORKER.json'),
         '--worker-input', str(directory/'INPUT.json'), '--mode', mode]
-    if (read_json(directory/'INPUT.json') != inp or process['command'] != command
+    if (str(Path(environment['launcher_executable']).resolve()) != environment['executable']
+            or read_json(directory/'INPUT.json') != inp or process['command'] != command
             or process['exit_status'] != 0 or process['timed_out'] is not False
             or process['input_sha256'] != digest(directory/'INPUT.json')
             or process['worker_sha256'] != digest(directory/'WORKER.json')

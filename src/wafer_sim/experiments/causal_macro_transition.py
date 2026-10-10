@@ -82,7 +82,8 @@ def main():
     args.output.mkdir()
     shutil.copyfile(args.tests, args.output/'TESTS.json'); shutil.copyfile(args.tests.parent/'tests.log', args.output/'tests.log')
     write_json(args.output/'ENVIRONMENT.json', dict(host=platform.node(), python=sys.version,
-        executable=str(Path(sys.executable).resolve()), executable_sha256=digest(Path(sys.executable).resolve()),
+        executable=str(Path(sys.executable).resolve()), launcher_executable=sys.executable,
+        executable_sha256=digest(Path(sys.executable).resolve()),
         platform=platform.platform(), affinity=reg['affinity']))
     write_json(args.output/'STARTED.json', dict(source_commit=source,
         source_hashes={name: digest(repo/name) for name in FILES}, g2_campaign=str(args.g2),
