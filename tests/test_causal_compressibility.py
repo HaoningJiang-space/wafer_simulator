@@ -48,3 +48,14 @@ class CompressibilityAuditTests(unittest.TestCase):
         self.assertFalse(checked['compression_implemented'])
         self.assertEqual(checked['processed_cycles'],result['final_cycle'])
         self.assertEqual(checked['observed_covered_cycles'],0)
+
+    def test_repeating_state_does_not_hide_a_changed_credit_output(self):
+        result,observer=observe(REG['contract'],[dict(source=0,destination=3,flits=128,ready=0)],200000)
+        checked=audit_patterns(result,observer)
+        chain=checked['representative_chains'][0]
+        changed=deepcopy(result)
+        middle=(chain['start']+chain['end'])//2
+        credit=next(r for r in changed['credit_returns'] if middle<=r['cycle']<chain['end'])
+        credit['amount']+=1
+        bad=audit_patterns(changed,observer)
+        self.assertLess(max(r['repetitions'] for r in bad['representative_chains']),chain['repetitions'])

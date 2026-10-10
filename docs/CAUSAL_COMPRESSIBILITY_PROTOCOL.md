@@ -71,9 +71,23 @@ PYTHONPATH=src ../.venv/bin/python scripts/test_causal_compressibility_remote.py
 PYTHONPATH=src ../.venv/bin/python scripts/audit_causal_compressibility_remote.py \
   /Projects/haoning/wafer_simulator/runs/causal-closure-002 \
   /Projects/haoning/wafer_simulator/runs/causal-compressibility-NEW
+PYTHONPATH=src ../.venv/bin/python -m wafer_sim.analysis.causal_compressibility \
+  /Projects/haoning/wafer_simulator/runs/causal-compressibility-NEW \
+  /Projects/haoning/wafer_simulator/runs/causal-compressibility-readback-NEW
+PYTHONPATH=src ../.venv/bin/python scripts/check_causal_compressibility_negative_remote.py \
+  /Projects/haoning/wafer_simulator/runs/causal-compressibility-NEW \
+  /Projects/haoning/wafer_simulator/runs/causal-compressibility-negative-NEW \
+  --readback /Projects/haoning/wafer_simulator/runs/causal-compressibility-readback-NEW
 ```
 
 Keep normalized state streams on hn072. Publish compact results, source/input/
 prediction/state hashes, test receipt and failure notes. No Native internal
 event is an input: saved independent G1 predictions are checked only after the
 instrumented run. No cycle is skipped during this audit.
+The fresh reader authenticates audit sources/artifacts and the old G1 manifest,
+checks state boundary inventory, finite-work guards and capacity bounds, then
+recomputes every period/output/coverage metric from saved states. Timing fields
+are carried as authenticated measurements, not measured again.
+After positive readback, saved-data fault injections alter finite-work guards,
+boundary inventory and coverage summaries while recomputing every affected
+hash. The reader must reject semantic inconsistencies even with valid hashes.

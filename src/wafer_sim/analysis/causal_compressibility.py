@@ -179,13 +179,97 @@ def audit_patterns(result,observer,minimum=3):
         chain.pop('_output');eligible.append(chain)
     coverage=intervals_union([(c['start'],c['end']) for c in eligible])
     busy_covered=sum(any(a<=t<b for a,b in coverage) for t in busy)
-    representatives=[]
+    representatives=[];periods={}
     for c in sorted(eligible,key=lambda c:c['end']-c['start'],reverse=True):
-        if any(r['start']<=c['start'] and c['end']<=r['end'] and r['period']==c['period'] for r in representatives): continue
-        representatives.append(c)
+        periods.setdefault(c['period'],[]).append(c)
+        if not any(r['period']==c['period'] for r in representatives): representatives.append(c)
+    period_summary=[]
+    for period,chains in sorted(periods.items()):
+        intervals=intervals_union([(c['start'],c['end']) for c in chains])
+        period_summary.append(dict(period=period,chains=len(chains),coverage=intervals,
+            covered_cycles=sum(b-a for a,b in intervals),maximum_repetitions=max(c['repetitions'] for c in chains)))
+    messages=len(result['messages'])
+    progress_fields=([f'injected/{i}' for i in range(messages)]+[f'ejected/{i}' for i in range(messages)]+
+        [f'source_stalls/{i}' for i in range(3)]+[f'router_stalls/{i}' for i in range(4)]+
+        ['service_count','input_arrival_count','credit_return_count','credit_send_count','allocation_count']+
+        [f'queue_peak/{r}/{p}' for r,state in enumerate(rows[0]['kernel']['routers']) for p in range(len(state['queues']))])
     return dict(processed_cycles=result['processed_cycles'],strict_normalized_state_repeats=strict_repeats,
         parametric_pattern_chains=len(eligible),observed_coverage=coverage,
         observed_covered_cycles=sum(b-a for a,b in coverage),busy_service_cycles=len(busy),
-        busy_service_cycles_covered=busy_covered,representative_chains=representatives[:12],
+        busy_service_cycles_covered=busy_covered,representative_chains=representatives,
+        period_summary=period_summary,progress_fields=progress_fields,
         output_trace_sha256=sha(output_trace),skipped_cycles=0,compression_implemented=False,
         interpretation='Repeated complete causal kernels with explicit finite-work bounds; observed periods verified, no batching proof or speedup')
+
+
+def readback(campaign,output):
+    """Recompute opportunity metrics from pinned saved states and G1 output."""
+    from pathlib import Path
+    import gzip
+    import subprocess
+    from types import SimpleNamespace
+    from wafer_sim.io import read_json,write_json,digest
+    repo=Path(__file__).resolve().parents[3]
+    if not output.is_absolute() or output.exists(): raise ValueError('Fresh absolute readback required')
+    complete=read_json(campaign/'COMPLETE.json');start=read_json(campaign/'STARTED.json')
+    if not complete['complete'] or (campaign/'FAILED.json').exists(): raise ValueError('Incomplete audit')
+    for name,expected in complete['artifacts_sha256'].items():
+        if digest(campaign/name)!=expected: raise ValueError('Changed audit artifact: '+name)
+    for name,expected in start['source_hashes'].items():
+        if digest(repo/name)!=expected: raise ValueError('Changed audit source: '+name)
+    reg=read_json(repo/'configs/causal_compressibility.json')
+    if digest(repo/'configs/causal_closure.json')!=reg['g1_registration_sha256'] or digest(repo/'src/wafer_sim/adapters/causal_merge.py')!=reg['predictor_sha256']:
+        raise ValueError('Changed pinned G1 source/registration')
+    g1=read_json(repo/'configs/causal_closure.json')
+    reference=Path(start['g1_campaign']);manifest=read_json(reference/'COMPLETE.json')
+    if digest(reference/'COMPLETE.json')!=start['campaign_manifest_sha256']: raise ValueError('Changed G1 manifest')
+    summary=read_json(campaign/'RESULTS.json')
+    if (not summary['audit_complete'] or summary['native_executions']!=0 or summary['skipped_cycles']!=0 or summary['compression_implemented']):
+        raise ValueError('Incorrect audit execution status')
+    if [r['name'] for r in summary['rows']]!=reg['cases']: raise ValueError('Missing/repeated audit case')
+    checked_rows=[]
+    for stored in summary['rows']:
+        name=stored['name'];path=reference/name/'PREDICTION.json'
+        case=next(c for c in g1['cases'] if c['name']==name)
+        inp=reference/name/'INPUT.json'
+        if digest(inp)!=stored['input_sha256'] or digest(inp)!=manifest['artifacts_sha256'][name+'/INPUT.json']:
+            raise ValueError('Changed audit input identity')
+        expected=dict(contract=dict(g1['contract'],capacity_flits=case.get('capacity_flits',g1['contract']['capacity_flits'])),messages=case['messages'])
+        if read_json(inp)!=expected or stored['capacity_flits']!=expected['contract']['capacity_flits']:
+            raise ValueError('Different registered input/contract')
+        if digest(path)!=stored['prediction_sha256'] or digest(path)!=manifest['artifacts_sha256'][name+'/PREDICTION.json']:
+            raise ValueError('Changed accepted prediction')
+        prediction=read_json(path)
+        with gzip.open(campaign/name/'STATES.jsonl.gz','rt') as stream: rows=[json.loads(line) for line in stream]
+        if [r['cycle'] for r in rows]!=list(range(prediction['final_cycle'])): raise ValueError('Missing/repeated state boundary')
+        first_flits={m['id']:min(f['id'] for f in m['flits']) for m in prediction['messages']}
+        for row in rows:
+            for m in prediction['messages']:
+                mid=m['id']
+                if row['remaining'][mid]!=[len(m['flits'])-row['anchors'][mid],len(m['flits'])-row['ejected'][mid]]:
+                    raise ValueError('Inconsistent finite-work guards')
+            if any(not 0<=credit<=stored['capacity_flits'] for credit in row['kernel']['source_credits']):
+                raise ValueError('Invalid source credit state')
+            for state in row['kernel']['routers']:
+                if not 0<=state['credit']<=stored['capacity_flits'] or any(len(q)>stored['capacity_flits'] for q in state['queues']):
+                    raise ValueError('Invalid router capacity state')
+        observer=SimpleNamespace(rows=rows,first_flits=first_flits)
+        checked=audit_patterns(prediction,observer,reg['minimum_repetitions'])
+        # Timing/identity metadata are authenticated, not re-measured on readback.
+        for field in ('name','capacity_flits','prediction_unchanged','input_sha256','prediction_sha256','states_sha256','capture_seconds','analysis_seconds'):
+            checked[field]=stored[field]
+        if checked!=stored or checked!=read_json(campaign/name/'CHECKED.json'): raise ValueError('Stored opportunity summary differs')
+        checked_rows.append(checked)
+    output.mkdir()
+    write_json(output/'VERIFIED.json',dict(readback_passed=True,case_count=len(checked_rows),artifacts_checked=len(complete['artifacts_sha256']),
+        audit_manifest_sha256=digest(campaign/'COMPLETE.json'),result_sha256=digest(campaign/'RESULTS.json'),
+        source_commit=subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip(),
+        native_executions=0,skipped_cycles=0,compression_implemented=False))
+
+
+if __name__=='__main__':
+    from pathlib import Path
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('campaign',type=Path);parser.add_argument('output',type=Path)
+    args=parser.parse_args();readback(args.campaign,args.output)

@@ -23,7 +23,8 @@ if not manifest['complete'] or not manifest['accuracy_passed'] or (args.campaign
 args.output.mkdir();source=subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip()
 files=['configs/causal_compressibility.json','src/wafer_sim/analysis/causal_compressibility.py','scripts/audit_causal_compressibility_remote.py','src/wafer_sim/adapters/causal_merge.py','src/wafer_sim/architecture/causal_merge.py']
 write_json(args.output/'STARTED.json',dict(source_commit=source,source_hashes={p:digest(repo/p) for p in files},
-    campaign_manifest_sha256=digest(args.campaign/'COMPLETE.json'),native_executions=0,skipped_cycles=0,compression_implemented=False))
+    campaign_manifest_sha256=digest(args.campaign/'COMPLETE.json'),g1_campaign=str(args.campaign.resolve()),
+    native_executions=0,skipped_cycles=0,compression_implemented=False))
 rows=[]
 try:
     for name in reg['cases']:
