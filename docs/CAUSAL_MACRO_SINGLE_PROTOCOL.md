@@ -84,6 +84,10 @@ PYTHONPATH=src ../.venv/bin/python -m wafer_sim.experiments.causal_macro_single 
 PYTHONPATH=src ../.venv/bin/python -m wafer_sim.analysis.causal_macro_single \
   /Projects/haoning/wafer_simulator/runs/causal-macro-single-NEW \
   /Projects/haoning/wafer_simulator/runs/causal-macro-single-readback-NEW
+PYTHONPATH=src ../.venv/bin/python scripts/check_causal_macro_single_negative_remote.py \
+  /Projects/haoning/wafer_simulator/runs/causal-macro-single-NEW \
+  /Projects/haoning/wafer_simulator/runs/causal-macro-single-negative-NEW \
+  --readback /Projects/haoning/wafer_simulator/runs/causal-macro-single-readback-NEW
 ```
 
 Candidate compact evidence is persisted before original G1 observation. The
