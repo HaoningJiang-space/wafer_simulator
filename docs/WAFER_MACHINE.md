@@ -17,7 +17,8 @@ budget or certified RX capacity. Both policies remain declared candidates.
 The integration defines the machine independently of one network generator,
 compiles it into the accepted target execution interfaces and verifies actual
 data paths. Hardware organization and numerical rates remain declared.
-`nw-design-for-wsi` remains a pinned **Logic-on-Interconnect network baseline**.
+The LoI branch of pinned `nw-design-for-wsi` remains the project's historical
+**Logic-on-Interconnect network baseline**.
 Its Baseline/Rotated results and all accepted evidence stay unchanged.
 The uncommitted benchmark-envelope draft was superseded before any run.
 
@@ -66,6 +67,65 @@ Validation checks:
 These are consistency checks. Bond pitch, signal budgets and signaling rates
 are assumptions, not foundry design rules. Power/ground bonds, routing closure,
 redundancy, yield, refresh, bank activation and thermal are not evaluated.
+
+## Communication hierarchy and topology boundaries
+
+The upstream [paper v2, Sections 3.1, 3.2 and 5.1.2](https://arxiv.org/html/2603.05266v2)
+models communication between compute reticles, including inter-GPU messages
+from Llama training traces. It aggregates each compute reticle's internal NoC
+into one router; this does not remove communication between compute reticles.
+The paper considers both LoI and Logic-on-Logic (LoL). The lower wafer is an
+interconnect-only fabric in LoI; both wafers contain compute reticles in LoL.
+Neither organization is this project's compute-plus-memory candidate.
+
+In the pinned [upstream topology builder](../third_party/nw-design-for-wsi/analyze_topology.py),
+reticle neighbors are created from overlapping vertical connectors on adjacent
+wafers. The [reticle builder](../third_party/nw-design-for-wsi/Reticle.py) selects
+`central_router` for compute reticles. The
+[exporter](../third_party/nw-design-for-wsi/export_to_rapidchiplet.py) adds internal
+interconnect-reticle links and the resulting inter-reticle connections, without
+adding direct same-wafer compute-reticle stitching. Thus LoI compute-to-compute
+traffic can traverse the interconnect wafer. This is an architectural scope,
+not a missing-message or implementation defect. The source pin and original
+notices are retained in [EXTERNAL_SOURCES](EXTERNAL_SOURCES.md).
+
+The target machine separates three communication levels:
+
+| Level | Current representation | Validation boundary |
+|---|---|---|
+| Inside an aggregate compute tile | Declared compute and SRAM services, plus endpoint access latency; no explicit PE-to-PE or distributed-SRAM NoC | Local service/admission semantics are checked; internal NoC traffic, arbitration and buffering are not modeled or calibrated |
+| Between compute tiles (C2C) | Direct bidirectional stitching links between neighboring compute routers | Declared geometry, ports, legal paths and complete Native application events are checked; physical wiring and implementation cost are not closed |
+| Compute-to-memory (C2M) | Aligned HB to a memory leaf router, explicit bank/controller service and return traffic; remote homes additionally use C2C | Request/response/write/ack causality, shared identities, capacity and complete recorded execution are audited under the selected periphery policy |
+
+A compute tile is an aggregate execution unit placed in a declared reticle-sized
+footprint. A manufacturing reticle, an execution unit and a router are distinct
+concepts even where the current configuration maps them one-to-one. The local
+service model is not evidence that a detailed internal NoC has equivalent timing.
+The memory wafer supplies storage; it is not a lateral routing substitute.
+
+The target [compiler and exporter](../src/wafer_sim/adapters/wafer_machine.py)
+derive the network from `WaferMachine.connections`, independently of the
+upstream reticle-placement generator. In S, the
+[executor](../src/wafer_sim/execution/timing.py) submits every transfer phase to
+one [online BookSim client](../src/wafer_sim/adapters/online_booksim.py).
+C2C payloads, memory request/response/write/ack traffic and I/O therefore share
+one physical fabric state. On intersecting paths, eligible traffic may compete
+for the same input FIFO, output VC, switch or directed link. Sharing a router
+does not make all of its ports one global bandwidth pool; opposite link
+directions are distinct resources. Actual interference also depends on data
+arrival and the declared execution policy. D0's independent DRAM completions
+do not preserve this joint contention, despite its remaining Native C2C/I/O.
+
+The [G1 closure](results/causal-closure-001/REVIEW.md),
+[R1 core](results/causal-transition-001/REVIEW.md) and
+[G2.1 compression](results/causal-macro-single-001/REVIEW.md) validate a separate,
+fixed four-router merge domain. They do not provide an accelerated backend for
+the complete compute/memory mesh or establish equivalence under general
+multi-output competition and routing. Extending that solver requires its own
+same-contract validation; the existing full-machine Native evidence remains a
+different acceptance scope. Network acceleration serves the system-level
+compute, storage, communication and layout question rather than defining the
+target architecture.
 
 ## Transaction and execution contract
 

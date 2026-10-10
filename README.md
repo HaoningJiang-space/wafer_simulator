@@ -7,8 +7,15 @@ The [candidate machine](docs/WAFER_MACHINE.md) is a stitched compute wafer plus
 an aligned memory wafer. It explicitly defines SRAM, banks, shared controllers,
 vertical HB and edge I/O. Logical work and data placement compile to request,
 response, compute and memory services on the existing timed executor and live
-BookSim. `spcl/nw-design-for-wsi` remains a pinned LoI network baseline; it does
-not prescribe the simulator's entire machine organization.
+BookSim. The project's historical adapter uses the LoI branch of pinned
+`spcl/nw-design-for-wsi`; it does not prescribe the simulator's entire machine
+organization. The upstream work models inter-reticle communication and also
+studies LoL, while aggregating compute-reticle internal NoCs.
+
+The [communication hierarchy](docs/WAFER_MACHINE.md#communication-hierarchy-and-topology-boundaries)
+separates abstract internal compute-tile services, direct C2C stitching and HB
+memory access. Native S uses one fabric for C2C, memory transactions and I/O.
+G1/G2's four-router validation has a narrower scope than the complete machine.
 
 All candidate resource numbers are **declared design assumptions**, not measured
 DRAM timing or a qualified TSMC/Cerebras system. Whole-object controller staging

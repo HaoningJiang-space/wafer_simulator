@@ -1,7 +1,8 @@
 # Current research: spatial compute–memory–communication model fidelity
 
-The machine is not defined by `spcl/nw-design-for-wsi`. That pinned implementation
-provides one Logic-on-Interconnect baseline with its own connectivity assumptions.
+The machine is not defined by `spcl/nw-design-for-wsi`. The project's historical
+adapter uses the LoI branch of that pinned implementation, with its own
+connectivity assumptions; the upstream paper also considers LoL.
 Its accepted model-selection results remain valid within their declared scope.
 
 The current candidate is a stitched compute wafer plus an aligned memory wafer,
@@ -18,6 +19,29 @@ Keep the responsibilities separate. Workload definitions contain mathematical
 work, immutable objects and dependencies. Architecture definitions contain
 geometry and finite resources. Adapters bind the two and specify transaction
 paths. Existing execution/storage/calendar and native BookSim are reused.
+
+## System objective and communication levels
+
+Distinguish internal compute-tile communication, direct compute-tile C2C and
+HB compute-to-memory communication. The first remains a declared local-service
+abstraction; the latter two are explicit in the target resource graph. The
+[communication hierarchy](WAFER_MACHINE.md#communication-hierarchy-and-topology-boundaries)
+records the upstream LoI/LoL distinction, the common Native S fabric and the
+separate validation scopes. Upstream inter-reticle communication exists even
+though its compute-reticle internal NoC is aggregated.
+
+The system question is how computation, storage supply, spatial communication
+and execution policy jointly determine data readiness and legal layout choices.
+Accurate C2C/C2M contention requires common resource identities and causal demand
+arrival; topology intersection alone does not establish interference. Port and
+geometry checks do not establish a manufactured stitching/HB implementation.
+
+G1/G2 investigate how to execute a fixed causal service contract with less work.
+Their four-router correctness and single-flow compression results support this
+method track, but do not replace full-machine or hardware validation. Internal
+NoC refinement, a general causal mesh backend and new joint-traffic experiments
+are not introduced by this scope clarification. Existing machine policies,
+accepted evidence and the staged core refactoring remain intact.
 
 ## First gate: machine integration
 
