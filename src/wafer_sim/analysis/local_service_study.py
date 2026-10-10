@@ -1,6 +1,7 @@
 """Authenticated readback of bounded observation/reconstruction, no simulation."""
 import argparse
 from collections import Counter
+import hashlib
 from pathlib import Path
 import subprocess
 
@@ -32,8 +33,13 @@ def analyze(components, curves, reference, acceptance, output):
     for name, expected in start['source_hashes'].items():
         # The only subsequent writer change corrects a stale descriptive scope
         # string; service/model/observer bytes must be identical.
-        if name != 'src/wafer_sim/experiments/local_service.py' and digest(source/name) != expected:
-            raise ValueError('Changed service/model source: '+name)
+        if digest(source/name) == expected: continue
+        if name == 'src/wafer_sim/experiments/local_service.py':
+            normalized = (source/name).read_bytes().replace(
+                b'not attempted; surrounding arrival/credit boundaries supplied by native',
+                b'not attempted; eligibility and feedback supplied by native')
+            if hashlib.sha256(normalized).hexdigest() == expected: continue
+        raise ValueError('Changed service/model source: '+name)
     summary = read_json(components/'SUMMARY.json'); rows = []; checked = []
     for row in summary['rows']:
         directory = components/row['name']
