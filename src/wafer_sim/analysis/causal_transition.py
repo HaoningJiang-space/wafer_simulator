@@ -89,7 +89,24 @@ def legacy_snapshot(local, scheduled, next_sequence, final=False):
                          ('service', 'inputs', 'credits', 'credit_sends', 'allocations')}))
 
 
-def compare_cycles(contract, messages, cycle_limit=200000, *, stream=None, perturb=None):
+def legacy_progress(local):
+    """Derive semantic counts/times from independent G1 histories, not producer fields."""
+    messages = []
+    for message in local['demand']:
+        mid = message['id']
+        injected = local['injections'].get(mid, ())
+        ejected = local['ejections'].get(mid, ())
+        messages.append(dict(generated_at=local['generated'].get(mid),
+            injected=len(injected), received=len(ejected),
+            first_inject=injected[0] if injected else None,
+            last_inject=injected[-1] if injected else None,
+            first_eject=ejected[0] if ejected else None,
+            last_eject=ejected[-1] if ejected else None))
+    return dict(schema=1, messages=messages)
+
+
+def compare_cycles(contract, messages, cycle_limit=200000, *, stream=None, perturb=None,
+                   progress_stream=None):
     """Run reference and independent shadow, comparing every pre-cycle boundary.
 
     Optional perturb is a fault-injection hook used only by tests. A mismatch
@@ -120,6 +137,17 @@ def compare_cycles(contract, messages, cycle_limit=200000, *, stream=None, pertu
         mismatch = first_difference(expected, actual)
         if mismatch:
             raise StateDivergence(expected['cycle'], mismatch)
+        expected_progress = legacy_progress(local)
+        actual_progress = shadow.progress_snapshot().to_record()
+        mismatch = first_difference(expected_progress, actual_progress, 'semantic_progress')
+        if mismatch:
+            raise StateDivergence(expected['cycle'], mismatch)
+        if progress_stream:
+            encoded_progress = json.dumps(expected_progress, sort_keys=True, separators=(',', ':')).encode()
+            progress_digest = hashlib.sha256(encoded_progress).hexdigest()
+            progress_stream.write(json.dumps(dict(cycle=expected['cycle'],
+                expected_sha256=progress_digest, actual_sha256=progress_digest, complete=final),
+                sort_keys=True, separators=(',', ':'))+'\n')
         encoded = json.dumps(expected, sort_keys=True, separators=(',', ':')).encode()
         digest = hashlib.sha256(encoded).hexdigest()
         row = dict(cycle=expected['cycle'], expected_sha256=digest, actual_sha256=digest,

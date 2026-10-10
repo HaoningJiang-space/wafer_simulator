@@ -62,6 +62,7 @@ def step_one_cycle(state):
             log.credits.append(dict(target=event['target'], number=number, cycle=now, amount=1))
         elif kind == 'sink':
             f = event['flit']
+            state.progress[state.work[f]['message']].receive(now)
             state.work[f]['ejected'] = now
             log.ejections[state.work[f]['message']].append(now)
             state.events.schedule(now+edge+1, 'credit', target='router', number=3)
@@ -83,7 +84,7 @@ def step_one_cycle(state):
         if not sending.issuing and sending.pending and sending.pending[0][0] <= now:
             _, mid = heapq.heappop(sending.pending)
             message = state.demand[mid]
-            state.generated[mid] = now
+            state.progress[mid].generated_at = now
             for _ in range(message['flits']):
                 f = state.next_flit
                 state.next_flit += 1
@@ -94,6 +95,7 @@ def step_one_cycle(state):
             f = sending.issuing.popleft()
             sending.credit -= 1
             state.work[f]['injected'] = now
+            state.progress[state.work[f]['message']].inject(now)
             log.injections[state.work[f]['message']].append(now)
             router = ENDPOINT_ROUTERS[source]
             port = PORTS[router].index(f'endpoint/{source}')
@@ -135,7 +137,7 @@ def step_one_cycle(state):
             router.sw_ready = now+1
 
     state.now = now+1
-    state.complete = (all(len(log.ejections[m['id']]) == m['flits'] for m in state.demand)
+    state.complete = (all(state.progress[m['id']].received == m['flits'] for m in state.demand)
         and not state.events and all(not s.issuing and not s.pending for s in state.sources)
         and all(r.owner is None and not any(r.queues) and r.credit == capacity for r in state.routers)
         and all(s.credit == capacity for s in state.sources))
@@ -150,12 +152,13 @@ def result(state):
     messages = []
     for m in state.demand:
         mid = m['id']
+        progress = state.progress[mid]
         flits = sorted((dict(f, hops=len(f['router_path'])) for f in state.work.values()
                         if f['message'] == mid), key=lambda f: (f['ejected'], f['id']))
         messages.append(dict(id=mid, source=m['source'], destination=3, ready=m['ready'],
-            generated=state.generated[mid], first_inject=min(log.injections[mid]),
-            last_inject=max(log.injections[mid]), first_eject=min(log.ejections[mid]),
-            last_eject=max(log.ejections[mid]), finish=max(log.ejections[mid])+1, flits=flits))
+            generated=progress.generated_at, first_inject=progress.first_inject,
+            last_inject=progress.last_inject, first_eject=progress.first_eject,
+            last_eject=progress.last_eject, finish=progress.last_eject+1, flits=flits))
     return deepcopy(dict(complete=True, drained=True, final_cycle=state.now,
         messages=messages, service=log.service, input_arrivals=log.inputs,
         credit_returns=log.credits, credit_sends=log.credit_sends, allocations=log.allocations,

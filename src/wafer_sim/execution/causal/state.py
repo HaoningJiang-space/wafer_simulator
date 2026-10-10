@@ -1,7 +1,8 @@
 """Mutable causal state, ordered channel events and immutable boundary snapshots.
 
 No analysis, Native, experiments, tracing or filesystem dependencies. Full
-evidence remains the sole R1 format; evidence sinks are a later migration.
+evidence remains the sole format; message progress is independent semantic state.
+Evidence sinks are a later migration.
 """
 from collections import defaultdict, deque
 from copy import deepcopy
@@ -128,19 +129,60 @@ class FullEvidence:
 
 
 @dataclass
+class MessageProgress:
+    """Per-message semantic counters/times; no event-list dependency."""
+    generated_at: int | None = None
+    injected: int = 0
+    received: int = 0
+    first_inject: int | None = None
+    last_inject: int | None = None
+    first_eject: int | None = None
+    last_eject: int | None = None
+
+    def inject(self, now):
+        self.injected += 1
+        if self.first_inject is None:
+            self.first_inject = now
+        self.last_inject = now
+
+    def receive(self, now):
+        self.received += 1
+        if self.first_eject is None:
+            self.first_eject = now
+        self.last_eject = now
+
+    def record(self):
+        return dict(generated_at=self.generated_at, injected=self.injected,
+            received=self.received, first_inject=self.first_inject,
+            last_inject=self.last_inject, first_eject=self.first_eject,
+            last_eject=self.last_eject)
+
+
+@dataclass
 class CausalState:
     contract: dict
     demand: list
     cycle_limit: int
     sources: list
     routers: list
+    progress: list
     events: EventQueue = field(default_factory=EventQueue)
-    generated: dict = field(default_factory=dict)
     work: dict = field(default_factory=dict)
     evidence: FullEvidence = field(default_factory=FullEvidence)
     now: int = 0  # The next boundary to consume; step advances exactly one.
     next_flit: int = 0
     complete: bool = False
+
+    @property
+    def generated(self):
+        """Detached legacy-compatible view, derived from semantic generation."""
+        return {mid: p.generated_at for mid, p in enumerate(self.progress)
+                if p.generated_at is not None}
+
+    def progress_snapshot(self):
+        """Detached semantic progress, including times absent from R1 schema 1."""
+        return CausalSnapshot(freeze(dict(schema=1,
+            messages=[p.record() for p in self.progress])))
 
     def snapshot(self, include_history=False):
         """Exact future-affecting state and progress, without copying retired logs.
@@ -168,10 +210,9 @@ class CausalState:
             events=self.events.snapshot(), next_event_sequence=self.events.next_sequence,
             generated=self.generated, next_flit=self.next_flit,
             live_work=[[f, self.work[f]] for f in sorted(live)],
-            remaining=[[m['flits']-len(log.injections.get(m['id'], ())),
-                        m['flits']-len(log.ejections.get(m['id'], ()))] for m in self.demand],
-            message_progress=[dict(injected=len(log.injections.get(m['id'], ())),
-                ejected=len(log.ejections.get(m['id'], ()))) for m in self.demand],
+            remaining=[[m['flits']-self.progress[m['id']].injected,
+                        m['flits']-self.progress[m['id']].received] for m in self.demand],
+            message_progress=[dict(injected=p.injected, ejected=p.received) for p in self.progress],
             evidence_counts={name: len(getattr(log, name)) for name in
                              ('service', 'inputs', 'credits', 'credit_sends', 'allocations')})
         if include_history:
@@ -199,4 +240,5 @@ def initialize(contract, messages, cycle_limit=200000):
         heapq.heappush(sources[m['source']].pending, (m['ready'], m['id']))
     routers = [RouterState([deque() for _ in ports], c['capacity_flits'], [0]*len(ports))
                for ports in PORTS]
-    return CausalState(deepcopy(c), demand, cycle_limit, sources, routers)
+    return CausalState(deepcopy(c), demand, cycle_limit, sources, routers,
+                       [MessageProgress() for _ in demand])
