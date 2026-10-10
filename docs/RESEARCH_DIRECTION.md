@@ -253,16 +253,26 @@ three upstream routers. The observer preserves full S events/protocols.
 This is independent component prediction, beyond conditional reconstruction;
 it remains limited to unique routes, single VC/packets and one used output per
 router. No closed application, general backend or minimum-state proof follows.
-The implementation advances cycles/flits; G2 compression is still unimplemented.
+The original implementation advances cycles/flits and remains an unchanged reference.
 
 The [compressibility audit](results/causal-compressibility-001/REVIEW.md) now
 tests the repeated-state hypothesis without changing that predictor. Single
 flow, simultaneous merge and tight-credit cases show recurring 2, 8/4 and
 78/39-cycle causal kernels plus ordered service/credit outputs. Their finite
 remaining counts are unequal and stay explicit guards. This supports testing
-a bounded batch update; it is not a completed compression algorithm or speedup.
+a bounded batch update; that audit alone is not an acceleration receipt.
 The saved states and opportunity summaries have independent readback and
 hash-consistent negative checks. No Native or application matrix was rerun.
+
+The [G2.1 acceptance](results/causal-macro-single-001/REVIEW.md) now establishes
+exact guarded two-cycle batching in the primary single-source contract. Full
+events and macro boundary states match original G1. Same-core off/on execution
+with identical counters outputs demonstrates computation skipping and measured
+worker acceleration; reconstructable evidence and full audit costs are separate.
+G1 and the AST-derived G2.1 prototype remain fixed references. The next task is
+R1 only: explicit causal state and a one-cycle transition engine, checked against
+all seven G1 cases at every cycle. Macro migration, evidence redesign and
+multi-source/credit-limited compression are deferred until that equivalence gate.
 
 Changes to recording must preserve message completion and closed execution.
 If repeated router work is the relevant cost, investigate batching between

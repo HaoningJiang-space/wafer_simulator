@@ -1,7 +1,8 @@
 # G2.1: guarded two-cycle transition on the existing G1 state machine
 
-Status: registered implementation/validation work, not an accuracy or speedup
-receipt. This gate covers one source-0 message to endpoint 3 under the exact
+Status: accepted bounded G2.1 implementation; see the
+[accuracy and cost receipt](results/causal-macro-single-001/REVIEW.md).
+This gate covers one source-0 message to endpoint 3 under the exact
 primary G1 contract. Multi-source traffic, two-flit buffers, other routes and
 G2.2/G2.3 are excluded. Accepted G1 source and evidence stay byte-pinned.
 

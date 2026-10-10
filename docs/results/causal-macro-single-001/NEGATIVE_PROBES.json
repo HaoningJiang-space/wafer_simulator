@@ -1,0 +1,52 @@
+{
+  "application_executions": 0,
+  "campaign_manifest_sha256": "ba57ad06fe074ee3706fd03342060a3ec6c7e2227cc26d4bc78cb97eadfdaee1",
+  "macro_record_sha256": "1189f27c86b84224df197797682840ae952935cf4e1aa5fd37986d60277da166",
+  "native_executions": 0,
+  "passed": true,
+  "probes": [
+    {
+      "name": "wrong_repeat_count",
+      "reason": "Macro evidence count differs",
+      "rejected": true
+    },
+    {
+      "name": "wrong_credit_template_clock",
+      "reason": "Expanded complete prediction differs from G1",
+      "rejected": true
+    },
+    {
+      "name": "wrong_exit_credit",
+      "reason": "Macro boundary state differs at ('exit', 1986)",
+      "rejected": true
+    },
+    {
+      "name": "declared_native_boundary_input",
+      "reason": "Compact summary differs from reference",
+      "rejected": true
+    },
+    {
+      "name": "wrong_source_injection_time",
+      "reason": "Source/receiver time evidence differs from retired flits",
+      "rejected": true
+    },
+    {
+      "name": "crossed_source_tail",
+      "reason": "Macro crossed tail boundary",
+      "rejected": true
+    },
+    {
+      "name": "missing_exit_checkpoint",
+      "reason": "Incomplete macro boundary pair",
+      "rejected": true
+    },
+    {
+      "name": "repeated_checkpoint_identity",
+      "reason": "Repeated macro checkpoint",
+      "rejected": true
+    }
+  ],
+  "readback_receipt_sha256": "ffd913df664cf1a7bbf01aa980fe34abfcaba41fe7170478409b319c6cbe0f09",
+  "script_sha256": "ecc3417caf3b9520219b06c7d9bb5de2df9123b832afbafff874e3599de68d0a",
+  "source_commit": "17abfedae89f935e9ae929803d121848507992c5"
+}

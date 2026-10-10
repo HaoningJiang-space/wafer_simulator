@@ -117,7 +117,13 @@ and 19 real-data negative probes pass without new Native runs. The subsequent
 [read-only compressibility audit](docs/results/causal-compressibility-001/REVIEW.md)
 finds repeated causal kernels and emitted boundaries in three fixed cases,
 including credit-blocked service. Remaining work stays explicit: no cycle is
-skipped, no batching backend is implemented and no speedup is established.
+skipped in that audit. The subsequent
+[G2.1 receipt](docs/results/causal-macro-single-001/REVIEW.md) verifies guarded
+single-flow two-cycle batching with exact expanded events and entry/exit state.
+At 32,768 flits it reduces 65,598 updates to 296 and yields 23.02× same-core
+counters-worker acceleration; reconstructable evidence cost is separate.
+This is not a general backend or a BookSim/application speedup. The next R1
+task exposes explicit state and one-cycle execution while retaining G1/G2.1.
 
 The [information and boundary evidence](docs/NECESSARY_INFORMATION.md) separates
 observed failures from constructed distinguishing cases. S remains the detailed
