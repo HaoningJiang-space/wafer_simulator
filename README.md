@@ -122,8 +122,12 @@ skipped in that audit. The subsequent
 single-flow two-cycle batching with exact expanded events and entry/exit state.
 At 32,768 flits it reduces 65,598 updates to 296 and yields 23.02× same-core
 counters-worker acceleration; reconstructable evidence cost is separate.
-This is not a general backend or a BookSim/application speedup. The next R1
-task exposes explicit state and one-cycle execution while retaining G1/G2.1.
+This is not a general backend or a BookSim/application speedup.
+The [R1 explicit core](docs/results/causal-transition-001/REVIEW.md) now exposes
+state, immutable snapshots and one-cycle execution without AST or analysis
+dependencies. Seven G1 cases match all 30,604 state boundaries and full saved
+predictions; 56 targeted regressions pass. G1/G2.1 references remain unchanged;
+macro migration and evidence-sink separation are still deferred.
 
 The [information and boundary evidence](docs/NECESSARY_INFORMATION.md) separates
 observed failures from constructed distinguishing cases. S remains the detailed

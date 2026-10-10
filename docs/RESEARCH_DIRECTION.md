@@ -269,10 +269,12 @@ exact guarded two-cycle batching in the primary single-source contract. Full
 events and macro boundary states match original G1. Same-core off/on execution
 with identical counters outputs demonstrates computation skipping and measured
 worker acceleration; reconstructable evidence and full audit costs are separate.
-G1 and the AST-derived G2.1 prototype remain fixed references. The next task is
-R1 only: explicit causal state and a one-cycle transition engine, checked against
-all seven G1 cases at every cycle. Macro migration, evidence redesign and
-multi-source/credit-limited compression are deferred until that equivalence gate.
+G1 and the AST-derived G2.1 prototype remain fixed references. The subsequent
+[R1 explicit state/transition gate](results/causal-transition-001/REVIEW.md) now
+passes seven cases, every cycle/final boundary and complete saved predictions.
+New ordinary execution has no AST, tracing or analysis dependency. Full evidence
+remains; sinks, macro migration and multi-source/credit-limited compression are
+separate future gates. Do not treat this equivalence result as a new speedup.
 
 Changes to recording must preserve message completion and closed execution.
 If repeated router work is the relevant cost, investigate batching between

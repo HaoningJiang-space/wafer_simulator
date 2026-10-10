@@ -1,6 +1,6 @@
 # R1: explicit state and ordinary one-cycle transition
 
-Status: registered implementation, not yet an equivalence receipt.
+Status: R1 accepted; see the [seven-case equivalence receipt](results/causal-transition-001/REVIEW.md).
 
 Preserve legacy `adapters/causal_merge.py` (SHA-256
 `24831579b2d0c49d11ab1003daef490754dba5d92e80b68c30da0fdbd1e9cf41`),
