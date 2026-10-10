@@ -67,3 +67,25 @@ Use fresh directories, clean main, same-source tests, source/interpreter/input/
 environment/result hashes. Preserve all failed attempts and large evidence on
 hn072. Do not retune the contract, use Native internal events, or claim a general
 network backend, application-gap result or hardware calibration.
+
+## Remote entry points
+
+```bash
+cd /Projects/haoning/wafer_simulator/source
+PYTHONPATH=src ../.venv/bin/python scripts/test_causal_macro_single_remote.py \
+  /Projects/haoning/wafer_simulator/runs/causal-macro-single-tests-NEW
+PYTHONPATH=src ../.venv/bin/python -m wafer_sim.experiments.causal_macro_single \
+  /Projects/haoning/wafer_simulator/runs/causal-macro-single-NEW \
+  --tests /Projects/haoning/wafer_simulator/runs/causal-macro-single-tests-NEW/TESTS.json
+PYTHONPATH=src ../.venv/bin/python -m wafer_sim.analysis.causal_macro_single \
+  /Projects/haoning/wafer_simulator/runs/causal-macro-single-NEW \
+  /Projects/haoning/wafer_simulator/runs/causal-macro-single-readback-NEW
+```
+
+Candidate compact evidence is persisted before original G1 observation. The
+reader restores that evidence rather than rerunning a correct candidate over
+it, regenerates only the independent reference, checks all macro boundaries,
+and recomputes cost tables from worker/process receipts. Expanded data use the
+G1 event-projection schema, including its compatibility scope string; the outer
+record explicitly identifies the actual G2.1 producer and compression metrics.
+The projection is not labelled as a new Native or uncompressed G1 execution.

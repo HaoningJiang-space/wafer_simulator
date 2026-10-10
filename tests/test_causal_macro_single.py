@@ -2,7 +2,7 @@
 from copy import deepcopy
 from pathlib import Path
 import unittest
-from wafer_sim.adapters.causal_macro import run,RangeQueue
+from wafer_sim.adapters.causal_macro import run,RangeQueue,expand_record
 from wafer_sim.adapters.causal_merge import simulate
 from wafer_sim.analysis.causal_macro_single import reference_boundaries,check_run,check_checkpoints
 from wafer_sim.io import read_json
@@ -70,3 +70,13 @@ class MacroSingleTests(unittest.TestCase):
         queue=RangeQueue();queue.reset(10,4);queue.skip(3)
         self.assertEqual((queue[0],queue[-1],len(queue)),(13,13,1))
         with self.assertRaises(ValueError):queue.skip(1)
+
+    def test_persisted_templates_expand_without_model_execution(self):
+        candidate=run(REG['contract'],self.demand(1024))
+        self.assertEqual(expand_record(candidate.record()),simulate(REG['contract'],self.demand(1024)))
+        bad=deepcopy(candidate.record())
+        segment=next(s for s in bad['evidence']['service'] if s['kind']=='repeat')
+        segment['period']=3
+        with self.assertRaises(ValueError):expand_record(bad)
+        bad=deepcopy(candidate.record());bad['evidence']['injections'][0]['rows'][0]+=1
+        with self.assertRaisesRegex(ValueError,'time evidence differs'):expand_record(bad)

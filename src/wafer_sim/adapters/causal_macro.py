@@ -137,6 +137,9 @@ class MacroRun:
         s=self.controller
         if not s.keep:raise ValueError('No complete evidence in counters mode')
         return {name:log.segments for name,log in s.logs.items()}
+    def record(self):
+        return dict(schema=1,producer='G2.1 pinned-G1 macro extension',compact=self.compact(),metrics=self.metrics(),
+            evidence=self.evidence() if self.controller.keep else None)
 
 
 class Controller:
@@ -298,3 +301,32 @@ def run(contract,messages,cycle_limit=200000,*,compress=True,evidence='compact',
         exec(compile(derived_source(),'<pinned G1 macro derivation>','exec'),namespace)
         _CORE=namespace['_derived_core']
     return _CORE(c,messages,cycle_limit,options=dict(compress=compress,evidence=evidence,checkpoints=checkpoints))
+
+
+def expand_record(record):
+    """Decode persisted compact evidence, without re-executing the solver."""
+    if (set(record)!={'schema','producer','compact','metrics','evidence'} or record['schema']!=1 or
+            record['producer']!='G2.1 pinned-G1 macro extension' or record['evidence'] is None):
+        raise ValueError('Complete macro evidence record required')
+    names={'service','input_arrivals','credit_returns','credit_sends','allocations','retired','injections','ejections'}
+    if set(record['evidence'])!=names:raise ValueError('Incomplete macro evidence inventory')
+    tables={}
+    for name,segments in record['evidence'].items():
+        kind='time' if name in ('injections','ejections') else 'retired' if name=='retired' else 'event'
+        log=Evidence(kind,True)
+        for segment in segments:
+            if segment.get('kind')=='rows' and set(segment)=={'kind','rows'}:
+                log.count+=len(segment['rows'])
+            elif (segment.get('kind')=='repeat' and set(segment)=={'kind','period','flit_stride','repetitions','template'} and
+                    segment['period']==2 and segment['flit_stride']==1 and type(segment['repetitions']) is int and segment['repetitions']>0):
+                log.count+=len(segment['template'])*segment['repetitions']
+            else:raise ValueError('Invalid macro evidence segment')
+        log.segments=segments;tables[name]=log.expand()
+        if len(tables[name])!=record['compact']['event_counts'][name]:raise ValueError('Macro evidence count differs')
+    c=record['compact'];message=c['messages'][0].copy();message['flits']=tables.pop('retired')
+    if (tables['injections']!=[f['injected'] for f in sorted(message['flits'],key=lambda f:(f['injected'],f['id']))] or
+            tables['ejections']!=[f['ejected'] for f in message['flits']]):raise ValueError('Source/receiver time evidence differs from retired flits')
+    tables.pop('injections');tables.pop('ejections')
+    return dict(complete=c['complete'],drained=c['drained'],final_cycle=c['final_cycle'],messages=[message],**tables,
+        source_stall_cycles=c['source_stall_cycles'],router_credit_stall_cycles=c['router_credit_stall_cycles'],queue_peaks=c['queue_peaks'],
+        native_boundary_inputs=False,processed_cycles=c['final_cycle'],scope='Independent bounded four-router G1 prediction; no service compression')

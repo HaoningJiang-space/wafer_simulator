@@ -38,6 +38,7 @@ def check_run(run,reference,boundaries):
     expanded=run.expand()
     if expanded!=reference:raise ValueError('Expanded complete prediction differs from G1')
     metrics=run.metrics();check_checkpoints(metrics['checkpoints'],boundaries)
+    if len(metrics['checkpoints'])!=2*metrics['macros']:raise ValueError('Missing macro end-state verification')
     if metrics['physical_cycle_updates']+metrics['skipped_cycles']!=reference['final_cycle']:
         raise ValueError('Incorrect physical/logical progress')
     if sum(b['end']-b['start'] for b in metrics['batches'])!=metrics['skipped_cycles']:
@@ -50,3 +51,102 @@ def check_run(run,reference,boundaries):
         service_boundaries=len(reference['service']),credit_returns=len(reference['credit_returns']),
         allocations=len(reference['allocations']),final_cycle=reference['final_cycle'],
         physical_cycle_updates=metrics['physical_cycle_updates'],skipped_cycles=metrics['skipped_cycles'],macros=metrics['macros'])
+
+
+def compact_reference(reference):
+    message=reference['messages'][0].copy();message['flits']=len(message['flits'])
+    counts={key:len(reference[key]) for key in ('service','input_arrivals','credit_returns','credit_sends','allocations')}
+    counts.update(retired=message['flits'],injections=message['flits'],ejections=message['flits'])
+    return dict(complete=reference['complete'],drained=True,final_cycle=reference['final_cycle'],messages=[message],event_counts=counts,
+        source_stall_cycles=reference['source_stall_cycles'],router_credit_stall_cycles=reference['router_credit_stall_cycles'],
+        queue_peaks=reference['queue_peaks'],native_boundary_inputs=False)
+
+
+class PersistedRun:
+    def __init__(self,record):self.record=record
+    def expand(self):
+        from wafer_sim.adapters.causal_macro import expand_record
+        return expand_record(self.record)
+    def metrics(self):return self.record['metrics']
+
+
+def analyze(root,output):
+    """Authenticate saved candidate, reproduce original G1, recheck every gate."""
+    from pathlib import Path
+    import hashlib
+    import statistics
+    import subprocess
+    from wafer_sim.adapters.causal_macro import derived_source
+    from wafer_sim.io import read_json,write_json,digest
+    repo=Path(__file__).resolve().parents[3]
+    if not output.is_absolute() or output.exists():raise ValueError('Fresh absolute readback required')
+    manifest=read_json(root/'COMPLETE.json');start=read_json(root/'STARTED.json')
+    if not manifest['complete'] or not manifest['accuracy_passed'] or (root/'FAILED.json').exists():raise ValueError('Incomplete G2.1 experiment')
+    for name,expected in manifest['artifacts_sha256'].items():
+        if digest(root/name)!=expected:raise ValueError('Changed G2.1 artifact: '+name)
+    for name,expected in start['source_hashes'].items():
+        if digest(repo/name)!=expected:raise ValueError('Changed G2.1 source: '+name)
+    if (digest(root/'DERIVED_CORE.py')!=start['derived_source_sha256'] or
+            hashlib.sha256(derived_source().encode()).hexdigest()!=start['derived_source_sha256']):raise ValueError('Different mechanical core derivation')
+    if digest(root/'ENVIRONMENT.json')!=start['environment_sha256']:raise ValueError('Changed environment receipt')
+    reg=read_json(repo/'configs/causal_macro_single.json');g1=read_json(repo/'configs/causal_closure.json')
+    summary=read_json(root/'RESULTS.json');rows=[]
+    expected_cases=[(n,0) for n in reg['accuracy_flits']]+[(1025,reg['delayed_ready'])]
+    if [(r['flits'],r['ready']) for r in summary['accuracy']]!=expected_cases:raise ValueError('Missing/duplicate G2.1 accuracy case')
+    for stored in summary['accuracy']:
+        n,ready=stored['flits'],stored['ready'];directory=root/f'accuracy-{n}-{ready}'
+        expected=dict(contract=g1['contract'],messages=[dict(source=0,destination=3,flits=n,ready=ready)],cycle_limit=reg['cycle_limit'])
+        if read_json(directory/'INPUT.json')!=expected:raise ValueError('Changed accuracy demand/contract')
+        record=read_json(directory/'MACRO_RECORD.json');candidate=PersistedRun(record)
+        cycles=[r['state']['cycle'] for r in candidate.metrics()['checkpoints']]
+        reference,boundaries=reference_boundaries(expected['contract'],expected['messages'],expected['cycle_limit'],cycles)
+        if reference!=read_json(directory/'G1_REFERENCE.json') or boundaries!={int(k):v for k,v in read_json(directory/'G1_BOUNDARIES.json').items()}:
+            raise ValueError('Saved G1 reference/boundaries differ from independent regeneration')
+        checked=check_run(candidate,reference,boundaries)
+        if record['compact']!=compact_reference(reference):raise ValueError('Compact logical summary differs')
+        checked.update(flits=n,ready=ready,macro_disabled_exact=True,compact_sha256=object_digest(record['compact']))
+        if checked!=stored or checked!=read_json(directory/'CHECKED.json'):raise ValueError('Accuracy receipt differs from evidence')
+        rows.append(checked)
+    costs=[];identities=set();cost_summary=[]
+    for stored in summary['cost']:
+        identity=(stored['flits'],stored['repetition'],stored['mode'])
+        if identity in identities:raise ValueError('Repeated cost worker identity')
+        identities.add(identity);n,repetition,mode=identity;directory=root/f'cost-{n}-{repetition}-{mode}'
+        worker=read_json(directory/'WORKER.json')
+        if {k:v for k,v in stored.items() if k not in ('flits','repetition','worker_wall_seconds','process_sha256')}!=worker:
+            raise ValueError('Cost summary differs from worker')
+        if digest(directory/'PROCESS.time')!=stored['process_sha256'] or read_json(directory/'CHECKED.json')!=stored:
+            raise ValueError('Cost process receipt differs')
+        expected=dict(contract=g1['contract'],messages=[dict(source=0,destination=3,flits=n,ready=0)],cycle_limit=reg['cycle_limit'])
+        if read_json(directory/'INPUT.json')!=expected:raise ValueError('Changed cost demand/contract')
+        costs.append(stored)
+    required={(n,r,m) for n in reg['benchmark_flits'] for r in range(reg['repetitions']) for m in ('g1','macro_off','macro_on')}
+    if identities!=required:raise ValueError('Incomplete cost coverage')
+    for n in reg['benchmark_flits']:
+        selected=[r for r in costs if r['flits']==n]
+        if len({object_digest(r['compact']) for r in selected})!=1:raise ValueError('Unequal cost-mode logical output')
+        by_mode={m:[r for r in selected if r['mode']==m] for m in ('g1','macro_off','macro_on')}
+        aggregate={m:dict(prediction_seconds_median=statistics.median(r['prediction_seconds'] for r in records),
+            worker_wall_seconds_median=statistics.median(r['worker_wall_seconds'] for r in records),
+            worker_wall_seconds_range=[min(r['worker_wall_seconds'] for r in records),max(r['worker_wall_seconds'] for r in records)],
+            process_peak_rss_kib_median=statistics.median(r['process_peak_rss_kib'] for r in records),
+            prediction_cpu_seconds_median=statistics.median(r['prediction_cpu_seconds'] for r in records),
+            physical_cycle_updates=records[0]['metrics']['physical_cycle_updates'],skipped_cycles=records[0]['metrics']['skipped_cycles'])
+            for m,records in by_mode.items()}
+        cost_summary.append(dict(flits=n,modes=aggregate,
+            same_core_prediction_speedup=aggregate['macro_off']['prediction_seconds_median']/aggregate['macro_on']['prediction_seconds_median'],
+            same_core_worker_speedup=aggregate['macro_off']['worker_wall_seconds_median']/aggregate['macro_on']['worker_wall_seconds_median'],
+            original_g1_worker_speedup=aggregate['g1']['worker_wall_seconds_median']/aggregate['macro_on']['worker_wall_seconds_median']))
+    output.mkdir();write_json(output/'RESULTS.json',dict(accuracy=rows,cost_summary=cost_summary,accuracy_passed=True,
+        scope='G2.1 one source-0 primary-contract message only; same-core counters cost separate from full evidence',native_executions=0,application_executions=0))
+    write_json(output/'VERIFIED.json',dict(readback_passed=True,accuracy_passed=True,source_commit=subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip(),
+        campaign_manifest_sha256=digest(root/'COMPLETE.json'),artifacts_checked=len(manifest['artifacts_sha256']),
+        result_sha256=digest(output/'RESULTS.json'),accuracy_cases=len(rows),cost_workers=len(costs),native_executions=0,application_executions=0))
+
+
+if __name__=='__main__':
+    import argparse
+    from pathlib import Path
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('campaign',type=Path);parser.add_argument('output',type=Path)
+    args=parser.parse_args();analyze(args.campaign,args.output)
