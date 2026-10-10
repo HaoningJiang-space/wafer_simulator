@@ -94,6 +94,7 @@ def compare_cycles(contract, messages, cycle_limit=200000, *, stream=None, pertu
     scheduled = {}
     next_sequence = 0
     boundaries = 0
+    last_cycle = -1
     chain = hashlib.sha256()
 
     def check(local, final=False):
@@ -116,7 +117,7 @@ def compare_cycles(contract, messages, cycle_limit=200000, *, stream=None, pertu
         boundaries += 1
 
     def trace(frame, event, arg):
-        nonlocal next_sequence
+        nonlocal next_sequence, last_cycle
         if (frame.f_code.co_filename == legacy.__code__.co_filename
                 and frame.f_code.co_name == 'schedule'):
             if event == 'return':
@@ -125,7 +126,9 @@ def compare_cycles(contract, messages, cycle_limit=200000, *, stream=None, pertu
             return trace
         if frame.f_code is not legacy.__code__:
             return None
-        if event == 'line' and frame.f_lineno == boundary_line:
+        if (event == 'line' and frame.f_lineno == boundary_line
+                and frame.f_locals['now'] != last_cycle):
+            last_cycle = frame.f_locals['now']
             check(frame.f_locals)
             scheduled.pop(frame.f_locals['now'], None)
             step_one_cycle(shadow)

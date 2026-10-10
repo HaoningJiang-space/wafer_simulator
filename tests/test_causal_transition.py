@@ -85,10 +85,9 @@ class CausalTransitionTests(unittest.TestCase):
     def test_future_event_reorder_is_detected_before_consumption(self):
         def change(state):
             if state.now == 1:
-                event = state.events.pending[2][0]
-                event.payload['flit'] = 99
+                state.events.pending[2].reverse()
         with self.assertRaises(StateDivergence) as raised:
-            compare_cycles(REG['contract'], ONE, perturb=change)
+            compare_cycles(REG['contract'], [ONE[0], dict(ONE[0], source=2)], perturb=change)
         self.assertEqual(raised.exception.record['cycle'], 1)
         self.assertIn('events', raised.exception.record['field'])
 
