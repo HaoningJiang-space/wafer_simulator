@@ -1,6 +1,7 @@
 # R2.2: evidence consumers independent of exact state transitions
 
-Registered implementation, not an accuracy receipt. Preserve G1, the AST G2.1
+The [accepted receipt](results/causal-evidence-001/REVIEW.md) covers the seven
+frozen cases and three modes. Preserve G1, the AST G2.1
 prototype, accepted records and all machine/transaction controls. No Native or
 application run. Full stays the default, with the original result schema.
 

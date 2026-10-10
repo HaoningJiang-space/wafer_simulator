@@ -325,6 +325,12 @@ waits are not pure IPC cost, and instrumented sections are not speedup measureme
 
 ## Frozen evidence
 
+The [R2.2 evidence-consumer separation](results/causal-evidence-001/REVIEW.md)
+now preserves all seven G1 cases, 30,604 boundary states and 10,787 full flit
+records across Full, Compact and Counters. Independent expansion and archived
+R1 byte/state checks pass; 71 targeted regressions pass. Eager packet/source
+state is retained, with no new Native/application execution or speedup claim.
+
 The old [boundary model choice](results/boundary-design-001/model_selection.md)
 and [group-sharing coverage](results/group-sharing-001/REVIEW.md) are complete.
 The latter reports actual shared paths but no final group slowdown; it is not a

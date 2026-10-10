@@ -17,6 +17,11 @@ separates abstract internal compute-tile services, direct C2C stitching and HB
 memory access. Native S uses one fabric for C2C, memory transactions and I/O.
 G1/G2's four-router validation has a narrower scope than the complete machine.
 
+The [R2.2 evidence separation](docs/results/causal-evidence-001/REVIEW.md)
+preserves all 30,604 causal/progress boundaries across Full, Compact and Counters.
+Full result bytes match R1; Compact independently expands to the original events.
+Counters provides completion/count semantics, with no complete flit-audit claim.
+
 All candidate resource numbers are **declared design assumptions**, not measured
 DRAM timing or a qualified TSMC/Cerebras system. Whole-object controller staging
 and an analytical bank service are explicit policies. See the
