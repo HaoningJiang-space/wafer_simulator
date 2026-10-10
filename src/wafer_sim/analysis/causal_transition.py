@@ -12,6 +12,9 @@ import sys
 from wafer_sim.adapters.causal_merge import simulate as legacy
 from wafer_sim.execution.causal import initialize, step_one_cycle, result
 
+PROGRESS_FIELDS = ('generated_at', 'injected', 'received', 'first_inject',
+                   'last_inject', 'first_eject', 'last_eject')
+
 
 def first_difference(expected, actual, path='state'):
     if type(expected) is not type(actual):
@@ -102,6 +105,8 @@ def legacy_progress(local):
             last_inject=injected[-1] if injected else None,
             first_eject=ejected[0] if ejected else None,
             last_eject=ejected[-1] if ejected else None))
+        if tuple(messages[-1]) != PROGRESS_FIELDS:
+            raise ValueError('Unexpected independent progress field inventory')
     return dict(schema=1, messages=messages)
 
 

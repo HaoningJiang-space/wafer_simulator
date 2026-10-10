@@ -1,6 +1,6 @@
 """R2.1 saved prediction/progress readback; no candidate is replaced by re-solving."""
 from pathlib import Path
-from wafer_sim.analysis.causal_transition import compare_cycles, check_saved_prediction, LedgerVerifier
+from wafer_sim.analysis.causal_transition import compare_cycles, check_saved_prediction, LedgerVerifier, PROGRESS_FIELDS
 from wafer_sim.io import digest, read_json, write_json
 
 
@@ -68,7 +68,7 @@ def check_case(directory, r1, case, g1, old_manifest, replay=False):
         allocations=len(saved['allocations']), final_cycle=saved['final_cycle'],
         predicted_finishes=[m['finish'] for m in saved['messages']],
         progress_boundaries_checked=checked['boundaries_checked'],
-        progress_fields_checked=checked['boundaries_checked']*len(case['messages'])*8,
+        progress_fields_checked=checked['boundaries_checked']*len(case['messages'])*len(PROGRESS_FIELDS),
         progress_ledger_sha256=digest(directory/'PROGRESS_DIGESTS.jsonl'),
         default_ledger_sha256=digest(directory/'STATE_DIGESTS.jsonl'),
         input_sha256=digest(directory/'INPUT.json'), prediction_sha256=digest(directory/'PREDICTION.json'),

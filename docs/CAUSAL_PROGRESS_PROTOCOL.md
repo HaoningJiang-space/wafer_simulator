@@ -20,7 +20,7 @@ legacy-compatible view of `generated_at`, not a second mutable state copy.
 
 The full result and R1 default snapshot schema remain unchanged. Snapshot's
 `ejected` compatibility field represents the semantic `received` count.
-`progress_snapshot()` provides a separate immutable projection of all eight
+`progress_snapshot()` provides a separate immutable projection of all seven
 new semantic fields. Default snapshot diagnostics still inspect full event
 counts; snapshots remain optional validation tools, not macro detectors.
 No independent counters-only production backend is introduced.
@@ -35,7 +35,7 @@ summaries unchanged. These probes demonstrate separation; damaged histories
 are not accepted as complete evidence.
 
 Run the seven frozen G1 cases. Persist ordinary full prediction before reference
-observation. Compare every R1 default state boundary and all eight progress
+observation. Compare every R1 default state boundary and all seven progress
 fields against independent G1 histories, including initial and drained states.
 Preserve same-clock event sequence and its next ID. Stream a separate progress
 digest ledger. Require full prediction and old default ledger bytes equal the

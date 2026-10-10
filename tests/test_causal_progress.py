@@ -52,6 +52,9 @@ class CausalProgressTests(unittest.TestCase):
 
     def test_zero_clocks_and_unstarted_progress_remain_distinct(self):
         state = initialize(REG['contract'], ONE)
+        self.assertEqual(set(state.progress[0].record()),
+                         {'generated_at', 'injected', 'received', 'first_inject',
+                          'last_inject', 'first_eject', 'last_eject'})
         self.assertEqual(state.progress[0], MessageProgress())
         self.assertEqual(state.generated, {})
         step_one_cycle(state)
