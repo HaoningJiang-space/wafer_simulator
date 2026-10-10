@@ -33,3 +33,10 @@ tests: `causal-evidence-tests-001`; readback: `causal-evidence-readback-001`.
 [Published copies](PUBLISHED_COPIES.json) are byte-verified against these server
 paths. The campaign manifest is
 `d54777804687969659b349db01cfbf8ce528e9af3baa0b73fd0ebad6237e05ff`.
+
+After R3, the ordinary core was revalidated at
+`be45fff9f41e688761a7bc2aea3900f7eb995315`: the same seven cases, 30,604 boundaries,
+10,787 flits and three modes passed [independent readback](final-core/VERIFIED.json).
+The result hash is unchanged. These supplemental [copies](final-core/PUBLISHED_COPIES.json)
+preserve the original receipt above and point to `causal-evidence-002` and
+`causal-evidence-readback-002`; its test source is the 84-test R3 receipt.
