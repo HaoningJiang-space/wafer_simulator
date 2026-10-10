@@ -139,9 +139,13 @@ def plot(events, windows, path, title, focus=None):
     import matplotlib.pyplot as plt
     identities = sorted({e['input_identity'] for e in events})
     fig, axes = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
+    final_boundary = max(e['cycle'] for e in events)+1
     for identity in identities:
         cycles = sorted(e['cycle']+1 for e in events if e['input_identity'] == identity)
-        axes[0].step([0, *cycles], list(range(len(cycles)+1)), where='post', label=identity)
+        points = [0, *cycles]; amounts = list(range(len(cycles)+1))
+        if cycles[-1] < final_boundary:
+            points.append(final_boundary); amounts.append(len(cycles))
+        axes[0].step(points, amounts, where='post', label=identity)
         counts = [w['input_counts'].get(identity, 0) for w in windows]
         axes[1].step([w['begin'] for w in windows]+[windows[-1]['end']], counts+[counts[-1]],
                      where='post', label=identity)

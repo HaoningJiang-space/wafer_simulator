@@ -29,6 +29,11 @@ This protocol creates no application backend and runs no application.
    Reject cross-output accept competition instead of feeding observed accept
    decisions back into the replay. This is **conditional diagnosis**, not
    independent arrival, feedback, source-release or message-completion prediction.
+4. A second observation build adds processed credit returns. A bounded local
+   state replay receives actual input arrivals and actual credit returns, then
+   computes FIFO heads, VC ownership, credit balance, eligibility, pointers and
+   pipeline boundaries itself. Native requests/service clocks are comparison
+   targets only. Surrounding network boundaries remain externally supplied.
 
 ## Source finding: observe VC allocation as well as switch allocation
 
@@ -55,6 +60,7 @@ The observation draft therefore records:
   whether a fresh VC/switch evaluation is pending;
 - output VC owner/availability, credit slots/fullness and output-buffer occupancy;
 - successful VC commit, switch commit and output-channel send per flit.
+- processed credit returns and declared pipeline/channel delays (second build).
 
 An upstream router ID such as 12 is not the router-local input-port index.
 The recorded attachment links these identities. Existing full channel traces

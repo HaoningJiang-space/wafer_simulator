@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 from wafer_sim.analysis.local_service import conditional_replay, output_events, read_observation
+from wafer_sim.analysis.local_service_state import reconstruct_state, compare_state
 from wafer_sim.analysis.source_order import authenticated
 from wafer_sim.experiments.server import require_active_server
 from wafer_sim.experiments.shared_spatial_service import component_cases, component_probe
@@ -91,6 +92,7 @@ def run(output, binary, tests):
         selection=dict(router=24, destination=36), new_application_executions=0,
         source_hashes={str(p.relative_to(REPO)): digest(p) for p in [
             Path(__file__).resolve(), REPO/'src/wafer_sim/analysis/local_service.py',
+            REPO/'src/wafer_sim/analysis/local_service_state.py',
             REPO/'src/wafer_sim/adapters/native/wafer_local_service.inc',
             REPO/'src/wafer_sim/adapters/native/wafer_local_service.hpp',
             REPO/'patches/booksim-local-service-observation.patch',
@@ -131,6 +133,17 @@ def run(output, binary, tests):
                 raise ValueError('Observation selection mismatch')
             boundaries = check_boundaries(observations, record)
             write_json(directory/'BOUNDARIES.json', boundaries)
+            contracts = [r for r in observations if r['kind'] == 'contract']
+            if len(contracts) != 1: raise ValueError('Missing observed timing contract')
+            # Supply external boundaries only, not native requests or service clocks.
+            arrivals = [dict(flit=r['flit'], input=r['input_port'], cycle=r['local_arrival'])
+                        for r in boundaries]
+            credits = [dict(cycle=r['cycle'], amount=r['amount']) for r in observations
+                       if r['kind'] == 'credit_return']
+            causal = reconstruct_state(arrivals, credits, contracts[0])
+            state_check = compare_state(observations, boundaries, causal)
+            write_json(directory/'STATE_REPLAY.json', causal)
+            write_json(directory/'STATE_CHECKED.json', state_check)
             replay = []
             for stage in ('vc', 'sw'):
                 try:
@@ -141,6 +154,7 @@ def run(output, binary, tests):
                     replay.append(dict(stage=stage, supported=False, reason=str(error)))
             row = dict(name=name, exact_messages=True, exact_protocol=True, exact_input=True,
                        observed_flits=len(boundaries), conditional_replay=replay,
+                       state_reconstruction=state_check,
                        independent_arrival_feedback_prediction=False)
             write_json(directory/'CHECKED.json', row); rows.append(row)
         if digest(baseline) != REFERENCE_BINARY:

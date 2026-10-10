@@ -12,6 +12,7 @@ struct LocalObserver {
   int router = -1, destination = -1;
   long rows = 0;
   bool finished = false;
+  bool contract_written = false;
   std::ofstream stream;
   LocalObserver() {
     const char *path = std::getenv("WAFER_LOCAL_SERVICE_OUTPUT");
@@ -26,7 +27,7 @@ struct LocalObserver {
     stream.open(path, std::ios::out);
     if (!stream) throw std::runtime_error("Cannot open local-service evidence");
     write({{"kind", "begin"}, {"router", router}, {"destination", destination},
-      {"schema", 1}, {"scope", "conditional local observation, not a backend"}});
+      {"schema", 2}, {"scope", "conditional local observation, not a backend"}});
   }
   void write(const LocalJson &record) {
     if (finished) throw std::runtime_error("Observation after checked close");
@@ -43,7 +44,7 @@ int IQRouter::_WaferLocalOutput() const {
   if (observer.router != _id) return -1;
   if (_vcs != 1 || _input_speedup != 1 || _output_speedup != 1 ||
       _speculative || _hold_switch_for_packet ||
-      _vc_alloc_delay != 1 || _sw_alloc_delay != 1 || _internal_speedup != 1.0)
+      _vc_alloc_delay != 1 || _sw_alloc_delay != 1 || _internal_speedup != 1.0 || _routing_delay != 0)
     throw std::runtime_error("Unsupported local-service observation contract");
   int selected = -1;
   for (int output = 0; output < _outputs; ++output) {
@@ -65,11 +66,21 @@ void IQRouter::_WaferLocalAllocation(const char *stage, bool after) const {
   const auto *islip = dynamic_cast<const iSLIP_Sparse *>(allocator);
   if (!islip || islip->WaferIterations() != 1)
     throw std::runtime_error("Observed allocator must be one-iteration iSLIP");
+  if (!local_observer().contract_written) {
+    local_observer().write({{"kind", "contract"}, {"input_count", _inputs},
+      {"crossbar_delay", _crossbar_delay}, {"channel_latency", _output_channels[output]->GetLatency()},
+      {"downstream_capacity", _next_buf[output]->LimitFor(0)}, {"vc_busy_when_full", _vc_busy_when_full},
+      {"output_buffer_limit", _output_buffer_size}, {"routing_delay", _routing_delay},
+      {"vc_alloc_delay", _vc_alloc_delay}, {"sw_alloc_delay", _sw_alloc_delay}});
+    local_observer().contract_written = true;
+  }
   LocalJson rows = LocalJson::array();
   for (int input = 0; input < _inputs; ++input) {
     const Buffer *buffer = _buf[input];
     const bool empty = buffer->Empty(0);
     const Flit *head = empty ? nullptr : buffer->FrontFlit(0);
+    if (head && (!head->head || !head->tail))
+      throw std::runtime_error("Local observation requires single-flit packets");
     const Router *upstream = _input_channels[input]->GetSource();
     LocalJson other = LocalJson::array();
     for (int port = 0; port < _outputs; ++port)
@@ -113,6 +124,12 @@ void IQRouter::_WaferLocalFlit(const char *kind, int input, int output, const Fl
   local_observer().write({{"kind", kind}, {"cycle", GetSimTime()}, {"router", _id},
     {"output", output}, {"destination", local_observer().destination},
     {"input", input}, {"flit", flit->id}, {"message", flit->mid}});
+}
+
+void IQRouter::_WaferLocalCredit(int output, int amount) const {
+  if (_WaferLocalOutput() != output) return;
+  local_observer().write({{"kind", "credit_return"}, {"cycle", GetSimTime()},
+    {"amount", amount}, {"output", output}, {"router", _id}});
 }
 
 void WaferLocalServiceFinish() {

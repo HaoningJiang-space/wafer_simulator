@@ -11,13 +11,14 @@
  
 --- a/rapidchiplet/booksim2/src/routers/iq_router.hpp
 +++ b/rapidchiplet/booksim2/src/routers/iq_router.hpp
-@@ -127,6 +127,10 @@
+@@ -127,6 +127,11 @@
  
    bool _SWAllocAddReq(int input, int vc, int output);
  
 +  int _WaferLocalOutput() const;
 +  void _WaferLocalAllocation(const char *stage, bool after) const;
 +  void _WaferLocalFlit(const char *kind, int input, int output, const Flit *flit) const;
++  void _WaferLocalCredit(int output, int amount) const;
 +
    void _InputQueuing( );
  
@@ -32,6 +33,14 @@
  IQRouter::IQRouter( Configuration const & config, Module *parent, 
  		    string const & name, int id, int inputs, int outputs )
  : Router( config, parent, name, id, inputs, outputs ), _active(false)
+@@ -447,6 +448,7 @@
+ #endif
+ 
+     dest_buf->ProcessCredit(c);
++    _WaferLocalCredit(output, static_cast<int>(c->vc.size()));
+     c->Free();
+     _proc_credits.pop_front();
+   }
 @@ -698,7 +699,9 @@
      _vc_allocator->PrintRequests( gWatchOut );
    }

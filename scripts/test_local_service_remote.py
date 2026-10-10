@@ -15,10 +15,10 @@ if not output.is_absolute() or not output.is_relative_to(root/'runs') or output.
 if subprocess.check_output(['git', '-C', str(repo), 'status', '--porcelain']):
     raise ValueError('Clean committed source required')
 output.mkdir()
-suite = unittest.TestLoader().discover(str(repo/'tests'), pattern='test_local_service.py')
+suite = unittest.TestLoader().discover(str(repo/'tests'), pattern='test_local_service*.py')
 with (output/'tests.log').open('w') as log:
     result = unittest.TextTestRunner(stream=log, verbosity=2).run(suite)
-write_json(output/'TESTS.json', dict(passed=result.wasSuccessful(), modules=['test_local_service'],
+write_json(output/'TESTS.json', dict(passed=result.wasSuccessful(), modules=['test_local_service', 'test_local_service_state'],
     tests=result.testsRun, tests_log=str(output/'tests.log'), tests_log_sha256=digest(output/'tests.log'),
     source_commit=subprocess.check_output(['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True).strip(),
     executable_sha256=digest(Path(sys.executable).resolve()), python=sys.version))
