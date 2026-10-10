@@ -1,6 +1,6 @@
 # R2.1: semantic MessageProgress independent of history lists
 
-Status: registered implementation, not an equivalence receipt.
+Status: R2.1 accepted; see the [semantic-progress equivalence receipt](results/causal-progress-001/REVIEW.md).
 
 Only separate per-message semantic progress from FullEvidence. Preserve G1,
 G2.1, R1 inputs/results and machine/transition order. Do not introduce sinks,

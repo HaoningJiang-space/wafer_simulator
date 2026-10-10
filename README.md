@@ -128,6 +128,12 @@ state, immutable snapshots and one-cycle execution without AST or analysis
 dependencies. Seven G1 cases match all 30,604 state boundaries and full saved
 predictions; 56 targeted regressions pass. G1/G2.1 references remain unchanged;
 macro migration and evidence-sink separation are still deferred.
+The [R2.1 progress receipt](docs/results/causal-progress-001/REVIEW.md) separates
+message counts/times from evidence histories. Completion, remaining work and
+message summaries now read semantic progress. Seven cases retain byte-identical
+full output/default ledgers; 65 targeted tests and independent progress-field
+readback pass. Full recording and source storage remain; no sink or macro was
+migrated and no new acceleration result is claimed.
 
 The [information and boundary evidence](docs/NECESSARY_INFORMATION.md) separates
 observed failures from constructed distinguishing cases. S remains the detailed

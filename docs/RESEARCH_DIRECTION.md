@@ -276,6 +276,14 @@ New ordinary execution has no AST, tracing or analysis dependency. Full evidence
 remains; sinks, macro migration and multi-source/credit-limited compression are
 separate future gates. Do not treat this equivalence result as a new speedup.
 
+The [R2.1 progress separation](results/causal-progress-001/REVIEW.md) now makes
+generation, injection/receipt counts and first/last clocks independent semantic
+state. Full recording remains, but completion/remaining/summary no longer read
+timestamp lists. Seven frozen components retain byte-identical R1 results and
+default boundary ledgers, with every new semantic field independently checked.
+Write-only/erased-history probes verify the separation. Recording sinks, source
+storage changes, lightweight macro keys and R3 migration remain future work.
+
 Changes to recording must preserve message completion and closed execution.
 If repeated router work is the relevant cost, investigate batching between
 causally necessary boundaries with event equivalence; do not assume an unchanged
