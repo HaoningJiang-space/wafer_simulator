@@ -1,0 +1,90 @@
+{
+  "cases": [
+    {
+      "critical_sink_arrival_span": null,
+      "critical_token": null,
+      "destination": 36,
+      "fixed_window_cycles": 128,
+      "input_counts": {
+        "router/12": 2048,
+        "router/25": 1024
+      },
+      "name": "three-shared-stagger-0",
+      "output_flits": 3072,
+      "router": 24,
+      "scope": "Observed local arrivals and output sink arrivals; no eligibility inference",
+      "windows": 49
+    },
+    {
+      "critical_sink_arrival_span": null,
+      "critical_token": null,
+      "destination": 36,
+      "fixed_window_cycles": 128,
+      "input_counts": {
+        "router/12": 2048,
+        "router/25": 1024
+      },
+      "name": "three-shared-stagger-509",
+      "output_flits": 3072,
+      "router": 24,
+      "scope": "Observed local arrivals and output sink arrivals; no eligibility inference",
+      "windows": 49
+    },
+    {
+      "critical_sink_arrival_span": null,
+      "critical_token": null,
+      "destination": 36,
+      "fixed_window_cycles": 128,
+      "input_counts": {
+        "router/12": 2048,
+        "router/25": 1024
+      },
+      "name": "three-shared-stagger-3000",
+      "output_flits": 3072,
+      "router": 24,
+      "scope": "Observed local arrivals and output sink arrivals; no eligibility inference",
+      "windows": 64
+    },
+    {
+      "critical_sink_arrival_span": [
+        3276,
+        9353
+      ],
+      "critical_token": "first17/phase/4",
+      "destination": 34,
+      "fixed_window_cycles": 128,
+      "input_counts": {
+        "endpoint/69": 258,
+        "router/47": 2049,
+        "router/58": 4655
+      },
+      "name": "6-B-critical-output",
+      "output_flits": 6962,
+      "router": 46,
+      "scope": "Observed local arrivals and output sink arrivals; no eligibility inference",
+      "windows": 228
+    },
+    {
+      "critical_sink_arrival_span": [
+        3276,
+        10533
+      ],
+      "critical_token": "first21/phase/4",
+      "destination": 42,
+      "fixed_window_cycles": 128,
+      "input_counts": {
+        "endpoint/84": 258,
+        "router/57": 2049,
+        "router/58": 8,
+        "router/70": 4614
+      },
+      "name": "7-B-critical-output",
+      "output_flits": 6929,
+      "router": 56,
+      "scope": "Observed local arrivals and output sink arrivals; no eligibility inference",
+      "windows": 241
+    }
+  ],
+  "new_application_executions": 0,
+  "new_native_executions": 0
+}

@@ -1,0 +1,125 @@
+{
+  "application_executions": 0,
+  "conditional_replay_only": true,
+  "independent_component_model_gate": "not attempted; eligibility and feedback supplied by native",
+  "native_component_executions": 3,
+  "rows": [
+    {
+      "conditional_replay": [
+        {
+          "allocation_calls": 5099,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 2026,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "vc"
+        },
+        {
+          "allocation_calls": 3072,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 0,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "sw"
+        }
+      ],
+      "exact_input": true,
+      "exact_messages": true,
+      "exact_protocol": true,
+      "independent_arrival_feedback_prediction": false,
+      "name": "three-shared-stagger-0",
+      "observed_flits": 3072,
+      "state_reconstruction": {
+        "allocation_calls_checked": 8171,
+        "boundary_errors": [],
+        "boundary_mismatches": 0,
+        "credit_returns_from_native": true,
+        "eligibility_from_native": false,
+        "eligibility_mismatches": 0,
+        "pointer_mismatches": 0,
+        "processed_event_times": 6165,
+        "scope": "Conditional local reconstruction, not an independent network backend",
+        "skipped_empty_or_blocked_cycles": 18,
+        "upstream_arrivals_from_native": true
+      }
+    },
+    {
+      "conditional_replay": [
+        {
+          "allocation_calls": 5119,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 2047,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "vc"
+        },
+        {
+          "allocation_calls": 3072,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 0,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "sw"
+        }
+      ],
+      "exact_input": true,
+      "exact_messages": true,
+      "exact_protocol": true,
+      "independent_arrival_feedback_prediction": false,
+      "name": "three-shared-stagger-509",
+      "observed_flits": 3072,
+      "state_reconstruction": {
+        "allocation_calls_checked": 8191,
+        "boundary_errors": [],
+        "boundary_mismatches": 0,
+        "credit_returns_from_native": true,
+        "eligibility_from_native": false,
+        "eligibility_mismatches": 0,
+        "pointer_mismatches": 0,
+        "processed_event_times": 6165,
+        "scope": "Conditional local reconstruction, not an independent network backend",
+        "skipped_empty_or_blocked_cycles": 18,
+        "upstream_arrivals_from_native": true
+      }
+    },
+    {
+      "conditional_replay": [
+        {
+          "allocation_calls": 3072,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 0,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "vc"
+        },
+        {
+          "allocation_calls": 3072,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 0,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "sw"
+        }
+      ],
+      "exact_input": true,
+      "exact_messages": true,
+      "exact_protocol": true,
+      "independent_arrival_feedback_prediction": false,
+      "name": "three-shared-stagger-3000",
+      "observed_flits": 3072,
+      "state_reconstruction": {
+        "allocation_calls_checked": 6144,
+        "boundary_errors": [],
+        "boundary_mismatches": 0,
+        "credit_returns_from_native": true,
+        "eligibility_from_native": false,
+        "eligibility_mismatches": 0,
+        "pointer_mismatches": 0,
+        "processed_event_times": 6207,
+        "scope": "Conditional local reconstruction, not an independent network backend",
+        "skipped_empty_or_blocked_cycles": 1838,
+        "upstream_arrivals_from_native": true
+      }
+    }
+  ]
+}

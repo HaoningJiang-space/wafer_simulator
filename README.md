@@ -92,8 +92,16 @@ inaccurate; a shared output records 501/501/1,002 flits from two input branches.
 All 69 saved S critical messages have zero source-generation wait, whereas
 two-plus-one local input structure occurs in 6×6/7×7 B critical responses.
 Source ordering explains the component counterexample, but is not established as
-the primary application-gap cause. The next service question is local arrival
-and input identity; no application variant or new native run is added.
+the primary application-gap cause. That historical study added no native or application run.
+
+The [local-service reconstruction](docs/results/local-service-001/REVIEW.md)
+is complete: six small Native observations preserve full accepted events, with
+zero new application runs. The focal single VC filters inputs before switch
+allocation; overlapping components have competing VC requests but no multi-input
+switch requests. A local FIFO/ownership/pipeline replay computes eligibility from
+observed arrivals and credit returns, matching all 36,864 service-clock comparisons
+and 22,506 allocator-call checks. This is conditional diagnosis, not independent
+network prediction, an application-gap result or a speedup claim.
 
 The [information and boundary evidence](docs/NECESSARY_INFORMATION.md) separates
 observed failures from constructed distinguishing cases. S remains the detailed

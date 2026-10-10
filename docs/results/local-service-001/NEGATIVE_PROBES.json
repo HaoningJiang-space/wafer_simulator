@@ -1,0 +1,31 @@
+{
+  "inputs_sha256": {
+    "BOUNDARIES.json": "949f0c393254d077fe1bd436fed89ea59a66261625b7dc96aecdea065730d70a",
+    "LOCAL_SERVICE.jsonl": "4bdfca8efbb0aac678728de7fee1981b3d385de659ddb65905fa9ae4a77a428d",
+    "NETWORK_RESULT.json": "bed7c018889eefca11fa6e5d68a1c0a1fc6c072aac016e8cd06b8ec0095738bc"
+  },
+  "passed": true,
+  "probes": [
+    {
+      "name": "missing_credit_drain",
+      "reason": "Incomplete local data or credit drainage",
+      "rejected": true
+    },
+    {
+      "name": "missing_switch_commit",
+      "reason": "Unmatched local service event",
+      "rejected": true
+    },
+    {
+      "name": "self_consistent_wrong_boundary_table",
+      "reason": "Rebuilt raw evidence differs from candidate boundary table",
+      "rejected": true
+    },
+    {
+      "name": "wrong_native_grant",
+      "reason": "Exactly one conditional grant mismatch",
+      "rejected": true
+    }
+  ],
+  "source_commit": "343df8094a7630b49af7e8e22b3bbb0cedda50dd"
+}

@@ -1,0 +1,86 @@
+{
+  "application_executions": 0,
+  "conditional_replay_only": true,
+  "independent_component_model_gate": "not attempted; eligibility and feedback supplied by native",
+  "native_component_executions": 3,
+  "rows": [
+    {
+      "conditional_replay": [
+        {
+          "allocation_calls": 5099,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 2026,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "vc"
+        },
+        {
+          "allocation_calls": 3072,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 0,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "sw"
+        }
+      ],
+      "exact_input": true,
+      "exact_messages": true,
+      "exact_protocol": true,
+      "independent_arrival_feedback_prediction": false,
+      "name": "three-shared-stagger-0",
+      "observed_flits": 3072
+    },
+    {
+      "conditional_replay": [
+        {
+          "allocation_calls": 5119,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 2047,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "vc"
+        },
+        {
+          "allocation_calls": 3072,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 0,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "sw"
+        }
+      ],
+      "exact_input": true,
+      "exact_messages": true,
+      "exact_protocol": true,
+      "independent_arrival_feedback_prediction": false,
+      "name": "three-shared-stagger-509",
+      "observed_flits": 3072
+    },
+    {
+      "conditional_replay": [
+        {
+          "allocation_calls": 3072,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 0,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "vc"
+        },
+        {
+          "allocation_calls": 3072,
+          "grant_mismatches": 0,
+          "multiple_request_calls": 0,
+          "pointer_mismatches": 0,
+          "scope": "Conditional true-request replay; no independent arrival or credit prediction",
+          "stage": "sw"
+        }
+      ],
+      "exact_input": true,
+      "exact_messages": true,
+      "exact_protocol": true,
+      "independent_arrival_feedback_prediction": false,
+      "name": "three-shared-stagger-3000",
+      "observed_flits": 3072
+    }
+  ]
+}

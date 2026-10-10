@@ -1,10 +1,11 @@
-# Local service reconstruction: bounded protocol and unexecuted preparation
+# Local service reconstruction: bounded protocol
 
-**Status: registered preparation; execution requires checked receipts.** The
-temporary local network/Git restriction was removed before execution. Credentials
-remain outside this project. This protocol itself is not a build, test, native
-equivalence or model-accuracy receipt. Read-only patch applicability checks are
-source inspection, not native validation.
+**Status: conditional reconstruction completed and independently checked.**
+See [the result](results/local-service-001/REVIEW.md). Six small Native component
+observations across two isolated builds preserve accepted full events/protocols;
+no application was executed. The second replay computes local eligibility from
+actual arrivals and credit returns. Independent surrounding-network prediction
+remains unimplemented. Credentials remain outside this project.
 
 ## Question and fixed scope
 
@@ -50,9 +51,10 @@ an input from reaching switch competition; an active owner may legally have
 `vc_available=false`. Do not interpret that flag as a universal switch
 ineligibility test. With one output VC, the observed two-branch alternation may
 already be chosen in VC allocation, leaving little switch-level competition.
-This is a source-supported possibility, not a new trace result.
+The completed observation confirms this ordering in the three registered
+components; see the result for counts and scope.
 
-The observation draft therefore records:
+The isolated observation records:
 
 - VC and switch pre/post request snapshots, actual input-port IDs, upstream
   router identity, round-robin pointer and raw allocator match;
@@ -93,7 +95,7 @@ close the common-source 60-cycle boundary cancellation. New independent service
 work should proceed only after the conditional evidence is read and checked.
 There is no automatic transition from this campaign to the application matrix.
 
-## Prepared entry points (hn072 only)
+## Reproduction entry points (hn072 only)
 
 Commit the preparation on `main` and synchronize it before running. Then use
 fresh directories, leaving old artifacts untouched:
@@ -101,18 +103,18 @@ fresh directories, leaving old artifacts untouched:
 ```bash
 cd /Projects/haoning/wafer_simulator/source
 PYTHONPATH=src ../.venv/bin/python scripts/test_local_service_remote.py \
-  /Projects/haoning/wafer_simulator/runs/local-service-tests-001
+  /Projects/haoning/wafer_simulator/runs/local-service-tests-NEW
 PYTHONPATH=src ../.venv/bin/python -m wafer_sim.analysis.local_service \
   /Projects/haoning/wafer_simulator/runs/d1-components-001 \
   /Projects/haoning/wafer_simulator/runs/d1-applications-001 \
   docs/results/shared-spatial-service-001/VERIFIED.json \
-  /Projects/haoning/wafer_simulator/runs/local-service-reconstruction-001
+  /Projects/haoning/wafer_simulator/runs/local-service-reconstruction-NEW
 bash scripts/build_local_service_remote.sh \
-  /Projects/haoning/wafer_simulator/build/booksim-local-service-001
+  /Projects/haoning/wafer_simulator/build/booksim-local-service-NEW
 PYTHONPATH=src ../.venv/bin/python -m wafer_sim.experiments.local_service \
-  --output /Projects/haoning/wafer_simulator/runs/local-service-components-001 \
-  --binary /Projects/haoning/wafer_simulator/build/booksim-local-service-001/online_booksim \
-  --tests /Projects/haoning/wafer_simulator/runs/local-service-tests-001/TESTS.json
+  --output /Projects/haoning/wafer_simulator/runs/local-service-components-NEW \
+  --binary /Projects/haoning/wafer_simulator/build/booksim-local-service-NEW/online_booksim \
+  --tests /Projects/haoning/wafer_simulator/runs/local-service-tests-NEW/TESTS.json
 ```
 
 The reconstruction produces five curve pairs and fixed-window tables from old
@@ -120,5 +122,5 @@ data. Event tables and sidecars stay on the experiment server. Native observatio
 run only the three registered small components. Source/binary/input/environment
 and output hashes, same-source tests, compiler identity and original binary
 immutability are required. New plots must be visually inspected after generation.
-No speedup, hardware calibration, algorithm novelty or application accuracy is
-claimed by this preparation.
+The completed result makes no speedup, hardware-calibration, algorithm-novelty
+or application-accuracy claim. The reader entry point is documented in its report.

@@ -1,0 +1,61 @@
+{
+  "affinity": [
+    18,
+    19
+  ],
+  "baseline_binary_sha256": "d37fc5551d90adb03f2595f9e23ef0199b39be3a572f315ef154bad172d93beb",
+  "build_manifest_sha256": "98d2482d8adb3d12446d621e145593ea74c378d8454323b80dab0fd54fe7698d",
+  "compiler_sha256": "2492f521845dd536aad96475a9c2fd8299b960a29d0821dcab0bbe0e1668717b",
+  "component_manifest_sha256": "44ca1ce850c3e47e536bed18929d76f0dd0feedd0f90bec800f2823c637ccc93",
+  "executable_sha256": "4d41dd95179ff96a9cf4ced37c735eb75ba50c87fef6bdaabd3b1558070a2edb",
+  "host": "ee4e072",
+  "new_application_executions": 0,
+  "observed_binary_sha256": "d55bc6e86d0197168ab14da54ef9b840aac458dc1d2b1279c8b79e8bed2ab51e",
+  "packages": [
+    "contourpy==1.4.0",
+    "cycler==0.12.1",
+    "fonttools==4.66.1",
+    "kiwisolver==1.5.1",
+    "matplotlib==3.11.2",
+    "networkx==3.7",
+    "numpy==2.5.3",
+    "packaging==26.3",
+    "pandas==3.0.6",
+    "pillow==12.3.0",
+    "pymetis==2025.2.2",
+    "pyparsing==3.3.3",
+    "python-dateutil==2.9.0.post0",
+    "scipy==1.18.1",
+    "shapely==2.1.2",
+    "six==1.17.0",
+    "typing_extensions==4.16.0"
+  ],
+  "python": "3.13.16 | packaged by conda-forge | (main, Oct  7 2026, 00:29:52) [GCC 15.3.0]",
+  "selection": {
+    "destination": 36,
+    "router": 24
+  },
+  "source_commit": "a0b3b320eccc138ca9ad67c08afd5b562c622c99",
+  "source_hashes": {
+    "patches/booksim-local-service-observation.patch": "a5a4244d19ffa0e90cff548133ad8f29cd6bc11d308f554ee4306ff85545efff",
+    "patches/online-booksim-local-service.patch": "1daa08d3f392866dda7b02c31cc8d565c9224816e250b08d87f4f7d3eceea0b1",
+    "src/wafer_sim/adapters/native/wafer_local_service.hpp": "8664ac5a2946fd288b5df08d755050684f40f84fa7f9c86b914c52d83b96b45d",
+    "src/wafer_sim/adapters/native/wafer_local_service.inc": "b79dd81b74db27209c2e8379cca07e0f50ce960c4c9a53de02946a8529cc9a8b",
+    "src/wafer_sim/analysis/local_service.py": "8fb32f74815fa535b586517c99efc22ba2118280af921893d7f4dc0ac6838a4e",
+    "src/wafer_sim/analysis/local_service_state.py": "63650c02db50c1f34da17358b69b54e0d291f0f120c621121f7df4007fd1d413",
+    "src/wafer_sim/experiments/local_service.py": "620fbff6d284bf439e1f109802c3bb78e51a687fec77956d98ad37b838220a87"
+  },
+  "tests": {
+    "executable_sha256": "4d41dd95179ff96a9cf4ced37c735eb75ba50c87fef6bdaabd3b1558070a2edb",
+    "modules": [
+      "test_local_service",
+      "test_local_service_state"
+    ],
+    "passed": true,
+    "python": "3.13.16 | packaged by conda-forge | (main, Oct  7 2026, 00:29:52) [GCC 15.3.0]",
+    "source_commit": "a0b3b320eccc138ca9ad67c08afd5b562c622c99",
+    "tests": 13,
+    "tests_log": "/Projects/haoning/wafer_simulator/runs/local-service-tests-002/tests.log",
+    "tests_log_sha256": "fc85a02ccbd587c1d177e9277527696f4d9e999988297733598a03da2542e5a3"
+  }
+}

@@ -23,7 +23,7 @@ caused its failure.
 | Independent message duration without background state | Same endpoints/payload, empty versus occupied path | [Isolated responses](results/isolated-response-001/REVIEW.md) and [D0 applications](results/independent-spatial-service-001/REVIEW.md), observed | Isolated service is insufficient for the registered v1 A/B gains. The intervention clears all background/history; peer traffic counts do not allocate causal cycles to individual peers, arbitration, buffers or credit. |
 | Every ready flow served concurrently, without source message order | Two simultaneous messages sharing one source | [Source-order diagnosis](results/source-order-001/REVIEW.md), observed generation/injection/ejection; component-only probe | Native selects message 1 at 1,988 after message 0's last injection at 1,987, before its destination finish at 2,080. Ordered heads recover final times, but the surrogate release is 60 cycles late. None of 69 S application-critical messages has generation wait; component repair alone does not explain application gap error. |
 | Whole route active from source-ready, with propagation added afterwards | Same ready flows, but data reaches their common service point at different times | [D1 contract](SHARED_SPATIAL_SERVICE_PROTOCOL.md), observed implementation; [three-flow arrivals](results/source-order-001/REVIEW.md), observed 50/28/7 at the common router despite ready 0; local-arrival example below, constructed | Immediate end-to-end sharing can conflate source eligibility with local arrival. Staggered cases vary source-ready times; they do not independently intervene on propagation. Application error does not uniquely establish this as the cause. |
-| End-to-end flow fairness without input-queue identity | Same three flows and common output, different merge/input structure | [Three-flow sink-arrival windows and critical B merges](results/source-order-001/REVIEW.md), observed; branch-fairness example, constructed | Common-window counts 501/501/1,002 distinguish a two-plus-one input structure from three equal flows. The same structure occurs on 6×6/7×7 B critical responses. Counts lack grant/credit/VC evidence and do not independently prove an arbitration law or simultaneous queue occupancy. |
+| End-to-end flow fairness without input-queue identity | Same three flows and common output, different merge/input structure | [Three-flow sink-arrival windows and critical B merges](results/source-order-001/REVIEW.md), observed; branch-fairness example, constructed | Common-window counts 501/501/1,002 distinguish a two-plus-one input structure from three equal flows. The same structure occurs on 6×6/7×7 B critical responses. The later [local-service observation](results/local-service-001/REVIEW.md) finds multi-input VC requests but no multi-input switch requests at 24→36. Actual FIFO/VC/pipeline reconstruction matches service given supplied arrivals/credit returns. Counts alone do not establish an arbitration law; the controlled result remains local and conditional. |
 | Only total bytes / final duration, without supply boundaries | Same objects and nominal rates, whole versus fragmented supply | [Periphery policy experiment](results/memory-periphery-001/REVIEW.md) and [matched critical chains](results/memory-periphery-attribution-001/INTERPRETATION.md), observed | B improves from 31,303 to 23,561 cycles while its W payload envelope remains 6,177 cycles. Supply and composition matter. Fragmentation also changes request granularity, latency instances and FCFS interleaving; this is a combined-policy contrast. |
 | Destination commit treated as source-visible feedback | Same destination commit, different return-notification arrival | [Ideal window contract](MEMORY_WINDOW_CONTRACT.md), observed implementation; delayed-notification contrast, constructed and unexecuted | Current commit visibility is explicitly global and immediate. Its physical impact is unquantified; no controller-wide DMA/RX budget or real completion protocol has been inferred. |
 
@@ -70,8 +70,10 @@ policy deliberately identifies it with destination commit.
 First preserve the service boundaries that distinguish these cases. The
 [source-only probe](results/source-order-001/REVIEW.md) demonstrates why checking
 only final completion is insufficient: exact 2,080/4,149 finishes coexist with a
-60-cycle source boundary error. Local arrival and input identity are the next
-component questions, without treating the observed input counts as fitted weights.
+60-cycle source boundary error. The
+[completed local reconstruction](results/local-service-001/REVIEW.md) identifies
+VC ownership and phase timing as distinct local service conditions,
+without treating the observed input counts as fitted weights.
 The probe is not an application backend and does not pass the overlapping
 three-flow component gate. Existing S/D0/D1 predictions remain unchanged.
 
@@ -93,9 +95,10 @@ Validate the service operator with identical inputs and initial states first;
 then let complete executions generate their own future requests. Native
 application timestamps can supply offline diagnostic inputs, but cannot be used
 as prediction inputs in the independent closed-loop comparison. Track the first
-different boundary as well as the final critical chain. No queue/credit model,
-event-compressed backend, runtime fidelity switch or new workload is implemented
-by this milestone.
+different boundary as well as the final critical chain. A bounded local
+FIFO/ownership/credit replay now exists with Native arrivals and credit returns
+as external inputs. No independent network or event-compressed
+backend, runtime fidelity switch or new workload is implemented by these milestones.
 
 Timing error, signed design-gap error and reference choice regret remain separate.
 D0's A/B misselection at 6×6 costs 658 reference cycles, despite its 6,870-cycle

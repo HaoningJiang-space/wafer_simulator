@@ -1,0 +1,213 @@
+{
+  "application_executions": 0,
+  "eligibility_from_native": false,
+  "native_component_executions": 3,
+  "note": "Raw SUMMARY aggregate gate text is stale for the state layer; typed per-case flags and this readback preserve its conditional scope.",
+  "rows": [
+    {
+      "common_sink_arrival_window": [
+        50,
+        4101
+      ],
+      "common_window_consecutive_same_input": 0,
+      "common_window_count_patterns": [
+        {
+          "counts": [
+            32,
+            32
+          ],
+          "input_order": [
+            "router/12",
+            "router/25"
+          ],
+          "windows": 31
+        }
+      ],
+      "complete_common_windows": 31,
+      "conditional_state": {
+        "allocation_calls_checked": 8171,
+        "boundary_errors": [],
+        "boundary_mismatches": 0,
+        "credit_returns_from_native": true,
+        "eligibility_from_native": false,
+        "eligibility_mismatches": 0,
+        "pointer_mismatches": 0,
+        "processed_event_times": 6165,
+        "scope": "Conditional local reconstruction, not an independent network backend",
+        "skipped_empty_or_blocked_cycles": 18,
+        "upstream_arrivals_from_native": true
+      },
+      "contract": {
+        "channel_latency": 17,
+        "crossbar_delay": 2,
+        "downstream_capacity": 32,
+        "input_count": 5,
+        "kind": "contract",
+        "output_buffer_limit": -1,
+        "routing_delay": 0,
+        "sw_alloc_delay": 1,
+        "vc_alloc_delay": 1,
+        "vc_busy_when_full": false
+      },
+      "credit_returns": 3072,
+      "durations": [
+        6176,
+        6175,
+        4148
+      ],
+      "fixed_window_cycles": 128,
+      "flits": 3072,
+      "input_counts": {
+        "router/12": 2048,
+        "router/25": 1024
+      },
+      "input_queue_peaks": {
+        "12": 23,
+        "25": 31,
+        "26": 0,
+        "36": 0
+      },
+      "messages": 3,
+      "minimum_sw_credit_slots": 13,
+      "name": "three-shared-stagger-0",
+      "sw_calls": 3072,
+      "sw_credit_full_calls": 0,
+      "sw_multi_request_calls": 0,
+      "vc_calls": 5099,
+      "vc_multi_request_calls": 2026,
+      "vc_zero_request_owned_calls": 2027
+    },
+    {
+      "common_sink_arrival_window": [
+        1046,
+        5139
+      ],
+      "common_window_consecutive_same_input": 0,
+      "common_window_count_patterns": [
+        {
+          "counts": [
+            32,
+            32
+          ],
+          "input_order": [
+            "router/12",
+            "router/25"
+          ],
+          "windows": 31
+        }
+      ],
+      "complete_common_windows": 31,
+      "conditional_state": {
+        "allocation_calls_checked": 8191,
+        "boundary_errors": [],
+        "boundary_mismatches": 0,
+        "credit_returns_from_native": true,
+        "eligibility_from_native": false,
+        "eligibility_mismatches": 0,
+        "pointer_mismatches": 0,
+        "processed_event_times": 6165,
+        "scope": "Conditional local reconstruction, not an independent network backend",
+        "skipped_empty_or_blocked_cycles": 18,
+        "upstream_arrivals_from_native": true
+      },
+      "contract": {
+        "channel_latency": 17,
+        "crossbar_delay": 2,
+        "downstream_capacity": 32,
+        "input_count": 5,
+        "kind": "contract",
+        "output_buffer_limit": -1,
+        "routing_delay": 0,
+        "sw_alloc_delay": 1,
+        "vc_alloc_delay": 1,
+        "vc_busy_when_full": false
+      },
+      "credit_returns": 3072,
+      "durations": [
+        5730,
+        5730,
+        4168
+      ],
+      "fixed_window_cycles": 128,
+      "flits": 3072,
+      "input_counts": {
+        "router/12": 2048,
+        "router/25": 1024
+      },
+      "input_queue_peaks": {
+        "12": 23,
+        "25": 31,
+        "26": 0,
+        "36": 0
+      },
+      "messages": 3,
+      "minimum_sw_credit_slots": 13,
+      "name": "three-shared-stagger-509",
+      "sw_calls": 3072,
+      "sw_credit_full_calls": 0,
+      "sw_multi_request_calls": 0,
+      "vc_calls": 5119,
+      "vc_multi_request_calls": 2047,
+      "vc_zero_request_owned_calls": 2047
+    },
+    {
+      "common_sink_arrival_window": null,
+      "common_window_consecutive_same_input": 0,
+      "common_window_count_patterns": [],
+      "complete_common_windows": 0,
+      "conditional_state": {
+        "allocation_calls_checked": 6144,
+        "boundary_errors": [],
+        "boundary_mismatches": 0,
+        "credit_returns_from_native": true,
+        "eligibility_from_native": false,
+        "eligibility_mismatches": 0,
+        "pointer_mismatches": 0,
+        "processed_event_times": 6207,
+        "scope": "Conditional local reconstruction, not an independent network backend",
+        "skipped_empty_or_blocked_cycles": 1838,
+        "upstream_arrivals_from_native": true
+      },
+      "contract": {
+        "channel_latency": 17,
+        "crossbar_delay": 2,
+        "downstream_capacity": 32,
+        "input_count": 5,
+        "kind": "contract",
+        "output_buffer_limit": -1,
+        "routing_delay": 0,
+        "sw_alloc_delay": 1,
+        "vc_alloc_delay": 1,
+        "vc_busy_when_full": false
+      },
+      "credit_returns": 3072,
+      "durations": [
+        2122,
+        2122,
+        2122
+      ],
+      "fixed_window_cycles": 128,
+      "flits": 3072,
+      "input_counts": {
+        "router/12": 2048,
+        "router/25": 1024
+      },
+      "input_queue_peaks": {
+        "12": 1,
+        "25": 1,
+        "26": 0,
+        "36": 0
+      },
+      "messages": 3,
+      "minimum_sw_credit_slots": 13,
+      "name": "three-shared-stagger-3000",
+      "sw_calls": 3072,
+      "sw_credit_full_calls": 0,
+      "sw_multi_request_calls": 0,
+      "vc_calls": 3072,
+      "vc_multi_request_calls": 0,
+      "vc_zero_request_owned_calls": 0
+    }
+  ],
+  "surrounding_arrival_credit_boundaries_from_native": true
+}

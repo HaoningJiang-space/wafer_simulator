@@ -223,9 +223,24 @@ All 69 saved S critical network messages have zero generation wait. Neither
 6×6 nor 7×7 B has a D1 same-source overlap touching the S critical chain, while
 both have actual two-plus-one input merging on critical responses. Do not
 promote the common-source repair into a primary explanation of application gap
-errors. Local competition remains relevant and deserves the next small service
-test. The source-only candidate does not pass the component gate for a new
-application backend; zero new native or application executions were needed.
+errors. Local competition remains relevant; the completed bounded test below
+identifies its actual service stage. The source-only candidate does not pass the
+component gate for a new application backend; zero new native or application executions were needed.
+
+The [local-service reconstruction](results/local-service-001/REVIEW.md) observes
+24→36 at offsets 0/509/3,000 without changing reference events. With one output
+VC, contention enters VC allocation and ownership filters switch eligibility;
+all observed switch calls have at most one requesting input. The 32/32 branch
+counts in complete overlapping windows are therefore not proof of simultaneous
+input-fair switch allocation. Given actual arrivals and processed credit returns,
+a small FIFO/VC/pipeline state machine computes eligibility and reproduces all
+four local service clocks. Requests/grants are comparison targets, not inputs to
+that second replay. This closes conditional reconstruction only: source release,
+upstream arrivals, downstream feedback and complete messages are not independently
+predicted. Busy-case advancement skips only 18 cycles; no speedup is claimed.
+No new application backend or matrix is started. A next method experiment should
+retain these established causal boundaries while separately testing independent
+boundary generation or compression, without fitting flow weights or bandwidth.
 
 Changes to recording must preserve message completion and closed execution.
 If repeated router work is the relevant cost, investigate batching between
