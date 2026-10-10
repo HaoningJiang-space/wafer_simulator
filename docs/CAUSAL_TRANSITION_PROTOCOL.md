@@ -33,6 +33,10 @@ from the ordinary snapshot, not execution: it is compared in the complete
 result. `snapshot(include_history=True)` additionally copies every generated
 packet and full event history. Snapshot generation is optional and never a
 service decision input. It imports no analysis or experiment code.
+Uninjected metadata is included as lossless contiguous identity segments;
+every queued record is checked, so a different message/source/epoch creates
+a distinct segment and is detected before injection. This coalesces snapshot
+copies only; the ordinary source remains an explicit deque.
 
 ## Independent equivalence gate
 
@@ -60,7 +64,7 @@ PYTHONPATH=src ../.venv/bin/python scripts/test_causal_transition_remote.py \
 PYTHONPATH=src ../.venv/bin/python -m wafer_sim.experiments.causal_transition \
   /Projects/haoning/wafer_simulator/runs/causal-transition-NEW \
   --tests /Projects/haoning/wafer_simulator/runs/causal-transition-tests-NEW/TESTS.json \
-  --g1-evidence /Projects/haoning/wafer_simulator/runs/causal-closure-001
+  --g1-evidence /Projects/haoning/wafer_simulator/runs/causal-closure-002
 PYTHONPATH=src ../.venv/bin/python -m wafer_sim.analysis.causal_transition \
   /Projects/haoning/wafer_simulator/runs/causal-transition-NEW \
   /Projects/haoning/wafer_simulator/runs/causal-transition-readback-NEW

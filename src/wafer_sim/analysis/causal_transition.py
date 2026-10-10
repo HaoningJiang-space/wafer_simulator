@@ -57,9 +57,23 @@ def legacy_snapshot(local, scheduled, next_sequence, final=False):
         if len(ids) != len(rows):
             raise ValueError('Reference schedule identity coverage changed')
         events.append([when, [[seq, row] for seq, row in zip(ids, rows)]])
+    queued_metadata = []
+    # Independent lossless grouping, without importing the producer encoder.
+    for queue in local['issuing']:
+        groups = []
+        for f in queue:
+            row = dict(work[f])
+            identity_delta = row.pop('id')-f
+            if (groups and groups[-1][1] == f and groups[-1][2] == identity_delta
+                    and groups[-1][3] == row):
+                groups[-1][1] = f+1
+            else:
+                groups.append([f, f+1, identity_delta, row])
+        queued_metadata.append(groups)
     return deepcopy(dict(schema=1, cycle=now, complete=final,
         cycle_limit=local['cycle_limit'], contract=local['c'], demand=demand,
         sources=[dict(credit=local['source_credits'][i], issuing=list(local['issuing'][i]),
+            issuing_work=queued_metadata[i],
             pending=[list(p) for p in local['todo'][i]], stall_cycles=local['source_stalls'][i]) for i in range(3)],
         routers=[dict(queues=[list(q) for q in s['queues']], owner=s['owner'],
             sw_ready=s['sw_ready'], credit=s['credit'], vc_pointer=s['vc_pointer'],

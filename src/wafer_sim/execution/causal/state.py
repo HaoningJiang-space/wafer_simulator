@@ -31,6 +31,30 @@ def thaw(value):
     return value
 
 
+def issuing_work(queue, work):
+    """Losslessly group contiguous IDs with identical uninjected metadata.
+
+    Check every queued record. A changed message/source/epoch/field forms a new
+    segment rather than being inferred from the head or hidden until injection.
+    Segmentation reduces snapshot copies only; source execution remains a deque.
+    """
+    segments = []
+    baseline = None
+    expected = None
+    for flit in queue:
+        row = work[flit]
+        if expected is not None:
+            expected['id'] = flit
+        if expected is not None and row == expected and flit == segments[-1][1]:
+            segments[-1][1] += 1
+        else:
+            baseline = dict(row)
+            packet_id = baseline.pop('id')
+            segments.append([flit, flit+1, packet_id-flit, baseline])
+            expected = dict(row)
+    return segments
+
+
 @dataclass(frozen=True)
 class CausalSnapshot:
     """Detached read-only logical state; to_record returns a detached JSON tree."""
@@ -123,7 +147,7 @@ class CausalState:
 
         Issuing IDs are retained in full, not coalesced. Live packet metadata
         includes path/timing evidence needed for eventual records. Uninjected
-        metadata is determined by issuing IDs, generation epochs and demand;
+        metadata is represented losslessly by checked homogeneous ID segments;
         retired records are history, independently compared in the full result.
         include_history=True additionally copies all work and evidence. Neither
         snapshot form participates in execution decisions.
@@ -134,7 +158,8 @@ class CausalState:
         log = self.evidence
         record = dict(schema=1, cycle=self.now, complete=self.complete,
             cycle_limit=self.cycle_limit, contract=self.contract, demand=self.demand,
-            sources=[dict(credit=s.credit, issuing=list(s.issuing), pending=s.pending,
+            sources=[dict(credit=s.credit, issuing=list(s.issuing),
+                          issuing_work=issuing_work(s.issuing, self.work), pending=s.pending,
                           stall_cycles=s.stall_cycles) for s in self.sources],
             routers=[dict(queues=[list(q) for q in r.queues], owner=r.owner,
                 sw_ready=r.sw_ready, credit=r.credit, vc_pointer=r.vc_pointer,
