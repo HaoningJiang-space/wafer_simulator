@@ -28,7 +28,10 @@ class CausalClosureTests(unittest.TestCase):
 
     def test_drains_every_credit_including_receiver_return(self):
         r=self.run_case('single-one')
-        self.assertEqual(r['final_cycle'],52)
+        # Receiver consumption returns its own credit early; the final reverse
+        # inter-router credit arrives at 45 + 17 + 1 = 63, then drains at 64.
+        self.assertEqual(r['final_cycle'],64)
+        self.assertEqual(max(e['cycle'] for e in r['credit_returns']),63)
         self.assertEqual(len(r['credit_sends']),3)
         self.assertEqual(len(r['credit_returns']),4)
         self.assertTrue(r['drained'])
