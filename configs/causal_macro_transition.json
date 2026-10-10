@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "gate": "R3 single-flow macro migration to explicit exact transition engine",
+  "g1_registration_sha256": "5216c7dd7e89046ea98b328bc280e198d5f1712f11d2f52516b69b0579713b0c",
+  "g1_predictor_sha256": "24831579b2d0c49d11ab1003daef490754dba5d92e80b68c30da0fdbd1e9cf41",
+  "g2_campaign_manifest_sha256": "ba57ad06fe074ee3706fd03342060a3ec6c7e2227cc26d4bc78cb97eadfdaee1",
+  "accuracy_flits": [1, 64, 127, 128, 1024, 1025, 2049, 8192],
+  "delayed_ready": 37,
+  "benchmark_flits": [1024, 8192, 32768],
+  "cost_modes": ["macro_off", "macro_on", "macro_compact"],
+  "repetitions": 3,
+  "order_seed": 20261010,
+  "affinity": [18, 19],
+  "cycle_limit": 200000,
+  "process_deadline_seconds": 180,
+  "scope": "No merge/credit-limited macro, general mesh, Native or application execution"
+}

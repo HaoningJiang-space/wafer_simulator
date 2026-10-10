@@ -7,7 +7,7 @@ import json
 from wafer_sim.io import digest, read_json, write_json
 from wafer_sim.execution.causal import initialize, step_one_cycle, result, compact_record, completion_summary
 from wafer_sim.analysis.causal_evidence import expand_record
-from wafer_sim.analysis.causal_transition import LedgerVerifier, check_saved_prediction, first_difference, StateDivergence
+from wafer_sim.analysis.causal_transition import LedgerVerifier, check_saved_prediction, first_difference, StateDivergence, PROGRESS_FIELDS
 
 
 def registration(repo, r1):
@@ -84,7 +84,7 @@ def check_case(directory, r1, case, g1, old_manifest, replay=False):
                 state_sha256=[hashlib.sha256(packed(r).strip().encode()).hexdigest() for r in records],
                 progress_sha256=[hashlib.sha256(packed(r).strip().encode()).hexdigest() for r in progress]))
             target.write(row); chain.update(row.encode())
-            boundaries += 1; progress_checks += len(case['messages'])*7*2
+            boundaries += 1; progress_checks += len(case['messages'])*len(PROGRESS_FIELDS)*2
             if states[0].complete:
                 break
             for state in states:

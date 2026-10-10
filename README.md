@@ -1,9 +1,15 @@
 # Wafer-Scale Simulator
 
-**Current objective:** determine which spatial compute–memory–communication
-abstractions support application timing, capacity and layout decisions.
+**Current objective:** develop and independently verify exact causal-service
+execution and guarded compression for wafer-scale system simulators.
 
-The [candidate machine](docs/WAFER_MACHINE.md) is a stitched compute wafer plus
+The [system target and project roles](docs/SYSTEM_BACKEND_TARGET.md) identify
+Cerebras-style distributed compute as the architecture reference and
+`w2w-memory` V3 as the future system integration target. This repository retains
+its original system evidence while developing the causal network method. The
+bounded component core is not yet a V3 network backend.
+
+The retained v1 [candidate machine](docs/WAFER_MACHINE.md) is a stitched compute wafer plus
 an aligned memory wafer. It explicitly defines SRAM, banks, shared controllers,
 vertical HB and edge I/O. Logical work and data placement compile to request,
 response, compute and memory services on the existing timed executor and live

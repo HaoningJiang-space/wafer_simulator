@@ -1,4 +1,10 @@
-# Current research: spatial compute–memory–communication model fidelity
+# Current research: causal service execution for wafer-scale systems
+
+The [project roles and future boundary contract](SYSTEM_BACKEND_TARGET.md)
+use Cerebras-style distributed compute as the architecture reference and
+`w2w-memory` V3 as the system track. This repository develops and verifies
+causal-network execution methods. Its v1 system and G1/G2 evidence remain
+bounded references, with no repository merge or system backend replacement.
 
 The machine is not defined by `spcl/nw-design-for-wsi`. The project's historical
 adapter uses the LoI branch of that pinned implementation, with its own

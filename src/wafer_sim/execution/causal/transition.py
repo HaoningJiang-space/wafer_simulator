@@ -65,6 +65,7 @@ def step_one_cycle(state):
             state.work[f]['ejected'] = now
             state.emit('ejections', state.work[f]['message'], now)
             state.emit('retired', state.work[f])
+            state.retire_metadata(f)
             state.events.schedule(now+edge+1, 'credit', target='router', number=3)
         elif kind == 'send':
             r, f = event['router'], event['flit']
@@ -85,12 +86,7 @@ def step_one_cycle(state):
             _, mid = heapq.heappop(sending.pending)
             message = state.demand[mid]
             state.progress[mid].generated_at = now
-            for _ in range(message['flits']):
-                f = state.next_flit
-                state.next_flit += 1
-                sending.issuing.append(f)
-                state.work[f] = dict(id=f, message=mid, source=source, destination=3,
-                    generated=now, router_path=[], link_arrivals=[])
+            state.generate_message(source, message, now)
         if sending.issuing and sending.credit:
             f = sending.issuing.popleft()
             sending.credit -= 1

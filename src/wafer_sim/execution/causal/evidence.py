@@ -13,6 +13,25 @@ STREAMS = ('service', 'inputs', 'credits', 'credit_sends', 'allocations',
 PRODUCER = 'Explicit causal core compact evidence'
 
 
+def translated(row, cycles, flits, name):
+    """Producer-side affine translation; the offline decoder is independent."""
+    out = deepcopy(row)
+    if name == 'retired':
+        out['id'] += flits
+        for key in ('injected', 'ejected', 'injection_router_arrival'):
+            if key in out:
+                out[key] += cycles
+        for arrival in out['link_arrivals']:
+            arrival['cycle'] += cycles
+    else:
+        out['cycle'] += cycles
+        if 'flit' in out:
+            out['flit'] += flits
+        if 'heads' in out:
+            out['heads'] = [v+flits if v >= 0 else -1 for v in out['heads']]
+    return out
+
+
 def event_row(name, args):
     """Construct a recording row only when a consumer actually needs it."""
     if name == 'service':
@@ -69,12 +88,26 @@ class FullEvidence:
                        for row in self.retired if row['message'] == message),
                       key=lambda row: (row['ejected'], row['id']))
 
+    def repeat(self, templates, repetitions, period, flit_stride):
+        # Full validation deliberately expands recording; compact execution does not.
+        for name, template in templates.items():
+            for i in range(1, repetitions+1):
+                for raw in template:
+                    row = translated(raw, period*i, flit_stride*i, name)
+                    if name in ('injections', 'ejections'):
+                        getattr(self, name)[row['message']].append(row['cycle'])
+                    else:
+                        getattr(self, name).append(row)
+
 
 class CountersEvidence:
     """Completion summary only; not a flit/path audit or reconstructable record."""
     mode = 'counters'
 
     def emit(self, name, *args):
+        pass
+
+    def repeat(self, templates, repetitions, period, flit_stride):
         pass
 
 

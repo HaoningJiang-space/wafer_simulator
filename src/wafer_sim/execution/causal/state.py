@@ -43,7 +43,7 @@ def issuing_work(queue, work):
     baseline = None
     expected = None
     for flit in queue:
-        row = work[flit]
+        row = work.peek(flit) if hasattr(work, 'peek') else work[flit]
         if expected is not None:
             expected['id'] = flit+segments[-1][2]
         if expected is not None and row == expected and flit == segments[-1][1]:
@@ -169,6 +169,25 @@ class CausalState:
         self.evidence.emit(name, *args)
         if self.observer is not None:
             self.observer.emit(name, *args)
+
+    def generate_message(self, source, message, now):
+        """Storage-specific label creation; eligibility/order is decided by step."""
+        queue = self.sources[source].issuing
+        if hasattr(self.work, 'register'):
+            self.work.register(message, self.next_flit, now)
+            queue.reset(self.next_flit, message['flits'])
+            self.next_flit += message['flits']
+        else:
+            for _ in range(message['flits']):
+                f = self.next_flit
+                self.next_flit += 1
+                queue.append(f)
+                self.work[f] = dict(id=f, message=message['id'], source=source, destination=3,
+                    generated=now, router_path=[], link_arrivals=[])
+
+    def retire_metadata(self, flit):
+        if hasattr(self.work, 'retire'):
+            self.work.retire(flit)
 
     @property
     def generated(self):
