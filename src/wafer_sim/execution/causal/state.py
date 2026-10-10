@@ -1,14 +1,14 @@
 """Mutable causal state, ordered channel events and immutable boundary snapshots.
 
-No analysis, Native, experiments, tracing or filesystem dependencies. Full
-evidence remains the sole format; message progress is independent semantic state.
-Evidence sinks are a later migration.
+No analysis, Native, experiments, tracing or filesystem dependencies. Message
+progress and event counts are semantic/diagnostic state independent of sinks.
 """
 from collections import defaultdict, deque
 from copy import deepcopy
 from dataclasses import dataclass, field
 import heapq
 from wafer_sim.architecture.causal_merge import PORTS, validate
+from .evidence import FullEvidence, STREAMS, make_evidence
 
 
 @dataclass(frozen=True)
@@ -118,17 +118,6 @@ class EventQueue:
 
 
 @dataclass
-class FullEvidence:
-    injections: dict = field(default_factory=lambda: defaultdict(list))
-    ejections: dict = field(default_factory=lambda: defaultdict(list))
-    service: list = field(default_factory=list)
-    inputs: list = field(default_factory=list)
-    credits: list = field(default_factory=list)
-    credit_sends: list = field(default_factory=list)
-    allocations: list = field(default_factory=list)
-
-
-@dataclass
 class MessageProgress:
     """Per-message semantic counters/times; no event-list dependency."""
     generated_at: int | None = None
@@ -169,9 +158,17 @@ class CausalState:
     events: EventQueue = field(default_factory=EventQueue)
     work: dict = field(default_factory=dict)
     evidence: FullEvidence = field(default_factory=FullEvidence)
+    event_counts: dict = field(default_factory=lambda: dict.fromkeys(STREAMS, 0))
+    observer: object = None  # Optional bounded macro observer, never read by step.
     now: int = 0  # The next boundary to consume; step advances exactly one.
     next_flit: int = 0
     complete: bool = False
+
+    def emit(self, name, *args):
+        self.event_counts[name] += 1
+        self.evidence.emit(name, *args)
+        if self.observer is not None:
+            self.observer.emit(name, *args)
 
     @property
     def generated(self):
@@ -197,7 +194,6 @@ class CausalState:
         live = {f for r in self.routers for q in r.queues for f in q}
         live.update(e.payload['flit'] for events in self.events.pending.values()
                     for e in events if 'flit' in e.payload)
-        log = self.evidence
         record = dict(schema=1, cycle=self.now, complete=self.complete,
             cycle_limit=self.cycle_limit, contract=self.contract, demand=self.demand,
             sources=[dict(credit=s.credit, issuing=list(s.issuing),
@@ -213,15 +209,18 @@ class CausalState:
             remaining=[[m['flits']-self.progress[m['id']].injected,
                         m['flits']-self.progress[m['id']].received] for m in self.demand],
             message_progress=[dict(injected=p.injected, ejected=p.received) for p in self.progress],
-            evidence_counts={name: len(getattr(log, name)) for name in
+            evidence_counts={name: self.event_counts[name] for name in
                              ('service', 'inputs', 'credits', 'credit_sends', 'allocations')})
         if include_history:
+            if self.evidence.mode != 'full':
+                raise ValueError('Full history requires Full evidence')
             record['all_work'] = [[f, w] for f, w in sorted(self.work.items())]
-            record['full_evidence'] = {name: getattr(log, name) for name in vars(log)}
+            record['full_evidence'] = {name: getattr(self.evidence, name) for name in
+                ('injections', 'ejections', 'service', 'inputs', 'credits', 'credit_sends', 'allocations')}
         return CausalSnapshot(freeze(record))
 
 
-def initialize(contract, messages, cycle_limit=200000):
+def initialize(contract, messages, cycle_limit=200000, *, evidence='full'):
     c = validate(contract)
     if type(cycle_limit) is not int or cycle_limit <= 0:
         raise ValueError('Invalid cycle limit')
@@ -241,4 +240,4 @@ def initialize(contract, messages, cycle_limit=200000):
     routers = [RouterState([deque() for _ in ports], c['capacity_flits'], [0]*len(ports))
                for ports in PORTS]
     return CausalState(deepcopy(c), demand, cycle_limit, sources, routers,
-                       [MessageProgress() for _ in demand])
+                       [MessageProgress() for _ in demand], evidence=make_evidence(evidence))
