@@ -12,6 +12,9 @@ from .transition import step_one_cycle, result, completion_summary, compact_reco
 
 PERIOD_COUNTS = dict(zip(STREAMS, (9, 3, 4, 3, 6, 1, 1, 1)))
 SEQUENCE_STRIDE = 11  # Injection + three sends + three switch/credit pairs + sink credit.
+PACKET_FIELDS = {'id', 'message', 'source', 'destination', 'generated', 'router_path',
+                 'link_arrivals', 'injected', 'injection_router_arrival'}
+PACKET_REQUIRED = PACKET_FIELDS-{'injection_router_arrival'}
 
 
 def frozen(value):
@@ -73,8 +76,14 @@ def macro_key(state):
         events.append((when-now, tuple(normalized)))
     metadata = []
     for f in sorted(active_flits(state)):
-        row = translated(state.work.data[f], -now, -anchor, 'retired')
-        metadata.append((f-anchor, frozen(row)))
+        row = state.work.data[f]
+        # Exact field projection under the explicit metadata inventory guard;
+        # no deepcopy/recursive evidence normalization on the hot key path.
+        metadata.append((f-anchor, row['id']-anchor, row['message'], row['source'],
+            row['destination'], row['generated'], row['injected']-now,
+            None if 'injection_router_arrival' not in row else row['injection_router_arrival']-now,
+            tuple(row['router_path']), tuple((a['source'], a['destination'], a['cycle']-now, a['vc'])
+                                            for a in row['link_arrivals'])))
     p = state.progress[0]
     return (routers, tuple(s.credit for s in state.sources), tuple(events), tuple(metadata),
         tuple(tuple(s.pending) for s in state.sources), tuple(bool(s.issuing) for s in state.sources),
@@ -107,7 +116,12 @@ class SingleFlowPeriod2Rule:
             and not state.sources[1].issuing and not state.sources[2].issuing
             and all(not q for r, router in enumerate(state.routers) for port, q in enumerate(router.queues)
                     if (r, port) not in ((0, 0), (2, 0), (3, 1)))
-            and set(state.work.data) == active_flits(state))
+            and set(state.work.data) == active_flits(state)
+            and all(PACKET_REQUIRED <= row.keys() <= PACKET_FIELDS and row['id'] == f
+                and row['message'] == 0 and row['source'] == 0 and row['destination'] == 3
+                and row['generated'] == p.generated_at
+                and all(set(a) == {'source', 'destination', 'cycle', 'vc'} for a in row['link_arrivals'])
+                for f, row in state.work.data.items()))
 
     def recognize(self, state):
         self.authorization = None
@@ -201,7 +215,8 @@ class MacroExecution:
     def metrics(self):
         return deepcopy(dict(physical_cycle_updates=self.updates, logical_cycles=self.state.now,
             skipped_cycles=self.rule.skipped, macros=len(self.rule.batches), batches=self.rule.batches,
-            evidence_mode=self.state.evidence.mode, expanded_during_execution=False,
+            evidence_mode=self.state.evidence.mode,
+            expanded_during_execution=self.state.evidence.mode == 'full' and self.rule.skipped > 0,
             checkpoints=self.checkpoints, next_event_sequence=self.state.events.next_sequence))
 
 

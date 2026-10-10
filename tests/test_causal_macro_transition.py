@@ -1,6 +1,7 @@
 """R3 exact-core migration, boundary sequence and guarded-jump negative tests."""
 from copy import deepcopy
 from pathlib import Path
+import json
 from unittest.mock import patch
 import unittest
 from wafer_sim.io import read_json
@@ -66,6 +67,29 @@ class MacroTransitionTests(unittest.TestCase):
         metric['checkpoints'][-1]['state']['next_event_sequence'] += 1
         with self.assertRaises(ValueError):
             check_accuracy(candidate.record(), metric, expected, boundaries)
+
+    def test_saved_json_checkpoint_keys_roundtrip_without_hiding_a_clock_error(self):
+        candidate = run(REG['contract'], demand(128), checkpoints=True)
+        record = json.loads(json.dumps(candidate.record()))
+        metrics = json.loads(json.dumps(candidate.metrics()))
+        clocks = [r['state']['cycle'] for r in metrics['checkpoints']]
+        expected, boundaries = reference_snapshots(REG['contract'], demand(128), 200000, clocks)
+        self.assertTrue(check_accuracy(record, metrics, expected, boundaries)['passed'])
+        metrics['checkpoints'][-1]['progress']['messages'][0]['last_inject'] += 1
+        with self.assertRaises(ValueError):
+            check_accuracy(record, metrics, expected, boundaries)
+
+    def test_full_macro_metrics_acknowledge_online_evidence_expansion(self):
+        full = run(REG['contract'], demand(128), evidence='full')
+        self.assertTrue(full.metrics()['expanded_during_execution'])
+        self.assertFalse(run(REG['contract'], demand(128)).metrics()['expanded_during_execution'])
+
+    def test_unmodeled_live_metadata_disables_the_rule(self):
+        state, rule, proposal = self.recognized()
+        state.work.data[min(state.work.data)]['unknown'] = 1
+        self.assertFalse(rule.guard(state))
+        with self.assertRaisesRegex(ValueError, 'Unsafe'):
+            rule.apply(state, proposal, 1)
 
     def test_stale_authorization_rejects_owner_credit_work_event_and_sequence_changes(self):
         changes = [lambda s: setattr(s.routers[0], 'owner', 2),

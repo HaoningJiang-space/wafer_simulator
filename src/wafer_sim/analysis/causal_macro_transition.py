@@ -1,11 +1,17 @@
 """Independent legacy-state and persisted-evidence checks for the R3 migration."""
 from copy import deepcopy
 import inspect
+import json
 import sys
 from wafer_sim.adapters.causal_merge import simulate as legacy
 from wafer_sim.analysis.causal_transition import legacy_snapshot, legacy_progress, first_difference, StateDivergence
 from wafer_sim.analysis.causal_evidence import expand_record
 from wafer_sim.analysis.causal_evidence_study import expected_summary
+
+
+def json_value(value):
+    """JSON's specified integer-map-key projection, for persisted state checks."""
+    return json.loads(json.dumps(value))
 
 
 def reference_snapshots(contract, messages, cycle_limit, cycles):
@@ -72,7 +78,7 @@ def check_accuracy(record, metrics, reference, boundaries):
         seen.add(identity)
         expected = boundaries.get(clock)
         actual = {k: row[k] for k in ('state', 'progress')}
-        mismatch = first_difference(expected, actual)
+        mismatch = first_difference(json_value(expected), json_value(actual))
         if mismatch:
             raise StateDivergence(clock, mismatch)
     if (metrics['physical_cycle_updates']+metrics['skipped_cycles'] != reference['final_cycle']

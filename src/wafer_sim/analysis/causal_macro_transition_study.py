@@ -3,7 +3,7 @@ from pathlib import Path
 import statistics
 from wafer_sim.adapters.causal_macro import expand_record as expand_prototype
 from wafer_sim.adapters.causal_merge import simulate
-from wafer_sim.analysis.causal_macro_transition import reference_snapshots, check_accuracy
+from wafer_sim.analysis.causal_macro_transition import reference_snapshots, check_accuracy, json_value
 from wafer_sim.analysis.causal_evidence import expand_record
 from wafer_sim.analysis.causal_evidence_study import expected_summary
 from wafer_sim.analysis.causal_macro_single import process_fields
@@ -93,7 +93,7 @@ def analyze(root, output):
         cycles = [r['state']['cycle'] for r in metrics['checkpoints']]+[record['summary']['final_cycle']]
         reference, boundaries = reference_snapshots(**inp, cycles=cycles)
         saved_boundaries = {int(k): v for k, v in read_json(directory/'G1_BOUNDARIES.json').items()}
-        if read_json(directory/'G1_REFERENCE.json') != reference or saved_boundaries != boundaries:
+        if read_json(directory/'G1_REFERENCE.json') != reference or json_value(saved_boundaries) != json_value(boundaries):
             raise ValueError('Saved original reference or boundary differs from independent G1')
         old_dir = g2_root/directory.name
         for name in ('INPUT.json', 'MACRO_RECORD.json'):
@@ -110,7 +110,7 @@ def analyze(root, output):
                 or read_json(directory/'COUNTERS.json') != dict(expected_summary(reference),
                     evidence_mode='counters', full_flit_audit=False)):
             raise ValueError('Saved mode prediction/summary differs')
-        expected_final = boundaries[reference['final_cycle']]
+        expected_final = json_value(boundaries[reference['final_cycle']])
         states = read_json(directory/'FINAL_STATES.json')
         if ([r['mode'] for r in states] != ['macro_off_full', 'macro_on_full', 'macro_on_compact', 'macro_on_counters']
                 or any({k: r[k] for k in ('state', 'progress')} != expected_final for r in states)):
